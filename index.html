@@ -99,7 +99,17 @@ body.online-pending .shell>.hero,body.online-pending .shell>.stepbar,body.online
 @keyframes battleCrouch{from{transform:translateY(8px) scale(1.12,.59)}to{transform:translateY(10px) scale(1.16,.56)}}@keyframes battleFall{from{transform:rotate(-8deg) scale(.9,1.08)}to{transform:rotate(8deg) scale(.94,1.12)}}@keyframes battleStomp{0%{transform:rotate(-18deg) scale(1.25,.7)}50%{transform:rotate(12deg) scale(.88,1.15)}100%{transform:rotate(0) scale(1)}}@keyframes battleFoodPunch{40%{transform:translateX(28%) rotate(20deg) scale(1.22)}100%{transform:translateX(0) rotate(-5deg)}}@keyframes battleHurt{50%{transform:translateX(-9px) rotate(-12deg);filter:brightness(1.7)}}
 </style><style id="departmentRaceStyles">
 #deptRaceView{background:#fff6df;color:#252219;overflow:hidden;border-radius:15px;position:relative}#deptRaceView[hidden]{display:none!important}.dept-mast{display:flex;justify-content:space-between;align-items:center;gap:10px;background:#252219;color:#fff6df;padding:13px 22px;font-size:10px;font-weight:900;letter-spacing:.12em}.dept-live{display:flex;align-items:center;gap:7px;letter-spacing:.04em}.dept-live:before{content:"";width:7px;height:7px;background:#ff7046;border-radius:50%;box-shadow:0 0 0 4px #ff704627;animation:dept-pulse 1s infinite}.dept-hero{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:24px 25px 18px}.dept-eyebrow{color:#a94e2e;font-size:10px;font-weight:900;letter-spacing:.14em;margin-bottom:7px}.dept-title{font-size:clamp(26px,4vw,39px);font-weight:950;letter-spacing:-.065em;line-height:1.12;margin:0}.dept-title em{font-style:normal;color:#ed5b32}.dept-subtitle{font-size:11px;color:#78694e;line-height:1.7;margin:10px 0 0}.dept-clock{flex:none;border:2px solid #252219;border-radius:50%;width:100px;height:100px;background:#fde277;box-shadow:4px 4px 0 #252219;display:flex;align-items:center;justify-content:center;flex-direction:column;transform:rotate(5deg)}.dept-clock b{font-size:35px;font-weight:950;font-variant-numeric:tabular-nums;line-height:1.1}.dept-clock span{font-size:8px;font-weight:900;letter-spacing:.12em}.dept-announcer{margin:0 24px 16px;background:#fffaf0;border:2px solid #252219;border-radius:10px;padding:10px 14px;display:flex;align-items:center;gap:10px;min-height:43px;box-shadow:3px 3px 0 #25221915}.dept-announcer:before{content:'중계';font-size:9px;font-weight:900;background:#ed5b32;color:#fff;padding:4px 5px;border-radius:4px;flex:none}.dept-announcer span{font-size:12px;font-weight:850;line-height:1.5}.dept-arena{position:relative;padding:0 22px 12px;background:linear-gradient(180deg,transparent,#f3e7c8)}.dept-lanes{display:grid;gap:9px}.dept-lane{display:grid;grid-template-columns:143px minmax(0,1fr) 47px;align-items:center;min-height:80px;gap:9px;padding:9px 10px;background:#fffcf2;border:2px solid #252219;border-radius:11px;box-shadow:3px 3px 0 #25221918;position:relative;transition:background .15s,border-color .15s}.dept-lane[data-own=true]{background:#fff1b7;border-color:#d85a2b;box-shadow:3px 3px 0 #d85a2b40}.dept-lane[data-finished=true]{background:#e0efcf}.dept-person{display:flex;align-items:center;gap:6px;min-width:0}.dept-rank{width:21px;height:21px;border:1.5px solid #252219;border-radius:6px;background:var(--dept-color);display:grid;place-items:center;flex:none;font-size:11px;font-weight:950}.dept-name{font-size:12px;font-weight:900;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.dept-department{font-size:9px;color:#7b6a4c;margin:3px 0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.dept-passive-label{font-size:8px;font-weight:850;color:#74684f;display:flex;gap:4px;align-items:center}.dept-passive-label i{font-style:normal;width:6px;height:6px;background:#ed5b32;border-radius:50%;box-shadow:0 0 0 2px #ed5b3220}.dept-passive-label[data-used=true]{color:#8c8578}.dept-passive-label[data-used=true] i{background:#aaa18e;box-shadow:none}.dept-track{height:57px;position:relative;border-bottom:3px solid #a2906a;background:repeating-linear-gradient(90deg,transparent 0 42px,#2522190d 42px 44px);border-radius:4px;overflow:visible}.dept-track:after{content:"";position:absolute;width:9px;right:0;top:0;bottom:-3px;background:conic-gradient(#252219 25%,#fffcf2 0 50%,#252219 0 75%,#fffcf2 0) 0 0/8px 8px;border:1px solid #252219;opacity:.65}.dept-progress{height:3px;position:absolute;left:0;bottom:-3px;background:var(--dept-color);max-width:100%;z-index:1}.dept-gate{position:absolute;bottom:3px;transform:translateX(-50%);font-size:17px;line-height:1;filter:drop-shadow(1px 2px 0 #25221926);opacity:.72}.dept-gate.passed{opacity:.16;filter:grayscale(1)}.dept-runner{position:absolute;left:0;bottom:0;width:45px;height:53px;margin-left:-22px;z-index:3;display:grid;place-items:center;transition:filter .1s;will-change:left,transform}.dept-runner svg{width:42px;height:30px;position:absolute;bottom:0;overflow:visible}.dept-food{position:absolute;bottom:20px;font-size:25px;line-height:1;filter:drop-shadow(1px 2px 0 #25221940);transform:rotate(-5deg)}.dept-lane[data-moving=true] .dept-runner svg{animation:dept-bob .15s linear infinite alternate}.dept-runner[data-dash=true]:before{content:"";position:absolute;width:27px;height:25px;right:38px;bottom:8px;background:repeating-linear-gradient(180deg,#ed5b32 0 2px,transparent 2px 7px);opacity:.65}.dept-runner[data-stun=true]{filter:grayscale(.8);opacity:.7}.dept-runner[data-stun=true] .dept-food{transform:rotate(-28deg)}.dept-fx{position:absolute;left:50%;top:-20px;transform:translateX(-50%);font-size:9px;font-weight:950;white-space:nowrap;background:#252219;color:#fffaf0;padding:3px 6px;border-radius:5px;pointer-events:none}.dept-meters{font-size:11px;font-weight:950;text-align:right;font-variant-numeric:tabular-nums}.dept-meters small{display:block;font-size:8px;font-weight:750;color:#8a7b60}.dept-next{font-size:9px;text-align:center;color:#a34b28;font-weight:900;position:absolute;left:20%;right:0;top:-6px;z-index:4;pointer-events:none}.dept-controls{position:sticky;bottom:8px;z-index:10;margin:12px 22px 15px;padding:12px;background:#252219;color:#fffaf0;border:2px solid #252219;border-radius:13px;box-shadow:4px 4px 0 #25221933;display:grid;grid-template-columns:1fr auto auto;gap:9px;align-items:center}.dept-control-copy strong{display:block;font-size:12px;font-weight:900;line-height:1.4}.dept-control-copy span{display:block;font-size:9px;line-height:1.5;color:#cabf9f;margin-top:3px}.dept-input{border:2px solid #fff4cc;background:#fde277;border-radius:9px;min-width:100px;min-height:55px;color:#252219;font-size:13px;font-weight:950;box-shadow:2px 2px 0 #fff4cc50;touch-action:manipulation}.dept-input[data-action=dash]{background:#ff926a}.dept-input small{display:block;font-size:8px;font-weight:850;line-height:1.5}.dept-input:disabled{background:#665f4e;color:#bcb29b;border-color:#867b61;box-shadow:none;cursor:default}.dept-input:active:not(:disabled){transform:translate(2px,2px);box-shadow:none}.dept-credit{font-size:9px;line-height:1.7;color:#8d7a56;padding:0 23px 18px}.dept-credit a{color:#795329;text-decoration:underline;text-underline-offset:2px}.dept-overlay{position:absolute;inset:0;display:flex;justify-content:center;align-items:center;flex-direction:column;gap:7px;background:#2522191c;z-index:7;pointer-events:none;border-radius:12px;text-align:center;padding:15px}.dept-overlay[hidden]{display:none}.dept-overlay b{font-size:clamp(70px,14vw,140px);line-height:1;font-weight:950;color:#fff4cf;-webkit-text-stroke:3px #252219;text-shadow:6px 6px 0 #ed5b32;letter-spacing:-.07em;animation:dept-count .5s ease-out}.dept-overlay span{font-size:12px;background:#252219;color:#fff5d2;padding:7px 15px;border-radius:999px;font-weight:900;box-shadow:3px 3px 0 #fff4cf}.dept-overlay.dept-finale{background:#fff2c6ee;gap:12px}.dept-finale b{font-size:clamp(36px,7vw,65px);line-height:1.2;color:#ed5b32;-webkit-text-stroke:0;text-shadow:3px 3px 0 #252219;letter-spacing:-.06em}.dept-finale .dept-winner-food{font-size:65px;line-height:1.2;filter:drop-shadow(3px 4px 0 #25221940);animation:dept-winner .55s ease-out}.dept-finale span{max-width:95%;overflow-wrap:anywhere;line-height:1.6}.dept-confetti{position:absolute;inset:0;overflow:hidden;pointer-events:none}.dept-confetti i{position:absolute;top:-15px;width:9px;height:15px;border:1px solid #252219;animation:dept-fall 2.3s linear infinite}.dept-photo{font-size:9px;letter-spacing:.18em;color:#9e4426;font-weight:950}.dept-spectator{grid-column:2/4;font-size:11px;font-weight:850;color:#e8dbb9;padding:15px}.dept-control-copy[data-spectator=true]{opacity:.75}@keyframes dept-pulse{50%{opacity:.45}}@keyframes dept-bob{to{transform:translateY(-2px) rotate(1deg)}}@keyframes dept-count{from{transform:scale(1.35);opacity:.25}to{transform:scale(1);opacity:1}}@keyframes dept-winner{from{transform:translateY(-30px) rotate(-20deg);opacity:0}to{transform:translateY(0) rotate(0);opacity:1}}@keyframes dept-fall{to{transform:translateY(650px) rotate(700deg)}}@media(max-width:650px){.dept-mast{padding:11px 14px;font-size:8px}.dept-hero{padding:19px 16px 15px;gap:8px}.dept-clock{width:74px;height:74px;box-shadow:3px 3px 0 #252219}.dept-clock b{font-size:27px}.dept-clock span{font-size:7px}.dept-subtitle{font-size:9px}.dept-announcer{margin:0 13px 13px;padding:8px 9px;gap:6px}.dept-announcer span{font-size:10px}.dept-arena{padding:0 11px 9px}.dept-lanes{gap:7px}.dept-lane{grid-template-columns:91px minmax(0,1fr) 33px;gap:7px;padding:8px 7px;min-height:78px;border-radius:8px}.dept-name{font-size:10px}.dept-department{font-size:8px}.dept-passive-label{font-size:7px}.dept-rank{width:18px;height:18px;font-size:10px}.dept-track{height:51px}.dept-runner{width:35px;margin-left:-17px;height:47px}.dept-runner svg{width:34px;height:26px}.dept-food{font-size:21px;bottom:18px}.dept-gate{font-size:13px}.dept-meters{font-size:9px}.dept-meters small{font-size:7px}.dept-controls{margin:9px 11px 12px;padding:9px;grid-template-columns:1fr 76px 76px;gap:6px;bottom:5px}.dept-input{min-width:0;min-height:54px;font-size:11px}.dept-input small{font-size:7px}.dept-control-copy strong{font-size:10px}.dept-control-copy span{font-size:8px}.dept-credit{font-size:8px;padding:0 14px 15px}.dept-fx{font-size:8px;padding:3px 4px}.dept-next{font-size:8px;left:0;top:-6px}.dept-overlay span{font-size:10px}.dept-overlay b{-webkit-text-stroke:2px #252219}.dept-finale b{-webkit-text-stroke:0}.dept-eyebrow{font-size:8px}.dept-title{font-size:27px}}@media(prefers-reduced-motion:reduce){.dept-live:before,.dept-lane[data-moving=true] .dept-runner svg,.dept-overlay b,.dept-finale .dept-winner-food,.dept-confetti i{animation:none}.dept-confetti{display:none}}
-</style><style id="onlineGameStyles">#randomBtn,#motionBtn{display:none!important}.players{grid-template-columns:repeat(auto-fit,minmax(215px,1fr))!important}.net-department-wrap{padding:16px;border:2px solid #25221e;border-radius:13px;background:#d9eadf;margin:16px 0}.net-department-wrap label{font-size:13px;font-weight:900;margin-right:15px}.net-department-wrap select{max-width:100%;padding:9px;border:2px solid #25221e;border-radius:8px;background:#fffaf0;font-weight:800}.net-department-wrap p{font-size:12px;margin:10px 0 6px}.net-department-wrap small{font-size:10px;color:#60675d}.net-ready-hint{font-size:12px;line-height:1.7;text-align:center;width:100%}.net-ready{background:#8cd6ae!important;color:#20241d!important}</style><style id="onlinePolishStyles">.in-play .topbar{height:60px}.in-play .room-banner{padding:9px 15px;margin:12px 0 14px}.in-play .room-banner-code{font-size:19px;display:inline-block;margin:0 0 0 9px}.in-play .room-banner-top>div:first-child{display:flex;align-items:center}.in-play .room-roster,.in-play .room-banner-bottom,.in-play .room-banner-notice{display:none}.in-play .stepbar{padding-bottom:10px}.in-play .dept-hero{padding:15px 21px 12px}.in-play .dept-title{font-size:32px}.in-play .dept-clock{width:76px;height:76px}.in-play .dept-clock b{font-size:27px}.in-play .dept-mast{padding:9px 20px}.in-play .dept-lane{min-height:69px}.in-play .dept-announcer{margin-bottom:12px}.actions-area #startBtn,.net-ready-hint{grid-column:1/-1}@media(max-width:600px){.in-play .room-banner-top>div:first-child{display:block}.in-play .room-banner-code{margin:3px 0 0;font-size:18px}.in-play .room-banner-actions .tiny-btn{padding:7px 9px;font-size:9px}.in-play .dept-title{font-size:26px}.in-play .dept-clock{width:65px;height:65px}.in-play .dept-lane{min-height:80px}}</style></head>
+</style><style id="onlineGameStyles">#randomBtn,#motionBtn{display:none!important}.players{grid-template-columns:repeat(auto-fit,minmax(215px,1fr))!important}.net-department-wrap{padding:16px;border:2px solid #25221e;border-radius:13px;background:#d9eadf;margin:16px 0}.net-department-wrap label{font-size:13px;font-weight:900;margin-right:15px}.net-department-wrap select{max-width:100%;padding:9px;border:2px solid #25221e;border-radius:8px;background:#fffaf0;font-weight:800}.net-department-wrap p{font-size:12px;margin:10px 0 6px}.net-department-wrap small{font-size:10px;color:#60675d}.net-ready-hint{font-size:12px;line-height:1.7;text-align:center;width:100%}.net-ready{background:#8cd6ae!important;color:#20241d!important}</style><style id="onlinePolishStyles">.in-play .topbar{height:60px}.in-play .room-banner{padding:9px 15px;margin:12px 0 14px}.in-play .room-banner-code{font-size:19px;display:inline-block;margin:0 0 0 9px}.in-play .room-banner-top>div:first-child{display:flex;align-items:center}.in-play .room-roster,.in-play .room-banner-bottom,.in-play .room-banner-notice{display:none}.in-play .stepbar{padding-bottom:10px}.in-play .dept-hero{padding:15px 21px 12px}.in-play .dept-title{font-size:32px}.in-play .dept-clock{width:76px;height:76px}.in-play .dept-clock b{font-size:27px}.in-play .dept-mast{padding:9px 20px}.in-play .dept-lane{min-height:69px}.in-play .dept-announcer{margin-bottom:12px}.actions-area #startBtn,.net-ready-hint{grid-column:1/-1}@media(max-width:600px){.in-play .room-banner-top>div:first-child{display:block}.in-play .room-banner-code{margin:3px 0 0;font-size:18px}.in-play .room-banner-actions .tiny-btn{padding:7px 9px;font-size:9px}.in-play .dept-title{font-size:26px}.in-play .dept-clock{width:65px;height:65px}.in-play .dept-lane{min-height:80px}}</style><style id="raceItemStyles">
+#deptRaceView .dept-controls{grid-template-columns:minmax(115px,1fr) repeat(4,minmax(75px,100px))}.dept-input[data-action=item]{background:#c8b5ee}.dept-input[data-action=cheer]{background:#a9d9b6}.dept-item-token{display:inline-flex;align-items:center;gap:4px;background:#fff5d7;border:1px solid #9c8867;border-radius:4px;padding:2px 4px;font-size:8px;font-weight:900;line-height:1.2;margin-top:3px;white-space:nowrap}.dept-item-token[data-used=true]{opacity:.5;background:#e6dfcf}.dept-reaction{position:absolute;top:-36px;left:50%;font-size:29px;line-height:1;filter:drop-shadow(2px 3px 0 #25221933);transform:translateX(-50%);pointer-events:none;animation:dept-reaction-pop .35s cubic-bezier(.2,1.8,.6,1) both;z-index:6}.dept-reaction[hidden]{display:none}.dept-runner[data-shield=true]:after{content:"";position:absolute;inset:-3px -6px 0;border:3px solid #74b8df;border-radius:50%;background:#a5dcff20;box-shadow:0 0 15px #74b8df85;pointer-events:none}.dept-runner[data-turbo=true]{filter:drop-shadow(-8px 2px 0 #ff8c3250)}.dept-runner[data-slow=true]{filter:sepia(.6);opacity:.8}.dept-item-pop{animation:dept-item-glow .55s ease-out}.dept-fever-banner{margin:0 23px 12px;padding:10px 12px;border:2px solid #252219;border-radius:9px;background:repeating-linear-gradient(120deg,#f56d35 0 22px,#f57c3c 22px 44px);color:#fff7d8;display:flex;justify-content:space-between;align-items:center;gap:8px;box-shadow:3px 3px 0 #252219;font-size:12px;font-weight:950;text-shadow:1px 1px 0 #9b3822;letter-spacing:.02em}.dept-fever-banner[hidden]{display:none}.dept-fever-banner small{font-size:9px;letter-spacing:.06em;white-space:nowrap}#deptRaceView[data-fever=true] .dept-lane{border-color:#d76632}#deptRaceView[data-fever=true] .dept-clock{background:#ff9364;animation:dept-fever-beat .55s ease-in-out infinite alternate}#deptRaceView[data-fever=true] .dept-track{background:repeating-linear-gradient(90deg,transparent 0 42px,#f56d3524 42px 44px)}#deptRaceView[data-fever=true] .dept-runner:before{content:"";position:absolute;right:30px;bottom:6px;width:22px;height:23px;background:linear-gradient(90deg,transparent,#f56d32a0);clip-path:polygon(100% 0,65% 24%,100% 40%,45% 60%,100% 75%,70% 100%,0 55%);z-index:-1}.dept-item-button:not(:disabled){animation:dept-item-ready 1.3s ease-in-out infinite}.dept-item-button:disabled{animation:none}@keyframes dept-reaction-pop{from{opacity:0;transform:translateX(-50%) translateY(10px) scale(.3)}to{opacity:1;transform:translateX(-50%) translateY(0) scale(1)}}@keyframes dept-item-glow{50%{background:#eadbff;box-shadow:0 0 15px #9670d755}}@keyframes dept-fever-beat{to{transform:rotate(2deg) scale(1.035)}}@keyframes dept-item-ready{50%{box-shadow:0 0 0 3px #c8b5ee35}}@media(max-width:650px){#deptRaceView .dept-controls{grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}#deptRaceView .dept-control-copy{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;gap:8px}#deptRaceView .dept-control-copy span{max-width:60%;text-align:right;line-height:1.5;margin:0}#deptRaceView .dept-control-copy strong{max-width:42%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}#deptRaceView .dept-input{min-height:49px;padding:6px 2px;font-size:10px}#deptRaceView .dept-input small{font-size:7px}.dept-item-token{font-size:7px;padding:2px 3px}.dept-fever-banner{margin:0 12px 10px;padding:8px 9px;font-size:10px}.dept-fever-banner small{font-size:7px}.dept-reaction{font-size:25px;top:-32px}}@media(prefers-reduced-motion:reduce){.dept-reaction,.dept-item-pop,#deptRaceView[data-fever=true] .dept-clock,.dept-item-button:not(:disabled){animation:none}}
+</style><style id="raceSmoothStyles">.dept-runner{will-change:transform;backface-visibility:hidden;transition:filter .1s;contain:layout style}.dept-progress{transform-origin:left center;will-change:transform}.dept-gate{transition:opacity .2s,filter .2s}.dept-input{touch-action:none;user-select:none;-webkit-user-select:none}</style><style id="coffeeEventStyles">
+#coffeeEventDialog{width:min(740px,calc(100vw - 28px));max-height:92vh;padding:0;border:3px solid #262219;border-radius:22px;background:#fff7e3;color:#262219;box-shadow:9px 9px 0 #262219;overflow:auto}#coffeeEventDialog::backdrop{background:#211d16b8;backdrop-filter:blur(3px)}.coffee-head{display:flex;align-items:flex-start;justify-content:space-between;gap:15px;padding:23px 25px 17px;border-bottom:2px solid #262219;background:#f4dda0}.coffee-kicker{font-size:10px;font-weight:900;letter-spacing:.13em;color:#7b4a2e}.coffee-head h2{font-size:30px;line-height:1.18;font-weight:950;letter-spacing:-.06em;margin:8px 0 0}.coffee-close{border:2px solid #262219;border-radius:50%;width:36px;height:36px;background:#fffaf0;font-size:21px;flex:none}.coffee-body{padding:21px 25px}.coffee-intro{font-size:12px;line-height:1.85;color:#705a3f;margin:0 0 15px}.coffee-title-row{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px}.coffee-phase{background:#e6542d;color:#fff;padding:6px 11px;font-size:10px;font-weight:900;border:2px solid #262219;border-radius:99px}.coffee-count{font-size:11px;font-weight:850}.coffee-drink-label{display:block;font-weight:900;font-size:12px;margin:10px 0 7px}.coffee-drink-fields{display:flex;gap:8px}.coffee-drink-fields select,.coffee-drink-fields input{min-width:0;flex:1;width:100%;padding:12px;border:2px solid #262219;border-radius:9px;background:#fffdf5;font:inherit;font-size:13px;font-weight:750}.coffee-actions{display:grid;grid-template-columns:1.5fr 1fr;gap:9px;margin:14px 0}.coffee-actions button,.coffee-secondary{padding:12px 14px;border:2px solid #262219;border-radius:10px;background:#e75c33;color:#fff;font:inherit;font-weight:900;font-size:13px;box-shadow:3px 3px 0 #262219;min-height:48px}.coffee-actions button:nth-child(2),.coffee-secondary{background:#fffaf0;color:#262219}.coffee-actions button:disabled,.coffee-secondary:disabled{opacity:.5;cursor:default;box-shadow:none}.coffee-note{font-size:10px;line-height:1.8;color:#78634a;margin:9px 0}.coffee-roster{display:grid;gap:6px;margin-top:17px}.coffee-member{display:flex;align-items:center;gap:9px;border:1.5px solid #d3bd90;background:#fffdf4;border-radius:9px;padding:9px 11px;font-size:11px}.coffee-member[data-own=true]{border:2px solid #df6037;background:#fff0c3}.coffee-member b{font-weight:900}.coffee-member small{margin-left:auto;white-space:nowrap;color:#7b6346;font-size:10px}.coffee-member .coffee-drink{font-size:10px;color:#907857;overflow-wrap:anywhere}.coffee-game{text-align:center;padding:8px 0}.coffee-goal{font-size:11px;font-weight:900;letter-spacing:.1em;color:#a04a29}.coffee-dial{width:180px;height:180px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:7px;margin:17px auto;background:#f9df7d;border:3px solid #262219;border-radius:50%;box-shadow:6px 6px 0 #262219;position:relative}.coffee-dial strong{font-size:45px;line-height:1.05;font-weight:950;font-variant-numeric:tabular-nums;letter-spacing:-.06em}.coffee-dial span{font-size:10px;font-weight:900;color:#795137}.coffee-dial[data-playing=true]{animation:coffee-breathe 1s ease-in-out infinite}.coffee-stop{display:block;width:min(100%,370px);margin:16px auto 0;padding:17px;border:3px solid #262219;border-radius:13px;background:#e65b32;color:#fff;font:inherit;font-size:23px;font-weight:950;box-shadow:5px 5px 0 #262219;touch-action:manipulation}.coffee-stop:disabled{background:#dbc799;color:#756143;box-shadow:2px 2px 0 #262219;cursor:default}.coffee-winner{text-align:center;border:2px solid #262219;border-radius:15px;background:#deedd8;padding:20px 17px}.coffee-winner .coffee-cup{font-size:50px;display:block;line-height:1.2}.coffee-winner h3{font-size:26px;font-weight:950;letter-spacing:-.06em;margin:8px 0}.coffee-winner p{margin:6px 0;font-size:12px;line-height:1.8}.coffee-winner strong{display:block;font-size:21px;color:#b74926}.coffee-rank{display:grid;gap:6px;margin-top:15px}.coffee-rank-row{display:grid;grid-template-columns:26px 1fr auto;gap:8px;padding:9px 11px;border-radius:9px;border:1.5px solid #cbb486;background:#fffbef;font-size:12px;align-items:center}.coffee-rank-row[data-winner=true]{background:#ffe78e;border:2px solid #262219}.coffee-rank-row small{display:block;font-size:10px;color:#826b4b}.coffee-error{min-height:20px;font-size:11px;color:#b63e25;font-weight:800;line-height:1.7}.coffee-footer{display:flex;align-items:center;justify-content:space-between;gap:10px;border-top:1px dashed #bba476;margin-top:18px;padding-top:13px}.coffee-footer .coffee-secondary{min-height:37px;padding:7px 11px;font-size:10px;box-shadow:2px 2px 0 #262219}.coffee-footer p{font-size:9px;color:#836a4d;line-height:1.7;margin:0}.coffee-result-button{background:#f5d68d!important;color:#30251a!important}.coffee-result-button:before{content:'☕';font-size:21px}@keyframes coffee-breathe{50%{transform:scale(1.025);box-shadow:7px 7px 0 #262219}}@media(max-width:520px){.coffee-head{padding:18px 17px 14px}.coffee-head h2{font-size:26px}.coffee-body{padding:17px}.coffee-actions{grid-template-columns:1fr}.coffee-drink-fields{flex-direction:column}.coffee-member{flex-wrap:wrap}.coffee-dial{width:157px;height:157px}.coffee-dial strong{font-size:39px}.coffee-footer{align-items:flex-start}.coffee-footer p{max-width:200px}}@media(prefers-reduced-motion:reduce){.coffee-dial{animation:none!important}}
+</style>
+<style id="victoryImpactStyles">
+.vfx-victory{position:fixed;inset:0;z-index:9990;overflow:hidden;pointer-events:none!important;font-family:inherit;isolation:isolate;contain:layout style}.vfx-victory *{box-sizing:border-box;pointer-events:none!important}.vfx-shade{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 44%,#312245d9 0,#17121eea 74%);animation:vfxShade 1.9s ease both}.vfx-one-flash{position:absolute;inset:0;background:#fff5c6;opacity:0;animation:vfxFlash .36s ease-out both}.vfx-rays{position:absolute;left:50%;top:46%;width:145vmax;height:145vmax;opacity:0;background:repeating-conic-gradient(from 2deg,#ffd46b30 0 10deg,transparent 10deg 25deg);transform:translate(-50%,-50%) rotate(-12deg);animation:vfxRays 1.95s ease-out both}.vfx-shock-ring{position:absolute;left:50%;top:44%;width:130px;height:130px;opacity:0;border:13px solid #ffeaa5;border-radius:50%;transform:translate(-50%,-50%);animation:vfxRing .8s cubic-bezier(.1,.7,.2,1) both}.vfx-poster{position:absolute;left:50%;top:45%;width:min(92vw,680px);display:flex;flex-direction:column;align-items:center;text-align:center;color:#fff9e9;transform:translate(-50%,-50%);animation:vfxPoster 1.95s cubic-bezier(.16,.8,.2,1) both;filter:drop-shadow(0 15px 15px #0005)}.vfx-eyebrow{font-size:clamp(9px,1.4vw,13px);font-weight:900;letter-spacing:.24em;color:#ffe598;background:#241b24;padding:8px 16px;border:2px solid #ffdf81;border-radius:50px;white-space:nowrap}.vfx-title{position:relative;margin:7px 0 -16px;font-size:clamp(65px,12vw,135px);font-weight:1000;font-style:italic;line-height:1;letter-spacing:-.075em;color:#ffdc68;-webkit-text-stroke:3px #2b1a2b;text-shadow:4px 7px 0 #f96545,8px 12px 0 #241b24;transform:rotate(-6deg);z-index:2}.vfx-duel .vfx-title{font-size:clamp(110px,19vw,180px);color:#fff4c8;text-shadow:5px 7px 0 #ef6747,9px 12px 0 #241b24}.vfx-art{position:relative;width:220px;height:178px;margin:10px 0 0}.vfx-trophy{position:absolute;width:183px;height:174px;left:7px;top:2px;transform:rotate(-10deg);animation:vfxTrophy 1.7s ease-out both}.vfx-trophy svg{width:100%;height:100%;filter:drop-shadow(5px 8px 0 #241b2466)}.vfx-food{position:absolute;right:-5px;top:53px;font-size:90px;line-height:1;transform:rotate(12deg);filter:drop-shadow(3px 5px 0 #241b2455);animation:vfxFood 1.8s ease-out both}.vfx-spark{position:absolute;color:#fff6b3;font-size:42px;font-style:normal;text-shadow:2px 3px #f79a44}.vfx-spark-a{left:-32px;top:44px;transform:rotate(-15deg)}.vfx-spark-b{right:-29px;top:8px;font-size:30px;transform:rotate(15deg)}.vfx-name{font-size:clamp(23px,4.3vw,39px);font-weight:1000;line-height:1.3;max-width:100%;overflow-wrap:anywhere;text-shadow:2px 3px 0 #241b24;margin-top:1px}.vfx-menu{display:block;max-width:94%;margin:10px 0 8px;padding:8px 25px 10px;background:#fff4d6;border:3px solid #241b24;border-radius:10px;box-shadow:5px 6px 0 #ed6947;color:#241b24;font-size:clamp(24px,5vw,46px);line-height:1.15;font-weight:1000;overflow-wrap:anywhere;transform:rotate(-2deg)}.vfx-caption{font-size:clamp(11px,1.8vw,16px);font-weight:800;letter-spacing:.03em;margin-top:8px;color:#fff8dd}.vfx-ticker{position:absolute;left:-4%;right:-4%;bottom:11%;transform:rotate(-4deg);background:#ffcf53;color:#241b24;border-block:4px solid #241b24;box-shadow:0 6px 0 #241b2444;padding:11px 0;overflow:hidden;text-align:center;animation:vfxTicker 1.85s ease both}.vfx-ticker span{font-size:clamp(11px,2.5vw,24px);font-weight:1000;letter-spacing:.12em;white-space:nowrap}.vfx-particles{position:absolute;inset:0;overflow:hidden}.vfx-confetti{position:absolute;left:var(--left);top:-25px;width:11px;height:22px;border:1px solid #241b2460;border-radius:2px;background:var(--color);animation:vfxConfetti var(--fall) cubic-bezier(.16,.65,.55,1) var(--delay) both}.vfx-confetti:nth-child(3n){width:8px;height:14px}.vfx-confetti-star{font-size:23px;background:none!important;border:0;color:var(--color);font-style:normal;width:auto;height:auto}.vfx-stage-impact{transform-origin:50% 48%;animation:vfxStage .76s cubic-bezier(.15,.75,.2,1) both!important}.vfx-replay{border:0;background:transparent;color:#6d4f72;text-decoration:underline;text-underline-offset:4px;padding:13px 10px;font:inherit;font-size:12px;font-weight:850;cursor:pointer;flex-basis:100%;min-height:42px}.vfx-replay:hover{color:#c74e2b}.vfx-replay:focus-visible{outline:3px solid #ed6947;border-radius:8px;outline-offset:-2px}
+@keyframes vfxFlash{0%{opacity:.82}100%{opacity:0}}@keyframes vfxShade{0%{opacity:0}8%,70%{opacity:1}100%{opacity:0}}@keyframes vfxRays{0%{opacity:0;transform:translate(-50%,-50%) rotate(-12deg) scale(.75)}10%,72%{opacity:1}100%{opacity:0;transform:translate(-50%,-50%) rotate(9deg) scale(1.12)}}@keyframes vfxRing{0%{opacity:.9;transform:translate(-50%,-50%) scale(.5)}100%{opacity:0;transform:translate(-50%,-50%) scale(12)}}@keyframes vfxPoster{0%{opacity:0;transform:translate(-50%,-50%) scale(1.65) rotate(-10deg)}10%{opacity:1;transform:translate(-50%,-50%) scale(.94) rotate(1deg)}17%,76%{opacity:1;transform:translate(-50%,-50%) scale(1) rotate(0)}100%{opacity:0;transform:translate(-50%,-54%) scale(1.08)}}@keyframes vfxTrophy{0%{transform:translateY(25px) rotate(-25deg) scale(.7)}25%{transform:translateY(-6px) rotate(-5deg) scale(1.05)}70%,100%{transform:translateY(0) rotate(-10deg) scale(1)}}@keyframes vfxFood{0%{transform:translate(35px,20px) rotate(30deg) scale(.5)}28%{transform:translate(0,-8px) rotate(8deg) scale(1.12)}70%,100%{transform:translate(0,0) rotate(12deg) scale(1)}}@keyframes vfxTicker{0%,6%{opacity:0;transform:translateX(-20%) rotate(-4deg)}18%,78%{opacity:1;transform:translateX(0) rotate(-4deg)}100%{opacity:0;transform:translateX(10%) rotate(-4deg)}}@keyframes vfxConfetti{0%{opacity:0;transform:translate(0,-20px) rotate(0)}8%,75%{opacity:1}100%{opacity:0;transform:translate(var(--drift),105vh) rotate(var(--turn))}}@keyframes vfxStage{0%{transform:scale(1)}10%{transform:translate(-5px,2px) scale(1.045)}18%{transform:translate(4px,-2px) scale(1.045)}28%{transform:translate(0,0) scale(1.035)}100%{transform:scale(1)}}
+.vfx-reduced .vfx-one-flash,.vfx-reduced .vfx-rays,.vfx-reduced .vfx-shock-ring,.vfx-reduced .vfx-particles{display:none}.vfx-reduced .vfx-poster,.vfx-reduced .vfx-trophy,.vfx-reduced .vfx-food,.vfx-reduced .vfx-ticker{animation:none!important}.vfx-reduced .vfx-shade{animation:vfxShade 1.8s ease both}.vfx-reduced .vfx-poster{transform:translate(-50%,-50%)}.vfx-reduced .vfx-ticker{transform:rotate(-4deg)}
+@media(max-height:670px){.vfx-poster{top:43%}.vfx-art{width:175px;height:132px}.vfx-trophy{width:139px;height:133px;left:10px;top:0}.vfx-food{font-size:66px;right:3px;top:39px}.vfx-title{font-size:80px;margin-bottom:-12px}.vfx-duel .vfx-title{font-size:115px}.vfx-name{font-size:25px}.vfx-menu{font-size:30px;margin-top:7px}.vfx-ticker{bottom:6%}}@media(max-width:420px){.vfx-poster{width:94vw}.vfx-art{transform:scale(.88);margin-block:0 -10px}.vfx-eyebrow{font-size:8px;letter-spacing:.16em}.vfx-title{-webkit-text-stroke:2px}.vfx-name{font-size:24px}.vfx-menu{font-size:30px}.vfx-ticker{padding-block:8px}}
+</style></head>
 <body>
 <div class="shell">
 <header class="topbar">
@@ -155,9 +165,10 @@ body.online-pending .shell>.hero,body.online-pending .shell>.stepbar,body.online
 <dialog id="helpDialog" aria-labelledby="helpHeading"><div class="modal-head"><h2 id="helpHeading">점심 결재, 이렇게 올려요</h2><button class="close" data-close type="button" aria-label="게임 방법 닫기">닫기</button></div><div class="modal-body">
 <div class="help-line"><b>1. 오늘 점심 주문에 동의하고 입장</b>각자 닉네임을 입력하고 주문 참여 동의에 직접 체크해요. 방장은 새 방을 만들고 초대 링크나 방 코드를 공유하세요. 최대 8명이 같은 방에 참여해요.</div>
 <div class="help-line"><b>2. 내 메뉴 1~2개와 학과 캐릭터 선택</b>각자 자신의 기기에서 메뉴를 고르고 새 후보도 직접 추가할 수 있어요. 준비 완료 뒤 메뉴를 바꾸려면 먼저 준비를 취소하세요.</div>
-<div class="help-line"><b>3. 모두 준비되면 실시간 레이스</b>최소 2명, 참가자 전원 준비가 완료되면 자동 출발해요. 후보가 2개면 그중 하나를 대표 메뉴로 선정해요. 학과 캐릭터의 능력과 점프·대시를 활용해 달리세요. 우승자의 메뉴를 모두가 함께 확인해요.</div>
+<div class="help-line"><b>3. 모두 준비되면 실시간 레이스</b>최소 2명, 참가자 전원 준비가 완료되면 자동 출발해요. 후보가 2개면 그중 하나를 대표 메뉴로 선정해요. 학과 패시브와 점프(Space)·대시(Shift)를 활용해 달리세요. 중반에 받는 랜덤 아이템은 E, 응원은 R로 사용해요. 마지막 250m는 피버 타임! 우승자의 메뉴를 모두가 함께 확인해요.</div>
 <div class="help-line"><b>4. 이의가 있으면 직접 액션 결투</b>내가 제출한 다른 메뉴를 걸고 현재 우승자에게 도전해요. 두 선수 모두 준비해야 시작하고, 각자 자신의 캐릭터만 조종해요. 이동 A/D 또는 ←/→, 점프 W 또는 ↑, 공격 F 또는 K, 숙이기 G 또는 L. 점프로 상대 머리를 밟거나 숙여서 피할 수 있어요. 다른 참가자는 같은 경기를 실시간 관전해요.</div>
 <div class="help-line"><b>방 연결과 참여 취소</b>방장은 이 브라우저를 열어두세요. 참가자가 나가면 진행 중인 경기는 취소되고 남은 인원이 다시 준비해요. 주문에 참여하지 않으려면 ‘주문 참여 취소하고 나가기’를 누르세요. 방장이 나가면 방이 종료돼요.</div>
+<div class="help-line"><b>식후 커피 3초 챌린지</b>점심 결과에서 커피 이벤트를 열 수 있어요. 원하는 음료를 고르고 별도로 참가하거나 패스해요. 참가자는 숫자가 사라진 뒤 감으로 딱 3초에 STOP! 가장 가까운 기록이 오늘의 커피 추천권을 가져가요.</div>
 <div class="help-line"><b>최종 주문은 직접 확인</b>이 게임은 메뉴를 함께 정하는 도구예요. 실제 음식 주문·결제는 자동으로 진행하지 않아요. 최종 결과와 주문 내역은 참가자끼리 확인해주세요.</div>
 </div></dialog>
 <dialog id="manageDialog" aria-labelledby="manageHeading"><div class="modal-head"><h2 id="manageHeading">우리의 점심 후보</h2><button class="close" data-close type="button" aria-label="메뉴 편집 닫기">닫기</button></div><div class="modal-body"><div class="subtle">공통 메뉴에서 내 후보를 고르고, 나만의 메뉴도 추가해보세요.</div><div class="manage-list" id="manageList"></div><form class="add-form" id="addForm"><input class="text-input" id="newMenuInput" aria-label="추가할 메뉴 이름" placeholder="새 메뉴 이름 · 20자까지" maxlength="40" autocomplete="off"><button class="small-add" type="submit">추가</button></form><div class="error" id="menuError" role="status"></div><button class="btn primary full-btn" id="saveMenusBtn" type="button">이 메뉴들로 결정</button></div></dialog>
@@ -592,7 +603,7 @@ function deptSimulate(dt,t){
   if(!lane.passiveUsed&&lane.department==='economics'&&t>=3&&roll<.98){lane.boostUntil=t+1.25;deptUsePassive(lane,t,'안정 성장!');}
   if(!lane.passiveUsed&&lane.department==='japanese'&&t>=8){lane.boostUntil=t+1.25;deptUsePassive(lane,t,'집중 가속!');}
   if(!lane.passiveUsed&&t>=21){lane.distance+=17;deptUsePassive(lane,t,'막판 스퍼트!');}
-  const before=lane.distance;let velocity=50*roll;if(t<lane.stunUntil)velocity*=.25;if(t<lane.dashUntil)velocity*=1.65;if(t<lane.boostUntil)velocity*=1.35;lane.speed=velocity;lane.distance+=velocity*dt;
+  const before=lane.distance;let velocity=50*roll;if(t<lane.stunUntil)velocity*=.25;if(t<lane.dashUntil)velocity*=1.65;if(t<lane.boostUntil)velocity*=1.35;velocity*=deptItemVelocity(lane,t);lane.speed=velocity;lane.distance+=velocity*dt;
   while(lane.nextObstacle<deptRace.obstacles.length&&lane.distance>=deptRace.obstacles[lane.nextObstacle].at){const gate=deptRace.obstacles[lane.nextObstacle++];deptGate(lane,gate,t);}
   if(lane.distance>=deptCourseLength){lane.finishedAt=t-dt+dt*Math.min(1,Math.max(0,(deptCourseLength-before)/Math.max(.01,lane.distance-before)));lane.distance=deptCourseLength;lane.speed=0;finishers.push(lane);}
  }
@@ -618,13 +629,13 @@ function deptHostInput(senderId,action){
  else{if(t<lane.dashReadyAt)return false;lane.dashUntil=t+.72;lane.dashReadyAt=t+4.1;deptNotice(lane,'⚡ 대시!',t);}
  deptRace.seq++;if(typeof netPublishRace==='function')netPublishRace(true);return true;
 }
-function deptGetState(){return deptRace?JSON.parse(JSON.stringify(deptRace)):null;}
+function deptGetState(){return deptRace?JSON.parse(JSON.stringify({...deptRace,sentAt:Date.now()})):null;}
 function deptReceive(state){
  if(deptAuthority()||!state||typeof state.id!=='string'||!Array.isArray(state.lanes)||state.lanes.length<1||state.lanes.length>8||!Number.isFinite(state.elapsed)||!Number.isFinite(state.startAt)||!['countdown','running','finished'].includes(state.phase))return false;
  if(state.lanes.some(l=>!l||typeof l.id!=='string'||!Number.isFinite(l.distance)||!Number.isFinite(l.speed)))return false;
  if(deptRace&&deptRace.id!==state.id)return false;if(deptRace&&state.seq<deptRace.seq)return false;
  if(!deptRace)deptStart({id:state.id,seed:state.seed,startAt:state.startAt,participants:state.lanes.map(l=>({id:l.id,name:l.name,menu:l.menu,department:l.department}))});
- if(!deptRace)return false;deptRace=JSON.parse(JSON.stringify(state));deptRemoteAt=performance.now();deptRender();return true;
+ if(!deptRace)return false;deptRace=JSON.parse(JSON.stringify(state));deptRemoteAt=performance.now();if(!deptFrame)deptRender();return true;
 }
 function deptInput(action){
  if(!deptRace||deptRace.phase!=='running'||!deptRace.lanes.some(x=>x.id===deptOwnId()))return;
@@ -633,10 +644,10 @@ function deptInput(action){
 function deptAnimate(){if(!deptRace)return;deptRender();deptFrame=requestAnimationFrame(deptAnimate);}
 function deptRender(){
  if(!deptRace||!deptView||deptView.hidden)return;
- const r=deptRace,remoteLag=deptAuthority()?0:Math.min(.7,Math.max(0,(performance.now()-deptRemoteAt)/1000)),t=r.phase==='running'?r.elapsed+remoteLag:r.elapsed,until=(r.startAt-Date.now())/1000,own=r.lanes.find(l=>l.id===deptOwnId());
+ const r=deptRace,t=deptSmoothFrame(),until=deptSmoothUntil(),own=r.lanes.find(l=>l.id===deptOwnId());deptSmoothMeasure();
  const order=[...r.lanes].sort((a,b)=>b.distance-a.distance||(a.finishedAt??Infinity)-(b.finishedAt??Infinity)||a.index-b.index);
- for(const lane of r.lanes){const nodes=deptRows.get(lane.id);if(!nodes)continue;const d=Math.min(deptCourseLength,lane.distance+(lane.finishedAt===null&&r.phase==='running'?lane.speed*remoteLag:0)),pct=d/deptCourseLength*100;nodes.runner.style.left='clamp(12px,'+pct+'%,calc(100% - 12px))';nodes.runner.style.transform='translateY('+(t<lane.jumpUntil?-Math.sin(Math.max(0,Math.min(1,1-(lane.jumpUntil-t)/.83))*Math.PI)*27:0)+'px)';nodes.runner.dataset.dash=String(t<lane.dashUntil||t<lane.boostUntil);nodes.runner.dataset.stun=String(t<lane.stunUntil);nodes.progress.style.width=pct+'%';nodes.row.dataset.moving=String(r.phase==='running'&&lane.finishedAt===null);nodes.row.dataset.finished=String(lane.finishedAt!==null);deptText(nodes.rank,order.findIndex(x=>x.id===lane.id)+1);deptText(nodes.meters,Math.round(d)+'m');nodes.passive.dataset.used=String(lane.passiveUsed);nodes.fx.hidden=!(lane.effect&&t<lane.effectUntil);deptText(nodes.fx,lane.effect);nodes.gates.forEach((g,i)=>g.classList.toggle('passed',i<lane.nextObstacle));
-  const gate=r.obstacles[lane.nextObstacle],gap=gate?gate.at-d:999;deptText(nodes.next,lane.id===deptOwnId()&&gap>0&&gap<100?(gap<42&&gate.type!=='portal'&&gate.type!=='fork'?(gate.type==='wind'?'대시 타이밍!':'지금 점프!'):gate.label+' '+Math.max(0,Math.round(gap))+'m'):'');
+ for(const lane of r.lanes){const nodes=deptRows.get(lane.id);if(!nodes)continue;const d=deptSmoothDistance(lane,t),pct=d/deptCourseLength*100;deptSmoothPlace(nodes,lane,d,t);nodes.runner.dataset.dash=String(deptSmoothDash(lane,t));nodes.runner.dataset.stun=String(t<lane.stunUntil);nodes.row.dataset.moving=String(r.phase==='running'&&lane.finishedAt===null);nodes.row.dataset.finished=String(lane.finishedAt!==null);deptText(nodes.rank,order.findIndex(x=>x.id===lane.id)+1);deptText(nodes.meters,Math.round(d)+'m');nodes.passive.dataset.used=String(lane.passiveUsed);nodes.fx.hidden=!(lane.effect&&t<lane.effectUntil);deptText(nodes.fx,lane.effect);nodes.gates.forEach((g,i)=>g.classList.toggle('passed',i<lane.nextObstacle));
+  const gate=r.obstacles[lane.nextObstacle],gap=gate?gate.at-d:999;deptText(nodes.next,lane.id===deptOwnId()&&gap>0&&gap<100?(gap<32&&gate.type!=='portal'&&gate.type!=='fork'?(gate.type==='wind'?'대시 타이밍!':'지금 점프!'):gate.label+' '+Math.max(0,Math.round(gap))+'m'):'');
  }
  const overlay=deptView.querySelector('#deptOverlay'),overTitle=deptView.querySelector('#deptOverlayTitle'),overSub=deptView.querySelector('#deptOverlaySub');
  if(r.phase==='finished'){
@@ -689,9 +700,9 @@ renderSetup=function(){
  const sel=$('netDepartment');if(sel){sel.value=netDepartment(self);sel.disabled=ready;$('netPassiveDesc').textContent=deptOptions.find(d=>d.id===sel.value)?.description||'';}
  document.querySelectorAll('#menuGrid button,#personalAddForm input,#personalAddForm button').forEach(b=>b.disabled=ready||netPendingPick);
 };
-choose=function(item){if(!netIsActive()||mode!=='setup')return;if(netReady[netSelfId()]){notify('준비를 취소하면 메뉴를 바꿀 수 있어요.');return;}netRoom.send({t:'pick',name:item.name});};
+choose=function(item){if(!netIsActive()||mode!=='setup')return;if(netReady[netSelfId()]){notify('준비를 취소하면 메뉴를 바꿀 수 있어요.');return;}const list=netPicks[netSelfId()]||[];if(list.length>=2&&!list.includes(item.name)){notify('한 사람당 최대 2개예요. 선택한 메뉴를 해제한 뒤 골라주세요.');return;}netRoom.send({t:'pick',name:item.name});};
 showSetup=function(){cancelActionDuel();if(typeof deptCancel==='function')deptCancel();cancelAnimationFrame(frame);clearTimeout(duelTimer);race=null;duel=null;mode='setup';$('setupView').hidden=false;$('raceView').hidden=true;$('resultView').hidden=true;$('duelView').hidden=true;setStep(1);renderSetup();playLayout(false);};
-function netSnapshot(){return {kind:'room-v3',seq:++netSeq,roster:netCopy(netRoster),picks:netCopy(netPicks),ready:netCopy(netReady),departments:netCopy(netDepartments),phase:netPhase,spec:netSpec&&netCopy(netSpec),result:result&&netCopy(result),duelMeta:netDuelMeta&&netCopy(netDuelMeta),combat:netPhase==='duel'?netGetCombatState():null,racing:netPhase==='race'?deptGetState():null};}
+function netSnapshot(){return {kind:'room-v3',seq:++netSeq,roster:netCopy(netRoster),picks:netCopy(netPicks),ready:netCopy(netReady),departments:netCopy(netDepartments),phase:netPhase,spec:netSpec&&netCopy(netSpec),result:result&&netCopy(result),duelMeta:netDuelMeta&&netCopy(netDuelMeta),combat:netPhase==='duel'?netGetCombatState():null,racing:netPhase==='race'?deptGetState():null,coffee:coffeeGetState()};}
 function netPublish(){if(netIsHost()&&!netApplying)netRoom.broadcast(netSnapshot());}
 function netPublishCombat(force=false){if(!netIsHost()||netApplying||netPhase!=='duel')return;const now=performance.now();if(!force&&now-netLastCombat<50)return;netLastCombat=now;netPublish();}
 function netPublishRace(force=false){if(!netIsHost()||netApplying||netPhase!=='race')return;const now=performance.now();if(!force&&now-netLastRace<80)return;netLastRace=now;netPublish();}
@@ -716,12 +727,12 @@ function netNewDuel(senderId,menu){
  netDuelMeta={id:'duel_'+Date.now()+'_'+rand(100000),challengerId:senderId,defenderId:result.winnerId,readyIds:[]};netPhase='duel';netApplying=true;try{netPrepareLocal(idx,menu);duel.id=netDuelMeta.id;}finally{netApplying=false;}netInputSeen={};netPublish();
 }
 function netHandle(senderId,cmd){
- if(!netIsHost()||!cmd||typeof cmd!=='object'||JSON.stringify(cmd).length>3000)return;const member=netMembers().find(m=>m.id===senderId);if(!member)return;
+ if(!netIsHost()||!cmd||typeof cmd!=='object'||JSON.stringify(cmd).length>3000)return;const member=netMembers().find(m=>m.id===senderId);if(!member)return;if(coffeeHandle(senderId,cmd))return;
  if(cmd.t==='pick'&&netPhase==='setup'&&!netReady[senderId]&&validName(cmd.name)){const name=cmd.name.trim().normalize('NFC'),list=netPicks[senderId]||[];const i=list.findIndex(n=>n.toLocaleLowerCase()===name.toLocaleLowerCase());if(i>=0)list.splice(i,1);else if(list.length<2)list.push(name);netPicks[senderId]=list;renderSetup();netPublish();return;}
  if(cmd.t==='department'&&netPhase==='setup'&&!netReady[senderId]&&deptOptions.some(d=>d.id===cmd.value)){netDepartments[senderId]=cmd.value;renderSetup();netPublish();return;}
  if(cmd.t==='ready'&&netPhase==='setup'&&typeof cmd.value==='boolean'){if(cmd.value&&!(netPicks[senderId]||[]).length)return;netReady[senderId]=cmd.value;renderSetup();netPublish();netBeginRace();return;}
  if(cmd.t==='reset'&&senderId===netSelfId()&&netPhase==='result'){netPhase='setup';netReady={};netPicks={};netSpec=null;netDuelMeta=null;result=null;netRoom.setLocked(false);showSetup();netPublish();return;}
- if(cmd.t==='raceInput'&&netPhase==='race'&&cmd.raceId===netSpec?.id&&['jump','dash'].includes(cmd.action)){deptHostInput(senderId,cmd.action);return;}
+ if(cmd.t==='raceInput'&&netPhase==='race'&&cmd.raceId===netSpec?.id&&['jump','dash','item','cheer'].includes(cmd.action)){deptHostInput(senderId,cmd.action);return;}
  if(cmd.t==='challenge'&&netPhase==='result'&&typeof cmd.menu==='string'){netNewDuel(senderId,cmd.menu);return;}
  if(netPhase!=='duel'||cmd.duelId!==netDuelMeta?.id)return;
  if(cmd.t==='combatCancel'&&duel?.phase==='done'){netPhase='result';cancelActionDuel();netDuelMeta=null;renderResult();netPublish();return;}
@@ -732,13 +743,13 @@ function netHandle(senderId,cmd){
 }
 function netReceive(s){
  if(netIsHost()||!s||s.kind!=='room-v3'||!Number.isSafeInteger(s.seq)||s.seq<=netLastSeq||!Array.isArray(s.roster))return;netLastSeq=s.seq;
- const oldPhase=netPhase,oldRace=netSpec?.id,oldDuel=netDuelMeta?.id;netApplying=true;
+ const oldPhase=netPhase,oldRace=netSpec?.id,oldDuel=netDuelMeta?.id,oldCoffeeResult=result?result.id+'|'+result.time+'|'+result.menu+'|'+result.person:'';netApplying=true;
  try{netRoster=s.roster.filter(m=>m&&typeof m.id==='string'&&typeof m.name==='string'&&m.consent===true).slice(0,8);netPicks=s.picks||{};netReady=s.ready||{};netDepartments=s.departments||{};netPhase=s.phase;netSpec=s.spec;netDuelMeta=s.duelMeta;result=s.result;netSyncRoster();
- if(netPhase==='setup'){showSetup();}
+ if(netPhase==='setup'){if(oldPhase!=='setup')showSetup();else renderSetup();}
  else if(netPhase==='race'){if(oldPhase!=='race'||oldRace!==netSpec?.id)netEnterRace();if(s.racing)deptReceive(s.racing);}
- else if(netPhase==='result'&&result){saveRound();renderResult();}
+ else if(netPhase==='result'&&result){if(oldPhase!=='result'||oldCoffeeResult!==result.id+'|'+result.time+'|'+result.menu+'|'+result.person){saveRound();renderResult();}}
  else if(netPhase==='duel'&&result&&s.combat){if(oldPhase!=='duel'||oldDuel!==netDuelMeta?.id){const idx=netMembers().findIndex(m=>m.id===netDuelMeta.challengerId);netPrepareLocal(idx,s.combat.duel.challengerMenu);duel.id=netDuelMeta.id;}netReceiveCombatState(s.combat);if(duel?.phase==='done')saveRound();}
- if(netPhase==='duel')netUpdateCombatReady();
+ if(netPhase==='duel')netUpdateCombatReady();coffeeReceive(s.coffee);
  }finally{netApplying=false;}
 }
 function netUpdateCombatReady(){if(!netDuelMeta||!duel)return;const ids=netDuelMeta.readyIds||[],self=ids.includes(netSelfId());if(['idle','paused'].includes(duel.phase)){$('duelStartBtn').disabled=self;$('duelStartBtn').textContent=self?'상대방 준비를 기다리는 중…':'내 캐릭터 준비 완료';$('battleOverlaySub').textContent='두 참가자 모두 준비해야 시작해요. 준비 '+ids.length+'/2';}else $('duelStartBtn').disabled=false;}
@@ -754,7 +765,7 @@ document.addEventListener('submit',e=>{if(e.target.id!=='personalAddForm'||!netI
 netRoom.onCommand(netHandle);netRoom.onState(netReceive);
 netRoom.onReady(()=>{netLastSeq=-1;netRoster=netRoom.members;netSyncRoster();if(netIsHost()){netPhase='setup';netPicks={};netReady={};netDepartments={};netSpec=null;result=null;showSetup();netPublish();}else showSetup();});
 netRoom.onPresence((members,event)=>{if(!netIsHost())return;netRoster=members;if(event.kind==='leave'){delete netPicks[event.memberId];delete netReady[event.memberId];delete netDepartments[event.memberId];if(netPhase!=='setup'){netPhase='setup';netReady={};netSpec=null;netDuelMeta=null;result=null;netRoom.setLocked(false);showSetup();notify('참가자가 나가서 이번 판을 멈췄어요. 남은 분들이 다시 준비해주세요.');}}
- if(netPhase==='setup'){netReady={};showSetup();}netPublish();});
+ if(netPhase==='setup'){netReady={};showSetup();if(event.kind==='join')notify('새 참가자가 들어왔어요. 모두 준비를 다시 확인해주세요.');}netPublish();});
 netRoom.onDisconnect(event=>{if(event.self||event.hostLost){deptCancel();cancelActionDuel();netPhase='setup';netRoster=[];netPicks={};netReady={};netSpec=null;netDuelMeta=null;result=null;mode='setup';}});
 // rAF sleeps in background tabs; continue host physics using bounded fixed steps.
 setInterval(()=>{if(!netIsHost()||netPhase!=='duel'||!document.hidden||!duel||!['fight','countdown'].includes(duel.phase))return;const now=performance.now();let n=0;while(actionLast+16<now&&n++<90&&['fight','countdown'].includes(duel.phase)){cancelAnimationFrame(actionFrame);actionTick(actionLast+16);}cancelAnimationFrame(actionFrame);actionFrame=0;},80);
@@ -767,6 +778,329 @@ const netSelectWrap=el('div','net-department-wrap');netSelectWrap.innerHTML='<la
 deptOptions.forEach(d=>{const o=el('option','',d.short+' · '+d.passive);o.value=d.id;netSelectWrap.querySelector('select').append(o);});$('players').before(netSelectWrap);$('netDepartment').addEventListener('change',e=>netRoom.send({t:'department',value:e.target.value}));const hint=el('p','net-ready-hint');hint.id='netReadyHint';$('startBtn').parentElement.append(hint);
 document.querySelectorAll('.hero-desc,.hero-sub,.subtitle').forEach(n=>{if(n.textContent.includes('공나영')||n.textContent.includes('세 사람'))n.textContent='점심 주문에 동의한 참가자들이 함께 고르고, 달리고, 직접 결투해요.';});
 $('helpDialog').querySelector('.dialog-body')?.replaceChildren();
+
+/* FUN_CORE_V1 */
+
+/* RACE_ITEMS_V1 */
+const deptItemTypes=[
+ {id:'turbo',icon:'🚀',name:'불꽃 부스터',short:'부스터',description:'1.25초 동안 속도가 45% 올라가요.'},
+ {id:'shield',icon:'🛡️',name:'철벽 도시락',short:'보호막',description:'4초 안에 만나는 장애물 또는 바나나를 1회 막고 짧게 가속해요.'},
+ {id:'banana',icon:'🍌',name:'바나나 배달',short:'바나나',description:'가장 가까운 앞 참가자를 0.85초 감속시켜요. 선두라면 짧게 가속해요.'},
+ {id:'portal',icon:'🌀',name:'순간 배달',short:'순간이동',description:'즉시 26m 전진해요. 도착 지점의 장애물은 그대로 적용돼요.'}
+];
+const deptCheerEmojis=['😋','🔥','💪','🍀','🤣'];
+const deptItemBaseStart=deptStart,deptItemBaseSimulate=deptSimulate,deptItemBaseHazard=deptHazard,deptItemBaseInput=deptHostInput,deptItemBaseRender=deptRender;
+function deptItemType(type){return deptItemTypes.find(item=>item.id===type);}
+function deptItemEnsure(lane){
+ if(lane.itemAwarded===undefined)Object.assign(lane,{itemType:null,itemAwarded:false,itemUsed:false,itemAwardedAt:null,itemUsedAt:null,itemTurboUntil:0,itemShieldUntil:0,itemShieldSpent:false,itemSlowUntil:0,cheerEmoji:'',cheerUntil:0,cheerReadyAt:0,cheerCount:0});
+}
+function deptItemPrepare(t){
+ if(!deptRace||!deptAuthority())return;
+ for(const lane of deptRace.lanes){deptItemEnsure(lane);if(lane.finishedAt!==null)continue;if(!lane.itemAwarded&&lane.distance>=380){lane.itemType=deptItemTypes[Math.min(3,Math.floor(deptHash(deptRace.seed+':item:'+lane.id)*4))].id;lane.itemAwarded=true;lane.itemAwardedAt=t;const item=deptItemType(lane.itemType);deptNotice(lane,'🎁 '+item.name+' 획득!',t);}}
+ if(!deptRace.fever&&deptRace.lanes.some(lane=>lane.distance>=deptCourseLength-250)){deptRace.fever=true;deptRace.feverStartedAt=t;}
+}
+function deptItemVelocity(lane,t){
+ let multiplier=deptRace?.fever?1.08:1;
+ if(t<(lane.itemTurboUntil||0))multiplier*=lane.itemType==='shield'?1.2:1.45;
+ if(t<(lane.itemSlowUntil||0))multiplier*=.6;
+ return multiplier;
+}
+function deptApplyItem(lane,t){
+ if(!deptAuthority()||!deptRace||deptRace.phase!=='running'||!lane||!deptRace.lanes.includes(lane)||lane.finishedAt!==null)return false;
+ deptItemEnsure(lane);const item=deptItemType(lane.itemType);if(!lane.itemAwarded||lane.itemUsed||!item)return false;
+ lane.itemUsed=true;lane.itemUsedAt=t;
+ if(item.id==='turbo'){lane.itemTurboUntil=t+1.25;deptNotice(lane,'🚀 불꽃 부스터 발사!',t);}
+ else if(item.id==='shield'){lane.itemShieldUntil=t+4;lane.itemShieldSpent=false;lane.itemTurboUntil=t+.5;deptNotice(lane,'🛡️ 철벽 도시락! 4초 방어',t);}
+ else if(item.id==='banana'){
+  const target=deptRace.lanes.filter(other=>other.id!==lane.id&&other.finishedAt===null&&other.distance>lane.distance).sort((a,b)=>a.distance-b.distance||a.index-b.index)[0];
+  if(target){deptItemEnsure(target);if(t<target.itemShieldUntil&&!target.itemShieldSpent){target.itemShieldSpent=true;target.itemShieldUntil=0;deptNotice(target,'🛡️ 바나나를 막았어요!',t);deptNotice(lane,'🍌 앗! 보호막에 막혔어요',t);}else{target.itemSlowUntil=Math.max(target.itemSlowUntil,t+.85);deptNotice(target,'🍌 바나나 배달! 잠깐 감속',t);deptNotice(lane,'🍌 '+target.name+' 님에게 배달!',t);}}
+  else{lane.itemTurboUntil=t+.6;deptNotice(lane,'🍌 선두 보너스! 미니 부스트',t);}
+ }
+ else if(item.id==='portal'){
+  lane.distance=Math.min(deptCourseLength,lane.distance+26);deptNotice(lane,'🌀 순간 배달 +26m!',t);
+  while(lane.nextObstacle<deptRace.obstacles.length&&lane.distance>=deptRace.obstacles[lane.nextObstacle].at){const gate=deptRace.obstacles[lane.nextObstacle++];deptGate(lane,gate,t);lane.distance=Math.min(deptCourseLength,lane.distance);}
+  if(lane.distance>=deptCourseLength)deptFinish(lane,t);
+ }
+ return true;
+}
+deptStart=function(spec){const started=deptItemBaseStart(spec);if(started&&deptRace&&deptAuthority()){for(const lane of deptRace.lanes)deptItemEnsure(lane);deptRace.fever??=false;deptRace.feverStartedAt??=null;}if(started)deptItemUI();return started;};
+deptSimulate=function(dt,t){deptItemPrepare(t);return deptItemBaseSimulate(dt,t);};
+deptHazard=function(lane,gate,t){
+ const alreadyAvoided=(t<lane.jumpUntil&&gate.type!=='wind')||(t<lane.dashUntil&&gate.type==='wind');
+ if(!alreadyAvoided&&t<(lane.itemShieldUntil||0)&&!lane.itemShieldSpent){lane.itemShieldSpent=true;lane.itemShieldUntil=0;deptNotice(lane,'🛡️ '+gate.label+' 방어 성공!',t);return;}
+ return deptItemBaseHazard(lane,gate,t);
+};
+deptHostInput=function(senderId,action){
+ if(!['item','cheer'].includes(action))return deptItemBaseInput(senderId,action);
+ if(!deptRace||!deptAuthority()||deptRace.phase!=='running'||Date.now()<deptRace.startAt)return false;
+ deptHostTick();if(!deptRace||deptRace.phase!=='running')return false;const lane=deptRace.lanes.find(player=>player.id===senderId);if(!lane||lane.finishedAt!==null)return false;deptItemEnsure(lane);const t=deptRace.elapsed;
+ if(action==='item'){if(!deptApplyItem(lane,t))return false;}
+ else{if(t<lane.cheerReadyAt)return false;lane.cheerCount++;lane.cheerEmoji=deptCheerEmojis[Math.min(4,Math.floor(deptHash(deptRace.seed+':cheer:'+lane.id+':'+lane.cheerCount)*5))];lane.cheerUntil=t+1.5;lane.cheerReadyAt=t+3;}
+ deptRace.seq++;if(typeof netPublishRace==='function')netPublishRace(true);return true;
+};
+function deptItemUI(){
+ if(!deptView)return;const controls=deptView.querySelector('.dept-controls');if(!controls)return;
+ if(!deptView.querySelector('#deptItem')){const item=deptMake('button','dept-input dept-item-button');item.id='deptItem';item.type='button';item.dataset.action='item';item.innerHTML='<span>🎁 아이템</span><small>E · 380m에서 획득</small>';item.addEventListener('click',()=>deptInput('item'));controls.append(item);const cheer=deptMake('button','dept-input');cheer.id='deptCheer';cheer.type='button';cheer.dataset.action='cheer';cheer.innerHTML='<span>😋 응원</span><small>R · 이모지 보내기</small>';cheer.addEventListener('click',()=>deptInput('cheer'));controls.append(cheer);}
+ if(!deptView.querySelector('#deptFeverBanner')){const banner=deptMake('div','dept-fever-banner');banner.id='deptFeverBanner';banner.hidden=true;banner.setAttribute('aria-live','polite');banner.append(deptMake('strong','','🔥 FINAL 250m · 전원 피버!'),deptMake('small','','ALL RACERS +8%'));deptView.querySelector('.dept-arena').before(banner);}
+}
+function deptItemRender(){
+ if(!deptRace||!deptView||deptView.hidden)return;deptItemUI();const r=deptRace,t=r.phase==='running'?r.elapsed+(deptAuthority()?0:Math.min(.7,Math.max(0,(performance.now()-deptRemoteAt)/1000))):r.elapsed,own=r.lanes.find(lane=>lane.id===deptOwnId()),running=r.phase==='running',fever=!!r.fever&&running;
+ deptView.dataset.fever=String(fever);const banner=deptView.querySelector('#deptFeverBanner');if(banner)banner.hidden=!fever;
+ if(fever){const leader=[...r.lanes].sort((a,b)=>b.distance-a.distance)[0],left=Math.max(0,Math.ceil(deptCourseLength-(leader?.distance||0)));deptText(banner?.querySelector('strong'),'🔥 LAST '+left+'m · 전원 피버!');const busy=r.lanes.some(lane=>lane.effect&&t<lane.effectUntil);if(!busy)deptText(deptView.querySelector('#deptAnnouncement'),'🔥 마지막 250m! 모두 8% 가속! 아이템과 대시로 결승선을 잡으세요.');}
+ for(const lane of r.lanes){const nodes=deptRows.get(lane.id);if(!nodes)continue;let token=nodes.row.querySelector('.dept-item-token');if(!token){token=deptMake('span','dept-item-token');nodes.row.querySelector('.dept-info').append(token);}const item=deptItemType(lane.itemType);token.hidden=!lane.itemAwarded;token.dataset.used=String(!!lane.itemUsed);token.title=item?.description||'';deptText(token,item?item.icon+' '+item.short+(lane.itemUsed?' 사용 완료':' 준비'):'');nodes.row.classList.toggle('dept-item-pop',!!lane.itemAwarded&&t-lane.itemAwardedAt<.55);nodes.runner.dataset.shield=String(t<(lane.itemShieldUntil||0)&&!lane.itemShieldSpent);nodes.runner.dataset.turbo=String(t<(lane.itemTurboUntil||0));nodes.runner.dataset.slow=String(t<(lane.itemSlowUntil||0));let reaction=nodes.runner.querySelector('.dept-reaction');if(!reaction){reaction=deptMake('span','dept-reaction');reaction.setAttribute('aria-hidden','true');nodes.runner.append(reaction);}reaction.hidden=!(running&&lane.cheerEmoji&&t<(lane.cheerUntil||0));if(!reaction.hidden&&reaction.dataset.count!==String(lane.cheerCount)){reaction.dataset.count=String(lane.cheerCount);deptText(reaction,lane.cheerEmoji);reaction.style.animation='none';void reaction.offsetWidth;reaction.style.animation='';}}
+ const itemButton=deptView.querySelector('#deptItem'),item=deptItemType(own?.itemType);if(itemButton){itemButton.disabled=!running||!own||own.finishedAt!==null||!own.itemAwarded||own.itemUsed;itemButton.title=item?.description||'380m를 지나면 랜덤 아이템을 1개 받아요.';itemButton.setAttribute('aria-label',item?item.name+' 사용: '+item.description:'랜덤 아이템, 380m에서 획득');deptText(itemButton.querySelector('span'),item?item.icon+' '+item.short:'🎁 아이템');deptText(itemButton.querySelector('small'),!own?'관전 중':!own.itemAwarded?'380m에서 획득':own.itemUsed?'사용 완료':'E · 지금 사용');}
+ const cheerButton=deptView.querySelector('#deptCheer'),cool=Math.max(0,(own?.cheerReadyAt||0)-t);if(cheerButton){cheerButton.disabled=!running||!own||own.finishedAt!==null||cool>.03;deptText(cheerButton.querySelector('small'),!own?'관전 중':cool>.03?cool.toFixed(1)+'초 후 응원':'R · 이모지 보내기');}
+ if(own)deptText(deptView.querySelector('#deptControlHint'),'Space 점프 · Shift 대시 · E 아이템 · R 응원');
+}
+deptRender=function(){deptItemBaseRender();deptItemRender();};
+window.addEventListener('keydown',event=>{if(!deptRace||deptView?.hidden||!['KeyE','KeyR'].includes(event.code)||/INPUT|TEXTAREA|SELECT/.test(event.target?.tagName)||event.target?.isContentEditable)return;event.preventDefault();event.stopImmediatePropagation();if(!event.repeat)deptInput(event.code==='KeyE'?'item':'cheer');},true);
+
+
+/* DEPT_SMOOTH_RENDER_V1 */
+let deptSmoothState=null,deptSmoothDt=1/60,deptSmoothDirty=true;
+const deptSmoothWidths=new Map();
+function deptSmoothReset(){deptSmoothState=null;deptSmoothWidths.clear();deptSmoothDirty=true;}
+function deptSmoothFrame(){
+ const r=deptRace,now=performance.now();if(!r)return 0;
+ if(!deptSmoothState||deptSmoothState.id!==r.id){deptSmoothState={id:r.id,phase:r.phase,observed:r.elapsed,observedAt:now,last:now,time:r.elapsed,views:new Map(),predictions:new Map(),snap:false};}
+ const s=deptSmoothState,gap=(now-s.last)/1000;deptSmoothDt=Math.max(0,Math.min(.05,gap));s.last=now;s.snap=gap>.25;
+ if(r.elapsed!==s.observed||r.phase!==s.phase){s.observed=r.elapsed;s.observedAt=now;s.phase=r.phase;}
+ if(r.phase==='running'){
+  const target=r.elapsed+Math.min(.15,Math.max(0,(now-s.observedAt)/1000));
+  if(s.snap||Math.abs(target-s.time)>.55)s.time=r.elapsed;
+  else s.time+=deptSmoothDt*Math.max(.72,Math.min(1.22,1+(target-s.time)*3.5));
+  s.time=Math.max(r.elapsed-.12,Math.min(r.elapsed+.18,s.time));
+ }else s.time=r.phase==='finished'?(r.finishedAt??r.elapsed):r.elapsed;
+ return s.time;
+}
+function deptSmoothDistance(lane,t){
+ const s=deptSmoothState,r=deptRace;if(!s||!r)return lane.distance;
+ let view=s.views.get(lane.id);if(!view){view={distance:lane.distance};s.views.set(lane.id,view);}
+ const running=r.phase==='running'&&lane.finishedAt===null;
+ const target=Math.min(running?deptCourseLength-1.5:deptCourseLength,lane.distance+(running?lane.speed*Math.max(0,Math.min(.15,t-r.elapsed)):0));
+ if(s.snap||lane.finishedAt!==null)view.distance=lane.distance;
+ else{const next=view.distance+(target-view.distance)*(1-Math.exp(-24*deptSmoothDt));view.distance=r.phase==='running'?Math.max(view.distance,next):next;}
+ return Math.max(0,Math.min(deptCourseLength,view.distance));
+}
+function deptSmoothJumpY(lane,t){
+ const p=deptSmoothState?.predictions.get(lane.id),now=performance.now();
+ if(p&&lane.id===deptOwnId()&&p.jumpAt!==undefined){const u=Math.max(0,Math.min(1,(now-p.jumpAt)/830));return -Math.sin(u*Math.PI)*36;}
+ return t<lane.jumpUntil?-Math.sin(Math.max(0,Math.min(1,1-(lane.jumpUntil-t)/.83))*Math.PI)*36:0;
+}
+function deptSmoothDash(lane,t){const p=deptSmoothState?.predictions.get(lane.id);return t<lane.dashUntil||t<lane.boostUntil||!!(p&&lane.id===deptOwnId()&&performance.now()<p.dashAt+720);}
+function deptSmoothPredict(action){
+ const r=deptRace,own=r?.lanes.find(l=>l.id===deptOwnId());if(!r||r.phase!=='running'||!own||own.finishedAt!==null)return false;
+ const t=deptSmoothFrame(),now=performance.now(),s=deptSmoothState,p=s.predictions.get(own.id)||{};
+ if(action==='jump'){if(t<own.jumpReadyAt-.025||now<(p.jumpReadyAt||0))return false;p.jumpAt=now;p.jumpReadyAt=now+1420;}
+ else if(action==='dash'){if(t<own.dashReadyAt-.025||now<(p.dashReadyAt||0))return false;p.dashAt=now;p.dashReadyAt=now+4100;}
+ else return true;s.predictions.set(own.id,p);return true;
+}
+function deptSmoothUntil(){
+ const r=deptRace,s=deptSmoothState,now=performance.now();if(!r||r.phase!=='countdown')return 0;
+ if(deptAuthority()||!Number.isFinite(r.sentAt)||!s)return (r.startAt-Date.now())/1000;
+ if(s.countSent!==r.sentAt){s.countSent=r.sentAt;s.countDeadline=now+Math.max(0,r.startAt-r.sentAt);}
+ return Math.max(0,(s.countDeadline-now)/1000);
+}
+function deptSmoothMeasure(){
+ if(!deptSmoothDirty)return;
+ // Read every track before any animation style is written. Resize only invalidates this cache.
+ for(const [id,n]of deptRows)deptSmoothWidths.set(id,n.track.clientWidth||1);
+ deptSmoothDirty=false;
+}
+function deptSmoothPlace(nodes,lane,d,t){
+ const width=deptSmoothWidths.get(lane.id)||1,x=Math.max(12,Math.min(width-12,width*d/deptCourseLength));
+ nodes.runner.style.transform='translate3d('+x.toFixed(2)+'px,'+deptSmoothJumpY(lane,t).toFixed(2)+'px,0)';
+ nodes.progress.style.transform='scaleX('+Math.max(0,Math.min(1,d/deptCourseLength)).toFixed(5)+')';
+}
+function deptSmoothControls(){
+ if(!deptRace||!deptView||deptView.hidden)return;const p=deptSmoothState?.predictions.get(deptOwnId());if(!p)return;
+ const now=performance.now();for(const action of ['jump','dash']){const remaining=((p[action+'ReadyAt']||0)-now)/1000,button=deptView.querySelector(action==='jump'?'#deptJump':'#deptDash');if(button&&remaining>.03&&deptRace.phase==='running'){button.disabled=true;deptText(button.querySelector('small'),remaining.toFixed(1)+'초 후 준비');}}
+}
+const deptSmoothBaseBuild=deptBuildLanes;deptBuildLanes=function(){deptSmoothBaseBuild();deptSmoothDirty=true;for(const n of deptRows.values()){n.runner.style.left='0px';n.progress.style.width='100%';}};
+const deptSmoothBaseCancel=deptCancel;deptCancel=function(){deptSmoothReset();return deptSmoothBaseCancel();};
+const deptSmoothBaseInput=deptInput;deptInput=function(action){if(['jump','dash'].includes(action)&&!deptSmoothPredict(action))return;return deptSmoothBaseInput(action);};
+const deptSmoothBaseRender=deptRender;deptRender=function(){deptSmoothBaseRender();deptSmoothControls();};
+window.addEventListener('resize',()=>{deptSmoothDirty=true;},{passive:true});
+document.addEventListener('visibilitychange',()=>{if(!document.hidden){deptSmoothDirty=true;if(deptSmoothState)deptSmoothState.last=performance.now()-300;}});
+// Activate touch controls on contact rather than waiting for finger release.
+const deptSmoothPointerClicks=new WeakMap();
+document.addEventListener('pointerdown',event=>{const button=event.target?.closest?.('#deptJump,#deptDash');if(!button||button.disabled||(event.pointerType==='mouse'&&event.button!==0)||deptView?.hidden)return;event.preventDefault();event.stopImmediatePropagation();deptSmoothPointerClicks.set(button,performance.now()+900);deptInput(button.id==='deptJump'?'jump':'dash');},true);
+document.addEventListener('click',event=>{const button=event.target?.closest?.('#deptJump,#deptDash');if(button&&event.detail!==0&&performance.now()<(deptSmoothPointerClicks.get(button)||0)){event.preventDefault();event.stopImmediatePropagation();}},true);
+
+
+/* COFFEE_EVENT_V1 */
+let coffeeState=null,coffeeDialog=null,coffeeFrame=0,coffeeAnchorId='',coffeeAnchorStartAt=0,coffeeLocalStart=0,coffeeStopPreview=null,coffeeRenderedEvent='',coffeeSeenNotice='',coffeeLastAnnouncement='';
+const coffeeCelebrated=new Set();
+const coffeeDrinks=['아메리카노','카페라떼','디카페인','아이스티','초코라떼'];
+function coffeeClone(v){return v?JSON.parse(JSON.stringify(v)):null;}
+function coffeeMember(){return coffeeState?.members.find(m=>m.id===netSelfId());}
+function coffeeNewId(){return 'coffee_'+Date.now()+'_'+rand(1000000);}
+function coffeePublish(){if(netIsHost()){coffeeRender();netPublish();}}
+function coffeeGetState(){if(!netIsActive()||netPhase!=='result'||!coffeeState)return null;return {...coffeeClone(coffeeState),serverNow:Date.now()};}
+function coffeeGetElapsed(){return coffeeLocalStart?Math.max(0,performance.now()-coffeeLocalStart):0;}
+function coffeeAnchor(state){if(!state?.startAt)return;if(coffeeAnchorId===state.id&&coffeeAnchorStartAt===state.startAt)return;coffeeAnchorId=state.id;coffeeAnchorStartAt=state.startAt;const serverNow=Number.isFinite(state.serverNow)?state.serverNow:Date.now();coffeeLocalStart=performance.now()+(state.startAt-serverNow);coffeeStopPreview=null;}
+function coffeeCancel(){coffeeState=null;coffeeAnchorId='';coffeeAnchorStartAt=0;coffeeLocalStart=0;coffeeStopPreview=null;coffeeRenderedEvent='';cancelAnimationFrame(coffeeFrame);coffeeFrame=0;if(coffeeDialog?.open)coffeeDialog.close();coffeeUpdateButton();}
+function coffeeSorted(state=coffeeState){return (state?.members||[]).filter(m=>m.response==='join').slice().sort((a,b)=>Number(a.dnf)-Number(b.dnf)||(a.elapsedMs===null?Infinity:Math.abs(a.elapsedMs-3000))-(b.elapsedMs===null?Infinity:Math.abs(b.elapsedMs-3000))||a.order-b.order);}
+function coffeeFinish(){if(!netIsHost()||!coffeeState||coffeeState.phase!=='playing')return;coffeeState.members.filter(m=>m.response==='join'&&m.elapsedMs===null).forEach(m=>m.dnf=true);const best=coffeeSorted().find(m=>!m.dnf&&m.elapsedMs!==null);coffeeState.phase='result';coffeeState.winnerId=best?.id||null;coffeeState.finishedAt=Date.now();coffeePublish();}
+function coffeeStartIfReady(){if(!netIsHost()||coffeeState?.phase!=='invite')return;const pending=coffeeState.members.some(m=>m.response==='pending'),joined=coffeeState.members.filter(m=>m.response==='join');if(pending||joined.length<2)return;coffeeState.phase='countdown';coffeeState.startAt=Date.now()+3300;coffeeState.serverNow=Date.now();coffeeAnchor(coffeeState);coffeePublish();}
+function coffeeHandle(senderId,cmd){
+ if(typeof cmd.t!=='string'||!cmd.t.startsWith('coffee'))return false;
+ if(!netIsHost()||netPhase!=='result'||!result||!netMembers().some(m=>m.id===senderId))return true;
+ if(cmd.t==='coffeeInvite'){
+  if(coffeeState&&['invite','countdown','playing'].includes(coffeeState.phase)){coffeePublish();return true;}
+  coffeeState={id:coffeeNewId(),roundId:result.id,phase:'invite',createdAt:Date.now(),startAt:0,finishedAt:0,winnerId:null,members:netMembers().map((m,i)=>({id:m.id,name:m.name,order:i,response:'pending',drink:'',elapsedMs:null,dnf:false}))};coffeeAnchorId='';coffeeStopPreview=null;coffeePublish();return true;
+ }
+ if(!coffeeState||cmd.eventId!==coffeeState.id)return true;
+ const member=coffeeState.members.find(m=>m.id===senderId);if(!member)return true;
+ if(cmd.t==='coffeeRespond'&&coffeeState.phase==='invite'&&['join','pass'].includes(cmd.response)){
+  if(cmd.response==='join'&&!validName(cmd.drink))return true;
+  member.response=cmd.response;member.drink=cmd.response==='join'?cmd.drink.trim().normalize('NFC'):'';member.elapsedMs=null;member.dnf=false;coffeePublish();coffeeStartIfReady();return true;
+ }
+ if(cmd.t==='coffeeStop'){
+  coffeeHostTick();if(coffeeState?.phase!=='playing'||member.response!=='join'||member.elapsedMs!==null||member.dnf)return true;
+  const elapsed=Number(cmd.elapsedMs),wallElapsed=Date.now()-coffeeState.startAt;
+  if(!Number.isFinite(elapsed)||elapsed<0||elapsed>8000||wallElapsed<0||wallElapsed>9000)return true;
+  member.elapsedMs=Math.round(elapsed);if(coffeeState.members.filter(m=>m.response==='join').every(m=>m.elapsedMs!==null||m.dnf))coffeeFinish();else coffeePublish();return true;
+ }
+ if(cmd.t==='coffeeCancel'&&senderId===netSelfId()){coffeeCancel();netPublish();return true;}
+ return true;
+}
+function coffeeHostTick(){
+ if(!netIsHost()||!coffeeState)return;
+ if(netPhase!=='result'||!result||result.id!==coffeeState.roundId){coffeeCancel();return;}
+ if(coffeeState.phase==='countdown'&&Date.now()>=coffeeState.startAt){coffeeState.phase='playing';coffeePublish();}
+ if(coffeeState?.phase==='playing'&&Date.now()>=coffeeState.startAt+8500)coffeeFinish();
+}
+function coffeeReceive(data){
+ if(netIsHost())return;if(!data){if(coffeeState)coffeeCancel();return;}
+ if(netPhase!=='result'||!data||typeof data.id!=='string'||!['invite','countdown','playing','result'].includes(data.phase)||!Array.isArray(data.members)||data.members.length>8||!Number.isFinite(data.createdAt))return;
+ if(data.members.some(m=>!m||typeof m.id!=='string'||typeof m.name!=='string'||!['pending','join','pass'].includes(m.response)||typeof m.drink!=='string'||(m.elapsedMs!==null&&!Number.isFinite(m.elapsedMs))))return;
+ const fresh=coffeeState?.id!==data.id;coffeeState=coffeeClone(data);coffeeAnchor(coffeeState);coffeeEnsureUI();coffeeRender();
+ if(fresh||(coffeeState.phase==='countdown'&&coffeeMember()?.response==='join'))coffeeOpen();
+}
+function coffeeElement(tag,cls,text){const n=document.createElement(tag);if(cls)n.className=cls;if(text!==undefined)n.textContent=text;return n;}
+function coffeeEnsureUI(){
+ if(coffeeDialog)return;coffeeDialog=coffeeElement('dialog');coffeeDialog.id='coffeeEventDialog';coffeeDialog.setAttribute('aria-labelledby','coffeeTitle');
+ coffeeDialog.innerHTML='<div class="coffee-head"><div><span class="coffee-kicker">AFTER LUNCH · BONUS CHALLENGE</span><h2 id="coffeeTitle">밥 먹었으니,<br>커피 한 잔 더? ☕</h2></div><button class="coffee-close" id="coffeeCloseBtn" type="button" aria-label="커피 이벤트 닫기">×</button></div><div class="coffee-body"><p class="coffee-intro">커피 타임에 함께할 사람만 참여하세요. <b>3.000초에 가장 가깝게 멈추면</b> 오늘의 커피 추천권! 음료 주문과 결제는 자동으로 진행하지 않아요.</p><div class="coffee-title-row"><span class="coffee-phase" id="coffeePhase">참가 모집</span><span class="coffee-count" id="coffeeCount"></span></div><section id="coffeeSetup"><label class="coffee-drink-label" for="coffeeDrinkSelect">내가 추천할 음료</label><div class="coffee-drink-fields"><select id="coffeeDrinkSelect" aria-label="커피 이벤트 추천 음료"></select><input id="coffeeCustomDrink" maxlength="40" placeholder="원하는 음료 · 20자까지" aria-label="직접 입력할 추천 음료" hidden></div><div class="coffee-actions"><button id="coffeeJoinBtn" type="button">☕ 참가 · 준비 완료</button><button id="coffeePassBtn" type="button">이번엔 패스</button></div><p class="coffee-note" id="coffeeInviteHint">모두 참가 또는 패스를 선택하면, 준비된 2명 이상이 시작해요.</p></section><section class="coffee-game" id="coffeeGame" hidden><div class="coffee-goal">TARGET · 3.000 SECONDS</div><div class="coffee-dial" id="coffeeDial"><strong id="coffeeTimer">3</strong><span id="coffeeTimerHint">출발 준비</span></div><button class="coffee-stop" id="coffeeStopBtn" type="button" disabled>딱 3초에 STOP!</button><p class="coffee-note" id="coffeePlayHint">처음 1초 뒤 숫자가 가려져요. 감각으로 타이밍을 잡아보세요!</p></section><section id="coffeeResult" hidden></section><div class="coffee-error" id="coffeeError" role="status" aria-live="polite"></div><div class="coffee-roster" id="coffeeRoster"></div><div class="coffee-footer"><p>커피 이벤트 참가 여부는 점심 주문 참가와 별개예요.<br>다시 열어도 준비·기록은 유지돼요.</p><button class="coffee-secondary" id="coffeeCancelBtn" type="button">이벤트 접기</button></div></div>';
+ document.body.append(coffeeDialog);const select=$('coffeeDrinkSelect');[...coffeeDrinks,'직접 입력'].forEach(d=>{const o=coffeeElement('option','',d);o.value=d;select.append(o);});
+ select.addEventListener('change',()=>{$('coffeeCustomDrink').hidden=select.value!=='직접 입력';});
+ $('coffeeCloseBtn').addEventListener('click',()=>coffeeDialog.close());coffeeDialog.addEventListener('close',()=>{cancelAnimationFrame(coffeeFrame);coffeeFrame=0;});
+ $('coffeeJoinBtn').addEventListener('click',()=>{const drink=select.value==='직접 입력'?$('coffeeCustomDrink').value:select.value;if(!validName(drink)){$('coffeeError').textContent='추천 음료를 1~20자로 입력해주세요.';return;}netRoom.send({t:'coffeeRespond',eventId:coffeeState?.id,response:'join',drink});});
+ $('coffeePassBtn').addEventListener('click',()=>netRoom.send({t:'coffeeRespond',eventId:coffeeState?.id,response:'pass'}));
+ $('coffeeStopBtn').addEventListener('click',coffeeStop);$('coffeeCancelBtn').addEventListener('click',()=>netRoom.send({t:'coffeeCancel',eventId:coffeeState?.id}));
+}
+function coffeeUpdateButton(){let b=$('coffeeEventBtn');if(!b&&$('resultView')){b=coffeeElement('button','btn coffee-result-button','식후 커피 한 판');b.type='button';b.id='coffeeEventBtn';const actions=$('againBtn')?.parentElement||$('resultView');actions.append(b);b.addEventListener('click',()=>{if(coffeeState)coffeeOpen();else{netRoom.send({t:'coffeeInvite'});coffeeEnsureUI();coffeeOpen();}});}if(b){b.hidden=!netIsActive()||netPhase!=='result';b.textContent=coffeeState?(coffeeState.phase==='result'?'커피 챌린지 결과 보기':'커피 챌린지 참여·확인'):'식후 커피 한 판';}}
+function coffeeOpen(){coffeeEnsureUI();if(!coffeeState){notify('커피 이벤트를 준비하고 있어요. 잠시 후 다시 열어주세요.');return;}if(!coffeeDialog.open)coffeeDialog.showModal();coffeeRender();coffeeAnimate();}
+function coffeeStop(){
+ const m=coffeeMember();if(!coffeeState||!['countdown','playing'].includes(coffeeState.phase)||!m||m.response!=='join'||m.elapsedMs!==null||m.dnf||coffeeStopPreview?.id===coffeeState.id)return;
+ const elapsed=coffeeGetElapsed();if(performance.now()<coffeeLocalStart||elapsed>8000)return;coffeeStopPreview={id:coffeeState.id,elapsedMs:Math.round(elapsed)};coffeeRender();netRoom.send({t:'coffeeStop',eventId:coffeeState.id,elapsedMs:coffeeStopPreview.elapsedMs});
+}
+function coffeeAnimate(){cancelAnimationFrame(coffeeFrame);if(!coffeeDialog?.open||!coffeeState)return;coffeeRenderTimer();if(['countdown','playing'].includes(coffeeState.phase))coffeeFrame=requestAnimationFrame(coffeeAnimate);else coffeeFrame=0;}
+function coffeeRenderTimer(){
+ if(!coffeeDialog||!coffeeState)return;const m=coffeeMember(),phase=coffeeState.phase,remaining=coffeeLocalStart-performance.now(),elapsed=coffeeGetElapsed(),preview=coffeeStopPreview?.id===coffeeState.id?coffeeStopPreview:null,stopped=m?.elapsedMs!==null&&m?.elapsedMs!==undefined?m.elapsedMs:preview?.elapsedMs;
+ const running=['countdown','playing'].includes(phase)&&remaining<=0;$('coffeeDial').dataset.playing=String(running&&stopped===undefined&&m?.response==='join');
+ if(remaining>0&&['countdown','playing'].includes(phase)){$('coffeeTimer').textContent=String(Math.min(3,Math.max(1,Math.ceil(remaining/1000))));$('coffeeTimerHint').textContent='커피 집중력 충전 중';}
+ else if(stopped!==undefined){$('coffeeTimer').textContent=(stopped/1000).toFixed(3);$('coffeeTimerHint').textContent='STOP! 기록 전송 완료';}
+ else if(m?.dnf||elapsed>=8000){$('coffeeTimer').textContent='TIME UP';$('coffeeTimerHint').textContent='다음 커피 타임에 다시 도전!';}
+ else if(running){$('coffeeTimer').textContent=elapsed<1000?(elapsed/1000).toFixed(2):'감으로!';$('coffeeTimerHint').textContent=elapsed<1000?'지금부터 3초를 세어보세요':'숫자 없이 딱 3초에 멈춰요';}
+ $('coffeeStopBtn').disabled=!running||m?.response!=='join'||stopped!==undefined||m?.dnf||elapsed>=8000;$('coffeeStopBtn').textContent=stopped!==undefined?'기록 제출 완료 ✓':m?.response!=='join'?'지금은 커피 챌린지 관전 중':'딱 3초에 STOP!';
+}
+function coffeeRender(){
+ coffeeUpdateButton();if(!coffeeState)return;coffeeEnsureUI();const s=coffeeState,m=coffeeMember(),joiners=s.members.filter(x=>x.response==='join'),pending=s.members.filter(x=>x.response==='pending').length;
+ if(coffeeRenderedEvent!==s.id){coffeeRenderedEvent=s.id;coffeeSeenNotice='';$('coffeeError').textContent='';if(netIsHost()&&!coffeeDialog.open)coffeeOpen();}
+ $('coffeePhase').textContent={invite:'참가 모집 · 자율 참여',countdown:'전원 응답 완료 · 출발 준비',playing:'3초 챌린지 진행 중',result:'커피 추천권 결정!'}[s.phase];$('coffeeCount').textContent='참가 '+joiners.length+'명 · 패스 '+s.members.filter(x=>x.response==='pass').length+'명';
+ $('coffeeSetup').hidden=s.phase!=='invite';$('coffeeGame').hidden=!['countdown','playing'].includes(s.phase);$('coffeeResult').hidden=s.phase!=='result';$('coffeeCancelBtn').hidden=!netIsHost();
+ $('coffeeJoinBtn').textContent=m?.response==='join'?'참가 준비 완료 ✓ · 음료 변경 가능':'☕ 참가 · 준비 완료';$('coffeePassBtn').textContent=m?.response==='pass'?'이번 커피는 패스 ✓':'이번엔 패스';$('coffeeInviteHint').textContent=pending?'아직 '+pending+'명이 참가 여부를 고르고 있어요. 참가하지 않아도 괜찮아요.':joiners.length<2?'2명 이상 참가하면 시작할 수 있어요. 참가 여부를 바꾸거나 창을 닫아도 돼요.':'모두 준비됐어요. 곧 출발합니다!';
+ const roster=$('coffeeRoster');roster.replaceChildren();s.members.forEach(x=>{const row=coffeeElement('div','coffee-member');row.dataset.own=String(x.id===netSelfId());row.append(coffeeElement('b','',(x.id===s.winnerId?'🏆 ':x.response==='join'?'☕ ':x.response==='pass'?'👋 ':'… ')+x.name+(x.id===netSelfId()?' · 나':'')));if(x.drink)row.append(coffeeElement('span','coffee-drink',x.drink));row.append(coffeeElement('small','',x.dnf?'시간 초과':x.elapsedMs!==null?(x.elapsedMs/1000).toFixed(3)+'초':x.response==='pending'?'선택 중':x.response==='join'?'준비 완료':'이번엔 패스'));roster.append(row);});
+ if(s.phase==='result'){
+  const winner=s.members.find(x=>x.id===s.winnerId),box=$('coffeeResult');box.replaceChildren();const card=coffeeElement('div','coffee-winner');card.append(coffeeElement('span','coffee-cup','☕'),coffeeElement('h3','',winner?winner.name+' 님, 커피 감각 최고!':'이번엔 모두 시간 초과!'));if(winner){card.append(coffeeElement('p','','오늘의 커피 추천권'),coffeeElement('strong','',winner.drink),coffeeElement('p','',(winner.elapsedMs/1000).toFixed(3)+'초 · 목표와 '+Math.abs(winner.elapsedMs-3000)+'ms 차이'));}else card.append(coffeeElement('p','','새 라운드에서 3초에 다시 도전해보세요.'));box.append(card);const ranks=coffeeElement('div','coffee-rank');coffeeSorted(s).forEach((x,i)=>{const row=coffeeElement('div','coffee-rank-row');row.dataset.winner=String(x.id===s.winnerId);const name=coffeeElement('div','',x.name);name.append(coffeeElement('small','',x.drink));row.append(coffeeElement('b','',String(i+1)),name,coffeeElement('strong','',x.dnf?'TIME UP':(x.elapsedMs/1000).toFixed(3)+'초'));ranks.append(row);});box.append(ranks);const again=coffeeElement('button','coffee-secondary','다른 음료로 한 판 더');again.type='button';again.style.marginTop='14px';again.addEventListener('click',()=>netRoom.send({t:'coffeeInvite'}));box.append(again);
+  if(winner&&!coffeeCelebrated.has(s.id)&&typeof vfxCelebrate==='function'){coffeeCelebrated.add(s.id);vfxCelebrate({id:'coffee:'+s.id,kind:'race',name:winner.name,menu:winner.drink,reason:'커피 챌린지 우승 · 추천권 획득'});}
+ }
+ coffeeRenderTimer();if(coffeeDialog.open&&['countdown','playing'].includes(s.phase)&&!coffeeFrame)coffeeAnimate();
+}
+const coffeePreviousRenderResult=renderResult;renderResult=function(){const out=coffeePreviousRenderResult();coffeeUpdateButton();return out;};
+netRoom.onDisconnect(event=>{if(event.self||event.hostLost)coffeeCancel();});
+setInterval(()=>{if(coffeeState&&(!netIsActive()||netPhase!=='result')){coffeeCancel();return;}coffeeHostTick();},50);
+document.addEventListener('keydown',event=>{if(!coffeeDialog?.open||event.code!=='Space'||/INPUT|TEXTAREA|SELECT|BUTTON/.test(event.target?.tagName)||event.target?.isContentEditable)return;event.preventDefault();if(!event.repeat)coffeeStop();});
+
+
+/* VICTORY_IMPACT_V1 */
+const vfxSeen=new Set();let vfxLastDetail=null,vfxLayer=null,vfxCleanup=0,vfxImpactCleanup=0,vfxFocusCleanup=0;
+const vfxOriginalRaceRender=deptRender,vfxOriginalCombatRender=actionRender,vfxOriginalResultRender=renderResult;
+function vfxReduced(){return typeof reduced==='boolean'?reduced:!!window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;}
+function vfxMake(tag,cls,text){const node=document.createElement(tag);if(cls)node.className=cls;if(text!==undefined)node.textContent=text;return node;}
+function vfxHash(text){let h=2166136261;for(const ch of String(text)){h^=ch.codePointAt(0);h=Math.imul(h,16777619);}return h>>>0;}
+function vfxNoise(seed,i){return (vfxHash(seed+':'+i)%10000)/10000;}
+function vfxFood(menu){if(typeof deptFood==='function')return deptFood(menu);if(typeof actionFood==='function')return actionFood(menu);return '🍽️';}
+function vfxFanfare(){
+ if(typeof sound!=='undefined'&&!sound)return;
+ if(typeof beep!=='function')return;
+ [[523,0,.08],[659,95,.09],[784,190,.1],[1047,320,.24],[659,320,.22],[784,320,.22]].forEach(([note,delay,duration])=>setTimeout(()=>beep(note,duration),delay));
+}
+function vfxImpactStage(kind,still){
+ const stage=kind==='duel'?$('battleStage'):(typeof deptView!=='undefined'?deptView:null);
+ if(!stage)return;
+ clearTimeout(vfxImpactCleanup);document.querySelectorAll('.vfx-stage-impact').forEach(n=>n.classList.remove('vfx-stage-impact'));
+ if(still)return;stage.classList.remove('vfx-stage-impact');void stage.offsetWidth;stage.classList.add('vfx-stage-impact');
+ vfxImpactCleanup=setTimeout(()=>stage.classList.remove('vfx-stage-impact'),780);
+}
+function vfxCelebrate(detail){
+ if(!detail||typeof detail.id!=='string'||!detail.id||!['race','duel'].includes(detail.kind)||!detail.name||!detail.menu)return false;
+ const id=detail.id.slice(0,180);if(!detail.force&&vfxSeen.has(id))return false;
+ if(!detail.force){vfxSeen.add(id);if(vfxSeen.size>64)vfxSeen.delete(vfxSeen.values().next().value);}
+ const clean={id,kind:detail.kind,name:String(detail.name).slice(0,60),menu:String(detail.menu).slice(0,80),reason:String(detail.reason||'').slice(0,100)};
+ vfxLastDetail=clean;clearTimeout(vfxCleanup);clearTimeout(vfxFocusCleanup);if(vfxLayer)vfxLayer.remove();
+ const still=vfxReduced(),layer=vfxMake('div','vfx-victory vfx-'+clean.kind+(still?' vfx-reduced':''));vfxLayer=layer;
+ layer.setAttribute('aria-hidden','true');layer.dataset.victoryId=id;
+ const shade=vfxMake('div','vfx-shade'),flash=vfxMake('div','vfx-one-flash'),rays=vfxMake('div','vfx-rays'),ring=vfxMake('div','vfx-shock-ring');
+ const poster=vfxMake('div','vfx-poster');
+ poster.append(vfxMake('span','vfx-eyebrow',clean.kind==='duel'?'FOOD FIGHT · VICTORY':'LUNCH GRAND PRIX · FINISH'));
+ const title=vfxMake('strong','vfx-title',clean.kind==='duel'?'K.O.':'WINNER!');title.dataset.echo=title.textContent;poster.append(title);
+ const art=vfxMake('div','vfx-art');
+ const trophy=vfxMake('div','vfx-trophy');trophy.innerHTML='<svg viewBox="0 0 200 190" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M51 40H20v28c0 28 28 40 49 28M149 40h31v28c0 28-28 40-49 28" stroke="#241b24" stroke-width="12" stroke-linecap="round"/><path d="M51 40H20v28c0 28 28 40 49 28M149 40h31v28c0 28-28 40-49 28" stroke="#ffbf39" stroke-width="7" stroke-linecap="round"/><path d="M48 19h104v40c0 37-23 61-52 61S48 96 48 59V19Z" fill="#ffc94a" stroke="#241b24" stroke-width="7"/><path d="M59 29h17v30c0 25 8 42 21 52-23-4-38-24-38-52V29Z" fill="#ffe99a"/><path d="m100 43 7 14 16 2-12 12 3 16-14-8-14 8 3-16-12-12 16-2 7-14Z" fill="#fff9e2" stroke="#ba721b" stroke-width="3"/><path d="M91 120h18v29H91z" fill="#e99b26" stroke="#241b24" stroke-width="6"/><path d="M70 149h60l10 25H60l10-25Z" fill="#ffc94a" stroke="#241b24" stroke-width="7"/><path d="M51 176h98" stroke="#241b24" stroke-width="9" stroke-linecap="round"/></svg>';
+ const food=vfxMake('span','vfx-food',vfxFood(clean.menu));art.append(trophy,food,vfxMake('i','vfx-spark vfx-spark-a','✦'),vfxMake('i','vfx-spark vfx-spark-b','✦'));poster.append(art);
+ poster.append(vfxMake('b','vfx-name',clean.name+' 우승!'),vfxMake('span','vfx-menu',clean.menu),vfxMake('span','vfx-caption',clean.kind==='duel'?'승부 끝! 오늘 점심을 지배하다.':'결승선 돌파! 오늘 점심의 주인공.'));
+ const ticker=vfxMake('div','vfx-ticker');ticker.append(vfxMake('span','',clean.kind==='duel'?'VICTORY • 점심 쟁탈전 승리 • VICTORY • 점심 쟁탈전 승리':'CHAMPION • 오늘 점심 확정 • CHAMPION • 오늘 점심 확정'));
+ const particles=vfxMake('div','vfx-particles');
+ for(let i=0;i<(still?10:58);i++){
+  const p=vfxMake('i',i%7===0?'vfx-confetti vfx-confetti-star':'vfx-confetti');
+  p.style.setProperty('--left',(vfxNoise(id,i)*100)+'%');p.style.setProperty('--drift',((vfxNoise(id,i+90)-.5)*340)+'px');p.style.setProperty('--turn',((i%2?1:-1)*(400+vfxNoise(id,i+180)*600))+'deg');p.style.setProperty('--delay',(vfxNoise(id,i+270)*.5)+'s');p.style.setProperty('--fall',(2+vfxNoise(id,i+360)*.8)+'s');p.style.setProperty('--color',['#ffce54','#ff684a','#a8edc9','#c7b7ff','#fff7d7'][i%5]);if(i%7===0)p.textContent='✦';particles.append(p);
+ }
+ layer.append(shade,rays,ring,flash,particles,poster,ticker);document.body.append(layer);
+ vfxImpactStage(clean.kind,still);vfxFanfare();
+ // Independent of CSS animation support, the readable game/results reappear
+ // within two seconds; only light, noninteractive particles may linger.
+ vfxFocusCleanup=setTimeout(()=>{for(const node of [shade,rays,ring,flash,poster,ticker])node.remove();},1900);
+ vfxCleanup=setTimeout(()=>{layer.remove();if(vfxLayer===layer)vfxLayer=null;},still?1950:3100);
+ vfxEnsureReplay();return true;
+}
+function vfxDuelDetail(){
+ if(typeof duel==='undefined'||!duel||duel.phase!=='done'||!duel.fighters?.length)return null;
+ const fromResult=typeof result!=='undefined'&&result?.source==='duel';
+ const side=fromResult?(result.person===duel.challenger?0:1):(duel.fighters[0].hp>=duel.fighters[1].hp?0:1);
+ return {id:'duel:'+(duel.id||((typeof result!=='undefined'&&result?.id)||'local')+':'+((typeof result!=='undefined'&&result?.duelCount)||0)),kind:'duel',name:side===0?duel.challenger:duel.defender,menu:side===0?duel.challengerMenu:duel.defenderMenu,reason:'결투 승리'};
+}
+function vfxResultDetail(){
+ if(typeof result==='undefined'||!result)return null;
+ if(result.source==='duel'){const d=vfxDuelDetail();return d||{id:'duel:'+result.id+':'+(result.duelCount||0),kind:'duel',name:result.person,menu:result.menu};}
+ return {id:'race:'+result.id,kind:'race',name:result.person,menu:result.menu};
+}
+function vfxEnsureReplay(){
+ const view=$('resultView');if(!view)return;
+ let replay=$('vfxReplayBtn');
+ if(!replay){replay=vfxMake('button','vfx-replay','✦ 승리 세리머니 다시 보기');replay.id='vfxReplayBtn';replay.type='button';replay.addEventListener('click',()=>{const detail=vfxResultDetail()||vfxLastDetail;if(detail)vfxCelebrate({...detail,force:true});});const actions=view.querySelector('.result-actions');if(actions)actions.append(replay);else view.append(replay);}
+ replay.hidden=!(typeof result!=='undefined'&&result);return replay;
+}
+deptRender=function(...args){
+ const value=vfxOriginalRaceRender(...args);
+ if(typeof deptRace!=='undefined'&&deptRace?.phase==='finished'){
+  const winner=deptRace.lanes.find(l=>l.id===deptRace.winnerId);
+  if(winner)vfxCelebrate({id:'race:'+deptRace.id,kind:'race',name:winner.name,menu:winner.menu});
+ }
+ return value;
+};
+actionRender=function(...args){const value=vfxOriginalCombatRender(...args);const detail=vfxDuelDetail();if(detail)vfxCelebrate(detail);return value;};
+renderResult=function(...args){const value=vfxOriginalResultRender(...args);vfxEnsureReplay();const detail=vfxResultDetail();if(detail)vfxCelebrate(detail);return value;};
 
 safeRead();showSetup();if(!canStore)$('storageNote').textContent='이번 게임은 정상 진행돼요. 이 환경에서는 기록 저장이 제한돼요.';
 })();
