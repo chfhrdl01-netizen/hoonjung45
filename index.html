@@ -345,13 +345,76 @@ body.online-pending .shell>.hero,body.online-pending .shell>.stepbar,body.online
 .delivery-order strong{font-size:12px;white-space:nowrap}.delivery-order-box>p{font-size:10px;font-weight:800;margin:12px 0 0;color:#756247}.delivery-empty{font-size:11px;color:#756247;line-height:1.5}
 .delivery-draw{text-align:center;padding:19px 15px 25px;background:#f8e9be;border:2px dashed #806b4f;border-radius:6px}
 .delivery-draw>span{display:block;font-size:12px;font-weight:800}.delivery-draw>strong{display:block;font-size:35px;letter-spacing:-.06em;margin:12px 0}.delivery-draw>small{font-size:11px;line-height:1.5;display:block}.delivery-draw .btn{font-size:12px;margin:14px auto 0;padding:11px 14px}
-.coffee-delivery[data-phase="spin"] .delivery-draw>strong{color:#bc5530;animation:deliveryWiggle .18s steps(2) infinite}
-@keyframes deliveryWiggle{50%{transform:rotate(-3deg) translateY(-2px)}}
+.coffee-delivery[data-phase="spin"] .delivery-draw>strong{color:#bc5530;font-size:clamp(20px,3vw,35px)}
+.delivery-bomb-art{position:relative;display:grid;place-items:center;width:132px;height:120px;margin:0 auto 12px;transform:rotate(-8deg);animation:deliveryCupBob 1.3s steps(2) infinite}
+.delivery-bomb-art i{font-style:normal;font-size:100px;line-height:1}.delivery-bomb-art b{position:absolute;left:29px;top:61px;font-size:20px;letter-spacing:1px;color:#30271f;background:#fff6e2;border-radius:4px;padding:1px 3px;transform:rotate(6deg)}
+.coffee-delivery[data-mine="true"] .delivery-draw{background:#ffe0b3;border-style:solid}.coffee-delivery[data-phase="done"] .delivery-bomb-art{animation:none;transform:rotate(17deg)}
+.delivery-targets{display:grid;grid-template-columns:repeat(auto-fit,minmax(105px,1fr));gap:8px;margin-top:18px}.delivery-target{min-height:75px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;border:2px solid #30271f;border-radius:8px;background:#fffaf0;padding:10px;cursor:pointer;box-shadow:2px 3px 0 #30271f33;color:#30271f;font:inherit}
+.delivery-target strong{font-size:13px;overflow-wrap:anywhere}.delivery-target small{font-size:10px}.delivery-target:not(:disabled):hover{background:#ffe181;transform:translateY(-2px)}.delivery-target:disabled{opacity:.55;cursor:default}.delivery-target.is-holder{opacity:1;background:#ffc482;border-style:dashed}.delivery-target:focus-visible{outline:3px solid #bc5530;outline-offset:3px}
+@keyframes deliveryCupBob{50%{transform:rotate(5deg) translateY(-4px)}}
 @media(max-width:700px){.delivery-body{grid-template-columns:1fr;gap:18px;padding:16px}.delivery-order-box{width:100%}.delivery-head{padding:16px}.delivery-head h3{font-size:23px}.delivery-head p{font-size:11px}.delivery-cup{font-size:38px}.delivery-choice-actions{display:grid;grid-template-columns:1fr 1fr}.delivery-choice-actions .btn{font-size:11px;padding:11px 8px}.delivery-draw>strong{font-size:30px}.delivery-chip{font-size:10px;padding:6px}.delivery-chip small{font-size:9px}.delivery-notice{font-size:11px}}
-@media(prefers-reduced-motion:reduce){.coffee-delivery[data-phase="spin"] .delivery-draw>strong{animation:none}}
+@media(prefers-reduced-motion:reduce){.delivery-bomb-art{animation:none}}
+/* The selection stays in the result page; only actual hot-potato play owns the viewport. */
+html:has(#coffeeDeliveryPanel:not([hidden])[data-phase="spin"]),body.delivery-game-active{overflow:hidden;overscroll-behavior:none}
+.coffee-delivery[data-phase="spin"]{position:fixed;inset:0;z-index:2147482000;width:100vw;max-width:none;height:100vh;height:100dvh;max-height:none;margin:0;border:0;border-radius:0;box-shadow:none;display:flex;flex-direction:column;background:radial-gradient(ellipse at 50% 35%,#fff9e8,#eed7ab);overflow:hidden;outline:0}
+.coffee-delivery[data-phase="spin"] .delivery-head{flex:none;padding:12px clamp(14px,3vw,40px);min-height:70px;background:#f0d5a3}
+.coffee-delivery[data-phase="spin"] .delivery-head h3{font-size:clamp(23px,3vw,34px);line-height:1.15;margin:5px 0 0}
+.coffee-delivery[data-phase="spin"] .delivery-head p,.coffee-delivery[data-phase="spin"] .delivery-head>.delivery-cup{display:none}
+.coffee-delivery[data-phase="spin"] .delivery-body{flex:1;min-height:0;grid-template-columns:minmax(0,1fr) 240px;align-items:stretch;gap:24px;width:100%;max-width:1440px;margin:0 auto;padding:20px clamp(14px,3vw,40px) 64px;overflow:hidden}
+.coffee-delivery[data-phase="spin"] .delivery-main{min-height:0;display:flex;flex-direction:column}
+.coffee-delivery[data-phase="spin"] .delivery-draw{flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:clamp(12px,2vw,24px);border:3px solid #806b4f;background:#faeac4;overflow:hidden;box-shadow:6px 7px 0 #30271f17}
+.coffee-delivery[data-phase="spin"] .delivery-draw>span{font-size:clamp(12px,1.6vw,17px);line-height:1.4}
+.coffee-delivery[data-phase="spin"] .delivery-draw>strong{max-width:100%;font-size:clamp(26px,3.3vw,46px);line-height:1.2;margin:8px 0;overflow-wrap:anywhere;color:#a84425}
+.coffee-delivery[data-phase="spin"] .delivery-draw>small{font-size:clamp(11px,1.25vw,14px);max-width:720px;flex:none}
+.coffee-delivery[data-phase="spin"] .delivery-bomb-art{width:150px;height:clamp(104px,18dvh,174px);flex:0 1 auto;min-height:88px;margin:0 auto 14px}
+.coffee-delivery[data-phase="spin"] .delivery-bomb-art i{font-size:125px}
+.coffee-delivery[data-phase="spin"] .delivery-bomb-art b{left:36px;top:54%;font-size:22px}
+.coffee-delivery[data-phase="spin"] .delivery-targets{width:100%;max-width:980px;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px;flex:0 1 auto;min-height:0;max-height:48dvh;overflow:auto;overscroll-behavior:contain;margin-top:22px;padding:4px;scrollbar-width:thin}
+.coffee-delivery[data-phase="spin"] .delivery-target{min-height:82px;padding:12px 9px;touch-action:manipulation}
+.coffee-delivery[data-phase="spin"] .delivery-target strong{font-size:clamp(13px,1.5vw,18px);line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.coffee-delivery[data-phase="spin"] .delivery-target small{font-size:11px;line-height:1.3}
+.coffee-delivery[data-phase="spin"] .delivery-notice{flex:none;min-height:19px;margin:10px 2px 0;font-size:12px;line-height:1.5}
+.coffee-delivery[data-phase="spin"] .delivery-roster{display:none}
+.coffee-delivery[data-phase="spin"] .delivery-order-box{max-height:calc(100dvh - 190px);overflow:auto;background:#fffae7}
+@media(max-width:1000px){.coffee-delivery[data-phase="spin"] .delivery-body{grid-template-columns:minmax(0,1fr)}.coffee-delivery[data-phase="spin"] .delivery-order-box{display:none}}
+@media(max-width:540px){
+ .coffee-delivery[data-phase="spin"] .delivery-head{min-height:62px;padding:9px 14px}
+ .coffee-delivery[data-phase="spin"] .delivery-head span{font-size:8px}
+ .coffee-delivery[data-phase="spin"] .delivery-head h3{font-size:24px}
+ .coffee-delivery[data-phase="spin"] .delivery-body{padding:12px 10px 61px;gap:0}
+ .coffee-delivery[data-phase="spin"] .delivery-draw{padding:12px 9px;border-width:2px}
+ .coffee-delivery[data-phase="spin"] .delivery-bomb-art{width:136px;height:clamp(88px,15dvh,130px);min-height:80px;margin-bottom:10px}
+ .coffee-delivery[data-phase="spin"] .delivery-bomb-art i{font-size:108px}
+ .coffee-delivery[data-phase="spin"] .delivery-bomb-art b{left:32px;font-size:19px}
+ .coffee-delivery[data-phase="spin"] .delivery-draw>strong{font-size:27px;margin:7px 0}
+ .coffee-delivery[data-phase="spin"] .delivery-draw>small{font-size:11px;line-height:1.5}
+ .coffee-delivery[data-phase="spin"] .delivery-targets{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:13px;max-height:52dvh;padding:3px}
+ .coffee-delivery[data-phase="spin"] .delivery-target{min-height:62px;padding:8px 6px;gap:4px}
+ .coffee-delivery[data-phase="spin"] .delivery-target strong{font-size:14px}
+ .coffee-delivery[data-phase="spin"] .delivery-target small{font-size:10px}
+ .coffee-delivery[data-phase="spin"] .delivery-notice{font-size:10px;margin-top:7px;line-height:1.4;min-height:14px}
+}
+@media(max-height:500px) and (min-width:541px){
+ .coffee-delivery[data-phase="spin"] .delivery-head{min-height:42px;padding:7px 14px}
+ .coffee-delivery[data-phase="spin"] .delivery-head span{display:none}
+ .coffee-delivery[data-phase="spin"] .delivery-head h3{font-size:21px;margin:0}
+ .coffee-delivery[data-phase="spin"] .delivery-body{padding:8px 12px 48px;gap:0;grid-template-columns:minmax(0,1fr)}
+ .coffee-delivery[data-phase="spin"] .delivery-order-box{display:none}
+ .coffee-delivery[data-phase="spin"] .delivery-draw{display:grid;grid-template-columns:160px minmax(0,1fr);grid-template-rows:auto auto auto minmax(0,1fr);column-gap:15px;row-gap:3px;padding:9px 12px;align-items:center}
+ .coffee-delivery[data-phase="spin"] .delivery-bomb-art{grid-column:1;grid-row:1/5;width:150px;height:150px;min-height:0;margin:0;justify-self:center}
+ .coffee-delivery[data-phase="spin"] .delivery-draw>span{grid-column:2;grid-row:1;font-size:12px}
+ .coffee-delivery[data-phase="spin"] .delivery-draw>strong{grid-column:2;grid-row:2;font-size:24px;margin:2px 0}
+ .coffee-delivery[data-phase="spin"] .delivery-draw>small{grid-column:2;grid-row:3;font-size:10px;line-height:1.4}
+ .coffee-delivery[data-phase="spin"] .delivery-targets{grid-column:2;grid-row:4;align-self:center;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin:5px 0 0;max-height:100%;padding:3px}
+ .coffee-delivery[data-phase="spin"] .delivery-target{min-height:48px;padding:5px 4px;gap:3px;border-radius:6px}
+ .coffee-delivery[data-phase="spin"] .delivery-target strong{font-size:12px;line-height:1.2}
+ .coffee-delivery[data-phase="spin"] .delivery-target small{font-size:9px}
+ .coffee-delivery[data-phase="spin"] .delivery-notice{font-size:10px;line-height:1.3;margin:5px 0 0;min-height:13px}
+}
 /* END_COFFEE_DELIVERY_STYLES */
+
 /* LUNCH_FINALE_CSS_V2 */
-#lunchFinaleDialog{position:fixed;inset:0;width:min(1180px,calc(100vw - 24px));max-width:min(1180px,calc(100vw - 24px));height:min(810px,94dvh);max-height:94dvh;margin:auto;padding:0;border:2px solid #17131b;border-radius:9px;overflow:hidden;background:#17141b;color:#fff0d0;box-shadow:0 25px 100px #000c,7px 7px 0 #0b090d;isolation:isolate}
+#lunchFinaleDialog{position:fixed;inset:0;width:100vw;max-width:100vw;height:100dvh;max-height:100dvh;margin:0;padding:0;border:0;border-radius:0;overflow:hidden;background:#17141b;color:#fff0d0;box-shadow:none;isolation:isolate}
 #lunchFinaleDialog[open]{display:flex;flex-direction:column}
 #lunchFinaleDialog[hidden],#lunchFinaleDialog [hidden]{display:none!important}
 #lunchFinaleDialog::backdrop{background:#09070be8;backdrop-filter:blur(9px)}
@@ -457,7 +520,7 @@ body.online-pending .shell>.hero,body.online-pending .shell>.stepbar,body.online
 #lunchFinaleDialog .film-credits-title h2{font-size:35px;margin:11px 0;color:#dac49e}
 #lunchFinaleDialog .film-credit-window{position:absolute;left:10%;right:10%;top:25%;bottom:9%;overflow:hidden;mask-image:linear-gradient(transparent,#000 9%,#000 90%,transparent)}
 #lunchFinaleDialog .film-credit-roll{text-align:center;padding:0 0 20px}
-#lunchFinaleDialog .film-credits.is-current .film-credit-roll{animation:filmCredits 13s linear both}
+#lunchFinaleDialog .film-credits.is-current .film-credit-roll{animation:filmCredits var(--film-credit-duration,20s) linear both}
 #lunchFinaleDialog .film-credit-row{margin-bottom:26px}
 #lunchFinaleDialog .film-credit-row span{display:block;font-size:9px;letter-spacing:.15em;color:#89765e;margin-bottom:8px}
 #lunchFinaleDialog .film-credit-row b{font-size:24px;line-height:1.4;font-weight:750;letter-spacing:-.03em;color:#e9d4af;overflow-wrap:anywhere}
@@ -497,32 +560,88 @@ body.online-pending .shell>.hero,body.online-pending .shell>.stepbar,body.online
 @keyframes filmWaddle{from{rotate:-6deg;translate:0 0;scale:1.02 .98}to{rotate:6deg;translate:0 -9px;scale:.98 1.02}}
 @keyframes filmStumble{0%,32%,100%{rotate:-4deg;translate:0 0}45%{rotate:18deg;translate:4px -2px}55%,61%{rotate:58deg;translate:8px 17px}73%{rotate:-15deg;translate:-3px -10px}81%{rotate:5deg;translate:0 0}}
 @keyframes filmConfetti{from{translate:0 -100%;rotate:-5deg}to{translate:0 100%;rotate:6deg}}
-@keyframes filmCredits{from{transform:translateY(300px)}to{transform:translateY(calc(-100% + 100px))}}
+@keyframes filmCredits{from{transform:translateY(var(--film-credit-start,300px))}to{transform:translateY(var(--film-credit-end,calc(-100% + 100px)))}}
 @media(max-width:850px){#lunchFinaleDialog .film-receipt{right:6%;width:52%;padding:23px 17px;min-height:230px}#lunchFinaleDialog .film-receipt-menu>span{font-size:47px}#lunchFinaleDialog .film-champion{left:0;width:42%}#lunchFinaleDialog .film-approved{width:73px;height:73px;font-size:13px}#lunchFinaleDialog .film-coffee-cart{left:30%;scale:.9}#lunchFinaleDialog .film-parade-banner{font-size:12px}#lunchFinaleDialog .film-credit-row b{font-size:21px}#lunchFinaleDialog .film-credit-extra b{font-size:15px}}
 @media(max-width:600px){#lunchFinaleDialog{width:calc(100vw - 12px);max-width:calc(100vw - 12px);height:calc(100dvh - 14px);max-height:calc(100dvh - 14px);border-radius:6px}#lunchFinaleDialog .film-top{flex-basis:40px;padding:8px 10px}#lunchFinaleDialog .film-top>span{font-size:7px}#lunchFinaleDialog .film-top i{font-size:5px;display:block;margin:3px 0 0}#lunchFinaleDialog .film-top button{font-size:8px;padding:6px}#lunchFinaleDialog .film-bottom{flex-basis:31px;padding:7px 10px;gap:9px}#lunchFinaleDialog .film-bottom>span{font-size:5px;letter-spacing:.02em}#lunchFinaleDialog .film-bottom>span:first-child{width:77px;font-size:6px}#lunchFinaleDialog .film-letterbox-top{top:39px}#lunchFinaleDialog .film-letterbox-bottom{bottom:30px}#lunchFinaleDialog .film-scene{padding:22px 17px}#lunchFinaleDialog .film-eyebrow{font-size:6px;letter-spacing:.12em}#lunchFinaleDialog .film-scene h2{font-size:42px;line-height:1.18;margin:18px 0}#lunchFinaleDialog .film-intro-seal{width:60px;height:60px;font-size:17px;margin-top:28px}#lunchFinaleDialog .film-intro>p{font-size:10px}#lunchFinaleDialog .film-intro-credit{font-size:7px;margin-top:44px}#lunchFinaleDialog .film-intro-credit>b{font-size:13px}#lunchFinaleDialog .film-lunch-crown{top:8%;font-size:8px;letter-spacing:.15em}#lunchFinaleDialog .film-champion{left:14%;top:15%;width:70%;height:41%;opacity:.95}#lunchFinaleDialog .film-receipt{left:8%;right:8%;top:49%;width:84%;min-height:170px;padding:17px 17px 14px;rotate:-3deg}#lunchFinaleDialog .film-receipt-kicker{font-size:8px;padding-bottom:9px;margin-bottom:13px}#lunchFinaleDialog .film-receipt small{font-size:10px}#lunchFinaleDialog .film-receipt-menu{gap:8px;margin:11px 0}#lunchFinaleDialog .film-receipt-menu>span{font-size:39px}#lunchFinaleDialog .film-receipt-menu h2{font-size:35px;line-height:1.1;margin:0}#lunchFinaleDialog .film-receipt>p{font-size:10px;margin:0 13px 0 0}#lunchFinaleDialog .film-approved{width:60px;height:60px;font-size:11px;right:-8px;bottom:-17px;border-width:3px}#lunchFinaleDialog .film-lunch .film-lunch-caption{font-size:9px;left:10%;right:10%;bottom:8%;line-height:1.7}#lunchFinaleDialog .film-burst{font-size:58px}#lunchFinaleDialog .film-burst-a{left:4%;top:17%}#lunchFinaleDialog .film-burst-b{right:4%;bottom:19%;font-size:46px}#lunchFinaleDialog .film-sparkles{font-size:17px;bottom:3%;letter-spacing:.3em}#lunchFinaleDialog .film-coffee{padding-top:15%}#lunchFinaleDialog .film-coffee h2{font-size:28px;line-height:1.2;margin:20px 0 8px}#lunchFinaleDialog .film-coffee>strong{font-size:49px;line-height:1.2;max-width:90%;overflow-wrap:anywhere}#lunchFinaleDialog .film-coffee>p{font-size:10px;max-width:87%;margin-top:14px}#lunchFinaleDialog .film-coffee-cart{left:calc(50% - 145px);bottom:21%;width:290px;height:210px;scale:.92}#lunchFinaleDialog .film-cart-body{height:93px}#lunchFinaleDialog .film-cart-body>span{font-size:30px}#lunchFinaleDialog .film-cart-body>b{font-size:15px}#lunchFinaleDialog .film-courier{width:160px;height:145px;top:13px;left:52px}#lunchFinaleDialog .film-coffee-road{bottom:20%;height:25px}#lunchFinaleDialog .film-cart-puff{font-size:18px;left:-60px;bottom:5px}#lunchFinaleDialog .film-order-ribbon{font-size:8px;bottom:10%;left:9%;right:9%;white-space:normal;max-height:58px}#lunchFinaleDialog .film-coffee-sun{width:95px;height:95px;top:26%;right:8%}#lunchFinaleDialog .film-parade{padding-top:13%}#lunchFinaleDialog .film-parade h2{font-size:33px;line-height:1.2;margin:22px 0 11px}#lunchFinaleDialog .film-parade>p{font-size:10px}#lunchFinaleDialog .film-parade-banner{top:43%;left:5%;right:5%;font-size:9px;line-height:1.3;padding:12px 7px;letter-spacing:0}#lunchFinaleDialog .film-parade-track{height:210px;bottom:14%}#lunchFinaleDialog .film-parade-march{gap:18px}#lunchFinaleDialog .film-mascot{width:91px;flex-basis:91px}#lunchFinaleDialog .film-mascot-sprite{width:88px;height:84px}#lunchFinaleDialog .film-mascot-sign{font-size:9px;padding:5px 6px;max-width:115px;min-width:54px}#lunchFinaleDialog .film-mascot-name{font-size:8px;max-width:90px}#lunchFinaleDialog .film-parade-small{bottom:8%;font-size:6px}#lunchFinaleDialog .film-parade-confetti{font-size:22px;letter-spacing:.6em}#lunchFinaleDialog .film-credits-title{top:9%}#lunchFinaleDialog .film-credits-title>span{font-size:6px;letter-spacing:.08em}#lunchFinaleDialog .film-credits-title h2{font-size:29px;margin:15px 0}#lunchFinaleDialog .film-credit-window{left:10%;right:10%;top:25%;bottom:10%}#lunchFinaleDialog .film-credit-row{margin-bottom:24px}#lunchFinaleDialog .film-credit-row span{font-size:8px;margin-bottom:7px;letter-spacing:.1em}#lunchFinaleDialog .film-credit-row b{font-size:19px;line-height:1.4}#lunchFinaleDialog .film-credit-extra b{font-size:14px}#lunchFinaleDialog .film-credit-last{font-size:17px;line-height:1.5}#lunchFinaleDialog .film-outro{padding-bottom:150px}#lunchFinaleDialog .film-outro h2{font-size:33px;line-height:1.25;margin:23px 0}#lunchFinaleDialog .film-outro #lunchFinaleThanks{font-size:16px;line-height:1.7}#lunchFinaleDialog .film-outro .film-outro-note{font-size:10px;line-height:1.9;margin-top:25px}#lunchFinaleDialog .film-outro-mascots{bottom:54px;left:7%;width:145px;height:90px}#lunchFinaleDialog .film-outro-mascots svg{width:53px;height:60px}#lunchFinaleDialog .film-end-title{right:8%;bottom:77px;font-size:15px}#lunchFinaleDialog .film-end-title>small{font-size:4px;letter-spacing:.04em;margin-top:6px}#lunchFinaleDialog .film-outro button{bottom:25px;font-size:7px}#lunchFinaleDialog .film-spotlight{width:100%;top:-10%;height:90%}}
 @media(prefers-reduced-motion:reduce){#lunchFinaleDialog *,#lunchFinaleDialog *::before,#lunchFinaleDialog *::after{animation:none!important;transition:none!important}#lunchFinaleDialog .film-scene.is-current{animation:filmReducedFade .25s both!important}#lunchFinaleDialog .film-parade-march{left:4%;right:4%;width:auto;min-width:0;flex-wrap:wrap;justify-content:center;gap:7px;bottom:8px}#lunchFinaleDialog .film-mascot{width:75px;flex-basis:75px}#lunchFinaleDialog .film-mascot-sprite{width:67px;height:67px}#lunchFinaleDialog .film-mascot-sign{max-width:82px;min-width:0;font-size:7px}#lunchFinaleDialog .film-credit-window{overflow:auto;mask-image:none}#lunchFinaleDialog .film-credit-row{margin-bottom:15px}#lunchFinaleDialog .film-credit-row b{font-size:17px}#lunchFinaleDialog .film-credit-extra b{font-size:13px}#lunchFinaleDialog .film-intro-seal,#lunchFinaleDialog .film-receipt,#lunchFinaleDialog .film-coffee-cart,#lunchFinaleDialog .film-champion,#lunchFinaleDialog .film-outro h2,#lunchFinaleDialog .film-outro #lunchFinaleThanks,#lunchFinaleDialog .film-outro .film-outro-note,#lunchFinaleDialog .film-end-title{opacity:1!important;translate:none!important;scale:none!important}#lunchFinaleDialog .film-receipt{rotate:-2deg}}
 @keyframes filmReducedFade{from{opacity:0}to{opacity:1}}
+/* Keep the film on the main stage on phones as well. */
+@media(max-width:600px){#lunchFinaleDialog{width:100vw;max-width:100vw;height:100dvh;max-height:100dvh;border-radius:0}}
+/* Short landscape screens need composition, rather than a clipped portrait stage. */
+@media(max-height:540px) and (min-width:541px){
+ #lunchFinaleDialog .film-top{flex-basis:32px;padding:5px 12px}
+ #lunchFinaleDialog .film-bottom{flex-basis:24px;padding:5px 12px}
+ #lunchFinaleDialog .film-letterbox-top{top:31px}
+ #lunchFinaleDialog .film-letterbox-bottom{bottom:23px}
+ #lunchFinaleDialog .film-scene{padding:16px 22px}
+ #lunchFinaleDialog .film-eyebrow{font-size:7px}
+ #lunchFinaleDialog .film-intro-seal{position:absolute;left:12%;top:calc(50% - 34px);margin:0}
+ #lunchFinaleDialog .film-intro h2{font-size:clamp(29px,6dvh,42px);margin:13px 0}
+ #lunchFinaleDialog .film-intro-credit{margin-top:12px}
+ #lunchFinaleDialog .film-lunch-crown{top:6%;font-size:9px}
+ #lunchFinaleDialog .film-champion{left:4%;top:15%;width:37%;height:70%}
+ #lunchFinaleDialog .film-receipt{left:auto;right:8%;top:22%;width:46%;min-height:0;padding:12px 16px}
+ #lunchFinaleDialog .film-receipt-kicker{font-size:8px;padding-bottom:7px;margin-bottom:9px}
+ #lunchFinaleDialog .film-receipt small,#lunchFinaleDialog .film-receipt>p{font-size:10px}
+ #lunchFinaleDialog .film-receipt-menu{margin:5px 0}
+ #lunchFinaleDialog .film-receipt-menu>span{font-size:34px}
+ #lunchFinaleDialog .film-receipt-menu h2{font-size:clamp(23px,6dvh,38px)}
+ #lunchFinaleDialog .film-approved{width:52px;height:52px;font-size:10px;right:-15px;bottom:-18px}
+ #lunchFinaleDialog .film-lunch .film-lunch-caption{bottom:5%;font-size:9px}
+ #lunchFinaleDialog .film-coffee{align-items:flex-start;justify-content:center;padding:20px 45% 25px 7%;text-align:left}
+ #lunchFinaleDialog .film-coffee h2{font-size:24px;margin:14px 0 6px}
+ #lunchFinaleDialog .film-coffee>strong{font-size:clamp(34px,9dvh,54px);overflow-wrap:anywhere;max-width:100%}
+ #lunchFinaleDialog .film-coffee>p{font-size:9px;max-width:100%;margin-top:10px}
+ #lunchFinaleDialog .film-coffee-cart{left:auto;right:5%;bottom:22%;transform:scale(.7);transform-origin:right bottom}
+ #lunchFinaleDialog .film-coffee-road{bottom:20%}
+ #lunchFinaleDialog .film-order-ribbon{left:7%;right:7%;bottom:5%;font-size:8px;max-height:35px}
+ #lunchFinaleDialog .film-parade{padding-top:16px}
+ #lunchFinaleDialog .film-parade h2{font-size:27px;line-height:1.1;margin:8px 0}
+ #lunchFinaleDialog .film-parade>p{font-size:9px}
+ #lunchFinaleDialog .film-parade-banner{top:44%;padding:7px;font-size:9px;letter-spacing:.04em}
+ #lunchFinaleDialog .film-parade-track{height:125px;bottom:8%}
+ #lunchFinaleDialog .film-mascot{width:84px;flex-basis:84px}
+ #lunchFinaleDialog .film-mascot-sprite{width:73px;height:65px}
+ #lunchFinaleDialog .film-mascot-sign{font-size:8px;padding:4px 5px;max-width:100px;min-width:40px}
+ #lunchFinaleDialog .film-mascot-name{font-size:8px}
+ #lunchFinaleDialog .film-parade-small{bottom:2%;font-size:6px}
+ #lunchFinaleDialog .film-credits-title{top:5%}
+ #lunchFinaleDialog .film-credits-title h2{font-size:24px;margin:7px 0}
+ #lunchFinaleDialog .film-credit-window{top:27%;bottom:6%}
+ #lunchFinaleDialog .film-credit-row{margin-bottom:18px}
+ #lunchFinaleDialog .film-credit-row b{font-size:19px}
+ #lunchFinaleDialog .film-outro{padding:16px 22px 50px}
+ #lunchFinaleDialog .film-outro h2{font-size:28px;margin:10px 0}
+ #lunchFinaleDialog .film-outro #lunchFinaleThanks{font-size:14px;line-height:1.5}
+ #lunchFinaleDialog .film-outro .film-outro-note{font-size:9px;line-height:1.6;margin-top:10px}
+ #lunchFinaleDialog .film-outro-mascots{left:5%;bottom:14px;width:150px;height:75px}
+ #lunchFinaleDialog .film-outro-mascots svg{width:53px;height:60px}
+ #lunchFinaleDialog .film-end-title{right:5%;bottom:32px;font-size:15px}
+ #lunchFinaleDialog .film-end-title>small{font-size:5px}
+ #lunchFinaleDialog .film-outro button{bottom:8px}
+}
 /* END_LUNCH_FINALE_CSS_V2 */
 
 
 /* FOCUSED_GAME_STAGE */
-#arcadeDialog[data-purpose="lunch"]{position:fixed;inset:0;width:100vw;max-width:100vw;height:100dvh;max-height:100dvh;margin:0;padding:0;border:0;border-radius:0;box-shadow:none;overflow:hidden;background:#eee7cc;display:flex;flex-direction:column}
-#arcadeDialog[data-purpose="lunch"]::backdrop{background:#eee7cc;backdrop-filter:none}
-#arcadeDialog[data-purpose="lunch"] .five-head{padding:12px 24px 10px;min-height:64px;flex:none;background:#fff6db}
-#arcadeDialog[data-purpose="lunch"] .five-head h2{font-size:26px;margin-top:5px}
-#arcadeDialog[data-purpose="lunch"] #arcadeSession{flex:1;min-height:0;display:flex;flex-direction:column}
-#arcadeDialog[data-purpose="lunch"] .five-round-strip{padding-top:9px;flex:none}
-#arcadeDialog[data-purpose="lunch"] .five-help{margin:7px 14px;flex:none}
-#arcadeDialog[data-purpose="lunch"] .five-roster{padding-bottom:7px;flex:none}
-#arcadeDialog[data-purpose="lunch"] #arcadePlay{flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0}
-#arcadeDialog[data-purpose="lunch"] .five-board{width:min(1100px,calc((100dvh - 302px)*1.52174));max-width:calc(100vw - 50px);flex:none;border:3px solid #30271f;box-shadow:5px 5px 0 #30271f22}
-#arcadeDialog[data-purpose="lunch"] .five-status{margin:7px 12px 6px;flex:none}
-#arcadeDialog[data-purpose="lunch"] .five-controls{flex:none;padding-bottom:9px}
-#arcadeDialog[data-purpose="lunch"] .five-dpad{grid-template-rows:27px 27px 27px;grid-template-columns:35px 35px 35px}
-#arcadeDialog[data-purpose="lunch"] .five-action{height:75px}
-#arcadeDialog[data-purpose="lunch"] .five-history{max-height:36px;flex:none;white-space:nowrap;overflow:auto;padding:5px 20px}
-#arcadeDialog[data-purpose="lunch"] .five-bottom{flex:none;padding:7px 18px;background:#fff6db}
-#arcadeDialog[data-purpose="lunch"] .five-bottom>span{font-size:10px}
+#arcadeDialog[open]:is([data-purpose="lunch"],[data-playing="true"]){position:fixed;inset:0;width:100vw;max-width:100vw;height:100dvh;max-height:100dvh;margin:0;padding:0;border:0;border-radius:0;box-shadow:none;overflow:hidden;background:#eee7cc;display:flex;flex-direction:column}
+#arcadeDialog:not([open]){display:none!important}
+#arcadeDialog:is([data-purpose="lunch"],[data-playing="true"])::backdrop{background:#eee7cc;backdrop-filter:none}
+#arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-head{padding:12px 24px 10px;min-height:64px;flex:none;background:#fff6db}
+#arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-head h2{font-size:26px;margin-top:5px}
+#arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) #arcadeSession{flex:1;min-height:0;display:flex;flex-direction:column}
+#arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-round-strip{padding-top:9px;flex:none}
+#arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-help{margin:7px 14px;flex:none}
+#arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-roster{padding-bottom:7px;flex:none}
+#arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) #arcadePlay{flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0}
+#arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-board{width:min(1100px,calc((100dvh - 302px)*1.52174));max-width:calc(100vw - 50px);flex:none;border:3px solid #30271f;box-shadow:5px 5px 0 #30271f22}
+#arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-status{margin:7px 12px 6px;flex:none}
+#arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-controls{flex:none;padding-bottom:9px}
+#arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-dpad{grid-template-rows:27px 27px 27px;grid-template-columns:35px 35px 35px}
+#arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-action{height:75px}
+#arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-history{max-height:36px;flex:none;white-space:nowrap;overflow:auto;padding:5px 20px}
+#arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-bottom{flex:none;padding:7px 18px;background:#fff6db}
+#arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-bottom>span{font-size:10px}
 body.in-play:has(#duelView:not([hidden])) .shell{width:100%;max-width:none;padding:0 18px}
 body.in-play:has(#duelView:not([hidden])) .topbar,body.in-play:has(#duelView:not([hidden])) #roomBanner{display:none}
 body.in-play:has(#duelView:not([hidden])) #game{margin:0;border-radius:0;box-shadow:none}
@@ -530,15 +649,62 @@ body.in-play:has(#duelView:not([hidden])) .battle-stage{height:clamp(300px,calc(
 body.in-play:has(#duelView:not([hidden])) .battle-intro{padding-top:9px}
 body.in-play:has(#duelView:not([hidden])) .battle-intro h2{font-size:25px}
 body.in-play:has(#duelView:not([hidden])) .board-head{padding-top:10px;padding-bottom:10px}
-@media(min-width:1450px){#arcadeDialog[data-purpose="lunch"] .five-roster{position:absolute;left:24px;top:145px;width:190px;display:flex;flex-direction:column;align-items:stretch;gap:7px;z-index:2}#arcadeDialog[data-purpose="lunch"] .five-player-chip{padding:9px;flex-direction:column;align-items:flex-start;gap:4px}#arcadeDialog[data-purpose="lunch"] .five-player-chip b{font-size:12px;max-width:165px}#arcadeDialog[data-purpose="lunch"] .five-player-chip small{font-size:11px}#arcadeDialog[data-purpose="lunch"] .five-board{width:min(1150px,calc((100dvh - 320px)*1.52174));max-width:calc(100vw - 450px)}}
-@media(max-width:540px){#arcadeDialog[data-purpose="lunch"] .five-head{padding:10px 12px;min-height:56px}#arcadeDialog[data-purpose="lunch"] .five-head h2{font-size:22px}#arcadeDialog[data-purpose="lunch"] .five-head span{font-size:8px}#arcadeDialog[data-purpose="lunch"] .five-board{width:calc(100vw - 16px);max-width:none;border-width:2px}#arcadeDialog[data-purpose="lunch"] #arcadePlay{justify-content:center}#arcadeDialog[data-purpose="lunch"] .five-controls{padding-top:9px;gap:13px}#arcadeDialog[data-purpose="lunch"] .five-dpad{grid-template-rows:35px 35px 35px;grid-template-columns:39px 39px 39px}#arcadeDialog[data-purpose="lunch"] .five-action{height:87px;min-width:105px}#arcadeDialog[data-purpose="lunch"] .five-status{font-size:11px}#arcadeDialog[data-purpose="lunch"] .five-bottom{padding:9px 10px}#arcadeDialog[data-purpose="lunch"] .five-bottom>span{font-size:9px}#arcadeDialog[data-purpose="lunch"] .five-history{font-size:9px;max-height:30px}body.in-play:has(#duelView:not([hidden])) .shell{padding:0}body.in-play:has(#duelView:not([hidden])) .battle-stage{height:clamp(270px,40dvh,420px)}body.in-play:has(#duelView:not([hidden])) .battle-intro h2{font-size:22px}}
+@media(min-width:1450px){#arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-roster{position:absolute;left:24px;top:145px;width:190px;display:flex;flex-direction:column;align-items:stretch;gap:7px;z-index:2}#arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-player-chip{padding:9px;flex-direction:column;align-items:flex-start;gap:4px}#arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-player-chip b{font-size:12px;max-width:165px}#arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-player-chip small{font-size:11px}#arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-board{width:min(1150px,calc((100dvh - 320px)*1.52174));max-width:calc(100vw - 450px)}}
+@media(max-width:540px){#arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-head{padding:10px 12px;min-height:56px}#arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-head h2{font-size:22px}#arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-head span{font-size:8px}#arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-board{width:calc(100vw - 16px);max-width:none;border-width:2px}#arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) #arcadePlay{justify-content:center}#arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-controls{padding-top:9px;gap:13px}#arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-dpad{grid-template-rows:35px 35px 35px;grid-template-columns:39px 39px 39px}#arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-action{height:87px;min-width:105px}#arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-status{font-size:11px}#arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-bottom{padding:9px 10px}#arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-bottom>span{font-size:9px}#arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-history{font-size:9px;max-height:30px}body.in-play:has(#duelView:not([hidden])) .shell{padding:0}body.in-play:has(#duelView:not([hidden])) .battle-stage{height:clamp(270px,40dvh,420px)}body.in-play:has(#duelView:not([hidden])) .battle-intro h2{font-size:22px}}
 /* END_FOCUSED_GAME_STAGE */
+
+/* In landscape, keep controls beside the arena so the arena keeps its height. */
+@media(max-height:600px) and (min-width:541px){
+ #arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-head{min-height:40px;padding:5px 12px}
+ #arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-head h2{font-size:19px;margin:2px 0 0}
+ #arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-head span{font-size:7px}
+ #arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) #arcadeSession{position:relative;overflow:hidden}
+ #arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-round-strip{padding:4px 12px;font-size:9px}
+ #arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-help{margin:3px 12px;font-size:10px;line-height:1.4}
+ #arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-roster{display:flex;flex:0 0 28px;min-height:28px;max-height:28px;flex-wrap:nowrap;align-items:flex-start;justify-content:flex-start;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;max-width:100%;padding:2px 12px 4px;gap:5px;position:relative;width:auto;z-index:2;background:#eee7cc}
+ #arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-player-chip{flex:0 0 auto;padding:3px 6px;gap:5px;flex-direction:row;align-items:center}
+ #arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-player-chip b{font-size:9px;max-width:125px}
+ #arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-player-chip small{font-size:8px}
+ #arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) #arcadePlay{display:grid;container-type:size;grid-template-columns:minmax(0,1fr) 150px;grid-template-rows:minmax(0,1fr) 23px;column-gap:8px;padding:0 12px;align-items:center;justify-content:stretch}
+ #arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-board{grid-column:1;grid-row:1;width:min(100%,calc((100dvh - 190px)*1.52174));width:min(100%,calc((100cqh - 23px)*1.52174));max-width:100%;max-height:calc(100cqh - 23px);justify-self:center;border-width:2px}
+ #arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-status{grid-column:1;grid-row:2;font-size:9px;line-height:1.2;margin:2px 0;text-align:center}
+ #arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-controls{grid-column:2;grid-row:1 / 3;align-self:stretch;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;padding:2px 0}
+ #arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .ten-choice-controls{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));width:100%;max-width:150px;min-width:0;gap:4px}
+ #arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .ten-choice-controls button{box-sizing:border-box;min-width:0;max-width:100%;width:100%;height:64px;font-size:11px;padding:5px 2px;gap:5px;overflow-wrap:anywhere}
+ #arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .ten-choice-controls kbd{font-size:8px;max-width:100%}
+ #arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-dpad{grid-template-rows:25px 25px 25px;grid-template-columns:31px 31px 31px}
+ #arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-dpad button{font-size:13px;padding:0}
+ #arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-dpad kbd{display:none}
+ #arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-action{height:48px;min-height:48px;min-width:105px;padding:5px 9px}
+ #arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-action strong{font-size:18px}
+ #arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-own-status{font-size:8px;max-width:145px}
+ #arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-history{max-height:19px;font-size:8px;padding:2px 12px}
+ #arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-bottom{min-height:26px;padding:3px 130px 3px 12px}
+ #arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-bottom>span{font-size:8px}
+ #arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-bottom button{font-size:9px;padding:4px 7px}
+ body.in-play:has(#duelView:not([hidden])) .shell{padding:0}
+ body.in-play:has(#duelView:not([hidden])) .board-head,body.in-play:has(#duelView:not([hidden])) .battle-intro{display:none}
+ body.in-play:has(#duelView:not([hidden])) .battle-stage{height:calc(100dvh - 155px);min-height:180px}
+}
+@media(max-width:540px) and (max-height:760px){
+ #arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-head{min-height:47px;padding:6px 10px}
+ #arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-round-strip{padding:5px 10px;font-size:9px}
+ #arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-help{margin:4px 10px;font-size:10px}
+ #arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-roster{flex-wrap:nowrap;justify-content:flex-start;overflow-x:auto;padding:2px 10px 5px}
+ #arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-player-chip{flex:0 0 auto;padding:5px 7px}
+ #arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-board{width:min(calc(100vw - 16px),calc((100dvh - 290px)*1.52174));max-width:calc(100vw - 16px)}
+ #arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-status{font-size:10px;margin:5px 8px}
+ #arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-controls{padding:3px 0 5px;gap:10px}
+ #arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-dpad{grid-template-rows:27px 27px 27px;grid-template-columns:35px 35px 35px}
+ #arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-action{height:72px;min-height:72px}
+ #arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-history{max-height:21px;padding:3px 10px}
+}
 
 #arcadeDialog:not([open]){display:none!important}
 
-html:has(#arcadeDialog[open][data-purpose="lunch"]),body:has(#arcadeDialog[open][data-purpose="lunch"]),html:has(#lunchFinaleDialog[open]),body:has(#lunchFinaleDialog[open]){overflow:hidden}
-#arcadeDialog[data-purpose="lunch"] .five-bottom{padding-right:130px}
-@media(max-width:540px){#arcadeDialog[data-purpose="lunch"] .five-bottom{padding-right:118px}#arcadeDialog[data-purpose="lunch"] .five-bottom>span{display:none}#arcadeDialog[data-purpose="lunch"] .five-bottom .tiny-btn{font-size:10px;padding:7px 9px}}
+html:has(#arcadeDialog[open]:is([data-purpose="lunch"],[data-playing="true"])),body:has(#arcadeDialog[open]:is([data-purpose="lunch"],[data-playing="true"])),html:has(#lunchFinaleDialog[open]),body:has(#lunchFinaleDialog[open]){overflow:hidden}
+#arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-bottom{padding-right:130px}
+@media(max-width:540px){#arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-bottom{padding-right:118px}#arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-bottom>span{display:none}#arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-bottom .tiny-btn{font-size:10px;padding:7px 9px}}
 </style></head>
 <body>
 <div class="shell">
@@ -552,7 +718,7 @@ html:has(#arcadeDialog[open][data-purpose="lunch"]),body:has(#arcadeDialog[open]
 </section>
 <section id="roomBanner" class="room-banner" aria-label="참가 중인 점심방" hidden><div class="room-banner-top"><div><span class="room-kicker">함께 주문하는 점심방</span><strong class="room-banner-code" id="roomCodeText"></strong></div><div class="room-banner-actions"><button class="tiny-btn" id="roomCopyBtn" type="button">초대 링크 복사</button><button class="tiny-btn room-leave" id="roomLeaveBtn" type="button">주문 참여 취소하고 나가기</button></div></div><div class="room-roster" id="roomRoster"></div><div class="room-banner-bottom"><span id="roomMemberCount"></span><span id="roomHostNotice">방장은 이 화면을 열어두세요.</span></div><input class="text-input room-copy-fallback" id="roomCopyFallback" readonly aria-label="복사할 점심방 초대 링크" hidden><div class="room-banner-notice" id="roomBannerNotice" role="status" aria-live="polite"></div></section>
 <section class="hero">
-<div><div class="eyebrow">DAEGU UNIVERSITY · LUNCH CLUB</div><h1>오늘 점심,<br><em>결재 올립니다.</em></h1><p>오늘 점심 주문에 동의한 사람끼리 모이는 온라인 점심 클럽.<br>메뉴 하나를 걸고 랜덤 토너먼트! 이의신청은 각자 1번의 1대1 승부.<br>모두 승낙하면 커피 메뉴 선택과 배달 담당 추첨까지!</p></div>
+<div><div class="eyebrow">DAEGU UNIVERSITY · LUNCH CLUB</div><h1>오늘 점심,<br><em>결재 올립니다.</em></h1><p>오늘 점심 주문에 동의한 사람끼리 모이는 온라인 점심 클럽.<br>메뉴 하나를 걸고 랜덤 토너먼트! 이의신청은 각자 1번의 1대1 승부.<br>모두 승낙하면 음료 선택 → 커피 폭탄으로 배달 담당 결정까지!</p></div>
 <aside class="dossier" aria-label="오늘 점심 주문 참여 현황"><div class="dossier-title">오늘의 공동 점심 품의서</div><div class="dossier-meta"><span>안건 &nbsp; 오늘 메뉴 결정</span><span>주문 동의 · 최대 8명</span></div><div class="signature-row"><div>참여 방식<strong>각자 접속</strong></div><div>내가 걸 메뉴<strong>딱 1개</strong></div><div>출발 조건<strong>모두 READY</strong></div></div><div class="dossier-foot"><span>참여 동의 후 함께 결정</span><b id="dossierStatus">점심방에 참여해주세요</b></div></aside>
 </section>
 <nav class="stepbar" aria-label="게임 진행"><span class="step active" id="step1"><span class="num">1</span>후보 제출</span><span class="step-arrow" aria-hidden="true">→</span><span class="step" id="step2"><span class="num">2</span>랜덤 토너먼트</span><span class="step-arrow" aria-hidden="true">→</span><span class="step" id="step3"><span class="num">3</span>승낙 · 커피</span></nav>
@@ -598,7 +764,7 @@ html:has(#arcadeDialog[open][data-purpose="lunch"]),body:has(#arcadeDialog[open]
 <div class="help-line"><b>3. 모두 준비되면 랜덤 게임 토너먼트</b>최소 2명이 메뉴를 고르고 모두 준비 완료를 누르면 자동 시작! 매 라운드 다른 게임이 랜덤으로 나와요. 최하위 한 명씩 탈락하며, 최하위 동점자는 다른 게임으로 재경기해요.</div>
 <div class="help-line"><b>4. 우승 메뉴 확인 · 이의신청은 각자 딱 한 번</b>우승 메뉴를 승낙하거나, 자신이 고른 메뉴로 1대1 이의신청을 할 수 있어요. 한 번 사용한 기회는 우승자가 바뀌어도 돌아오지 않아요. 토너먼트 우승자는 방어전에서 체력 150과 거인 보너스를 받아요. 메뉴가 바뀌면 모두 새 메뉴에 다시 승낙해요.</div>
 <div class="help-line"><b>방 연결과 참여 취소</b>방장은 이 브라우저를 열어두세요. 페이지를 닫거나 연결이 끊기면 기권 처리되고 나머지는 계속 진행해요. 주문에 참여하지 않으려면 ‘주문 참여 취소하고 나가기’를 누르세요. 방장이 나가면 방이 종료돼요.</div>
-<div class="help-line"><b>5. 전원 승낙 후, 커피는 원하는 사람만</b>커피에 참여할 사람은 마실 음료를 고르고, 안 마실 사람은 패스를 눌러요. 모두 응답하면 참가자 중 커피 배달 담당 한 명을 랜덤으로 뽑아요. 함께 가져올 음료 목록도 보여줘요. 마지막에는 퍼레이드와 엔딩 크레딧이 이어집니다.</div>
+<div class="help-line"><b>5. 커피 폭탄 · 참가와 음료는 내 선택</b>마실 음료를 고르거나 패스를 눌러요. 2명 이상 참여하면 커피 폭탄을 서로 넘겨요. 언제 터지는지는 비밀! 터질 때 컵을 가진 사람이 배달 담당이에요. 3명 이상이면 방금 준 사람에게 바로 되돌릴 수 없어요. 한 명만 참여하면 그 사람이 담당하고, 모두 패스하면 커피 없이 엔딩으로 이어져요.</div>
 <div class="help-line"><b>최종 주문은 직접 확인</b>이 게임은 메뉴를 함께 정하는 도구예요. 실제 음식 주문·결제는 자동으로 진행하지 않아요. 최종 결과와 주문 내역은 참가자끼리 확인해주세요.</div>
 </div></dialog>
 <dialog id="manageDialog" aria-labelledby="manageHeading"><div class="modal-head"><h2 id="manageHeading">우리의 점심 후보</h2><button class="close" data-close type="button" aria-label="메뉴 편집 닫기">닫기</button></div><div class="modal-body"><div class="subtle">공통 메뉴에서 내 후보를 고르고, 나만의 메뉴도 추가해보세요.</div><div class="manage-list" id="manageList"></div><form class="add-form" id="addForm"><input class="text-input" id="newMenuInput" aria-label="추가할 메뉴 이름" placeholder="새 메뉴 이름 · 20자까지" maxlength="40" autocomplete="off"><button class="small-add" type="submit">추가</button></form><div class="error" id="menuError" role="status"></div><button class="btn primary full-btn" id="saveMenusBtn" type="button">이 메뉴들로 결정</button></div></dialog>
@@ -1193,9 +1359,15 @@ function netHandle(senderId,cmd){
 }
 function netReceive(s){
  if(netIsHost()||!s||s.kind!=='room-v3'||!Number.isSafeInteger(s.seq)||s.seq<=netLastSeq||!Array.isArray(s.roster))return;netLastSeq=s.seq;
- const oldPhase=netPhase,oldRace=netSpec?.id,oldDuel=netDuelMeta?.id,oldCoffeeResult=result?result.id+'|'+result.time+'|'+result.menu+'|'+result.person:'';netApplying=true;
+ const oldPhase=netPhase,oldRace=netSpec?.id,oldDuel=netDuelMeta?.id,oldCoffeeResult=result?result.id+'|'+result.time+'|'+result.menu+'|'+result.person+'|'+String(result.provisional):'';netApplying=true;
  try{netRoster=s.roster.filter(m=>m&&typeof m.id==='string'&&typeof m.name==='string'&&m.consent===true).slice(0,8);netPicks=s.picks||{};netReady=s.ready||{};netDepartments=s.departments||{};netPhase=s.phase;netSpec=s.spec;netDuelMeta=s.duelMeta;result=s.result;netSyncRoster();
  if(netPhase==='setup'){if(oldPhase!=='setup')showSetup();else renderSetup();}
+ 
+ 
+ 
+ 
+ 
+ 
  
  
  
@@ -1204,7 +1376,7 @@ function netReceive(s){
  else if(netPhase==='menuTournament'){netEnterMenuTournament();}
  else if(netPhase==='brawlInvite'||netPhase==='brawl'){groupReceive(s.brawlRoom,s.brawlFight);}
  else if(netPhase==='race'){if(oldPhase!=='race'||oldRace!==netSpec?.id)netEnterRace();if(s.racing)deptReceive(s.racing);}
- else if(netPhase==='result'&&result){if(oldPhase!=='result'||oldCoffeeResult!==result.id+'|'+result.time+'|'+result.menu+'|'+result.person){saveRound();renderResult();}}
+ else if(netPhase==='result'&&result){if(oldPhase!=='result'||oldCoffeeResult!==result.id+'|'+result.time+'|'+result.menu+'|'+result.person+'|'+String(result.provisional)){saveRound();renderResult();}}
  else if(netPhase==='duel'&&result&&s.combat){if(oldPhase!=='duel'||oldDuel!==netDuelMeta?.id){const idx=netMembers().findIndex(m=>m.id===netDuelMeta.challengerId);netPrepareLocal(idx,s.combat.duel.challengerMenu);duel.id=netDuelMeta.id;}netReceiveCombatState(s.combat);if(duel?.phase==='done')saveRound();}
  if(netPhase==='duel')netUpdateCombatReady();coffeeReceive(s.coffee);trayReceive(s.tray);roomChatReceive(s.chat);arcadeReceive(s.arcade);lunchDecisionReceive(s.decision);deliveryReceive(s.delivery);
  }finally{netApplying=false;}
@@ -1478,8 +1650,8 @@ function vfxCelebrate(detail){
  const art=vfxMake('div','vfx-art');
  const trophy=vfxMake('div','vfx-trophy');trophy.innerHTML='<svg viewBox="0 0 200 190" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M51 40H20v28c0 28 28 40 49 28M149 40h31v28c0 28-28 40-49 28" stroke="#241b24" stroke-width="12" stroke-linecap="round"/><path d="M51 40H20v28c0 28 28 40 49 28M149 40h31v28c0 28-28 40-49 28" stroke="#ffbf39" stroke-width="7" stroke-linecap="round"/><path d="M48 19h104v40c0 37-23 61-52 61S48 96 48 59V19Z" fill="#ffc94a" stroke="#241b24" stroke-width="7"/><path d="M59 29h17v30c0 25 8 42 21 52-23-4-38-24-38-52V29Z" fill="#ffe99a"/><path d="m100 43 7 14 16 2-12 12 3 16-14-8-14 8 3-16-12-12 16-2 7-14Z" fill="#fff9e2" stroke="#ba721b" stroke-width="3"/><path d="M91 120h18v29H91z" fill="#e99b26" stroke="#241b24" stroke-width="6"/><path d="M70 149h60l10 25H60l10-25Z" fill="#ffc94a" stroke="#241b24" stroke-width="7"/><path d="M51 176h98" stroke="#241b24" stroke-width="9" stroke-linecap="round"/></svg>';
  const food=vfxMake('span','vfx-food',vfxFood(clean.menu));art.append(trophy,food,vfxMake('i','vfx-spark vfx-spark-a','✦'),vfxMake('i','vfx-spark vfx-spark-b','✦'));poster.append(art);
- poster.append(vfxMake('b','vfx-name',clean.name+(clean.kind==='tournament'?' 토너먼트 우승!':clean.kind==='duel'?' 최종 승리!':' 레이스 1등!')),vfxMake('span','vfx-menu',clean.menu),vfxMake('span','vfx-caption',clean.kind==='tournament'?'내 메뉴, 끝까지 살아남았다!':clean.kind==='tournament'?'내 메뉴, 끝까지 살아남았다!':clean.kind==='tournament'?'내 메뉴, 끝까지 살아남았다!':clean.kind==='tournament'?'내 메뉴, 끝까지 살아남았다!':clean.kind==='tournament'?'내 메뉴, 끝까지 살아남았다!':clean.kind==='tournament'?'내 메뉴, 끝까지 살아남았다!':clean.kind==='duel'?'승부 끝! 오늘 점심을 지배하다.':'왕관 썼다고 안 봐줌. 다음은 밥그릇 난투.'));
- const ticker=vfxMake('div','vfx-ticker');ticker.append(vfxMake('span','',clean.kind==='tournament'?'CHAMPION • 오늘의 우승 메뉴':clean.kind==='tournament'?'CHAMPION • 오늘의 우승 메뉴':clean.kind==='tournament'?'CHAMPION • 오늘의 우승 메뉴':clean.kind==='tournament'?'CHAMPION • 오늘의 우승 메뉴':clean.kind==='tournament'?'CHAMPION • 오늘의 우승 메뉴':clean.kind==='tournament'?'CHAMPION • 오늘의 우승 메뉴':clean.kind==='duel'?'VICTORY • 점심 쟁탈전 승리 • VICTORY • 점심 쟁탈전 승리':'FIRST SEED • 왕좌 쟁탈전 진출 • FIRST SEED • 왕좌 쟁탈전 진출'));
+ poster.append(vfxMake('b','vfx-name',clean.name+(clean.kind==='tournament'?' 토너먼트 우승!':clean.kind==='duel'?' 최종 승리!':' 레이스 1등!')),vfxMake('span','vfx-menu',clean.menu),vfxMake('span','vfx-caption',clean.kind==='tournament'?'내 메뉴, 끝까지 살아남았다!':clean.kind==='tournament'?'내 메뉴, 끝까지 살아남았다!':clean.kind==='tournament'?'내 메뉴, 끝까지 살아남았다!':clean.kind==='tournament'?'내 메뉴, 끝까지 살아남았다!':clean.kind==='tournament'?'내 메뉴, 끝까지 살아남았다!':clean.kind==='tournament'?'내 메뉴, 끝까지 살아남았다!':clean.kind==='tournament'?'내 메뉴, 끝까지 살아남았다!':clean.kind==='tournament'?'내 메뉴, 끝까지 살아남았다!':clean.kind==='tournament'?'내 메뉴, 끝까지 살아남았다!':clean.kind==='tournament'?'내 메뉴, 끝까지 살아남았다!':clean.kind==='tournament'?'내 메뉴, 끝까지 살아남았다!':clean.kind==='tournament'?'내 메뉴, 끝까지 살아남았다!':clean.kind==='duel'?'승부 끝! 오늘 점심을 지배하다.':'왕관 썼다고 안 봐줌. 다음은 밥그릇 난투.'));
+ const ticker=vfxMake('div','vfx-ticker');ticker.append(vfxMake('span','',clean.kind==='tournament'?'CHAMPION • 오늘의 우승 메뉴':clean.kind==='tournament'?'CHAMPION • 오늘의 우승 메뉴':clean.kind==='tournament'?'CHAMPION • 오늘의 우승 메뉴':clean.kind==='tournament'?'CHAMPION • 오늘의 우승 메뉴':clean.kind==='tournament'?'CHAMPION • 오늘의 우승 메뉴':clean.kind==='tournament'?'CHAMPION • 오늘의 우승 메뉴':clean.kind==='tournament'?'CHAMPION • 오늘의 우승 메뉴':clean.kind==='tournament'?'CHAMPION • 오늘의 우승 메뉴':clean.kind==='tournament'?'CHAMPION • 오늘의 우승 메뉴':clean.kind==='tournament'?'CHAMPION • 오늘의 우승 메뉴':clean.kind==='tournament'?'CHAMPION • 오늘의 우승 메뉴':clean.kind==='tournament'?'CHAMPION • 오늘의 우승 메뉴':clean.kind==='duel'?'VICTORY • 점심 쟁탈전 승리 • VICTORY • 점심 쟁탈전 승리':'FIRST SEED • 왕좌 쟁탈전 진출 • FIRST SEED • 왕좌 쟁탈전 진출'));
  const particles=vfxMake('div','vfx-particles');
  for(let i=0;i<(still?10:58);i++){
   const p=vfxMake('i',i%7===0?'vfx-confetti vfx-confetti-star':'vfx-confetti');
@@ -2224,6 +2396,12 @@ netRoom.onReady(()=>{roomChatSyncRoom();roomChatTick();});netRoom.onDisconnect(e
 
 
 
+
+
+
+
+
+
 /* FIVE_NEW_GAMES_START */
 /* ARCADE_MOTION_RULES_V1 */
 function createArcadeMotionRules(){
@@ -2432,7 +2610,7 @@ function createArcadeCombatKartRules(){
    if(action!=='hit'||w.elapsed<p.hitReadyAt||w.elapsed<p.stunUntil)return;
    p.hitReadyAt=w.elapsed+.55;p.attackUntil=w.elapsed+.18;p.actionUntil=p.attackUntil;
    const len=Math.hypot(p.faceX,p.faceY)||1,fx=p.faceX/len,fy=p.faceY/len;
-   const victims=w.players.filter(q=>q!==p&&alive(q)).map(q=>{const dx=q.x-p.x,dy=q.y-p.y,d=Math.hypot(dx,dy);return{q,dx,dy,d,dot:d>0?(dx*fx+dy*fy)/d:1};}).filter(v=>v.d<=84&&v.dot>=.05).sort((a,b)=>a.d-b.d||a.q.index-b.q.index);
+   const victims=w.players.filter(q=>q!==p&&alive(q)&&w.elapsed>=q.hurtUntil).map(q=>{const dx=q.x-p.x,dy=q.y-p.y,d=Math.hypot(dx,dy);return{q,dx,dy,d,dot:d>0?(dx*fx+dy*fy)/d:1};}).filter(v=>v.d<=84&&v.dot>=.05).sort((a,b)=>a.d-b.d||a.q.index-b.q.index);
    const hit=victims[0];if(!hit)return;const q=hit.q,norm=hit.d||1,nx=hit.d?hit.dx/norm:fx,ny=hit.d?hit.dy/norm:fy;
    q.hp=Math.max(0,q.hp-28);q.health=Math.min(3,Math.ceil(q.hp/34));q.vx=nx*255;q.vy=ny*255;q.stunUntil=w.elapsed+.16;q.hurtUntil=w.elapsed+.22;
    w.objects.push({kind:'punch',x:q.x,y:q.y,until:w.elapsed+.23});
@@ -2663,6 +2841,9 @@ const arcadeGames={
 };
 let arcadeDialog=null,arcadeUIFrame=0,arcadeBoardKey='',arcadeLastDraw=0;
 const arcadeUIActors=new Map(),arcadeUIMeters=new Map(),arcadeUIKeys=new Set(),arcadeUIPointers=new Map();
+const arcadeUIObjects=new Map();let arcadeObjectFrame=0;
+function arcadeObjectNode(key,tag,cls,text){let entry=arcadeUIObjects.get(key);if(!entry){entry={node:el(tag,cls),frame:0};arcadeUIObjects.set(key,entry);$('arcadeObjects').append(entry.node);}entry.frame=arcadeObjectFrame;const node=entry.node;if(node.className!==cls)node.className=cls;if(text!==undefined&&node.textContent!==String(text))node.textContent=String(text);return node;}
+function arcadeObjectCleanup(){for(const [key,entry]of arcadeUIObjects)if(entry.frame!==arcadeObjectFrame){entry.node.remove();arcadeUIObjects.delete(key);}}
 const arcadeMoveKeys={ArrowUp:'up',KeyW:'up',ArrowDown:'down',KeyS:'down',ArrowLeft:'left',KeyA:'left',ArrowRight:'right',KeyD:'right'};
 function arcadeHeld(){return [...new Set([...arcadeUIKeys].map(k=>k==='Space'||k==='KeyF'?'up':arcadeMoveKeys[k]).filter(Boolean).concat([...arcadeUIPointers.values()].filter(a=>a!=='action')))];}
 function arcadeClearKeys(){const had=arcadeUIKeys.size||arcadeUIPointers.size;arcadeUIKeys.clear();arcadeUIPointers.clear();if(had&&typeof arcadeState!=='undefined'&&arcadeState?.world?.phase==='play')arcadeInput('sync',[]);arcadeDialog?.querySelectorAll('.is-held').forEach(b=>b.classList.remove('is-held'));}
@@ -2686,11 +2867,12 @@ function arcadeEnsureUI(){
 function arcadeChoose(game,mode){arcadeClearKeys();if(netIsActive()){arcadeSend({t:'arcadeInvite',game,mode});}else arcadeDemoStart(game,mode);}
 function arcadeEntry(){arcadeEnsureUI();if(arcadeState){arcadeOpen();return;}arcadeRender();if(!arcadeDialog.open)arcadeDialog.showModal();}
 function arcadeOpen(){arcadeEnsureUI();arcadeBoardKey='';arcadeRender();if(!arcadeDialog.open)arcadeDialog.showModal();arcadeDialog.scrollTop=0;if(!arcadeUIFrame)arcadeUIFrame=requestAnimationFrame(arcadeUIAnimate);}
+function arcadeRequestRender(){if(arcadeDialog?.open){if(!arcadeUIFrame)arcadeUIFrame=requestAnimationFrame(arcadeUIAnimate);return;}if(typeof arcadeState!=='undefined'&&arcadeState){if(arcadeState.purpose==='lunch'&&typeof menuTournamentRenderBackground==='function')menuTournamentRenderBackground();return;}arcadeRender();}
 function arcadeUIAnimate(now){arcadeUIFrame=0;if(!arcadeDialog?.open)return;if(now-arcadeLastDraw>30){arcadeLastDraw=now;arcadeRender();}arcadeUIFrame=requestAnimationFrame(arcadeUIAnimate);}
 function arcadeSetText(id,text){const n=$(id);if(n&&n.textContent!==String(text))n.textContent=String(text);}
 function arcadeRender(){
  if(!arcadeDialog)return;const s=typeof arcadeState==='undefined'?null:arcadeState;const online=netIsActive();
- $('arcadeMenu').hidden=!!s;$('arcadeSession').hidden=!s;arcadeDialog.dataset.purpose=s?.purpose||'arcade';arcadeSetText('arcadeCloseBtn',s?.purpose==='lunch'?'경기 접기':'닫기');$('arcadeCloseBtn').setAttribute('aria-label',s?.purpose==='lunch'?'메뉴 토너먼트 접기':'오락실 닫기');
+ $('arcadeMenu').hidden=!!s;$('arcadeSession').hidden=!s;arcadeDialog.dataset.purpose=s?.purpose||'arcade';arcadeDialog.dataset.playing=String(!!s?.world);arcadeSetText('arcadeCloseBtn',s?.purpose==='lunch'?'경기 접기':'닫기');$('arcadeCloseBtn').setAttribute('aria-label',s?.purpose==='lunch'?'메뉴 토너먼트 접기':'오락실 닫기');
  if(!s){arcadeSetText('arcadeTitle','조교 오락실');arcadeSetText('arcadeEyebrow','NEW · 열 가지 승부');arcadeSetText('arcadeMenuNote',online?'같은 방 친구들을 초대해요. 참가자가 2명 이상 필요해요.':'친구들과 하려면 방에 입장! 여기서는 컴퓨터와 연습할 수 있어요.');for(const card of $('arcadeGameCards').children){card.querySelector('em').textContent=online?'이 게임으로 초대 →':'혼자 연습 →';card.disabled=online&&netMembers().length<2;}$('arcadeTournamentBtn').disabled=online&&netMembers().length<2;return;}
  if(s.purpose==='lunch')menuTournamentRenderBackground();
  const w=s.world,g=arcadeGames[w?.game||s.chosen]||arcadeGames.coins,self=arcadeSelf(),own=s.members.find(m=>m.id===self);
@@ -2709,7 +2891,7 @@ function arcadeRender(){
  if(w)arcadeDrawWorld(s,w,g,self);
 }
 function arcadeBuildBoard(w){
- arcadeBoardKey=w.id+':'+w.game;arcadeUIActors.clear();arcadeUIMeters.clear();for(const id of ['arcadeScenery','arcadeObjects','arcadeActors','arcadeMeters'])$(id).replaceChildren();$('arcadeBoard').dataset.game=w.game;$('arcadeBoard').dataset.crowded=String(w.players.length>4);
+ arcadeBoardKey=w.id+':'+w.game;arcadeUIActors.clear();arcadeUIMeters.clear();arcadeUIObjects.clear();arcadeObjectFrame=0;for(const id of ['arcadeScenery','arcadeObjects','arcadeActors','arcadeMeters'])$(id).replaceChildren();$('arcadeBoard').dataset.game=w.game;$('arcadeBoard').dataset.crowded=String(w.players.length>4);
  if(w.game==='sneak'){const line=el('div','five-finish','퇴근 성공');$('arcadeScenery').append(line);for(const p of w.players){const lane=el('i','five-sneak-lane');lane.style.left=p.x/7+'%';$('arcadeScenery').append(lane);}}
  if(w.game==='runner'){for(const p of w.players){const lane=el('div','five-run-lane');lane.style.top=(p.index+.5)/w.players.length*100+'%';lane.style.height=100/w.players.length+'%';lane.append(el('span','',arcadeDisplayName(p)));$('arcadeScenery').append(lane);}}
  if(w.game==='stamp'){for(const p of [...w.players].sort((a,b)=>Number(b.id===arcadeSelf())-Number(a.id===arcadeSelf()))){const row=el('div','five-meter-row');row.style.setProperty('--p-color',trayPalette[p.index%8]);const head=el('div','five-meter-head');head.append(el('b','',arcadeDisplayName(p)+(p.id===arcadeSelf()?' · 내 메뉴':'')),el('strong','five-meter-score'));const meter=el('div','five-meter');meter.append(el('i','five-meter-target'),el('i','five-meter-pointer'),el('i','five-meter-mark'));const reaction=el('small','five-meter-reaction');row.append(head,meter,reaction);$('arcadeMeters').append(row);arcadeUIMeters.set(p.id,row);}return;}
@@ -2719,10 +2901,10 @@ function arcadeDrawWorld(s,w,g,self){
  if(arcadeBoardKey!==w.id+':'+w.game)arcadeBuildBoard(w);const t=w.elapsed,can=w.phase==='play'&&s.phase==='round',own=w.players.find(p=>p.id===self),alive=own&&!own.eliminated&&!own.forfeited,objects=$('arcadeObjects');
  const seconds=w.phase==='countdown'?Math.ceil(w.countdown):Math.max(0,Math.ceil(w.duration-t));arcadeSetText('arcadeClock',w.phase==='done'?'종료':w.phase==='countdown'?'준비!':seconds+'초');
  $('arcadeSignal').hidden=w.game!=='sneak';if(w.game==='sneak'){$('arcadeSignal').dataset.signal=w.meta.signal;arcadeSetText('arcadeSignal',w.meta.signal==='green'?'🟢 달려!':'🔴 멈춰!');}
- objects.replaceChildren();
- if(w.game==='coins'){for(const o of w.objects){const coin=el('span',t<o.readyAt?'five-coin five-preview':'five-coin',t<o.readyAt?'+':'●');coin.style.left=o.x/7+'%';coin.style.top=o.y/4.6+'%';objects.append(coin);}}
- if(w.game==='dodge'){for(const o of w.objects){const warning=el('i','five-food-zone');warning.style.left=o.x/7+'%';warning.style.top=o.y/4.6+'%';warning.style.width=o.radius*2/7+'%';warning.style.height=o.radius*2/4.6+'%';warning.dataset.hit=String(t>=o.impactAt);warning.textContent=t>=o.impactAt?o.emoji:'!';objects.append(warning);}}
- if(w.game==='runner'){for(const p of w.players)for(const o of w.objects){const n=el('span','five-hurdle',o.emoji||'📚');n.style.left=o.x/7+'%';n.style.top=((p.index+.5)/w.players.length*100)+'%';n.style.width=Math.max(24,o.width)/7+'%';n.style.height=Math.min(54,72/w.players.length)+'px';objects.append(n);}}
+ arcadeObjectFrame++;
+ if(w.game==='coins'){for(const o of w.objects){const coin=arcadeObjectNode('coin:'+o.id,'span',t<o.readyAt?'five-coin five-preview':'five-coin',t<o.readyAt?'+':'●');coin.style.left=o.x/7+'%';coin.style.top=o.y/4.6+'%';}}
+ if(w.game==='dodge'){for(const o of w.objects){const warning=arcadeObjectNode('food:'+o.id,'i','five-food-zone',t>=o.impactAt?o.emoji:'!');warning.style.left=o.x/7+'%';warning.style.top=o.y/4.6+'%';warning.style.width=o.radius*2/7+'%';warning.style.height=o.radius*2/4.6+'%';warning.dataset.hit=String(t>=o.impactAt);}}
+ if(w.game==='runner'){for(const p of w.players)for(const o of w.objects){const n=arcadeObjectNode('hurdle:'+p.id+':'+o.id,'span','five-hurdle',o.emoji||'📚');n.style.left=o.x/7+'%';n.style.top=((p.index+.5)/w.players.length*100)+'%';n.style.width=Math.max(24,o.width)/7+'%';n.style.height=Math.min(54,72/w.players.length)+'px';}}
  if(w.game==='stamp'){for(const p of w.players){const row=arcadeUIMeters.get(p.id),target=row.querySelector('.five-meter-target'),pointer=row.querySelector('.five-meter-pointer'),mark=row.querySelector('.five-meter-mark');target.style.left=(w.meta.target-w.meta.window/2)*100+'%';target.style.width=w.meta.window*100+'%';pointer.style.left=(p.pointer??w.meta.pointer)*100+'%';row.querySelector('.five-meter-score').textContent=Math.round(p.score)+'점';mark.hidden=p.lastStampStage!==w.meta.stage;mark.style.left=(p.stampPos||0)*100+'%';const fresh=t-p.stampAt<1.1;row.dataset.result=fresh?p.stampResult:'';row.querySelector('.five-meter-reaction').textContent=p.lastStampStage===w.meta.stage?(p.stampResult==='perfect'?'완벽한 결재! +'+p.stampPoints:p.stampResult==='hit'?'통과! +'+p.stampPoints:'반려! '+p.stampPoints):'초록 칸에서 한 번만 찍어!';row.classList.toggle('is-own',p.id===self);}}
  else for(const p of w.players){const actor=arcadeUIActors.get(p.id);actor.style.left=p.x/7+'%';actor.style.top=w.game==='runner'?((p.index+.5)/w.players.length*100-(p.jumpHeight||0)/4.6*Math.min(.4,2/w.players.length))+'%':p.y/4.6+'%';actor.classList.toggle('is-own',p.id===self);actor.classList.toggle('is-out',p.eliminated||p.forfeited);actor.classList.toggle('is-action',t<(p.dashUntil||0));actor.classList.toggle('is-hurt',t<(p.caughtUntil||0)||t<(p.stunUntil||0));const tag=actor.querySelector('.five-actor-tag');tag.textContent=(p.id===self?(s.purpose==='lunch'?'▼ 내 메뉴 ':'▼ 나 '):'')+(['dodge','runner'].includes(w.game)?'♥'.repeat(Math.max(0,p.health)):w.game==='coins'?Math.round(p.score)+'원':p.finishAt>=0?'도착!':'');}
  $('arcadeOverlay').hidden=can;
@@ -2734,6 +2916,7 @@ function arcadeDrawWorld(s,w,g,self){
  arcadeDialog.querySelectorAll('[data-arcade-control]').forEach(b=>{b.disabled=!can||!alive||(b.dataset.arcadeControl==='action'&&(stamped||cool>.05));});
  const ownStatus=!own?'이번 판 관전 중':own.forfeited?'기권 · 관전 중':own.eliminated?'탈락 · 관전 중':Math.round(own.score)+'점'+(['dodge','runner'].includes(w.game)?' · '+'♥'.repeat(Math.max(0,own.health)):'');arcadeSetText('arcadeOwnStatus',ownStatus);
  arcadeSetText('arcadeStatus',s.phase==='between'||s.phase==='done'?s.notice||'한 판 끝!':w.game==='stamp'?'결재 '+(w.meta.stage+1)+'/10 · 이번 기회에 딱 한 번!':w.game==='sneak'?(w.meta.signal==='green'?'교수님 딴 데 본다. 지금 튀어!':'교수님 돌아봤다. 손 떼!'):w.meta.notice||g.hint);
+ if(!['brawl','kart','basket','rhythm'].includes(w.game))arcadeObjectCleanup();
 }
 function arcadeUpdateButtons(){
  const active=netIsActive()&&netPhase==='result'&&!result?.tournamentHistory;for(const id of ['arcadeRoomBtn','arcadeResultBtn']){const b=$(id);if(b){b.hidden=!active;b.disabled=false;}}
@@ -2745,9 +2928,10 @@ function arcadeInstall(){
  document.addEventListener('keydown',e=>{if(!arcadeDialog?.open||!arcadeState?.world||['doors','rhythm'].includes(arcadeState.world.game)||e.target?.matches?.('input,textarea,select,[contenteditable="true"]'))return;const move=arcadeMoveKeys[e.code],action=['Space','KeyF'].includes(e.code),game=arcadeState.world.game;if(!move&&!action)return;e.preventDefault();e.stopImmediatePropagation();if(e.repeat)return;if(action&&game!=='sneak')arcadeInput(arcadeGames[game].input,true);else{arcadeUIKeys.add(e.code);arcadeInput('sync',arcadeHeld());}},true);
  document.addEventListener('keyup',e=>{const had=arcadeUIKeys.delete(e.code);if(!arcadeDialog?.open||!had)return;e.preventDefault();e.stopImmediatePropagation();arcadeInput('sync',arcadeHeld());},true);
  document.addEventListener('focusin',e=>{if(e.target?.matches?.('input,textarea,select,[contenteditable="true"]'))arcadeClearKeys();});window.addEventListener('blur',arcadeClearKeys);document.addEventListener('visibilitychange',()=>{if(document.hidden)arcadeClearKeys();});
- setInterval(()=>{arcadeUpdateButtons();if(arcadeDialog?.open&&!arcadeState)arcadeRender();if(arcadeDialog?.open&&arcadeState?.world?.phase==='play'&&arcadeHeld().length)arcadeInput('sync',arcadeHeld());},200);arcadeUpdateButtons();
+ setInterval(()=>{arcadeUpdateButtons();if(arcadeDialog?.open&&!arcadeState)arcadeRender();},200);arcadeUpdateButtons();
 }
 /* END_FIVE_ARCADE_UI_V1 */
+
 /* TEN_GAME_VARIETY_UI */
 Object.assign(arcadeGames,{
  brawl:{name:'식판 격투장',icon:'🥊',tag:'격투 · 주먹 한 방',hint:'방향키로 붙어서 Space로 펀치! 바라보는 방향으로 때려요. 마지막 생존자가 승리.',action:'펀치!',key:'SPACE / F',input:'hit',color:'#eaa38d'},
@@ -2777,30 +2961,32 @@ arcadeDrawWorld=function(s,w,g,self){
  if(['brawl','kart','basket'].includes(w.game))$('arcadeDpad').hidden=false;
  const center=$('arcadeDpad').querySelector('i');center.textContent=w.game==='basket'?'각도':w.game==='kart'?'조향':'이동';
  for(const [i,b]of [...arcadeTenChoices.children].entries()){b.disabled=!play||(w.game==='doors'&&(w.meta.phase!=='choose'||own.locked));b.firstChild.textContent=w.game==='doors'?(w.meta.labels[i]||['왼쪽','가운데','오른쪽'][i]):['←','●','→'][i];}
- if(w.game==='brawl'){for(const p of w.players){const a=arcadeUIActors.get(p.id);a.querySelector('.five-actor-tag').textContent=(p.id===self?'▼ 내 메뉴 ':'')+Math.ceil(p.hp)+' HP';a.classList.toggle('is-punching',t<p.attackUntil);if(t<p.attackUntil){const punch=el('span','ten-punch','💥');punch.style.left=(p.x+p.faceX*55)/7+'%';punch.style.top=(p.y+p.faceY*55)/4.6+'%';objects.append(punch);}}}
- if(w.game==='kart'){for(const o of w.objects){if(!['puddle','boost'].includes(o.kind))continue;const n=el('span','ten-kart-object '+o.kind,o.kind==='puddle'?'💧':'⚡');n.style.left=o.x/7+'%';n.style.top=o.y/4.6+'%';n.classList.toggle('is-preview',t<o.readyAt);objects.append(n);}for(const p of w.players){const a=arcadeUIActors.get(p.id);a.classList.add('is-kart');a.querySelector('.five-actor-tag').textContent=(p.id===self?'▼ ':'')+Math.min(3,Math.floor(p.progress)+1)+'/3바퀴';}}
- if(w.game==='basket'){const h=$('tenHoop');h.style.left=w.meta.hoopX/7+'%';h.style.top=w.meta.hoopY/4.6+'%';h.style.width=w.meta.hoopRadius*2/7+'%';for(const p of w.players){const aim=el('i','ten-basket-aim');aim.style.left=p.x/7+'%';aim.style.top=p.y/4.6+'%';aim.style.transform='rotate('+(-p.aim)+'deg)';objects.append(aim);}for(const o of w.objects){const ball=el('span','ten-basket-ball','🏀');ball.style.left=o.x/7+'%';ball.style.top=o.y/4.6+'%';objects.append(ball);}arcadeSetText('arcadeStatus',own?'슛 각도 '+Math.round(own.aim)+'° · '+own.makes+'골 / '+own.attempts+'슛':g.hint);}
+ if(w.game==='brawl'){for(const p of w.players){const a=arcadeUIActors.get(p.id);a.querySelector('.five-actor-tag').textContent=(p.id===self?'▼ 내 메뉴 ':'')+Math.ceil(p.hp)+' HP';a.classList.toggle('is-punching',t<p.attackUntil);if(t<p.attackUntil){const punch=arcadeObjectNode('punch:'+p.id,'span','ten-punch','💥');punch.style.left=(p.x+p.faceX*55)/7+'%';punch.style.top=(p.y+p.faceY*55)/4.6+'%';}}}
+ if(w.game==='kart'){for(const o of w.objects){if(!['puddle','boost'].includes(o.kind))continue;const n=arcadeObjectNode('kart:'+o.id,'span','ten-kart-object '+o.kind,o.kind==='puddle'?'💧':'⚡');n.style.left=o.x/7+'%';n.style.top=o.y/4.6+'%';n.classList.toggle('is-preview',t<o.readyAt);}for(const p of w.players){const a=arcadeUIActors.get(p.id);a.classList.add('is-kart');a.querySelector('.five-actor-tag').textContent=(p.id===self?'▼ ':'')+Math.min(3,Math.floor(p.progress)+1)+'/3바퀴';}}
+ if(w.game==='basket'){const h=$('tenHoop');h.style.left=w.meta.hoopX/7+'%';h.style.top=w.meta.hoopY/4.6+'%';h.style.width=w.meta.hoopRadius*2/7+'%';for(const p of w.players){const aim=arcadeObjectNode('aim:'+p.id,'i','ten-basket-aim');aim.style.left=p.x/7+'%';aim.style.top=p.y/4.6+'%';aim.style.transform='rotate('+(-p.aim)+'deg)';}for(const o of w.objects){const ball=arcadeObjectNode('ball:'+o.id,'span','ten-basket-ball','🏀');ball.style.left=o.x/7+'%';ball.style.top=o.y/4.6+'%';}arcadeSetText('arcadeStatus',own?'슛 각도 '+Math.round(own.aim)+'° · '+own.makes+'골 / '+own.attempts+'슛':g.hint);}
  if(w.game==='doors'){const reveal=w.meta.phase==='reveal';for(const card of $('arcadeScenery').querySelectorAll('.ten-restaurant')){const i=Number(card.dataset.choice);card.querySelector('strong').textContent=reveal?w.meta.counts[i]+'명':'?명';card.querySelector('small').textContent=reveal?'총 '+(w.meta.totalCounts?.[i]??w.meta.counts[i])+'명':'예약 '+(w.meta.reservedCounts?.[i]||0)+'명 · 선택 비밀';card.classList.toggle('is-own',reveal&&own?.choice===i);}arcadeSetText('arcadeStatus','눈치 '+(w.meta.stage+1)+'/6 · '+(reveal?'공개! 다음 선택을 준비해':own?.locked?'선택 완료! 다른 사람을 기다려':'어느 식당이 덜 붐빌까?')+' · '+w.meta.stageLeft.toFixed(1)+'초');arcadeSetText('arcadeOwnStatus',own?Math.round(own.score)+'점'+(own.locked?' · 선택 완료':''):'관전 중');}
- if(w.game==='rhythm'){for(const o of w.objects){const until=o.hitAt-t;if(until>w.meta.travelTime||until<-.25)continue;const n=el('span','ten-rhythm-note lane-'+o.lane,['◀','●','▶'][o.lane]);n.style.left=[20,50,80][o.lane]+'%';n.style.top=(8+(1-until/w.meta.travelTime)*72)+'%';objects.append(n);}arcadeSetText('tenRhythmJudge',own?(t<own.judgeUntil?own.judge:own.combo+' COMBO'):'박자에 맞춰!');arcadeSetText('arcadeOwnStatus',own?Math.round(own.score)+'점 · '+own.combo+' COMBO':'관전 중');}
+ if(w.game==='rhythm'){const resolved=new Set(own?.resolvedNotes||[]);for(const o of w.objects){const until=o.hitAt-t;if(resolved.has(o.id)||until>w.meta.travelTime||until<-.25)continue;const n=arcadeObjectNode('note:'+o.id,'span','ten-rhythm-note lane-'+o.lane,['◀','●','▶'][o.lane]);n.style.left=[20,50,80][o.lane]+'%';n.style.top=(8+(1-until/w.meta.travelTime)*72)+'%';}arcadeSetText('tenRhythmJudge',own?(t<own.judgeUntil?own.judge:own.combo+' COMBO'):'박자에 맞춰!');arcadeSetText('arcadeOwnStatus',own?Math.round(own.score)+'점 · '+own.combo+' COMBO':'관전 중');}
  if(['brawl','kart','basket'].includes(w.game)){const ready=own?(w.game==='brawl'?own.hitReadyAt:w.game==='basket'?own.shotReadyAt:own.dashReadyAt)||0:0,cool=Math.max(0,ready-t),b=arcadeDialog.querySelector('[data-arcade-control="action"]');b.disabled=!play||cool>.05;arcadeSetText('arcadeActionHint',cool>.05?cool.toFixed(1)+'초 뒤 다시':g.key);}
+ arcadeObjectCleanup();
 };
 function arcadeTenInstall(){document.addEventListener('keydown',e=>{const w=arcadeState?.world;if(!arcadeDialog?.open||!['doors','rhythm'].includes(w?.game)||e.target?.matches?.('input,textarea,select,[contenteditable="true"]'))return;const i=['KeyA','ArrowLeft'].includes(e.code)?0:['KeyW','ArrowUp','Space','KeyF'].includes(e.code)?1:['KeyD','ArrowRight'].includes(e.code)?2:-1;if(i<0)return;e.preventDefault();e.stopImmediatePropagation();if(!e.repeat)arcadeInput(['jump','hit','dash'][i],true);},true);}
 /* END_TEN_GAME_VARIETY_UI */
+
 /* ARCADE_CONTROLLER_V1 */
 const arcadeEngine=createArcadeEngine(),arcadeGameKeys=typeof arcadeGames==='object'&&arcadeGames?Object.keys(arcadeGames):['sneak','dodge','coins','stamp','runner'];
 let arcadeState=null,arcadeDemo=false,arcadeInputSeq=0,arcadeLastPublish=0,arcadePumpAt=0,arcadeAccum=0,arcadePrevious=null,arcadeReceivedAt=0,arcadeLastWorldId='',arcadeBotAt=0,arcadeHeartbeatAt=0;
-const arcadeBotSeq=new Map();
+const arcadeBotSeq=new Map(),arcadeBotBrains=new Map();
 function arcadeSelf(){return arcadeDemo?'arcade-you':netSelfId();}
 function arcadeHost(){return arcadeDemo||netIsHost();}
 function arcadeClone(v){return v?JSON.parse(JSON.stringify(v)):null;}
 function arcadeBaseContext(){return netPhase+':'+(result?.id||'setup');}
 function arcadeBusy(){return !!arcadeState&&['invite','round','between'].includes(arcadeState.phase);}
-function arcadeRenderSafe(){if(typeof arcadeRender==='function')arcadeRender();if(typeof arcadeUpdateButtons==='function')arcadeUpdateButtons();}
+function arcadeRenderSafe(){if(typeof arcadeRequestRender==='function')arcadeRequestRender();else if(typeof arcadeRender==='function')arcadeRender();if(typeof arcadeUpdateButtons==='function')arcadeUpdateButtons();}
 function arcadeGetState(){return !arcadeDemo&&netIsActive()&&arcadeState?arcadeClone(arcadeState):null;}
 function arcadePublish(force=false){if(arcadeDemo||!netIsHost()||netApplying)return;const n=performance.now();if(!force&&n-arcadeLastPublish<80)return;arcadeLastPublish=n;netPublish();}
 function arcadeSend(cmd){if(arcadeDemo)return arcadeHandle(arcadeSelf(),cmd);return netRoom.send(cmd);}
 function arcadeInput(action,held){if(!arcadeState?.world)return false;return arcadeSend({t:'arcadeInput',gameId:arcadeState.id,worldId:arcadeState.world.id,seq:++arcadeInputSeq,action,held});}
-function arcadeCancel(){arcadeState=null;arcadeDemo=false;arcadePrevious=null;arcadeLastWorldId='';arcadeBotSeq.clear();if(typeof arcadeClearKeys==='function')arcadeClearKeys();if(typeof arcadeDialog!=='undefined')arcadeDialog?.close();arcadeRenderSafe();}
+function arcadeCancel(){arcadeState=null;arcadeDemo=false;arcadePrevious=null;arcadeLastWorldId='';arcadeBotSeq.clear();arcadeBotBrains.clear();if(typeof arcadeClearKeys==='function')arcadeClearKeys();if(typeof arcadeDialog!=='undefined')arcadeDialog?.close();arcadeRenderSafe();}
 function arcadeClose(){
  if(!arcadeState){if(typeof arcadeDialog!=='undefined')arcadeDialog?.close();return;}
  if(arcadeDemo){arcadeCancel();return;}
@@ -2815,15 +3001,15 @@ function arcadeInvite(senderId,mode,game){
  if(!netIsHost()||!['setup','result'].includes(netPhase)||netMembers().length<2||!['single','tournament'].includes(mode)||!arcadeGameKeys.includes(game))return false;
  if(typeof trayBusy==='function'&&trayBusy()||typeof coffeeState!=='undefined'&&coffeeState&&['invite','play'].includes(coffeeState.phase)){notify('지금 게임을 마치고 새 게임을 시작해주세요.');return false;}
  if(arcadeBusy())return true;
- arcadeState=arcadeMakeState(mode,game,netMembers().map(m=>({id:m.id,name:m.name,department:netDepartment(m.id),response:'pending'})));arcadeInputSeq=0;arcadePrevious=null;arcadeBotSeq.clear();arcadeOpen();arcadeRenderSafe();arcadePublish(true);return true;
+ arcadeState=arcadeMakeState(mode,game,netMembers().map(m=>({id:m.id,name:m.name,department:netDepartment(m.id),response:'pending'})));arcadeInputSeq=0;arcadePrevious=null;arcadeBotSeq.clear();arcadeBotBrains.clear();arcadeOpen();arcadeRenderSafe();arcadePublish(true);return true;
 }
-function arcadeRandomGame(previous){const choices=arcadeGameKeys.filter(k=>k!==previous);return choices[rand(choices.length)];}
+function arcadeRandomGame(previous){const history=arcadeState?.history||[],inCycle=(arcadeState?.round||history.length)%arcadeGameKeys.length,used=new Set(inCycle?history.slice(-inCycle).map(h=>h.game):[]);let choices=arcadeGameKeys.filter(k=>!used.has(k)&&k!==previous);if(!choices.length)choices=arcadeGameKeys.filter(k=>k!==previous);return choices[rand(choices.length)];}
 function arcadeStartWorld(){
  const s=arcadeState;if(!s||!arcadeHost()||!['invite','between'].includes(s.phase))return false;const ids=(s.tiebreakIds.length?s.tiebreakIds:s.activeIds).filter(id=>s.activeIds.includes(id));
  if(ids.length<2){arcadeFinishTournament();return;}const game=s.mode==='single'?s.chosen:arcadeRandomGame(s.lastGame);
  s.round++;s.lastGame=game;s.phase='round';s.nextAt=0;s.world=arcadeEngine.create({id:s.id+':'+s.round,game,participants:ids.map(id=>s.members.find(m=>m.id===id)),seed:rand(0xffffffff)});
  if(s.tiebreakIds.length)s.world.duration=Math.min(s.world.duration,16);s.world.meta.tiebreak=s.tiebreakIds.length>0;s.world.meta.safeIds=[...s.safeIds];
- arcadeInputSeq=0;arcadeLastWorldId=s.world.id;arcadeBotSeq.clear();arcadeBotAt=0;arcadePumpAt=performance.now();arcadeAccum=0;arcadePrevious=null;s.notice=s.tiebreakIds.length?'최하위 동점! 동점자끼리 재경기 · 나머지는 다음 라운드 진출':'매판 다른 게임! 이번 판에서 살아남으세요.';arcadeRenderSafe();arcadePublish(true);
+ arcadeInputSeq=0;arcadeLastWorldId=s.world.id;arcadeBotSeq.clear();arcadeBotBrains.clear();arcadeBotAt=0;arcadePumpAt=performance.now();arcadeAccum=0;arcadePrevious=null;s.notice=s.tiebreakIds.length?'최하위 동점! 동점자끼리 재경기 · 나머지는 다음 라운드 진출':'매판 다른 게임! 이번 판에서 살아남으세요.';arcadeRenderSafe();arcadePublish(true);
 }
 function arcadeMaybeStart(){const s=arcadeState;if(!s||!arcadeHost()||s.phase!=='invite'||s.members.some(m=>m.response==='pending'))return;const joined=s.members.filter(m=>m.response==='join'&&!m.left);if(joined.length<2){const hint='2명 이상 준비해야 시작할 수 있어요. 참가 또는 관전을 다시 골라주세요.';if(s.notice!==hint){s.notice=hint;arcadeRenderSafe();arcadePublish(true);}return;}s.activeIds=joined.map(m=>m.id);arcadeStartWorld();}
 function arcadeFinishTournament(){const s=arcadeState;if(!s)return;s.phase='done';s.nextAt=0;s.tiebreakIds=[];s.safeIds=[];s.championIds=[...s.activeIds];s.notice=s.championIds.length?'최후의 생존자! 토너먼트 우승!':'참가자가 모두 나가 경기를 마쳤어요.';if(s.purpose==='lunch'&&typeof netFinishMenuTournament==='function'){netFinishMenuTournament(s);return;}arcadeRenderSafe();arcadePublish(true);}
@@ -2853,7 +3039,7 @@ function arcadeForfeit(id){
 function arcadeDemoStart(game='coins',mode='single'){
  if(!arcadeGameKeys.includes(game)||!['single','tournament'].includes(mode)||arcadeState?.purpose==='lunch'&&arcadeBusy())return false;if(arcadeState)arcadeCancel();
  arcadeDemo=true;const members=[{id:'arcade-you',name:'내 캐릭터',department:'business'},...['반찬도둑','월급요정','퇴근장인'].map((name,i)=>({id:'arcade-bot-'+i,name,department:['accounting','hotel','tourism'][i]}))].map(m=>({...m,response:'join'}));
- arcadeState=arcadeMakeState(mode,game,members);arcadeState.activeIds=members.map(m=>m.id);arcadeOpen();arcadeStartWorld();return true;
+ arcadeState=arcadeMakeState(mode,game,members);arcadeState.difficulty='normal';arcadeState.activeIds=members.map(m=>m.id);arcadeOpen();arcadeStartWorld();return true;
 }
 function arcadeHandle(senderId,cmd){
  if(typeof cmd?.t!=='string')return false;const own=cmd.t.startsWith('arcade');if(!own)return arcadeBusy();
@@ -2887,6 +3073,32 @@ function arcadePresence(event){
  if(event?.kind==='leave'){delete netPicks[event.memberId];delete netReady[event.memberId];delete netDepartments[event.memberId];}
  arcadeHousekeep(performance.now());arcadePublish(true);return true;
 }
+// Solo opponents make ordinary mistakes; human and multiplayer inputs use the original rules.
+function arcadeBotChance(w,p,key){
+ let hash=((w.seed>>>0)^Math.imul(p.index+1,0x9e3779b1))>>>0;
+ for(const c of w.game+':'+p.id+':'+key){hash=Math.imul(hash^c.charCodeAt(0),16777619)>>>0;}
+ hash^=hash>>>16;hash=Math.imul(hash,0x7feb352d);hash^=hash>>>15;return(hash>>>0)/4294967296;
+}
+function arcadeNormalBot(w,p){
+ const intent=arcadeEngine.bot(w,p.id),t=w.elapsed;
+ let brain=arcadeBotBrains.get(p.id);
+ if(!brain||brain.worldId!==w.id){brain={worldId:w.id,nextThinkAt:t+.2+arcadeBotChance(w,p,'reaction')*.17,held:[],thought:0};arcadeBotBrains.set(p.id,brain);}
+ if(t>=brain.nextThinkAt){
+  const n=++brain.thought;brain.nextThinkAt=t+.24+arcadeBotChance(w,p,'think:'+n)*.16;
+  brain.held=arcadeBotChance(w,p,'hesitate:'+n)<.12?[]:[...(intent.held||[])];
+ }
+ const response={held:[...brain.held]};if(!intent.action||t<.24)return response;
+ let key='action:'+Math.floor(t/.65),success={brawl:.64,kart:.66,basket:.68,coins:.64,dodge:.75,doors:1}[w.game]??.74;
+ if(w.game==='stamp')key='stamp:'+w.meta.stage;
+ if(w.game==='runner'){
+  const obstacle=w.objects.filter(o=>!o.hitIds?.includes(p.id)&&o.x>p.x-15).sort((a,b)=>a.x-b.x)[0];key='runner:'+(obstacle?.id||Math.floor(t));success=.82;
+ }
+ if(w.game==='rhythm'){
+  const note=w.objects.filter(n=>!p.resolvedNotes?.includes(n.id)).sort((a,b)=>Math.abs(t-a.hitAt)-Math.abs(t-b.hitAt))[0];key='rhythm:'+(note?.id||Math.floor(t));success=.73;
+ }
+ if(arcadeBotChance(w,p,key)<success)response.action=intent.action;
+ return response;
+}
 function arcadeHousekeep(now){
  const s=arcadeState;if(!s)return;
  if(!arcadeDemo&&(!netIsActive()||s.roomCode!==String(netRoom.code||'')||s.context!==arcadeBaseContext()||!(s.purpose==='lunch'?netPhase==='menuTournament':['setup','result'].includes(netPhase)))){arcadeCancel();return;}
@@ -2894,13 +3106,14 @@ function arcadeHousekeep(now){
  if(!arcadeDemo){const present=new Set(netMembers().map(m=>m.id));for(const m of s.members)if(!m.left&&!present.has(m.id)){m.left=true;if(s.phase==='invite')m.response='pass';else arcadeForfeit(m.id);}if(s.phase==='invite')arcadeMaybeStart();}
  if(s.phase==='between'&&Date.now()>=s.nextAt)arcadeStartWorld();
  if(s.phase==='round'&&s.world){if(!arcadePumpAt)arcadePumpAt=now;arcadeAccum+=Math.min(75,Math.max(0,now-arcadePumpAt));arcadePumpAt=now;
-  if(arcadeDemo&&now-arcadeBotAt>=180&&s.world.phase==='play'){arcadeBotAt=now;for(const p of s.world.players)if(p.id!==arcadeSelf()&&!p.eliminated&&!p.forfeited){const v=arcadeEngine.bot(s.world,p.id);let seq=arcadeBotSeq.get(p.id)||0;arcadeEngine.input(s.world,p.id,{seq:++seq,action:'sync',held:v.held||[]},now);if(v.action)arcadeEngine.input(s.world,p.id,{seq:++seq,action:v.action},now);arcadeBotSeq.set(p.id,seq);}}
-  while(arcadeAccum>=16&&s.world.phase!=='done'){arcadeEngine.step(s.world,.016,now);arcadeAccum-=16;}arcadeResolveRound();arcadeRenderSafe();arcadePublish(false);
+  if(arcadeDemo&&now-arcadeBotAt>=180&&s.world.phase==='play'){arcadeBotAt=now;for(const p of s.world.players)if(p.id!==arcadeSelf()&&!p.eliminated&&!p.forfeited){const v=arcadeNormalBot(s.world,p);let seq=arcadeBotSeq.get(p.id)||0;arcadeEngine.input(s.world,p.id,{seq:++seq,action:'sync',held:v.held||[]},now);if(v.action)arcadeEngine.input(s.world,p.id,{seq:++seq,action:v.action},now);arcadeBotSeq.set(p.id,seq);}}
+  while(arcadeAccum>=16&&s.world.phase!=='done'){arcadeEngine.step(s.world,.016,now);arcadeAccum-=16;}arcadeResolveRound();arcadePublish(false);
  }
 }
 setInterval(()=>{const now=performance.now();arcadeHousekeep(now);if(arcadeState?.phase==='round'&&arcadeState.world?.phase==='play'&&now-arcadeHeartbeatAt>=200){arcadeHeartbeatAt=now;arcadeInput('sync',typeof arcadeHeld==='function'?arcadeHeld():[]);}if(arcadeState?.phase==='between')arcadeRenderSafe();},32);
 netRoom.onDisconnect(e=>{if(e.self||e.hostLost)arcadeCancel();});
 /* END_ARCADE_CONTROLLER_V1 */
+
 /* MENU_TOURNAMENT_V1 */
 const menuTournamentSavedIds=new Set();
 function menuTournamentHideView(){const v=$('menuTournamentView');if(v)v.hidden=true;}
@@ -2996,6 +3209,7 @@ function lunchDecisionDuelFinished(){
 function lunchDecisionReturnReview(){
  const s=lunchDecisionState;if(!netIsHost()||!lunchDecisionActive()||s.phase!=='duel')return false;
  if(duel?.finishLocked&&duel.phase==='done')lunchDecisionDuelFinished();if(!lunchDecisionActive())return false;
+ if(!lunchDecisionResolvedDuels.has(s.duelId))s.notice='이의 결투가 취소됐어요. 기존 메뉴를 유지하며, 신청자의 이의 기회는 사용 처리돼요.';
  s.phase='review';s.duelId='';s.challengerId='';s.defenderId='';s.seq++;lunchDecisionReturnAt=0;netPhase='result';netDuelMeta=null;if(typeof cancelActionDuel==='function')cancelActionDuel();result.provisional=true;renderResult();if(!lunchDecisionFinalize())netPublish();return true;
 }
 function lunchDecisionHandle(senderId,cmd){
@@ -3072,6 +3286,7 @@ renderResult=function(){const out=lunchDecisionPreviousResult();lunchDecisionRen
 netRoom.onDisconnect(event=>{if(event.self||event.hostLost)lunchDecisionClear();});
 setInterval(lunchDecisionTick,200);
 /* END_LUNCH_DECISION_V1 */
+
 /* CHAMPION_DUEL_V1 */
 function championDuelScope(){
  if(typeof lunchDecisionGetState!=='function'||typeof netDuelMeta==='undefined'||!netDuelMeta||typeof netPhase==='undefined'||netPhase!=='duel'||typeof result==='undefined'||!result)return null;
@@ -3156,12 +3371,14 @@ const menuTournamentTrayButtons=trayUpdateButtons;
 trayUpdateButtons=function(){menuTournamentTrayButtons();for(const id of ['trayRoomBtn','trayResultBtn']){const b=$(id);if(b&&netPhase!=='result'||b&&result?.tournamentHistory)b.hidden=true;}};
 
 /* COFFEE_DELIVERY_V1 */
-let deliveryState=null,deliveryChosenId='',deliverySendSeq=0,deliveryUiId='',deliveryPanel=null,deliveryRosterKey='',deliveryOrdersKey='',deliveryScrolledId='';
+let deliveryState=null,deliveryDeadline=0,deliveryClockOffset=0,deliverySendSeq=0,deliveryUiId='',deliveryPanel=null,deliveryRosterKey='',deliveryOrdersKey='',deliveryScrolledId='',deliveryTargetsKey='';
+let deliveryStageActive=false,deliveryStageHome=null,deliveryStageSibling=null,deliveryStageReturnFocus=null,deliveryStageFocusKey='';
+const deliveryStageInert=[];
 const deliverySeen=new Map(),deliveryDrinks=['아이스 아메리카노','따뜻한 아메리카노','카페라테','디카페인','차'];
 function deliveryClone(v){return v?JSON.parse(JSON.stringify(v)):null;}
 function deliveryDrink(value){if(typeof value!=='string')return null;const s=value.normalize('NFC').replace(/[\u0000-\u001f\u007f]/g,' ').replace(/\s+/g,' ').trim();return s&&Array.from(s).length<=20?s:null;}
 function deliveryCurrent(){return !!deliveryState&&netIsActive()&&deliveryState.roomCode===String(netRoom.code||'')&&result?.id===deliveryState.roundId;}
-function deliveryCancel(){deliveryState=null;deliveryChosenId='';deliverySendSeq=0;deliveryUiId='';deliverySeen.clear();deliveryRosterKey='';deliveryOrdersKey='';deliveryScrolledId='';if(deliveryPanel)deliveryPanel.hidden=true;}
+function deliveryCancel(){deliverySetStage(false);deliveryState=null;deliveryDeadline=0;deliveryClockOffset=0;deliverySendSeq=0;deliveryUiId='';deliverySeen.clear();deliveryRosterKey='';deliveryOrdersKey='';deliveryScrolledId='';deliveryTargetsKey='';if(deliveryPanel)deliveryPanel.hidden=true;}
 function deliveryPublish(){if(netIsHost()&&!netApplying)netPublish();}
 function deliveryChanged(){if(deliveryState)deliveryState.seq++;deliveryRender();deliveryPublish();}
 function deliveryCandidates(){return deliveryState?.members.filter(m=>m.response==='join'&&!m.left)||[];}
@@ -3170,50 +3387,100 @@ function deliveryStart(roundId,members=netMembers()){
  if(deliveryCurrent()&&deliveryState.roundId===roundId)return true;
  const present=new Set(netMembers().map(m=>m.id)),list=(Array.isArray(members)?members:[]).filter(m=>m&&typeof m.id==='string'&&typeof m.name==='string'&&present.has(m.id)).slice(0,8);
  if(!list.length||new Set(list.map(m=>m.id)).size!==list.length)return false;
- deliveryCancel();deliveryState={id:'delivery_'+Date.now()+'_'+rand(1000000),roundId,roomCode:String(netRoom.code||''),seq:0,phase:'invite',members:list.map(m=>({id:m.id,name:m.name,response:'pending',drink:'',left:false})),winnerId:'',startAt:0,needsRedraw:false,notice:'커피를 마실 사람은 메뉴를 고르고, 안 마실 사람은 패스를 골라주세요.'};
+ deliveryCancel();deliveryState={id:'delivery_'+Date.now()+'_'+rand(1000000),roundId,roomCode:String(netRoom.code||''),seq:0,phase:'invite',members:list.map(m=>({id:m.id,name:m.name,response:'pending',drink:'',left:false})),winnerId:'',holderId:'',previousHolderId:'',startAt:0,passReadyAt:0,passes:0,needsRedraw:false,notice:'커피를 마실 사람은 메뉴를 고르고, 안 마실 사람은 패스를 골라주세요.'};
  deliveryEnsureUI();deliveryChanged();return true;
+}
+function deliveryFinish(winnerId,notice=''){
+ const s=deliveryState;if(!s||!netIsHost())return;
+ const winner=deliveryCandidates().find(m=>m.id===winnerId);s.phase='done';s.winnerId=winner?.id||'';s.holderId='';s.previousHolderId='';s.passReadyAt=0;s.needsRedraw=false;deliveryDeadline=0;
+ s.notice=notice||(winner?winner.name+' 님 컵이 터졌어요! 오늘의 커피 배달 담당입니다. 참가자들이 고른 음료를 함께 가져와주세요.':'오늘은 모두 커피 패스! 배달 담당도 없어요.');
+}
+function deliveryBeginBomb(){
+ const s=deliveryState;if(!netIsHost()||!s)return;const joined=deliveryCandidates();s.winnerId='';s.needsRedraw=false;s.previousHolderId='';s.passes=0;s.startAt=0;
+ if(joined.length<2){deliveryFinish(joined[0]?.id||'',joined.length?joined[0].name+' 님만 커피에 참가했어요. 오늘은 내 음료를 직접 가져와요 ☕':'');return;}
+ const now=Date.now();s.phase='spin';s.startAt=now;s.holderId=joined[rand(joined.length)].id;s.passReadyAt=now+650;
+ // The fuse exists only on the host. Passing or losing a participant never resets it.
+ deliveryDeadline=now+7000+rand(19001);s.notice='컵이 터질 때 들고 있으면 커피 배달 담당! 내 차례에는 받을 사람을 눌러요.';
 }
 function deliveryMaybeSpin(){
  const s=deliveryState;if(!netIsHost()||!s||s.phase!=='invite'||s.members.some(m=>m.response==='pending'&&!m.left))return;
- const joined=deliveryCandidates();s.winnerId='';s.needsRedraw=false;
- if(!joined.length){s.phase='done';s.startAt=0;deliveryChosenId='';s.notice='오늘은 모두 커피 패스! 배달 담당도 없어요.';}
- else{s.phase='spin';s.startAt=Date.now();deliveryChosenId=joined[rand(joined.length)].id;s.notice='배달 담당을 뽑고 있어요. 누가 커피를 가져올까요?';}
- deliveryChanged();
+ deliveryBeginBomb();deliveryChanged();
 }
 function deliveryHandle(senderId,cmd){
  if(typeof cmd?.t!=='string'||!cmd.t.startsWith('delivery'))return false;
  if(!netIsHost()||!deliveryCurrent()||!netMembers().some(m=>m.id===senderId))return true;
  const s=deliveryState,m=s.members.find(m=>m.id===senderId);
  if(!m||m.left||cmd.deliveryId!==s.id||cmd.roundId!==s.roundId||!Number.isSafeInteger(cmd.seq)||cmd.seq<1||cmd.seq<=(deliverySeen.get(senderId)||0))return true;
+ if(cmd.t==='deliveryThrow'&&s.phase==='spin'){
+  const now=Date.now();if(now>=deliveryDeadline){deliveryFinish(s.holderId);deliveryChanged();return true;}
+  const joined=deliveryCandidates(),target=joined.find(p=>p.id===cmd.targetId),present=new Set(netMembers().map(p=>p.id));
+  if(senderId!==s.holderId||m.response!=='join'||!target||target.id===senderId||!present.has(target.id)||now<s.passReadyAt||joined.length>2&&target.id===s.previousHolderId)return true;
+  deliverySeen.set(senderId,cmd.seq);s.previousHolderId=senderId;s.holderId=target.id;s.passReadyAt=now+650;s.passes++;s.notice=m.name+' → '+target.name+' 님에게 컵 배달!';deliveryChanged();return true;
+ }
  if(cmd.t==='deliveryReply'&&s.phase==='invite'&&['join','pass'].includes(cmd.response)){
   const drink=cmd.response==='join'?deliveryDrink(cmd.drink):'';if(cmd.response==='join'&&!drink)return true;
   deliverySeen.set(senderId,cmd.seq);m.response=cmd.response;m.drink=drink;s.notice=m.name+' 님 '+(m.response==='join'?'커피 참가!':'커피 패스!');deliveryChanged();deliveryMaybeSpin();return true;
  }
  if(cmd.t==='deliveryRedraw'&&senderId===netSelfId()&&s.phase==='done'&&s.needsRedraw&&deliveryCandidates().length){
-  deliverySeen.set(senderId,cmd.seq);s.phase='spin';s.startAt=Date.now();s.winnerId='';s.needsRedraw=false;const joined=deliveryCandidates();deliveryChosenId=joined[rand(joined.length)].id;s.notice='남아 있는 커피 참가자 중에서 배달 담당을 다시 뽑아요.';deliveryChanged();return true;
+  deliverySeen.set(senderId,cmd.seq);deliveryBeginBomb();deliveryChanged();return true;
  }
  return true;
 }
-function deliveryGetState(){if(!deliveryCurrent()){if(deliveryState)deliveryCancel();return null;}return {...deliveryClone(deliveryState),serverNow:Date.now()};}
+function deliveryPublicState(s){return deliveryClone({id:s.id,roundId:s.roundId,roomCode:s.roomCode,seq:s.seq,phase:s.phase,members:s.members.map(m=>({id:m.id,name:m.name,response:m.response,drink:m.drink,left:m.left})),winnerId:s.winnerId,holderId:s.holderId,previousHolderId:s.previousHolderId,startAt:s.startAt,passReadyAt:s.passReadyAt,passes:s.passes,needsRedraw:s.needsRedraw,notice:s.notice});}
+function deliveryGetState(){if(!deliveryCurrent()){if(deliveryState)deliveryCancel();return null;}return {...deliveryPublicState(deliveryState),serverNow:Date.now()};}
 function deliveryValidate(data){
- if(!data||typeof data.id!=='string'||data.id.length>100||typeof data.roundId!=='string'||data.roundId!==result?.id||data.roomCode!==String(netRoom.code||'')||!Number.isSafeInteger(data.seq)||data.seq<0||!['invite','spin','done'].includes(data.phase)||!Array.isArray(data.members)||data.members.length<1||data.members.length>8||typeof data.winnerId!=='string'||!Number.isFinite(data.startAt)||data.startAt<0||typeof data.notice!=='string'||data.notice.length>300||typeof data.needsRedraw!=='boolean')return false;
+ if(!data||typeof data.id!=='string'||data.id.length>100||typeof data.roundId!=='string'||data.roundId!==result?.id||data.roomCode!==String(netRoom.code||'')||!Number.isSafeInteger(data.seq)||data.seq<0||!['invite','spin','done'].includes(data.phase)||!Array.isArray(data.members)||data.members.length<1||data.members.length>8||typeof data.winnerId!=='string'||typeof data.holderId!=='string'||typeof data.previousHolderId!=='string'||!Number.isFinite(data.startAt)||data.startAt<0||!Number.isFinite(data.passReadyAt)||data.passReadyAt<0||!Number.isSafeInteger(data.passes)||data.passes<0||typeof data.notice!=='string'||data.notice.length>300||typeof data.needsRedraw!=='boolean')return false;
  if(data.members.some(m=>!m||typeof m.id!=='string'||!m.id||m.id.length>128||typeof m.name!=='string'||!m.name||Array.from(m.name).length>24||!['pending','join','pass'].includes(m.response)||typeof m.left!=='boolean'||(m.response==='join'?deliveryDrink(m.drink)!==m.drink:m.drink!==''))||new Set(data.members.map(m=>m.id)).size!==data.members.length)return false;
  if(data.phase!=='done'&&data.winnerId)return false;
  if(data.winnerId&&!data.members.some(m=>m.id===data.winnerId&&m.response==='join'&&!m.left))return false;
- if(data.phase==='spin'&&(!data.startAt||data.members.some(m=>m.response==='pending'&&!m.left)||!data.members.some(m=>m.response==='join'&&!m.left)))return false;
+ if(data.previousHolderId&&!data.members.some(m=>m.id===data.previousHolderId))return false;
+ if(data.needsRedraw&&(data.phase!=='done'||data.winnerId||!data.members.some(m=>m.response==='join'&&!m.left)))return false;
+ if(data.phase==='spin'&&(!data.startAt||data.needsRedraw||data.members.some(m=>m.response==='pending'&&!m.left)||data.members.filter(m=>m.response==='join'&&!m.left).length<2||!data.members.some(m=>m.id===data.holderId&&m.response==='join'&&!m.left)))return false;
+ if(data.phase!=='spin'&&(data.holderId||data.previousHolderId||data.passReadyAt))return false;
  return true;
 }
 function deliveryReceive(data){
  if(netIsHost())return false;if(!data){deliveryCancel();return false;}if(!deliveryValidate(data))return false;
- if(deliveryState?.id===data.id&&data.seq<deliveryState.seq)return false;const fresh=deliveryState?.id!==data.id;deliveryState=deliveryClone(data);deliveryChosenId='';
- if(fresh){deliverySendSeq=0;deliveryUiId='';deliverySeen.clear();deliveryRosterKey='';deliveryOrdersKey='';}
+ if(deliveryState?.id===data.id&&data.seq<deliveryState.seq)return false;const fresh=deliveryState?.id!==data.id;deliveryState=deliveryPublicState(data);deliveryDeadline=0;deliveryClockOffset=Number.isFinite(data.serverNow)?data.serverNow-Date.now():0;
+ if(fresh){deliverySendSeq=0;deliveryUiId='';deliverySeen.clear();deliveryRosterKey='';deliveryOrdersKey='';deliveryTargetsKey='';}
  deliveryEnsureUI();deliveryRender();return true;
 }
 function deliverySend(cmd){if(!deliveryState)return;netRoom.send({...cmd,deliveryId:deliveryState.id,roundId:deliveryState.roundId,seq:++deliverySendSeq});}
+function deliveryStageChatContains(node){return !!node&&!!document.getElementById('roomChatDock')?.contains(node);}
+function deliveryStageFocusable(){
+ const dock=document.getElementById('roomChatDock'),selector='button:not(:disabled),input:not(:disabled),textarea:not(:disabled),select:not(:disabled),a[href],[tabindex]:not([tabindex="-1"])';
+ return [deliveryPanel,dock].filter(Boolean).flatMap(root=>[...root.querySelectorAll(selector)]).filter(n=>!n.hidden&&!n.closest('[hidden]')&&!n.closest('[inert]')&&n.getClientRects().length);
+}
+function deliverySetStage(active){
+ if(typeof document==='undefined'||!deliveryPanel)return;
+ if(active&&!deliveryStageActive){
+  deliveryStageActive=true;deliveryStageHome=deliveryPanel.parentElement;deliveryStageSibling=deliveryPanel.nextSibling;deliveryStageReturnFocus=document.activeElement;deliveryStageFocusKey='';
+  // A body-level stage cannot be clipped by the result card or its layout containers.
+  document.body.append(deliveryPanel);document.body.classList.add('delivery-game-active');deliveryPanel.tabIndex=-1;
+  const dock=document.getElementById('roomChatDock');for(const n of document.body.children){if(n===deliveryPanel||n===dock||n.contains(dock)||['SCRIPT','STYLE','LINK'].includes(n.tagName))continue;if('inert'in n){deliveryStageInert.push({node:n,value:n.inert});n.inert=true;}}
+  deliveryPanel.focus({preventScroll:true});
+ }else if(!active&&deliveryStageActive){
+  deliveryStageActive=false;document.body.classList.remove('delivery-game-active');for(const entry of deliveryStageInert)entry.node.inert=entry.value;deliveryStageInert.length=0;
+  if(deliveryStageHome?.isConnected){deliveryStageHome.insertBefore(deliveryPanel,deliveryStageSibling?.parentNode===deliveryStageHome?deliveryStageSibling:null);}else document.getElementById('resultView')?.append(deliveryPanel);
+  const prior=deliveryStageReturnFocus;deliveryStageHome=null;deliveryStageSibling=null;deliveryStageReturnFocus=null;deliveryStageFocusKey='';
+  if(!deliveryStageChatContains(document.activeElement)&&prior?.isConnected&&!prior.disabled&&!prior.closest('[hidden],[inert]'))prior.focus?.({preventScroll:true});
+ }
+ if(active&&deliveryStageActive){
+  const s=deliveryState,mine=s?.holderId===netSelfId(),ready=Date.now()+deliveryClockOffset>=(s?.passReadyAt||0),key=s?.holderId+':'+s?.passes;
+  if(mine&&ready&&deliveryStageFocusKey!==key&&!deliveryStageChatContains(document.activeElement)){const target=deliveryStageFocusable().find(n=>n.matches('[data-delivery-target]'));if(target){target.focus({preventScroll:true});deliveryStageFocusKey=key;}}
+  else if(document.activeElement?.disabled&&deliveryPanel.contains(document.activeElement))deliveryPanel.focus({preventScroll:true});
+ }
+}
+function deliveryStageKeydown(event){
+ if(!deliveryStageActive||event.key!=='Tab')return;const list=deliveryStageFocusable(),current=document.activeElement,index=list.indexOf(current);event.preventDefault();
+ const next=index<0?(event.shiftKey?list.length-1:0):(index+(event.shiftKey?-1:1)+list.length)%list.length;(list.length?list[next]:deliveryPanel).focus({preventScroll:true});
+}
 function deliveryEnsureUI(){
  if(deliveryPanel)return;const view=$('resultView');if(!view)return;
  deliveryPanel=el('section','coffee-delivery');deliveryPanel.id='coffeeDeliveryPanel';deliveryPanel.hidden=true;deliveryPanel.setAttribute('aria-labelledby','deliveryTitle');
  deliveryPanel.innerHTML='<header class="delivery-head"><div><span>AFTER LUNCH · 자율 참가</span><h3 id="deliveryTitle">커피는 자유 참가 ☕</h3><p>마실 메뉴를 고르면, 참가자 중 한 명이 커피 배달 담당!</p></div><b class="delivery-cup" aria-hidden="true">☕</b></header><div class="delivery-body"><div class="delivery-main"><div id="deliveryPick" class="delivery-pick"><label for="deliveryDrinkSelect">내 커피 메뉴</label><select id="deliveryDrinkSelect" aria-label="내 커피 메뉴"></select><input id="deliveryCustomDrink" type="text" maxlength="40" placeholder="마실 메뉴 · 20자까지" aria-label="직접 입력할 커피 메뉴" hidden><div class="delivery-choice-actions"><button id="deliveryJoinBtn" class="btn primary" type="button">이 메뉴로 커피 참가</button><button id="deliveryPassBtn" class="btn" type="button">이번엔 안 마실래</button></div><small id="deliveryMyChoice"></small></div><div id="deliveryDraw" class="delivery-draw" hidden><span id="deliveryDrawCaption"></span><strong id="deliveryDrawName"></strong><small id="deliveryDrawHint"></small><button id="deliveryRedrawBtn" class="btn primary" type="button" hidden>배달 담당 다시 뽑기</button></div><p id="deliveryNotice" class="delivery-notice" role="status" aria-live="polite"></p><div id="deliveryRoster" class="delivery-roster"></div></div><aside class="delivery-order-box"><h4>함께 가져올 메뉴</h4><div id="deliveryOrders"></div><p id="deliveryCount"></p></aside></div>';
+ const cup=el('div','delivery-bomb-art');cup.id='deliveryBombArt';cup.setAttribute('aria-hidden','true');cup.innerHTML='<i>☕</i><b>⊙_⊙</b>';const draw=deliveryPanel.querySelector('#deliveryDraw');draw.insertBefore(cup,draw.firstChild);
+ const targets=el('div','delivery-targets');targets.id='deliveryTargets';targets.setAttribute('aria-label','커피 컵을 받을 사람');draw.append(targets);
  view.append(deliveryPanel);
  const select=$('deliveryDrinkSelect');if(select&&!select.options.length)for(const d of [...deliveryDrinks,'직접 입력']){const o=el('option','',d);o.value=d;select.append(o);}
  select.addEventListener('change',()=>{$('deliveryCustomDrink').hidden=select.value!=='직접 입력';deliveryRenderControls();});
@@ -3221,6 +3488,9 @@ function deliveryEnsureUI(){
  $('deliveryJoinBtn').addEventListener('click',()=>{const drink=deliveryDrink(select.value==='직접 입력'?$('deliveryCustomDrink').value:select.value);if(!drink){$('deliveryMyChoice').textContent='마실 메뉴를 1~20자로 적어주세요.';return;}deliverySend({t:'deliveryReply',response:'join',drink});});
  $('deliveryPassBtn').addEventListener('click',()=>deliverySend({t:'deliveryReply',response:'pass'}));
  $('deliveryRedrawBtn').addEventListener('click',()=>deliverySend({t:'deliveryRedraw'}));
+ targets.addEventListener('click',event=>{const b=event.target.closest('[data-delivery-target]');if(b&&!b.disabled)deliverySend({t:'deliveryThrow',targetId:b.dataset.deliveryTarget});});
+ document.addEventListener('keydown',deliveryStageKeydown,true);
+ document.addEventListener('focusin',event=>{if(deliveryStageActive&&!deliveryPanel.contains(event.target)&&!deliveryStageChatContains(event.target))deliveryPanel.focus({preventScroll:true});});
  deliveryRender();
 }
 function deliveryRenderControls(){
@@ -3228,8 +3498,8 @@ function deliveryRenderControls(){
  $('deliveryDrinkSelect').disabled=!can;$('deliveryCustomDrink').disabled=!can;$('deliveryCustomDrink').hidden=!custom;$('deliveryJoinBtn').disabled=!can||custom&&!deliveryDrink($('deliveryCustomDrink').value);$('deliveryPassBtn').disabled=!can;
 }
 function deliveryRender(){
- if(!deliveryPanel)return;const s=deliveryState;deliveryPanel.hidden=!s||!deliveryCurrent()||netPhase!=='result';if(deliveryPanel.hidden)return;
- const own=s.members.find(m=>m.id===netSelfId());if(deliveryUiId!==s.id){deliveryUiId=s.id;const drink=own?.drink||deliveryDrinks[0],preset=deliveryDrinks.includes(drink);$('deliveryDrinkSelect').value=preset?drink:'직접 입력';$('deliveryCustomDrink').value=preset?'':drink;}
+ if(!deliveryPanel)return;const s=deliveryState;deliveryPanel.hidden=!s||!deliveryCurrent()||netPhase!=='result';if(deliveryPanel.hidden){deliverySetStage(false);return;}
+ deliveryPanel.dataset.phase=s.phase;const own=s.members.find(m=>m.id===netSelfId());if(deliveryUiId!==s.id){deliveryUiId=s.id;const drink=own?.drink||deliveryDrinks[0],preset=deliveryDrinks.includes(drink);$('deliveryDrinkSelect').value=preset?drink:'직접 입력';$('deliveryCustomDrink').value=preset?'':drink;}
  $('deliveryPick').hidden=s.phase!=='invite'||!own||own.left;$('deliveryDraw').hidden=s.phase==='invite';deliveryRenderControls();
  $('deliveryMyChoice').textContent=own?.response==='join'?'내 선택: '+own.drink+' · 참가 중':own?.response==='pass'?'내 선택: 이번에는 커피 패스':'참가 또는 패스를 고르면, 모두 선택한 뒤 자동으로 돌려요.';
  $('deliveryNotice').textContent=s.notice;$('deliveryRedrawBtn').hidden=!(netIsHost()&&s.phase==='done'&&s.needsRedraw&&deliveryCandidates().length);
@@ -3238,12 +3508,16 @@ function deliveryRender(){
  const joined=deliveryCandidates(),orders=new Map();for(const m of joined)orders.set(m.drink,(orders.get(m.drink)||0)+1);const orderKey=JSON.stringify([...orders]);if(orderKey!==deliveryOrdersKey){deliveryOrdersKey=orderKey;const list=$('deliveryOrders');list.replaceChildren();if(!orders.size)list.append(el('p','delivery-empty','참가자가 고른 메뉴가 여기에 모여요.'));for(const [drink,count]of orders){const line=el('div','delivery-order');line.append(el('span','',drink),el('strong','',count+'잔'));list.append(line);}}
  $('deliveryCount').textContent='커피 참가 '+joined.length+'명 · 총 '+joined.length+'잔';
  deliveryRenderDraw();
+ $('deliveryTitle').textContent=s.phase==='spin'?'커피 폭탄 떠넘기기 ☕':'커피는 자유 참가 ☕';deliverySetStage(s.phase==='spin');
  if(deliveryScrolledId!==s.id&&typeof requestAnimationFrame==='function'&&typeof deliveryPanel.scrollIntoView==='function'){const revealId=s.id;deliveryScrolledId=revealId;requestAnimationFrame(()=>{if(deliveryState?.id!==revealId||!deliveryCurrent()||deliveryPanel?.hidden)return;const still=typeof matchMedia==='function'&&matchMedia('(prefers-reduced-motion: reduce)').matches;deliveryPanel.scrollIntoView({behavior:still?'auto':'smooth',block:'start'});});}
 }
 function deliveryRenderDraw(){
  const s=deliveryState;if(!s||!deliveryPanel||deliveryPanel.hidden||s.phase==='invite')return;const joined=deliveryCandidates();deliveryPanel.dataset.phase=s.phase;
- if(s.phase==='spin'){$('deliveryDrawCaption').textContent='커피 배달 담당 돌리는 중…';const elapsed=Math.max(0,Date.now()-s.startAt),index=joined.length?Math.floor(elapsed/110)%joined.length:0;$('deliveryDrawName').textContent=joined[index]?.name||'☕';$('deliveryDrawHint').textContent=joined.length===1?'혼자 마셔도 커피는 소중하니까 ☕':'커피 가져올 사람은 과연 누구?';}
+ const playing=s.phase==='spin',mine=playing&&s.holderId===netSelfId(),ready=Date.now()+deliveryClockOffset>=s.passReadyAt,holder=joined.find(m=>m.id===s.holderId);deliveryPanel.dataset.mine=String(mine);$('deliveryBombArt').hidden=!playing&&(!s.winnerId||!s.startAt);$('deliveryBombArt').querySelector('b').textContent=playing?(mine?'⊙_⊙':'ㅡ_ㅡ'):'X﹏X';
+ if(playing){$('deliveryDrawCaption').textContent=mine?'내 컵이다. 받을 사람을 눌러!':'컵을 피하는 중…';$('deliveryDrawName').textContent=(holder?.name||'')+' 님이 컵 들고 있음';$('deliveryDrawHint').textContent='언제 터질지는 아무도 몰라요. '+(joined.length>2?'방금 준 사람에게 반송 금지!':'서로 번갈아 넘겨요!');}
  else{const winner=s.members.find(m=>m.id===s.winnerId);$('deliveryDrawCaption').textContent=winner?'오늘의 커피 배달 담당':s.needsRedraw?'배달 담당을 다시 골라주세요':'오늘은 커피 패스';$('deliveryDrawName').textContent=winner?winner.name+' ☕':s.needsRedraw?'다시 돌릴까?':'각자 맛점!';$('deliveryDrawHint').textContent=winner?'아래 메뉴 '+joined.length+'잔을 함께 가져와주세요.':s.needsRedraw?'남은 참가자 중에서 다시 뽑을 수 있어요.':'모두의 선택을 반영했어요.';}
+ const targets=$('deliveryTargets');targets.hidden=!playing;const targetKey=joined.map(m=>m.id+':'+m.name).join('|');if(targetKey!==deliveryTargetsKey){deliveryTargetsKey=targetKey;targets.replaceChildren();for(const m of joined){const b=el('button','delivery-target');b.type='button';b.title=m.name;b.dataset.deliveryTarget=m.id;b.append(el('strong','',m.name+(m.id===netSelfId()?' · 나':'')),el('small'));targets.append(b);}}
+ for(const b of targets.children){const id=b.dataset.deliveryTarget,blocked=joined.length>2&&id===s.previousHolderId;b.classList.toggle('is-holder',playing&&id===s.holderId);b.disabled=!playing||!mine||!ready||id===netSelfId()||blocked;b.querySelector('small').textContent=id===s.holderId?'☕ 컵 보유':mine&&blocked?'반송 금지':mine?'여기로 넘기기':'컵 피하는 중';}
 }
 function deliveryHousekeep(){
  const s=deliveryState;if(!s)return;if(!deliveryCurrent()){deliveryCancel();return;}if(!netIsHost())return;
@@ -3251,18 +3525,22 @@ function deliveryHousekeep(){
  for(const m of s.members)if(!m.left&&!present.has(m.id)){m.left=true;m.response='pass';m.drink='';changed=true;}
  if(changed){
   const joined=deliveryCandidates();
-  if(s.phase==='spin'&&!joined.some(m=>m.id===deliveryChosenId)){if(joined.length){deliveryChosenId=joined[rand(joined.length)].id;s.startAt=Date.now();s.notice='참가자가 나가 남은 커피 참가자끼리 다시 돌려요.';}else{s.phase='done';s.startAt=0;deliveryChosenId='';s.winnerId='';s.notice='커피 참가자가 없어 배달 담당 없이 마쳤어요.';}}
+  if(s.phase==='spin'){
+   if(joined.length<2)deliveryFinish(joined[0]?.id||'',joined.length?joined[0].name+' 님만 남았어요. 오늘의 커피 배달 담당입니다 ☕':'커피 참가자가 없어 배달 담당 없이 마쳤어요.');
+   else if(!joined.some(m=>m.id===s.holderId)){s.holderId=joined[rand(joined.length)].id;s.previousHolderId='';s.passReadyAt=Date.now()+650;s.notice='컵을 들던 사람이 나가 남은 참가자에게 컵을 넘겼어요.';}
+  }
   if(s.phase==='done'&&s.winnerId&&!joined.some(m=>m.id===s.winnerId)){s.winnerId='';s.needsRedraw=joined.length>0;s.notice=joined.length?'배달 담당이 나갔어요. 남은 참가자 중에서 다시 뽑아주세요.':'커피 참가자가 모두 나갔어요.';}
   deliveryChanged();deliveryMaybeSpin();
  }
- if(s.phase==='spin'&&Date.now()-s.startAt>=3500){const winner=deliveryCandidates().find(m=>m.id===deliveryChosenId);s.phase='done';s.winnerId=winner?.id||'';s.needsRedraw=false;s.notice=winner?winner.name+' 님이 오늘의 커피 배달 담당! 참가자들이 고른 메뉴를 함께 가져와주세요.':'이번에는 커피 배달 담당 없이 마쳤어요.';deliveryChosenId='';deliveryChanged();}
+ if(s.phase==='spin'&&Date.now()>=deliveryDeadline){deliveryFinish(s.holderId);deliveryChanged();}
 }
 setInterval(()=>{deliveryHousekeep();deliveryRender();},200);netRoom.onDisconnect(e=>{if(e.self||e.hostLost)deliveryCancel();});
 /* END_COFFEE_DELIVERY_V1 */
 
 /* LUNCH_FINALE_V2 */
 let lunchFinaleDialog=null,lunchFinaleReplay=null,lunchFinaleRoom='',lunchFinaleRound='',lunchFinaleShownKey='',lunchFinaleFocus=null,lunchFinaleSoundTimers=[],lunchFinaleStartedAt=0,lunchFinaleCurrentScene=-1;
-const lunchFinaleSeen=new Set(),lunchFinaleSceneTimes=[0,3500,11000,17500,26000,39000],lunchFinaleSceneLabels=['상영을 시작합니다','오늘의 점심','커피 원정대','밥친구 퍼레이드','오늘의 출연진','우리의 오후를 응원하며'],lunchFinaleDuration=49000;
+let lunchFinaleSceneTimes=[0,3500,11000,17500,26000,39000],lunchFinaleDuration=49000;
+const lunchFinaleSeen=new Set(),lunchFinaleSceneLabels=['상영을 시작합니다','오늘의 점심','커피 원정대','밥친구 퍼레이드','오늘의 출연진','우리의 오후를 응원하며'];
 function lunchFinaleData(){
  if(!netIsActive()||netPhase!=='result'||!result||result.provisional!==false||!result.id||typeof result.menu!=='string'||!result.menu||typeof result.person!=='string'||!result.person)return null;
  const decision=typeof lunchDecisionGetState==='function'?lunchDecisionGetState():null,delivery=typeof deliveryGetState==='function'?deliveryGetState():null;
@@ -3307,16 +3585,27 @@ function lunchFinaleBuild(data){
  people.forEach((name,i)=>{const mascot=el('div','film-mascot');mascot.style.setProperty('--march-delay',(-i*.19)+'s');mascot.style.setProperty('--tilt',((i%2?1:-1)*(3+i%4))+'deg');mascot.style.setProperty('--mascot-color',['#b9d67e','#c5a0df','#eda992','#8dccca','#e6c675','#b6c6e4','#dcac98','#c1c7a0'][i%8]);mascot.dataset.odd=String(i%4);const sprite=el('div','film-mascot-sprite');sprite.innerHTML=deptAvatarSvg(['business','accounting','hotel','tourism','economics','japanese','translation','international'][i%8]);mascot.append(el('b','film-mascot-sign',tags[i%tags.length]),sprite,el('small','film-mascot-name',name));parade.append(mascot);});
  const final=$('lunchFinaleFinalMascots');final.innerHTML=deptAvatarSvg('business')+deptAvatarSvg('accounting')+deptAvatarSvg('hotel');
 }
+function lunchFinalePlan(data){
+ const cast=Math.max(1,Math.min(8,data.names?.length||1)),creditDuration=14500+cast*1200;
+ lunchFinaleSceneTimes=[0,3500,11000,17500,26000,26000+creditDuration];lunchFinaleDuration=36000+creditDuration;
+ if(lunchFinaleDialog?.style?.setProperty)lunchFinaleDialog.style.setProperty('--film-credit-duration',creditDuration+'ms');
+}
+function lunchFinaleCreditLayout(){
+ const roll=$('lunchFinaleCreditRoll'),window=roll?.parentElement;
+ if(!roll?.style?.setProperty)return;
+ roll.style.setProperty('--film-credit-start',Math.max(100,window?.clientHeight||300)+'px');
+ roll.style.setProperty('--film-credit-end',(-Math.max(100,roll.scrollHeight||900))+'px');
+}
 function lunchFinaleSceneAt(elapsed){let scene=0;for(let i=1;i<lunchFinaleSceneTimes.length;i++)if(elapsed>=lunchFinaleSceneTimes[i])scene=i;return scene;}
 function lunchFinaleAdvance(now=lunchFinaleNow()){
  if(!lunchFinaleDialog?.open)return;const elapsed=Math.max(0,now-lunchFinaleStartedAt);if(elapsed>=lunchFinaleDuration){lunchFinaleClose();return;}
  const scene=lunchFinaleSceneAt(elapsed);
- if(scene!==lunchFinaleCurrentScene){lunchFinaleCurrentScene=scene;lunchFinaleDialog.dataset.scene=String(scene);lunchFinaleDialog.querySelectorAll('[data-film-scene]').forEach((node,i)=>{node.hidden=i!==scene;node.classList.toggle('is-current',i===scene);});$('lunchFinaleSceneName').textContent=lunchFinaleSceneLabels[scene];if(scene===3&&$('lunchFinaleParade').style?.setProperty)$('lunchFinaleParade').style.setProperty('--parade-start',Math.max(300,(lunchFinaleDialog.clientWidth||1000)-4)+'px');lunchFinaleTone(scene);}
+ if(scene!==lunchFinaleCurrentScene){lunchFinaleCurrentScene=scene;lunchFinaleDialog.dataset.scene=String(scene);lunchFinaleDialog.querySelectorAll('[data-film-scene]').forEach((node,i)=>{node.hidden=i!==scene;node.classList.toggle('is-current',i===scene);});$('lunchFinaleSceneName').textContent=lunchFinaleSceneLabels[scene];if(scene===3&&$('lunchFinaleParade').style?.setProperty)$('lunchFinaleParade').style.setProperty('--parade-start',Math.max(300,(lunchFinaleDialog.clientWidth||1000)-4)+'px');if(scene===4)lunchFinaleCreditLayout();lunchFinaleTone(scene);}
  $('lunchFinaleProgressFill').style.width=(elapsed/lunchFinaleDuration*100).toFixed(2)+'%';
 }
 function lunchFinaleOpen(replay=false){
  const data=lunchFinaleData();if(!data||!replay&&lunchFinaleSeen.has(data.key))return false;
- lunchFinaleEnsureUI();lunchFinaleEnsureReplay();lunchFinaleBuild(data);lunchFinaleShownKey=data.key;lunchFinaleSeen.add(data.key);if(lunchFinaleSeen.size>20)lunchFinaleSeen.delete(lunchFinaleSeen.values().next().value);
+ lunchFinaleEnsureUI();lunchFinaleEnsureReplay();lunchFinaleBuild(data);lunchFinalePlan(data);lunchFinaleShownKey=data.key;lunchFinaleSeen.add(data.key);if(lunchFinaleSeen.size>20)lunchFinaleSeen.delete(lunchFinaleSeen.values().next().value);
  if(!lunchFinaleDialog.open)lunchFinaleFocus=document.activeElement;lunchFinaleStopSound();lunchFinaleCurrentScene=-1;lunchFinaleStartedAt=lunchFinaleNow();if(!lunchFinaleDialog.open)lunchFinaleDialog.showModal();lunchFinaleAdvance();$('lunchFinaleCloseBtn').focus({preventScroll:true});return true;
 }
 function lunchFinaleTick(){
@@ -3329,6 +3618,53 @@ function lunchFinaleTick(){
 }
 setInterval(lunchFinaleTick,100);netRoom.onDisconnect(e=>{if(e.self||e.hostLost)lunchFinaleReset();});
 /* END_LUNCH_FINALE_V2 */
+
+/* PRACTICE_NORMAL_DIFFICULTY_V1 */
+// Only the two legacy solo practices use these brains. Human multiplayer rules stay unchanged.
+function practiceNormalSeed(value){let seed=2166136261;for(const c of String(value)){seed^=c.charCodeAt(0);seed=Math.imul(seed,16777619);}return seed>>>0;}
+function practiceNormalRoll(brain){brain.randomState=(Math.imul(brain.randomState,1664525)+1013904223)>>>0;return brain.randomState/4294967296;}
+function practiceNormalBrain(store,id,sessionId,t,index=0){
+ let b=store.get(id);if(!b||b.normalSession!==sessionId||t<(b.lastTime??-1)-.05){
+  b={seq:b?.seq||0,normalSession:sessionId,randomState:practiceNormalSeed(sessionId+':'+id),lastTime:t,targetId:'',targetUntil:0,next:t+.35+index*.08,attackNext:t+1.7+index*.2,beamNext:t+3.8+index*.5,jumpNext:t+.8,dash:t+2.8+index*.3};store.set(id,b);
+ }
+ b.lastTime=t;return b;
+}
+function practiceNormalTarget(brain,others,distance,t){
+ let target=others.find(p=>p.id===brain.targetId);if(!target||t>=brain.targetUntil){const sorted=others.slice().sort((a,b)=>distance(a)-distance(b));target=sorted[practiceNormalRoll(brain)<.18&&sorted.length>1?1:0];brain.targetId=target?.id||'';brain.targetUntil=t+1.1+practiceNormalRoll(brain)*.65;}
+ return target;
+}
+arcadeBotStep=function arcadeNormalBotStep(){
+ const s=brawlState;if(netIsActive()||!arcadePractice||!s||s.phase!=='fight')return;const t=s.clock,alive=brawlAlive();
+ for(const f of alive.filter(p=>p.id!=='practice-you')){
+  const b=practiceNormalBrain(arcadePractice.bots,f.id,s.id,t,f.index);if(t<b.next)continue;b.next=t+.42+practiceNormalRoll(b)*.22;
+  const send=(action,held=true)=>brawlHostInput(f.id,{seq:++b.seq,action,held}),other=practiceNormalTarget(b,alive.filter(p=>p!==f),p=>Math.abs(p.x-f.x),t);if(!other){send('sync',[]);continue;}
+  // A missed read leaves a short opening instead of tracking perfectly every frame.
+  if(t<(f.stun||0)||practiceNormalRoll(b)<.14){send('sync',[]);continue;}
+  const dx=other.x-f.x+(practiceNormalRoll(b)-.5)*52,dy=other.y-f.y;send('sync',Math.abs(dx)>103?[dx>0?'right':'left']:[]);
+  if(Math.abs(dx)<128&&Math.abs(dy)<70&&t>=b.attackNext){b.attackNext=t+1.65+practiceNormalRoll(b)*.75;if(practiceNormalRoll(b)<.74){send('attack');continue;}}
+  const projectile=(s.projectiles||[]).some(p=>p.active&&p.owner!==f.id&&Math.abs(p.x-f.x)<85),canJump=(f.jumps||0)<2&&(f.jumps===0||practiceNormalRoll(b)<.35);
+  if(canJump&&t>=b.jumpNext&&(dy>45||projectile&&practiceNormalRoll(b)<.35||Math.abs(dx)<105&&practiceNormalRoll(b)<.13)){send('jump');b.jumpNext=t+.9+practiceNormalRoll(b)*.55;continue;}
+  if(Math.abs(dx)>250&&Math.abs(dx)<650&&Math.abs(dy)<65&&t>=b.beamNext){b.beamNext=t+4+practiceNormalRoll(b)*2;if(practiceNormalRoll(b)<.55)send('beam');}
+ }
+};
+trayBotStep=function trayNormalBotStep(now){
+ const w=trayState?.world;if(netIsActive()||!trayDemo||!w||w.phase!=='play')return;const t=w.elapsed,alive=w.players.filter(p=>!p.eliminated&&!p.forfeited),exists=z=>!!z&&(!Number.isFinite(z.goneAt)||z.goneAt>t),warned=z=>exists(z)&&Number.isFinite(z.warningAt)&&z.warningAt<=t;
+ const tileAt=(x,y)=>{const col=Math.floor((x-70)/80),row=Math.floor((y-70)/80);return row>=0&&row<7&&col>=0&&col<7?w.tiles[row*7+col]:null;};
+ for(const p of alive.filter(p=>p.id!=='tray-you')){
+  const b=practiceNormalBrain(trayBotBrains,p.id,w.id,t,p.index);if(t<b.next)continue;b.next=t+.44+practiceNormalRoll(b)*.23;
+  const send=(action,held)=>trayEngine.input(w,p.id,{seq:++b.seq,action,held},now),target=practiceNormalTarget(b,alive.filter(q=>q!==p),q=>Math.hypot(q.x-p.x,q.y-p.y),t);if(!target||practiceNormalRoll(b)<.12){send('sync',[]);continue;}
+  let x=target.x+(practiceNormalRoll(b)-.5)*48,y=target.y+(practiceNormalRoll(b)-.5)*48,avoiding=false;
+  const ahead=tileAt(p.x+Math.sign(x-p.x)*46,p.y+Math.sign(y-p.y)*46);
+  // React to visible holes/red tiles, rather than reading their exact future collapse time.
+  if(!exists(ahead)||warned(ahead)&&practiceNormalRoll(b)<.65){
+   const safe=w.tiles.filter(z=>exists(z)&&!warned(z)).sort((a,b)=>Math.hypot(110+a.col*80-p.x,110+a.row*80-p.y)-Math.hypot(110+b.col*80-p.x,110+b.row*80-p.y))[0];
+   if(safe){x=110+safe.col*80;y=110+safe.row*80;avoiding=true;}
+  }
+  const held=[];if(Math.abs(x-p.x)>26)held.push(x>p.x?'right':'left');if(Math.abs(y-p.y)>26)held.push(y>p.y?'down':'up');send('sync',held);
+  if(!avoiding&&held.length&&Math.hypot(target.x-p.x,target.y-p.y)<91&&t>=b.dash){b.dash=t+4.2+practiceNormalRoll(b)*1.6;if(practiceNormalRoll(b)<.66)send('dash',true);}
+ }
+};
+/* END_PRACTICE_NORMAL_DIFFICULTY_V1 */
 
 arcadeInstall();arcadeTenInstall();
 /* FIVE_NEW_GAMES_END */
