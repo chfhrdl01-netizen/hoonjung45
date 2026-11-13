@@ -1042,7 +1042,7 @@ body:has(#winnerAwardDialog[open]){overflow:hidden}
 <div class="help-line"><b>1. 오늘 점심 주문에 동의하고 입장</b>각자 닉네임을 입력하고 주문 참여 동의에 직접 체크해요. 방장은 새 방을 만들고 초대 링크나 방 코드를 공유하세요. 최대 8명이 같은 방에 참여해요.</div>
 <div class="help-line"><b>2. 내가 걸고 싸울 메뉴 딱 하나 선택</b>각자 먹고 싶은 메뉴 하나와 학과 캐릭터를 골라요. 다른 메뉴를 누르면 선택이 바뀌어요. 준비 완료 뒤 바꾸려면 먼저 준비를 취소하세요.</div>
 <div class="help-line"><b>3. 전원 5라운드 점수전</b>2~8명 모두 다섯 판 끝까지 함께해요. 매판 순위에 따라 1등은 참가 인원만큼, 그다음은 1점씩 적게 받아요. 동순위는 같은 점수! 2명일 땐 2인전에 맞는 게임으로 진행해요. 공동 1위만 짧게 재경기하며, 3회 모두 동점이면 공동 1위 중 같은 확률로 추첨해요.</div>
-<div class="help-line"><b>4. 본선 1위 대기 → 난투 도전자 → 동등한 결승</b>3명 이상이면 본선 1위를 제외한 참가자들이 난투를 해요. 난투 우승자는 본선 1위와 같은 체력·크기로 1대1 결승! 2명일 땐 본선 결과로 시상식을 진행해요. 우승자만 10초간 소감을 말할 수 있고, 이후 각자 1번의 이의신청 또는 메뉴 승낙을 골라요.</div>
+<div class="help-line"><b>4. 본선 1위 대기 → 난투 도전자 → 동등한 결승</b>3명 이상이면 본선 1위를 제외한 참가자들이 난투를 해요. 난투 우승자는 본선 1위와 같은 체력·크기로 1대1 결승! 2명일 땐 본선 결과로 시상식을 진행해요. 우승자만 30초간 소감을 말할 수 있고, 이후 각자 1번의 이의신청 또는 메뉴 승낙을 골라요.</div>
 <div class="help-line"><b>방 연결과 참여 취소</b>방장은 이 브라우저를 열어두세요. 페이지를 닫거나 연결이 끊기면 기권 처리되고 나머지는 계속 진행해요. 주문에 참여하지 않으려면 ‘주문 참여 취소하고 나가기’를 누르세요. 방장이 나가면 방이 종료돼요.</div>
 <div class="help-line"><b>5. 모두 승낙하면 작은 커피 팝업</b>커피 참가와 음료는 자유롭게 골라요. 2명 이상이면 언제 터질지 모르는 컵을 넘기고, 터질 때 들고 있던 사람이 배달 담당! 1명은 단독 담당, 모두 패스하면 커피 없이 끝나요. 엔딩에 점심·커피 주문과 @mid_jhs가 나오고, 엔딩이 끝나면 모두 방에서 나갑니다.</div>
 <div class="help-line"><b>최종 주문은 직접 확인</b>이 게임은 메뉴를 함께 정하는 도구예요. 실제 음식 주문·결제는 자동으로 진행하지 않아요. 최종 결과와 주문 내역은 참가자끼리 확인해주세요.</div>
@@ -1054,7 +1054,7 @@ body:has(#winnerAwardDialog[open]){overflow:hidden}
 <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 <script id="roomTransportRuntime">(function installLunchRoom(){
 'use strict';
-const VERSION=3,BUILD='party30-20261113',PREFIX='du-lunch-online-v3-',MAX_MEMBERS=8,MAX_BYTES=100000;
+const VERSION=3,BUILD='party30-20261113-award2',PREFIX='du-lunch-online-v3-',MAX_MEMBERS=8,MAX_BYTES=100000;
 const $=id=>document.getElementById(id),handlers={command:[],state:[],ready:[],presence:[],disconnect:[],private:[]};
 let peer=null,upstream=null,roster=[],me=null,host=false,active=false,ready=false,code='',locked=false,busy=false,generation=0,loadPromise=null,joinTimeout=0,hostOpenTimeout=0,lastSnapshot=null,snapshotSeq=0,lastReceivedSeq=-1;
 const links=new Map();
@@ -4788,8 +4788,10 @@ brawlRender=function(...args){const out=combatPreviousBrawlRender(...args);if(ty
 /* END_COMBAT_ARENA_V1 */
 
 /* WINNER_CEREMONY_V1 */
-let awardState=null,awardCompletion=null,awardClockOffset=0,awardInputSeq=0,awardLastInputSeq=0,awardLastSpeechAt=-Infinity;
+const awardSpeechMs=30000,awardHoldMs=4000,awardDraftIntervalMs=80;
+let awardState=null,awardCompletion=null,awardClockOffset=0,awardInputSeq=0,awardLastInputSeq=0;
 let awardDialog=null,awardUiKey='',awardDraftTimer=0,awardReturnFocus=null,awardLastPhase='';
+let awardDraftLastSentAt=-Infinity,awardLastDraftText=null,awardComposing=false;
 function awardClone(value){return value?JSON.parse(JSON.stringify(value)):null;}
 function awardText(value){return typeof value==='string'?Array.from(value.normalize('NFC').replace(/[\u0000-\u001f\u007f]/g,' ').replace(/\s+/g,' ').trim()).slice(0,100).join(''):null;}
 function awardCurrent(){return !!awardState&&netIsActive()&&awardState.roomCode===String(netRoom.code||'')&&typeof result!=='undefined'&&result?.id===awardState.roundId;}
@@ -4799,7 +4801,7 @@ function awardGetState(){return awardCurrent()?{...awardPublicState(awardState),
 function awardPublish(){if(netIsHost()&&!netApplying)netPublish();}
 function awardSetText(id,value){const node=$(id);if(node&&node.textContent!==String(value))node.textContent=String(value);}
 function awardCancel(){
- clearTimeout(awardDraftTimer);awardDraftTimer=0;awardCompletion=null;awardState=null;awardClockOffset=0;awardInputSeq=0;awardLastInputSeq=0;awardLastSpeechAt=-Infinity;awardUiKey='';awardLastPhase='';
+ clearTimeout(awardDraftTimer);awardDraftTimer=0;awardCompletion=null;awardState=null;awardClockOffset=0;awardInputSeq=0;awardLastInputSeq=0;awardDraftLastSentAt=-Infinity;awardLastDraftText=null;awardComposing=false;awardUiKey='';awardLastPhase='';
  if(awardDialog?.open)awardDialog.close();if(awardReturnFocus?.isConnected)awardReturnFocus.focus({preventScroll:true});awardReturnFocus=null;
 }
 function awardStart(details,onComplete){
@@ -4808,7 +4810,7 @@ function awardStart(details,onComplete){
  if(!winner||!menu||Array.from(menu).length>20||typeof winner.name!=='string')return false;
  if(awardBusy()&&awardState.roundId===details.roundId&&awardState.winnerId===details.winnerId)return true;
  awardCancel();const now=Date.now();
- awardState={id:'award_'+now+'_'+rand(1000000),roomCode:String(netRoom.code||''),roundId:details.roundId,seq:1,phase:'speech',winnerId:winner.id,person:winner.name,department:typeof netDepartment==='function'?netDepartment(winner.id):String(details.department||'business'),menu,speech:'',startAt:now,endAt:now+10000,closeAt:now+11600};
+ awardState={id:'award_'+now+'_'+rand(1000000),roomCode:String(netRoom.code||''),roundId:details.roundId,seq:1,phase:'speech',winnerId:winner.id,person:winner.name,department:typeof netDepartment==='function'?netDepartment(winner.id):String(details.department||'business'),menu,speech:'',startAt:now,endAt:now+awardSpeechMs,closeAt:now+awardSpeechMs+awardHoldMs};
  awardCompletion=typeof onComplete==='function'?onComplete:null;awardEnsureUI();awardRender();awardPublish();return true;
 }
 function awardCompleteFlow(reason='completed'){
@@ -4822,48 +4824,56 @@ function awardHandle(senderId,cmd){
  if(!netIsHost()||!awardCurrent()||!netMembers().some(m=>m.id===senderId))return true;
  const s=awardState;if(cmd.t!=='awardSpeech'||cmd.awardId!==s.id||cmd.roundId!==s.roundId||senderId!==s.winnerId||!Number.isSafeInteger(cmd.seq)||cmd.seq<1||cmd.seq<=awardLastInputSeq)return true;
  const now=Date.now();if(s.phase!=='speech'||now>=s.endAt){if(s.phase==='speech')awardLock();return true;}
- const text=awardText(cmd.text);if(text===null||now-awardLastSpeechAt<150)return true;
- awardLastInputSeq=cmd.seq;awardLastSpeechAt=now;if(text===s.speech)return true;
+ const text=awardText(cmd.text);if(text===null)return true;
+ awardLastInputSeq=cmd.seq;if(text===s.speech)return true;
  s.speech=text;s.seq++;awardRender();awardPublish();return true;
 }
 function awardValidate(data){
  if(!data||typeof data.id!=='string'||!data.id.startsWith('award_')||data.id.length>100||typeof data.roundId!=='string'||typeof result==='undefined'||data.roundId!==result?.id||data.roomCode!==String(netRoom.code||'')||!Number.isSafeInteger(data.seq)||data.seq<1||!['speech','hold'].includes(data.phase)||typeof data.winnerId!=='string'||typeof data.person!=='string'||Array.from(data.person).length>24||!data.person||typeof data.department!=='string'||data.department.length>50||typeof data.menu!=='string'||!data.menu||Array.from(data.menu).length>20||awardText(data.speech)!==data.speech)return false;
- if(!netMembers().some(m=>m.id===data.winnerId&&m.name===data.person)||![data.startAt,data.endAt,data.closeAt].every(n=>Number.isFinite(n)&&n>=0)||data.endAt-data.startAt!==10000||data.closeAt-data.endAt!==1600)return false;
+ if(!netMembers().some(m=>m.id===data.winnerId&&m.name===data.person)||![data.startAt,data.endAt,data.closeAt].every(n=>Number.isFinite(n)&&n>=0)||data.endAt-data.startAt!==awardSpeechMs||data.closeAt-data.endAt!==awardHoldMs)return false;
  return true;
 }
 function awardReceive(data){
  if(netIsHost())return false;if(!data){awardCancel();return false;}if(!netIsActive()||!awardValidate(data))return false;
  if(awardState&&(awardState.id===data.id?data.seq<awardState.seq:data.startAt<awardState.startAt))return false;
  const fresh=awardState?.id!==data.id;awardState=awardPublicState(data);awardCompletion=null;awardClockOffset=Number.isFinite(data.serverNow)?data.serverNow-Date.now():0;
- if(fresh){awardInputSeq=0;awardUiKey='';awardLastPhase='';clearTimeout(awardDraftTimer);awardDraftTimer=0;}
+ if(fresh){awardInputSeq=0;awardUiKey='';awardLastPhase='';clearTimeout(awardDraftTimer);awardDraftTimer=0;awardDraftLastSentAt=-Infinity;awardLastDraftText=null;awardComposing=false;}
  awardEnsureUI();awardRender();return true;
 }
 function awardSendSpeech(){
  clearTimeout(awardDraftTimer);awardDraftTimer=0;const s=awardState;
  if(!awardCurrent()||s.phase!=='speech'||s.winnerId!==netSelfId()||Date.now()+awardClockOffset>=s.endAt)return;
  const input=$('awardSpeechInput');if(!input)return;const text=awardText(input.value);if(text===null)return;
- if(Array.from(input.value).length>100)input.value=text;
+ if(!awardComposing&&Array.from(input.value).length>100)input.value=text;
+ if(text===awardLastDraftText)return;awardLastDraftText=text;awardDraftLastSentAt=Date.now();
  netRoom.send({t:'awardSpeech',awardId:s.id,roundId:s.roundId,seq:++awardInputSeq,text});
 }
 function awardQueueSpeech(event){
- if(event?.isComposing)return;clearTimeout(awardDraftTimer);
- if(awardState&&awardState.endAt-(Date.now()+awardClockOffset)<250)awardSendSpeech();else awardDraftTimer=setTimeout(awardSendSpeech,200);
+ const s=awardState;if(!awardCurrent()||s.phase!=='speech'||s.winnerId!==netSelfId()||Date.now()+awardClockOffset>=s.endAt)return;
+ if(event?.isComposing===true)awardComposing=true;
+ const input=$('awardSpeechInput');if(!input)return;
+ awardSetText('awardSpeechMessage',awardText(input.value)||'우승자가 마이크를 잡고 있어요…');
+ const delay=awardDraftIntervalMs-(Date.now()-awardDraftLastSentAt);
+ if(delay<=0||s.endAt-(Date.now()+awardClockOffset)<250){awardSendSpeech();return;}
+ if(!awardDraftTimer){const id=s.id,roundId=s.roundId;awardDraftTimer=setTimeout(()=>{awardDraftTimer=0;if(awardState?.id===id&&awardState.roundId===roundId)awardSendSpeech();},delay);}
 }
 function awardEnsureUI(){
  if(awardDialog)return;awardDialog=el('dialog','winner-award');awardDialog.id='winnerAwardDialog';awardDialog.setAttribute('aria-labelledby','awardTitle');
- awardDialog.innerHTML='<div class="award-spotlights" aria-hidden="true"></div><div class="award-confetti" aria-hidden="true">✦　▱　✧　▰　✦　▱　✧　▰　✦</div><header class="award-header"><span>THE LUNCH AWARDS · 오늘의 주인공</span><h2 id="awardTitle">잠시만요,<br><em>우승자 입장합니다.</em></h2><p id="awardMenu"></p></header><div class="award-body"><section class="award-stage" aria-label="우승 캐릭터 시상대"><div class="award-crown" aria-hidden="true">♛</div><div id="awardCharacter" class="award-character" aria-hidden="true"></div><div class="award-podium"><strong>1</strong><span id="awardWinnerName"></span></div><span class="award-stage-note">발표는 진지하게. 표정은 마음대로.</span></section><section class="award-speech" aria-labelledby="awardSpeechTitle"><div class="award-speech-heading"><h3 id="awardSpeechTitle">우승 소감</h3><span class="award-time"><b id="awardSeconds">10</b>초</span></div><p id="awardSpeechMessage" class="award-bubble" aria-live="polite"></p><form id="awardSpeechForm"><label for="awardSpeechInput">우승자만 10초 동안 입력할 수 있어요</label><textarea id="awardSpeechInput" rows="2" maxlength="200" placeholder="제 메뉴를 믿어주셔서… 아무도 안 믿었지만 감사합니다." aria-describedby="awardInputHint"></textarea><div class="award-input-row"><small id="awardInputHint">100자까지 · 입력하면 모두에게 보여요</small><button id="awardSpeechSend" type="submit">소감 전하기 ↗</button></div></form><p id="awardAudience" class="award-audience"></p><p id="awardStatus" class="award-status" role="status"></p></section></div><footer class="award-footer"><span>점심결재 대작전</span><span>잠깐의 영광, 든든한 한 끼.</span></footer>';
+ awardDialog.innerHTML='<div class="award-spotlights" aria-hidden="true"></div><div class="award-confetti" aria-hidden="true">✦　▱　✧　▰　✦　▱　✧　▰　✦</div><header class="award-header"><span>THE LUNCH AWARDS · 오늘의 주인공</span><h2 id="awardTitle">잠시만요,<br><em>우승자 입장합니다.</em></h2><p id="awardMenu"></p></header><div class="award-body"><section class="award-stage" aria-label="우승 캐릭터 시상대"><div class="award-crown" aria-hidden="true">♛</div><div id="awardCharacter" class="award-character" aria-hidden="true"></div><div class="award-podium"><strong>1</strong><span id="awardWinnerName"></span></div><span class="award-stage-note">발표는 진지하게. 표정은 마음대로.</span></section><section class="award-speech" aria-labelledby="awardSpeechTitle"><div class="award-speech-heading"><h3 id="awardSpeechTitle">우승 소감</h3><span class="award-time"><b id="awardSeconds">30</b>초</span></div><p id="awardSpeechMessage" class="award-bubble" aria-live="polite"></p><div id="awardSpeechForm"><label for="awardSpeechInput">우승자만 30초 동안 입력할 수 있어요</label><textarea id="awardSpeechInput" rows="2" maxlength="200" placeholder="제 메뉴를 믿어주셔서… 아무도 안 믿었지만 감사합니다." aria-describedby="awardInputHint"></textarea><div class="award-input-row"><small id="awardInputHint">입력 즉시 자동 공유 · 100자까지</small></div></div><p id="awardAudience" class="award-audience"></p><p id="awardStatus" class="award-status" role="status"></p></section></div><footer class="award-footer"><span>점심결재 대작전</span><span>잠깐의 영광, 든든한 한 끼.</span></footer>';
  document.body.append(awardDialog);awardDialog.addEventListener('cancel',e=>e.preventDefault());
- $('awardSpeechInput').addEventListener('input',awardQueueSpeech);$('awardSpeechInput').addEventListener('compositionend',awardQueueSpeech);
- $('awardSpeechForm').addEventListener('submit',e=>{e.preventDefault();awardSendSpeech();});
+ $('awardSpeechInput').addEventListener('input',awardQueueSpeech);
+ $('awardSpeechInput').addEventListener('compositionstart',()=>{awardComposing=true;});
+ $('awardSpeechInput').addEventListener('compositionend',()=>{awardComposing=false;awardQueueSpeech();});
 }
 function awardRender(){
  if(!awardCurrent()){if(awardDialog?.open)awardDialog.close();return;}awardEnsureUI();const s=awardState,self=netSelfId(),own=s.winnerId===self,active=s.phase==='speech'&&Date.now()+awardClockOffset<s.endAt;
  if(awardUiKey!==s.id){awardUiKey=s.id;awardSetText('awardWinnerName',s.person+' 님');awardSetText('awardMenu',s.person+' 님이 지켜낸 '+s.menu+'!');$('awardCharacter').innerHTML=deptAvatarSvg(s.department);$('awardSpeechInput').value=s.speech;}
  awardDialog.dataset.phase=s.phase;awardDialog.dataset.winner=String(own);awardSetText('awardSeconds',Math.max(0,Math.ceil((s.endAt-Date.now()-awardClockOffset)/1000)));
- awardSetText('awardSpeechMessage',s.speech||(active?'우승자가 마이크를 잡고 있어요…':'말보다 메뉴로 보여드리겠습니다.'));
- $('awardSpeechForm').hidden=!own;$('awardSpeechInput').disabled=!own||!active;$('awardSpeechSend').disabled=!own||!active;
+ const speech=own&&active?awardText($('awardSpeechInput').value):s.speech;
+ awardSetText('awardSpeechMessage',speech||(active?'우승자가 마이크를 잡고 있어요…':'말보다 메뉴로 보여드리겠습니다.'));
+ $('awardSpeechForm').hidden=!own;$('awardSpeechInput').disabled=!own||!active;
  awardSetText('awardAudience',own?'오늘의 주인공은 바로 나. 짧고 굵게 한마디!':s.person+' 님의 우승 소감을 함께 들어주세요.');
- if(awardLastPhase!==s.phase){awardLastPhase=s.phase;awardSetText('awardStatus',s.phase==='speech'?'우승자에게 주어진 10초!':'소감 마감! 박수와 함께 다음 순서로 넘어갑니다.');}
+ if(awardLastPhase!==s.phase){awardLastPhase=s.phase;awardSetText('awardStatus',s.phase==='speech'?'우승자의 30초 · 쓰는 대로 모두에게 보여요!':'소감 마감! 박수와 함께 다음 순서로 넘어갑니다.');}
  if(!awardDialog.open){awardReturnFocus=document.activeElement;awardDialog.showModal();if(own&&active)$('awardSpeechInput').focus({preventScroll:true});else $('awardTitle').setAttribute('tabindex','-1'),$('awardTitle').focus({preventScroll:true});}
 }
 function awardHousekeep(){
@@ -4897,7 +4907,7 @@ function championshipAward(){
  const key=s.roundId+':'+s.version+':'+winner.id;
  if(championshipAwardsSeen.has(key))return championshipReview();championshipAwardsSeen.add(key);if(championshipAwardsSeen.size>120)championshipAwardsSeen.delete(championshipAwardsSeen.values().next().value);
  championshipClearTimer();if(typeof groupCancel==='function')groupCancel();if(typeof cancelActionDuel==='function')cancelActionDuel();
- s.phase='award';s.duelKind='';s.duelId='';s.challengerId='';s.defenderId='';s.notice=winner.name+' 님의 우승 소감! 10초 동안 우승자만 말할 수 있어요.';s.seq++;netPhase='result';netDuelMeta=null;
+ s.phase='award';s.duelKind='';s.duelId='';s.challengerId='';s.defenderId='';s.notice=winner.name+' 님의 우승 소감! 30초 동안 우승자만 말할 수 있어요.';s.seq++;netPhase='result';netDuelMeta=null;
  renderResult();
  const roundId=s.roundId,version=s.version;
  if(typeof awardStart!=='function'){championshipReview();return true;}
