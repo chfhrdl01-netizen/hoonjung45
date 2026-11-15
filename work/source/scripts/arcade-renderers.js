@@ -37,7 +37,7 @@ arcadeDrawWorld=function(s,w,g,self){
  if(['brawl','kart','basket'].includes(w.game)){const ready=own?(w.game==='brawl'?own.hitReadyAt:w.game==='basket'?own.shotReadyAt:own.dashReadyAt)||0:0,cool=Math.max(0,ready-t),b=arcadeDialog.querySelector('[data-arcade-control="action"]');b.disabled=!play||cool>.05;arcadeSetText('arcadeActionHint',cool>.05?cool.toFixed(1)+'초 뒤 다시':g.key);}
  arcadeObjectCleanup();
 };
-function arcadeTenInstall(){document.addEventListener('keydown',e=>{const w=arcadeState?.world;if(!arcadeDialog?.open||!['doors','rhythm'].includes(w?.game)||e.target?.matches?.('input,textarea,select,[contenteditable="true"]'))return;const i=['KeyA','ArrowLeft'].includes(e.code)?0:['KeyW','ArrowUp','Space','KeyF'].includes(e.code)?1:['KeyD','ArrowRight'].includes(e.code)?2:-1;if(i<0)return;e.preventDefault();e.stopImmediatePropagation();if(!e.repeat)arcadeInput(['jump','hit','dash'][i],true);},true);}
+function arcadeTenInstall(){document.addEventListener('keydown',e=>{const w=arcadeState?.world;if(!arcadeDialog?.open||!['doors','rhythm'].includes(w?.game)||e.target?.matches?.('input,textarea,select,[contenteditable="true"]')||e.target?.closest?.('button:not([data-arcade-control]),[data-device-ui-control]'))return;const i=['KeyA','ArrowLeft'].includes(e.code)?0:['KeyW','ArrowUp','Space','KeyF'].includes(e.code)?1:['KeyD','ArrowRight'].includes(e.code)?2:-1;if(i<0)return;e.preventDefault();e.stopImmediatePropagation();if(!e.repeat)arcadeInput(['jump','hit','dash'][i],true);},true);}
 /* END_TEN_GAME_VARIETY_UI */
 
 /* ARCADE_TRAY_UI_V1 */
@@ -292,7 +292,7 @@ function arcadeExtraInstall(){
  const ensureBase=arcadeEnsureUI;arcadeEnsureUI=function(){const result=ensureBase();installFilters();return result;};
 
  document.addEventListener('keydown',event=>{
-  if(!arcadeDialog?.open||!arcadeState?.world||arcadeGames[arcadeState.world.game]?.controls!=='choices'||event.target?.matches?.('input,textarea,select,[contenteditable="true"]'))return;
+  if(!arcadeDialog?.open||!arcadeState?.world||arcadeGames[arcadeState.world.game]?.controls!=='choices'||event.target?.matches?.('input,textarea,select,[contenteditable="true"]')||event.target?.closest?.('button:not([data-arcade-control]),[data-device-ui-control]'))return;
   const index=['KeyA','ArrowLeft'].includes(event.code)?0:['KeyW','ArrowUp'].includes(event.code)?1:['KeyD','ArrowRight'].includes(event.code)?2:-1;
   if(index<0)return;event.preventDefault();event.stopImmediatePropagation();if(event.repeat)return;arcadeExtraEnsureControls();const button=arcadeExtraChoices?.children[index];if(button&&!button.disabled)arcadeInput(['hit','jump','dash'][index],true);
  },true);
