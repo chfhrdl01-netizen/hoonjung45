@@ -7,6 +7,7 @@ setTimeout(()=>{
  Object.defineProperty(netRoom,'code',{get:()=> 'QA8888'});
  netRoster=Array.from({length:count},(_,i)=>({id:'qa'+i,name:['정훈','밥친구','공나영','점심친구','마케팅친구','커피친구','오늘의메뉴','함께놀자'][i],consent:true,connected:true}));
  netDepartments=Object.fromEntries(netRoster.map((m,i)=>[m.id,deptOptions[(i*11+8)%deptOptions.length].id]));
+ if(phase==='unselected')netDepartments={};
  netReady={};netPicks=Object.fromEntries(netRoster.map((m,i)=>[m.id,[['김치찌개','돈가스','제육덮밥'][i%3]]]));netPhase='setup';
  document.body.classList.remove('online-pending');$('roomLobby').hidden=true;showSetup();
  const qaFreeze=()=>{arcadeAdvanceWorld=()=>0;arcadeClockSeconds=()=>20;};if(['audit','game','practice-series'].includes(phase))qaFreeze();
@@ -21,7 +22,7 @@ setTimeout(()=>{
   if(query.get('scene')==='results')awardCompleteFlow();return;
  }
  if(phase==='practice-series'){
-  netIsActive=()=>false;netIsHost=()=>false;arcadeDemoStart('coins','tournament');arcadeHousekeep=()=>{};arcadeRender();qaInfo();return;
+  netIsActive=()=>false;netIsHost=()=>false;deptPracticeChoice='business';arcadeDemoStart('coins','tournament');arcadeHousekeep=()=>{};arcadeRender();qaInfo();return;
  }
  if(phase==='audit'){
   arcadeHousekeep=()=>{};const rows=[],keys=[...arcadeGameKeys];let index=0;
