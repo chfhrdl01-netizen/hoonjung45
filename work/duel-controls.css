@@ -1,0 +1,67 @@
+/* DUEL_SINGLE_CONTROLS_CSS_V1 */
+#duelView .battle-controls[data-single-pad="true"]{display:block;grid-template-columns:minmax(0,1fr);width:100%;max-width:920px;margin:0 auto;padding:8px 16px 4px;min-width:0;box-sizing:border-box}
+#duelView .battle-controls[hidden],#duelView .battle-control-panel[hidden],#duelView .duel-control-toolbar[hidden],#duelView .duel-control-toolbar [hidden],#duelView .duel-spectator-controls[hidden]{display:none!important}
+#duelView .battle-controls[data-single-pad="true"] .battle-control-panel{width:100%;max-width:none;min-width:0;margin:0;padding:8px 12px;box-sizing:border-box}
+#duelView .battle-controls[data-single-pad="true"] .battle-control-panel>strong{display:block;font-size:12px;line-height:1.4}
+#duelView .battle-controls[data-single-pad="true"] .battle-key-hint{font-size:10px;min-height:0;margin:3px 0 6px;line-height:1.4}
+#duelView .battle-controls[data-single-pad="true"] .battle-touch{display:grid;grid-template-columns:repeat(2,minmax(0,1fr)) minmax(12px,.4fr) repeat(3,minmax(0,1fr));gap:7px;align-items:stretch;width:100%;min-width:0}
+#duelView .battle-controls[data-single-pad="true"] .battle-touch button{grid-row:1;grid-column:auto;min-width:0;min-height:58px;max-width:100%;margin:0;padding:6px 3px;font-size:13px;line-height:1.15;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;box-sizing:border-box}
+#duelView .battle-controls[data-single-pad="true"] .battle-touch [data-battle-action="left"]{grid-column:1}
+#duelView .battle-controls[data-single-pad="true"] .battle-touch [data-battle-action="right"]{grid-column:2}
+#duelView .battle-controls[data-single-pad="true"] .battle-touch [data-battle-action="jump"]{grid-column:4}
+#duelView .battle-controls[data-single-pad="true"] .battle-touch [data-battle-action="attack"]{grid-column:5;flex-direction:column;gap:2px}
+#duelView .battle-controls[data-single-pad="true"] .battle-touch [data-battle-action="guard"]{grid-column:6}
+#duelView .battle-controls[data-single-pad="true"] .battle-touch kbd{font-size:9px;line-height:1.1;white-space:nowrap}
+#duelView .duel-control-toolbar{display:flex;align-items:center;justify-content:center;gap:9px;flex-wrap:wrap;margin:5px 16px 0;font-size:11px;line-height:1.4;color:#5f5143}
+#duelView .duel-control-toolbar label{font-weight:850}
+#duelView .duel-control-toolbar select{max-width:220px;min-height:34px;padding:5px 8px;border:2px solid #30251e;border-radius:6px;background:#fff8df;font:inherit;color:#30251e}
+#duelView .duel-control-toolbar span{text-align:center;overflow-wrap:anywhere}
+#duelView .duel-spectator-controls{margin:8px 16px;padding:10px 14px;text-align:center;background:#e9dfc6;border:1px dashed #8a7558;border-radius:7px;font-size:12px}
+@media(max-width:600px){
+ #duelView .battle-controls[data-single-pad="true"]{padding:7px max(8px,env(safe-area-inset-right)) calc(7px + env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-left))}
+ #duelView .battle-controls[data-single-pad="true"] .battle-control-panel{padding:8px;outline-offset:0;border-radius:10px}
+ #duelView .battle-controls[data-single-pad="true"] .battle-control-panel>strong{font-size:11px}
+ #duelView .battle-controls[data-single-pad="true"] .battle-key-hint{font-size:8px;min-height:0;margin-bottom:7px}
+ #duelView .battle-controls[data-single-pad="true"] .battle-touch{gap:5px;grid-template-columns:repeat(2,minmax(0,1fr)) minmax(8px,.35fr) repeat(3,minmax(0,1fr))}
+ #duelView .battle-controls[data-single-pad="true"] .battle-touch button{min-height:64px;font-size:11px;border-width:2px;border-radius:9px;padding:7px 2px}
+ #duelView .battle-controls[data-single-pad="true"] .battle-touch kbd{font-size:8px}
+ #duelView .duel-control-toolbar{font-size:9px;margin:5px 10px 0;gap:5px}
+ #duelView .duel-control-toolbar select{max-width:190px;min-height:32px}
+ #duelView .battle-instructions{font-size:9px;line-height:1.5;padding:5px 12px}
+}
+@media(max-height:520px) and (min-width:601px){
+ #duelView[data-single-duel-pad="true"]{position:fixed;inset:0;z-index:55;display:grid;grid-template-columns:minmax(0,1fr) clamp(184px,25vw,218px);grid-template-rows:56px 24px minmax(0,1fr) 62px 18px;gap:4px 8px;width:100vw;height:100dvh;max-height:100dvh;padding:6px max(8px,env(safe-area-inset-right)) max(6px,env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-left));margin:0;background:#f5eedd;box-sizing:border-box;overflow:hidden}
+ #duelView[data-single-duel-pad="true"]>.board-head,#duelView[data-single-duel-pad="true"]>.battle-intro,#duelView[data-single-duel-pad="true"]>.battle-instructions{display:none}
+ #duelView[data-single-duel-pad="true"]>.battle-scoreboard{grid-column:1 / -1;grid-row:1;align-self:stretch;align-items:center;grid-template-columns:minmax(0,1fr) 42px minmax(0,1fr);gap:10px;min-width:0;min-height:0;margin:0;padding:0 4px;box-sizing:border-box}
+ #duelView[data-single-duel-pad="true"] .battle-score-name{align-items:center;flex-direction:row;gap:5px;margin:0 0 3px;line-height:1.15}
+ #duelView[data-single-duel-pad="true"] .battle-score-name b{font-size:12px;max-width:170px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ #duelView[data-single-duel-pad="true"] .battle-score-name small{display:none}
+ #duelView[data-single-duel-pad="true"] .battle-score-name>strong{font-size:10px;min-height:0;max-width:50%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ #duelView[data-single-duel-pad="true"] .battle-health{height:19px;border-width:2px;border-radius:5px;box-shadow:1px 1px 0 #211c18}
+ #duelView[data-single-duel-pad="true"] .battle-health b{font-size:9px;line-height:15px}
+ #duelView[data-single-duel-pad="true"] .battle-energy{height:4px;margin:3px 2px 0}
+ #duelView[data-single-duel-pad="true"] .battle-clock strong{font-size:30px}
+ #duelView[data-single-duel-pad="true"] .battle-clock span{font-size:7px}
+ body.in-play #duelView[data-single-duel-pad="true"]>.battle-stage{grid-column:1;grid-row:2 / 5;align-self:stretch;width:auto;height:100%;min-height:0;max-height:100%;min-width:0;margin:0;border-radius:10px;box-sizing:border-box}
+ #duelView[data-single-duel-pad="true"]>.battle-feedback{grid-column:1;grid-row:5;align-self:center;min-height:0;height:18px;margin:0;padding:0 2px;font-size:9px;line-height:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;box-sizing:border-box}
+ #duelView[data-single-duel-pad="true"]>.duel-control-toolbar{grid-column:2;grid-row:2;align-self:stretch;min-width:0;min-height:0;height:24px;margin:0;padding:0;font-size:8px;gap:4px;flex-wrap:nowrap;box-sizing:border-box}
+ #duelView[data-single-duel-pad="true"] .duel-control-toolbar select{min-height:24px;height:24px;max-width:132px;min-width:0;padding:1px 4px;font-size:8px;border-width:1px}
+ #duelView[data-single-duel-pad="true"] .duel-control-toolbar #duelControlPadNote{max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:9px}
+ #duelView[data-single-duel-pad="true"]>.battle-controls[data-single-pad="true"]{grid-column:2;grid-row:3;align-self:stretch;width:100%;height:100%;min-height:0;max-width:none;margin:0;padding:0;box-sizing:border-box}
+ #duelView[data-single-duel-pad="true"] .battle-controls[data-single-pad="true"] .battle-control-panel{display:flex;flex-direction:column;gap:5px;height:100%;min-height:0;padding:6px;box-sizing:border-box}
+ #duelView[data-single-duel-pad="true"] .battle-controls[data-single-pad="true"] .battle-control-panel>strong{font-size:10px;line-height:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:none}
+ #duelView[data-single-duel-pad="true"] .battle-controls[data-single-pad="true"] .battle-key-hint{display:none}
+ #duelView[data-single-duel-pad="true"] .battle-controls[data-single-pad="true"] .battle-touch{flex:1;min-height:0;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(2,minmax(42px,1fr));gap:5px}
+ #duelView[data-single-duel-pad="true"] .battle-controls[data-single-pad="true"] .battle-touch button{grid-column:auto;grid-row:auto;min-height:42px;min-width:0;font-size:11px;padding:4px 2px;box-sizing:border-box}
+ #duelView[data-single-duel-pad="true"] .battle-controls[data-single-pad="true"] [data-battle-action="left"]{grid-column:1;grid-row:2}
+ #duelView[data-single-duel-pad="true"] .battle-controls[data-single-pad="true"] [data-battle-action="right"]{grid-column:2;grid-row:2}
+ #duelView[data-single-duel-pad="true"] .battle-controls[data-single-pad="true"] [data-battle-action="jump"]{grid-column:1;grid-row:1}
+ #duelView[data-single-duel-pad="true"] .battle-controls[data-single-pad="true"] [data-battle-action="attack"]{grid-column:2;grid-row:1}
+ #duelView[data-single-duel-pad="true"] .battle-controls[data-single-pad="true"] [data-battle-action="guard"]{grid-column:3;grid-row:1 / 3}
+ #duelView[data-single-duel-pad="true"] .battle-controls[data-single-pad="true"] .battle-touch kbd{font-size:8px}
+ #duelView[data-single-duel-pad="true"]>.battle-bottom{grid-column:2;grid-row:4;align-self:stretch;display:grid!important;grid-template-columns:minmax(0,1fr)!important;align-content:end;gap:4px!important;min-width:0;min-height:0;max-height:62px;margin:0;padding:0!important;overflow:hidden;box-sizing:border-box}
+ #duelView[data-single-duel-pad="true"] .battle-bottom>.btn{min-height:32px!important;height:32px!important;padding:4px 5px!important;font-size:9px!important;line-height:1.2;box-sizing:border-box}
+ #duelView[data-single-duel-pad="true"] .battle-bottom>.link-btn{min-height:22px;height:22px;padding:3px 2px;font-size:8px;line-height:1.2;box-sizing:border-box}
+ #duelView[data-single-duel-pad="true"]>.duel-spectator-controls{grid-column:2;grid-row:3;align-self:center;min-width:0;margin:0;padding:12px 8px;font-size:11px}
+}
+/* END_DUEL_SINGLE_CONTROLS_CSS_V1 */
