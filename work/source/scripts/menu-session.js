@@ -13,7 +13,7 @@ function netEnterMenuTournament(){
 }
 function netBeginMenuTournament(){
  if(!netIsHost()||netPhase!=='setup'||arcadeBusy())return false;const roster=netMembers();
- if(roster.length<2||roster.length>8||roster.some(m=>!netReady[m.id]||!Array.isArray(netPicks[m.id])||netPicks[m.id].length!==1||!validName(netPicks[m.id][0])))return false;
+ if(roster.length<2||roster.length>8||roster.some(m=>!netReady[m.id]||!netCanReady(m.id)))return false;
  const members=roster.map(m=>({id:m.id,name:m.name,department:netDepartment(m.id),menu:netPicks[m.id][0].trim().normalize('NFC'),response:'join'}));
  arcadeCancel();arcadeDemo=false;netPhase='menuTournament';result=null;netDuelMeta=null;
  arcadeState=arcadeMakeState('tournament','coins',members);arcadeState.purpose='lunch';arcadeState.context='menuTournament:setup';arcadeState.activeIds=members.map(m=>m.id);if(typeof arcadeInitPoints==='function')arcadeInitPoints(arcadeState);arcadeState.notice='전원 5판 함께! 매판 순위 점수를 합산해 최종 순위를 정해요.';
