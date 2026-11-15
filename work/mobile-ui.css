@@ -1,0 +1,131 @@
+/* A phone uses a play-first HUD and a thumb deck; the same world and inputs remain shared. */
+#arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]):is([data-purpose="lunch"],[data-playing="true"]){
+ --mobile-dpad-size:44px;
+ --mobile-control-width:154px;
+}
+#arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]):is([data-purpose="lunch"],[data-playing="true"]) .five-head{
+ min-height:54px;padding:6px max(12px,env(safe-area-inset-right)) 6px max(12px,env(safe-area-inset-left));gap:10px;
+}
+#arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]):is([data-purpose="lunch"],[data-playing="true"]) .five-head h2{font-size:21px;line-height:1.15;margin-top:3px}
+#arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]):is([data-purpose="lunch"],[data-playing="true"]) .five-head span{font-size:8px;letter-spacing:.04em}
+#arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]):is([data-purpose="lunch"],[data-playing="true"]) #arcadeCloseBtn{min-width:48px;min-height:44px;padding:6px 9px;font-size:11px}
+#arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]):is([data-purpose="lunch"],[data-playing="true"]) #arcadeSession{
+ display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto auto minmax(0,1fr) auto auto;flex:1 1 auto;min-height:0;overflow:hidden;gap:0;
+}
+#arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]):is([data-purpose="lunch"],[data-playing="true"]) .five-round-strip{
+ grid-column:1;grid-row:1;display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:5px 8px;padding:7px max(10px,env(safe-area-inset-right)) 7px max(10px,env(safe-area-inset-left));min-width:0;font-size:11px;border-bottom:1px solid #c9b990;background:#f9efd3;
+}
+#arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]):is([data-purpose="lunch"],[data-playing="true"]) #arcadeRoundTag{grid-column:1;grid-row:1;white-space:nowrap;padding:5px 7px;transform:none;font-size:11px}
+#arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]):is([data-purpose="lunch"],[data-playing="true"]) #arcadeRemaining{display:none}
+#arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]):is([data-purpose="lunch"],[data-playing="true"]) #deviceOwnSummary{grid-column:2;grid-row:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11px;text-align:right}
+#arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]):is([data-purpose="lunch"],[data-playing="true"]) #deviceInfoToggle{grid-column:3;grid-row:1;min-height:44px;padding:6px 9px;font-size:11px;white-space:nowrap;border:1.5px solid #594b33;border-radius:999px;background:#fffaf0;box-shadow:none}
+#arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]):is([data-purpose="lunch"],[data-playing="true"]) #deviceInfoToggle[aria-expanded="true"]{background:#30271f;color:#fff7db}
+#arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]):is([data-purpose="lunch"],[data-playing="true"]) #deviceRuleSummary{grid-column:1/-1;grid-row:2;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-width:0;margin:0;font-size:11px;line-height:1.4;color:#60513b;text-align:left}
+#arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]):is([data-purpose="lunch"],[data-playing="true"]) .five-help{grid-column:1;grid-row:2;min-height:0;max-height:60px;margin:5px 10px 3px;padding:6px 8px;overflow:auto;text-align:left;font-size:12px;line-height:1.45;border:1px solid #d3c19b;border-radius:8px;background:#fff9e9}
+#arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]):is([data-purpose="lunch"],[data-playing="true"]) .five-roster{grid-column:1;grid-row:3;position:relative;inset:auto;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-content:start;min-height:0;max-height:90px;width:auto;height:auto;gap:5px;padding:4px 10px 7px;overflow-x:hidden;overflow-y:auto;scrollbar-width:thin}
+#arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]):is([data-purpose="lunch"],[data-playing="true"]) .five-player-chip{min-width:0;min-height:37px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:3px;padding:5px 7px;border-radius:7px}
+#arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]):is([data-purpose="lunch"],[data-playing="true"]) .five-player-chip b{min-width:0;max-width:100%;font-size:10px;line-height:1.2;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]):is([data-purpose="lunch"],[data-playing="true"]) .five-player-chip small{font-size:11px;line-height:1.2;white-space:nowrap}
+#arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"])[data-session-phase="round"]:not([data-info-open="true"]) :is(.five-help,.five-roster),
+#arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"])[data-session-phase="between"]:not([data-info-open="true"]) :is(.five-help,.five-roster){display:none}
+#arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"])[data-info-open="true"] #deviceRuleSummary{display:none}
+#arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]):is([data-purpose="lunch"],[data-playing="true"]) #arcadePlay{
+ grid-column:1;grid-row:4;display:grid;flex:1 1 auto;flex-basis:auto;min-width:0;min-height:0;grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr) auto auto;align-self:stretch;gap:0;padding:4px max(7px,env(safe-area-inset-right)) 0 max(7px,env(safe-area-inset-left));overflow:hidden;
+}
+#arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]):is([data-purpose="lunch"],[data-playing="true"]) .five-arena-fit{grid-column:1;grid-row:1;min-width:0;min-height:0;place-items:center}
+#arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]):is([data-purpose="lunch"],[data-playing="true"]) .five-board{width:min(calc(100cqw - 6px),calc((100cqh - 6px)*1.521739));max-width:100%;max-height:100%;margin:0;aspect-ratio:700/460;border-width:2px;box-shadow:2px 2px 0 #30271f22}
+#arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]):is([data-purpose="lunch"],[data-playing="true"]) .five-status{grid-column:1;grid-row:2;min-height:0;max-height:34px;margin:5px 3px;overflow:auto;font-size:11px;line-height:1.4}
+#arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]):is([data-purpose="lunch"],[data-playing="true"]) .five-controls{grid-column:1;grid-row:3;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-rows:auto auto;grid-template-areas:"move action" "status status";align-items:center;align-self:stretch;min-width:0;width:100%;gap:4px 12px;padding:5px 5px calc(7px + env(safe-area-inset-bottom));border-top:1px solid #d0bf95;background:#f9f0d8}
+#arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]):is([data-purpose="lunch"],[data-playing="true"]) .five-dpad{grid-area:move;justify-self:start;grid-template-columns:repeat(3,var(--mobile-dpad-size));grid-template-rows:repeat(3,var(--mobile-dpad-size));gap:3px}
+#arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]):is([data-purpose="lunch"],[data-playing="true"]) .five-dpad button{min-width:0;min-height:0;padding:0;border-radius:9px;font-size:20px;box-shadow:1px 2px 0 #30271f33}
+#arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]):is([data-purpose="lunch"],[data-playing="true"]) .five-dpad kbd{display:none}
+#arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]):is([data-purpose="lunch"],[data-playing="true"]) .five-dpad i{font-size:10px;color:#7a6a4c}
+#arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]):is([data-purpose="lunch"],[data-playing="true"]) .five-action{grid-area:action;justify-self:end;min-width:108px;max-width:100%;height:88px;min-height:88px;border-radius:18px;transform:none;box-shadow:3px 4px 0 #30271f33;padding:8px}
+#arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]):is([data-purpose="lunch"],[data-playing="true"]) .five-action strong{font-size:25px;line-height:1.1}
+#arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]):is([data-purpose="lunch"],[data-playing="true"]) .five-action small{font-size:10px;line-height:1.3;margin-top:6px;white-space:normal}
+#arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]):is([data-purpose="lunch"],[data-playing="true"]) .five-own-status{grid-area:status;justify-self:center;min-width:0;max-width:100%;font-size:11px;line-height:1.35;overflow-wrap:anywhere;text-align:center}
+#arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]):is([data-purpose="lunch"],[data-playing="true"]) :is(.extra-choice-controls,.ten-choice-controls){grid-column:1/-1;grid-row:1;justify-self:stretch;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));min-width:0;width:100%;max-width:100%;gap:7px}
+#arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]):is([data-purpose="lunch"],[data-playing="true"]) :is(.extra-choice-controls,.ten-choice-controls) button{width:100%;min-width:0;max-width:100%;min-height:72px;height:auto;padding:8px 4px;border-radius:12px;font-size:14px;line-height:1.25;gap:5px;overflow-wrap:anywhere;box-shadow:2px 3px 0 #30271f33}
+#arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]):is([data-purpose="lunch"],[data-playing="true"]) :is(.extra-choice-controls,.ten-choice-controls) kbd{font-size:10px;line-height:1.2;white-space:normal}
+#arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]):is([data-purpose="lunch"],[data-playing="true"]) .five-controls:has(.five-dpad[hidden]):not(:has(.extra-choice-controls:not([hidden]),.ten-choice-controls:not([hidden]))) .five-action{grid-column:1/-1;justify-self:center}
+#arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]):is([data-purpose="lunch"],[data-playing="true"]) .five-history{grid-column:1;grid-row:5;min-height:0;max-height:60px;overflow:auto;padding:5px 10px;font-size:10px;line-height:1.4;white-space:normal}
+#arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]):is([data-session-phase="round"],[data-session-phase="between"]) .five-history{display:none}
+#arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]):is([data-purpose="lunch"],[data-playing="true"]) .five-bottom{grid-column:1;grid-row:6;min-height:42px;margin:0;padding:5px max(118px,env(safe-area-inset-right)) 5px max(10px,env(safe-area-inset-left));gap:6px;align-items:center;flex-wrap:wrap}
+#arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]):is([data-purpose="lunch"],[data-playing="true"]) .five-bottom>span{display:none}
+#arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]):is([data-purpose="lunch"],[data-playing="true"]) .five-bottom button{min-height:44px;margin:0;font-size:11px;line-height:1.2;padding:7px 9px;white-space:normal}
+
+/* The final scores use the space formerly occupied by disabled movement controls. */
+#arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"])[data-session-phase="done"] .five-help,
+#arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"])[data-session-phase="done"] #deviceRuleSummary,
+#arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"])[data-session-phase="done"] #deviceInfoToggle,
+#arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"])[data-session-phase="done"] :is(.five-controls,.five-status){display:none}
+#arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"])[data-session-phase="done"] .five-roster{display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;max-height:40dvh;min-height:0;padding-top:8px;padding-bottom:8px;gap:5px}
+#arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"])[data-session-phase="done"] .five-player-chip{min-height:40px;flex:0 0 auto;flex-direction:row;align-items:center;justify-content:space-between;padding:7px 9px}
+#arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"])[data-session-phase="done"] .five-player-chip b{font-size:12px;max-width:64%;white-space:normal;overflow-wrap:anywhere}
+#arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"])[data-session-phase="done"] .five-player-chip small{font-size:12px;font-weight:800}
+#arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"])[data-session-phase="done"] #arcadePlay{grid-template-rows:minmax(0,1fr)}
+
+@media(max-width:359px){
+ #arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]){--mobile-dpad-size:40px}
+ #arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]) #deviceInfoToggle{padding:5px 7px;font-size:10px}
+ #arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]) #deviceOwnSummary{font-size:10px}
+}
+@media(orientation:portrait) and (max-height:700px){
+ #arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"])[data-info-open="true"] .five-help{max-height:42px;margin-top:3px;margin-bottom:2px;padding-top:4px;padding-bottom:4px;font-size:11px}
+ #arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"])[data-info-open="true"] .five-roster{max-height:52px;padding-top:2px;padding-bottom:4px}
+}
+
+/* A landscape phone gives the arena its own column and keeps the deck beside it. */
+@media(orientation:landscape) and (max-height:600px){
+ #arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]):is([data-purpose="lunch"],[data-playing="true"]){--mobile-control-width:154px;--mobile-dpad-size:44px}
+ #arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]):is([data-purpose="lunch"],[data-playing="true"]) .five-head{min-height:40px;padding-top:4px;padding-bottom:4px}
+ #arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]):is([data-purpose="lunch"],[data-playing="true"]) .five-head h2{font-size:18px;margin-top:2px}
+ #arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]):is([data-purpose="lunch"],[data-playing="true"]) .five-head span{display:none}
+ #arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]):is([data-purpose="lunch"],[data-playing="true"]) #arcadeCloseBtn{min-height:32px;font-size:10px;padding:4px 8px}
+ #arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]):is([data-purpose="lunch"],[data-playing="true"]) #arcadeSession{grid-template-rows:auto minmax(0,1fr) auto auto;grid-template-columns:minmax(0,1fr)}
+ #arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]):is([data-purpose="lunch"],[data-playing="true"]) .five-round-strip{grid-column:1/-1;grid-row:1;padding-top:3px;padding-bottom:3px;gap:3px 8px}
+ #arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]):is([data-purpose="lunch"],[data-playing="true"]) #deviceInfoToggle{min-height:32px;padding:4px 9px}
+ #arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]):is([data-purpose="lunch"],[data-playing="true"]) #deviceRuleSummary{-webkit-line-clamp:1;font-size:10px;line-height:1.3}
+ #arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]):is([data-purpose="lunch"],[data-playing="true"]) #arcadePlay{grid-column:1;grid-row:2;min-height:0;flex-basis:auto;grid-template-columns:minmax(0,1fr) var(--mobile-control-width);grid-template-rows:minmax(0,1fr) auto;gap:0 7px;padding:3px max(7px,env(safe-area-inset-right)) 0 max(7px,env(safe-area-inset-left))}
+ #arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]):is([data-purpose="lunch"],[data-playing="true"]) .five-arena-fit{grid-column:1;grid-row:1}
+ #arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]):is([data-purpose="lunch"],[data-playing="true"]) .five-status{grid-column:1;grid-row:2;max-height:26px;font-size:10px;margin:3px 2px;line-height:1.3}
+ #arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]):is([data-purpose="lunch"],[data-playing="true"]) .five-controls{grid-column:2;grid-row:1/3;display:flex;flex-direction:column;align-items:center;justify-content:center;flex-wrap:nowrap;min-width:0;min-height:0;gap:5px;padding:3px 4px calc(3px + env(safe-area-inset-bottom));border-top:0;border-left:1px solid #d0bf95}
+ #arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]):is([data-purpose="lunch"],[data-playing="true"]) .five-dpad{justify-self:auto;gap:2px;flex:0 0 auto}
+ #arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]):is([data-purpose="lunch"],[data-playing="true"]) .five-action{width:126px;min-width:0;min-height:58px;height:58px;flex:0 0 auto;padding:5px 6px;border-radius:13px}
+ #arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]):is([data-purpose="lunch"],[data-playing="true"]) .five-action strong{font-size:20px}
+ #arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]):is([data-purpose="lunch"],[data-playing="true"]) .five-action small{font-size:9px;margin-top:3px}
+ #arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]):is([data-purpose="lunch"],[data-playing="true"]) .five-own-status{font-size:10px;line-height:1.2;max-height:25px;overflow:auto;flex:0 1 auto}
+ #arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]):is([data-purpose="lunch"],[data-playing="true"]) :is(.extra-choice-controls,.ten-choice-controls){display:grid;grid-template-columns:minmax(0,1fr);gap:5px;width:100%;max-width:100%;flex:0 1 auto}
+ #arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]):is([data-purpose="lunch"],[data-playing="true"]) :is(.extra-choice-controls,.ten-choice-controls) button{min-height:48px;padding:5px 3px;border-radius:9px;font-size:12px;gap:3px}
+ #arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]):is([data-purpose="lunch"],[data-playing="true"]) :is(.extra-choice-controls,.ten-choice-controls) kbd{font-size:9px}
+ #arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]):is([data-purpose="lunch"],[data-playing="true"]) .five-history{grid-column:1/-1;grid-row:3;max-height:36px}
+ #arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]):is([data-purpose="lunch"],[data-playing="true"]) .five-bottom{grid-column:1/-1;grid-row:4;min-height:36px;padding-top:3px;padding-bottom:3px}
+ #arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]):is([data-purpose="lunch"],[data-playing="true"]) .five-bottom button{min-height:30px;font-size:10px;padding:5px 8px}
+
+ #arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"])[data-info-open="true"]:is([data-purpose="lunch"],[data-playing="true"]) #arcadeSession{grid-template-columns:154px minmax(0,1fr);grid-template-rows:auto auto minmax(0,1fr) auto auto}
+ #arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"])[data-info-open="true"] .five-help{display:block;grid-column:1;grid-row:2;max-height:62px;font-size:10px;line-height:1.35;margin:4px 3px 3px 7px;padding:5px 6px}
+ #arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"])[data-info-open="true"] .five-roster{display:flex;grid-column:1;grid-row:3;flex-direction:column;align-items:stretch;justify-content:flex-start;min-height:0;max-height:none;height:100%;overflow-y:auto;overflow-x:hidden;padding:3px 3px 4px 7px;gap:4px}
+ #arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"])[data-info-open="true"] .five-player-chip{min-height:32px;flex:0 0 auto;padding:4px 5px}
+ #arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"])[data-info-open="true"] #arcadePlay{grid-column:2;grid-row:2/4;padding-left:4px}
+ #arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"])[data-info-open="true"] .five-history{grid-row:4}
+ #arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"])[data-info-open="true"] .five-bottom{grid-row:5}
+
+ #arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"])[data-session-phase="done"] #arcadeSession{grid-template-columns:190px minmax(0,1fr);grid-template-rows:auto minmax(0,1fr) auto auto}
+ #arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"])[data-session-phase="done"] .five-roster{display:flex;grid-column:1;grid-row:2;min-height:0;max-height:none;height:100%;overflow:auto;padding:5px 5px 5px 8px;gap:4px}
+ #arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"])[data-session-phase="done"] .five-player-chip{min-height:36px;padding:5px 6px;flex-direction:column;align-items:flex-start}
+ #arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"])[data-session-phase="done"] .five-player-chip b{max-width:100%;font-size:10px}
+ #arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"])[data-session-phase="done"] .five-player-chip small{font-size:11px}
+ #arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"])[data-session-phase="done"] #arcadePlay{grid-column:2;grid-row:2;grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr);padding:3px 7px}
+ #arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"])[data-session-phase="done"] .five-history{grid-row:3}
+ #arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"])[data-session-phase="done"] .five-bottom{grid-row:4}
+}
+@media(orientation:landscape) and (max-height:360px){
+ #arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]):is([data-purpose="lunch"],[data-playing="true"]){--mobile-dpad-size:38px;--mobile-control-width:142px}
+ #arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]):is([data-purpose="lunch"],[data-playing="true"]) .five-head{min-height:34px}
+ #arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]):is([data-purpose="lunch"],[data-playing="true"]) .five-head h2{font-size:16px}
+ #arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]):is([data-purpose="lunch"],[data-playing="true"]) #deviceRuleSummary{display:none}
+ #arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]):is([data-purpose="lunch"],[data-playing="true"]) .five-action{height:48px;min-height:48px;width:116px}
+ #arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]):is([data-purpose="lunch"],[data-playing="true"]) :is(.extra-choice-controls,.ten-choice-controls) button{min-height:44px;padding:4px 3px}
+}
+/* State visibility wins over both orientation layouts. */
+#arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"])[data-session-phase="done"] :is(.five-controls,.five-status,.five-help,#deviceRuleSummary,#deviceInfoToggle){display:none!important}
