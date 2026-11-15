@@ -42,6 +42,6 @@ setTimeout(()=>{
   lunchDecisionBegin(result);renderResult();if(phase==='duel'){lunchDecisionObject('qa1');return;}for(const m of netRoster)lunchDecisionHandle(m.id,{t:'lunchAccept',roundId:result.id,version:lunchDecisionState.version});
   for(const [i,m]of netRoster.entries())deliveryHandle(m.id,{t:'deliveryReply',deliveryId:deliveryState.id,roundId:result.id,seq:1,response:'join',drink:['아이스 아메리카노','카페라떼','바닐라 라떼','디카페인 아메리카노'][i%4]});
   deliveryState.phase='done';deliveryState.winnerId='qa1';deliveryState.needsRedraw=false;deliveryRender();lunchFinaleOpen(true);
-  if(query.get('scene')==='coffee'){const state=lunchFinaleGetState(),offset=state.sceneTimes[2]+400;state.startAt-=offset;state.endAt-=offset;lunchFinaleInstallSchedule(state,Date.now());lunchFinaleStartedAt=lunchFinaleLocalStart;lunchFinaleAdvance();}
+  if(['coffee','credits','outro'].includes(query.get('scene'))){const target={coffee:2,credits:4,outro:5}[query.get('scene')],state=lunchFinaleGetState(),offset=state.sceneTimes[target]+400,frozenNow=lunchFinaleNow();if(target>=4)lunchFinaleNow=()=>frozenNow;state.startAt-=offset;state.endAt-=offset;lunchFinaleInstallSchedule(state,Date.now());lunchFinaleStartedAt=lunchFinaleLocalStart;lunchFinaleAdvance();}
  }
 },0);
