@@ -2,7 +2,7 @@
   "build": "party30-20261116-secret8",
   "assets": {
     "css": "assets/styles-secret8.css",
-    "js": "assets/app-secret8.js"
+    "js": "assets/app-secret8a.js"
   },
   "styles": [
     {
