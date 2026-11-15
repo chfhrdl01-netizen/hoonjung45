@@ -1,0 +1,12 @@
+/* Current ownership is always explicit; these are facts, not targeting assistance. */
+#arcadeBoard[data-game="crown"] .crown-owner-status{position:absolute;top:7px;left:50%;transform:translateX(-50%);max-width:calc(100% - 112px);padding:5px 9px;border:1px solid #745927;border-radius:6px;background:#f9e8adee;color:#4a391e;font-size:clamp(9px,1.7cqw,13px);font-weight:900;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;z-index:14;box-shadow:0 2px 0 #4d3d2322;pointer-events:none}
+#arcadeBoard[data-game="crown"] .crown-owner-status.is-own{background:#ffe280;border-color:#5b451c}
+#arcadeBoard[data-game="crown"] .five-actor.is-crown-holder{z-index:9;filter:drop-shadow(0 0 3px #ffe889) drop-shadow(0 3px 1px #30271f55)}
+#arcadeBoard[data-game="crown"] .five-actor.is-crown-holder::before{content:"";position:absolute;inset:-6px -5px -2px;border:3px solid #ffd35e;border-radius:45%;background:#fadd6a26;box-shadow:0 0 0 1px #71582c;z-index:-1;pointer-events:none}
+#arcadeBoard[data-game="crown"] .five-actor.is-crown-holder .five-actor-name{background:#ffe18a;border:2px solid #85652a;font-weight:900}
+#arcadeBoard[data-game="crown"] .ap-crown{z-index:12;line-height:1;translate:-50% -50%;font-size:clamp(30px,6cqw,43px);filter:drop-shadow(0 2px 0 #6c4d27);pointer-events:none}
+#arcadeBoard[data-game="crown"] .ap-crown.is-owned{font-size:clamp(29px,5.5cqw,40px)}
+#arcadeBoard[data-game="crown"] .ap-crown[hidden]{display:none}
+@container(max-width:640px){#arcadeBoard[data-game="crown"]{--crown-owner-lift:48px}#arcadeBoard[data-game="crown"] .crown-owner-status{top:5px;padding:4px 7px;max-width:calc(100% - 88px);font-size:10px}#arcadeBoard[data-game="crown"] .five-actor.is-crown-holder::before{inset:-4px -4px -2px;border-width:2px}}
+@container(max-height:300px){#arcadeBoard[data-game="crown"]{--crown-owner-lift:48px}#arcadeBoard[data-game="crown"] .crown-owner-status{top:4px;padding:3px 7px;font-size:9px}}
+@media(prefers-reduced-motion:reduce){#arcadeBoard[data-game="crown"] .ap-crown,#arcadeBoard[data-game="crown"] .five-actor.is-crown-holder{animation:none;transition:none}}
