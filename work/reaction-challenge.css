@@ -1,0 +1,11 @@
+/* Read the current instruction, then choose: no predicted target or highlighted answer button. */
+#arcadeBoard[data-game="reaction"] .brain-reaction-sign{font-weight:850;color:#65563f}
+#arcadeBoard[data-game="reaction"] .brain-reaction-signal{width:82%;gap:clamp(8px,3cqw,24px);padding:12px;max-height:44cqh}
+#arcadeBoard[data-game="reaction"] .brain-reaction-signal strong{font-size:clamp(21px,9cqh,42px);line-height:1.2;overflow-wrap:anywhere}
+#arcadeBoard[data-game="reaction"] .brain-signal-dot{flex:0 0 12%;max-width:65px;min-width:20px}
+#arcadeBoard[data-game="reaction"] .reaction-window{flex:0 0 5px;width:76%;height:5px;overflow:hidden;border-radius:4px;background:#95887233}
+#arcadeBoard[data-game="reaction"] .reaction-window>i{display:block;width:100%;height:100%;background:#557d4c;transform-origin:left center}
+#arcadeBoard[data-game="reaction"] .brain-reaction-record{font-size:clamp(10px,3.4cqh,17px);font-weight:750;color:#63543e}
+#arcadeDialog[data-game="reaction"] .extra-choice-button strong{font-size:clamp(12px,1.6vw,18px)}
+@container(max-height:230px){#arcadeBoard[data-game="reaction"] .brain-reaction-sign{font-size:10px}#arcadeBoard[data-game="reaction"] .brain-reaction-signal{padding:5px;border-width:3px}#arcadeBoard[data-game="reaction"] .brain-reaction-signal strong{font-size:clamp(18px,10cqh,27px)}#arcadeBoard[data-game="reaction"] .brain-reaction-record{font-size:10px}}
+@media(prefers-reduced-motion:reduce){#arcadeBoard[data-game="reaction"] .reaction-window>i{transition:none;animation:none}}
