@@ -69,11 +69,11 @@ arcadeDrawWorld=function(s,w,g,self){
 /* ARCADE_SPORTS_UI_V1 */
 Object.assign(arcadeGames,{
  pong:{name:'식판 탁구',icon:'🏓',tag:'스포츠 · 반사 랠리',hint:'목표: 반사 점수! ↑/↓로 패들을 옮기고 Space로 스매시. 공이 닿는 위치로 반사각을 바꿔요.',action:'스매시!',key:'↑ / ↓ · SPACE',input:'hit',color:'#81c6bf',duel:true,controls:'standard'},
- curling:{name:'얼음컵 컬링',icon:'🥌',tag:'빙판 · 마찰과 정확도',hint:'목표: 3개 돌을 과녁 중심으로! ←/→ 조준, Space로 파워 시작 → 한 번 더 발사. 약한 힘도 중요해요.',action:'파워 / 발사',key:'← / → · SPACE 두 번',input:'hit',color:'#abd5df',duel:true,controls:'standard'},
- bowling:{name:'생수병 볼링',icon:'🎳',tag:'볼링 · 핀 연쇄 충돌',hint:'목표: 3프레임에 많은 핀! ←/→로 조준하고 Space 두 번으로 투구. 핀이 옆 핀도 쓰러뜨려요.',action:'파워 / 투구',key:'← / → · SPACE 두 번',input:'hit',color:'#dfb37e',duel:true,controls:'standard'},
- volley:{name:'풍선 배구',icon:'🎈',tag:'유지 액션 · 재서브',hint:'목표: 풍선 오래 받아치기! ←/→로 아래에 서서 Space. 떨어져도 잠깐 감점 뒤 다시 시작해요.',action:'받아쳐!',key:'← / → · SPACE',input:'hit',color:'#e9a8b6',duel:true,controls:'standard'},
+ curling:{name:'얼음컵 컬링',icon:'🥌',tag:'빙판 · 조준과 쓸기',hint:'3개 돌을 과녁 중심으로! ←/→ 조준, Space 두 번 발사. 굴러갈 때 Space로 쓸면 더 멀리 가요.',action:'파워 / 발사',key:'← / → · SPACE 두 번',input:'hit',color:'#abd5df',duel:true,controls:'standard'},
+ bowling:{name:'생수병 볼링',icon:'🎳',tag:'볼링 · 스트라이크와 스페어',hint:'3프레임, 한 프레임 최대 두 번! ←/→ 조준, Space 두 번 투구. 스트라이크 +15, 스페어 +8.',action:'파워 / 투구',key:'← / → · SPACE 두 번',input:'hit',color:'#dfb37e',duel:true,controls:'standard'},
+ volley:{name:'풍선 배구',icon:'🎈',tag:'유지 액션 · 정확한 리시브',hint:'내려오는 풍선 아래에서 Space! 일반 리시브 +7, 낮은 위치 정중앙 +10. 떨어져도 다시 시작해요.',action:'받아쳐!',key:'← / → · SPACE',input:'hit',color:'#e9a8b6',duel:true,controls:'standard'},
  golf:{name:'식당 미니골프',icon:'⛳',tag:'미니골프 · 벽 반사',hint:'목표: 적은 타수로 3홀! ←/→ 방향, Space 두 번으로 파워 퍼팅. 장애물과 벽의 반사각을 이용해요.',action:'파워 / 퍼팅',key:'← / → · SPACE 두 번',input:'hit',color:'#a6c980',duel:true,controls:'standard'},
- parking:{name:'도시락 주차왕',icon:'🚗',tag:'운전 · 관성과 정렬',hint:'목표: 주차칸에 1초 안착! ↑/↓ 전후진, ←/→ 회전, Space 브레이크. 낮은 속도와 방향이 중요해요.',action:'브레이크!',key:'방향키 · SPACE',input:'hit',color:'#a9b5cf',duel:true,controls:'standard'}
+ parking:{name:'도시락 주차왕',icon:'🚗',tag:'운전 · 정방향과 후진 주차',hint:'주차칸에 천천히 1초 안착! ↑/↓ 전후진, ←/→ 회전, Space 브레이크. 후진 주차도 성공이에요.',action:'브레이크!',key:'방향키 · SPACE',input:'hit',color:'#a9b5cf',duel:true,controls:'standard'}
 });
 const arcadeSportsKeys=new Set(['pong','curling','bowling','volley','golf','parking']);
 let arcadeSportsBoard='';const arcadeSportsPanels=new Map();
@@ -105,10 +105,10 @@ arcadeDrawWorld=function(s,w,g,self){
    const paddle=arcadeSportNode(v,'paddle','sport-paddle');arcadeSportPlace(paddle,61,p.paddleY);paddle.style.height='26%';paddle.classList.toggle('is-smash',t<p.smashUntil);const back=arcadeSportNode(v,'wall','sport-pong-wall');arcadeSportRect(back,{x:664,y:26,w:9,h:408});arcadeSportPlace(v.actor,38,p.paddleY);detail=p.rallies+'회 반사 · 놓침 '+p.misses;
   }
   if(w.game==='curling'){
-   arcadeSportPlace(arcadeSportNode(v,'target','sport-curl-target'),350,125);arcadeSportPlace(v.actor,350,425);const aim=arcadeSportNode(v,'aim','sport-aim sport-aim-up');arcadeSportPlace(aim,350,419);aim.style.transform='translate(-50%,-100%) rotate('+p.aim+'rad)';aim.hidden=!['ready','power'].includes(p.phase);detail=p.shots+'/3투 · '+(p.phase==='done'?'완료':p.phase==='power'?'한 번 더 눌러 발사':p.phase==='moving'?'미끄러지는 중':'조준 후 Space');
+   arcadeSportPlace(arcadeSportNode(v,'target','sport-curl-target'),350,125);arcadeSportPlace(v.actor,350,425);const aim=arcadeSportNode(v,'aim','sport-aim sport-aim-up');arcadeSportPlace(aim,350,419);aim.style.transform='translate(-50%,-100%) rotate('+p.aim+'rad)';aim.hidden=!['ready','power'].includes(p.phase);detail=p.shots+'/3투 · '+(p.phase==='done'?'완료':p.phase==='power'?'한 번 더 눌러 발사':p.phase==='moving'?t<p.sweepUntil?'슥슥! 쓸기 중':'Space로 쓸어 더 멀리':'조준 후 Space');
   }
   if(w.game==='bowling'){
-   arcadeSportPlace(v.actor,350,425);const aim=arcadeSportNode(v,'aim','sport-aim sport-aim-up');arcadeSportPlace(aim,350,419);aim.style.transform='translate(-50%,-100%) rotate('+p.aim+'rad)';aim.hidden=!['ready','power'].includes(p.phase);detail=Math.min(3,p.completed+1)+'/3프레임 · 이번 '+p.framePins+'핀';
+   arcadeSportPlace(v.actor,350,425);const aim=arcadeSportNode(v,'aim','sport-aim sport-aim-up');arcadeSportPlace(aim,350,419);aim.style.transform='translate(-50%,-100%) rotate('+p.aim+'rad)';aim.hidden=!['ready','power'].includes(p.phase);detail=Math.min(3,p.completed+1)+'/3프레임 · '+p.frameShots+'/2투 · 이번 '+p.framePins+'핀';
   }
   if(w.game==='volley'){arcadeSportPlace(v.actor,p.x,418);v.actor.classList.toggle('is-hitting',t<p.actionUntil);detail=p.hits+'번 살림 · 놓침 '+p.misses;}
   if(w.game==='golf'){
@@ -120,7 +120,7 @@ arcadeDrawWorld=function(s,w,g,self){
   for(const o of w.objects){if(o.ownerId!==p.id)continue;let cls='sport-ball sport-'+o.kind;if(o.down)cls+=' is-down';const node=arcadeSportNode(v,o.id,cls);arcadeSportPlace(node,o.x,o.y);node.hidden=w.game==='pong'||w.game==='volley'?t<(o.serveAt||0):false;if(o.kind==='curlStone')node.classList.toggle('is-settled',o.settled);}
   for(const [key,node]of v.nodes)if(!v.used.has(key)){node.remove();v.nodes.delete(key);}v.foot.textContent=detail;
  }
- if(own){arcadeSetText('arcadeOwnStatus',Math.round(own.score)+'점 · '+(t<own.judgeUntil?own.judge:own.phase==='power'?'파워 '+Math.round(own.power*100)+'%':''));const next=Math.max(0,(own.readyAt||0)-t),moving=['moving','between','done'].includes(own.phase)&&['curling','bowling','golf'].includes(w.game),button=arcadeDialog.querySelector('[data-arcade-control="action"]');button.disabled=s.phase!=='round'||w.phase!=='play'||!own||own.forfeited||own.eliminated||moving||next>.01;arcadeSetText('arcadeActionLabel',own.phase==='power'?'지금 발사!':g.action);arcadeSetText('arcadeActionHint',moving?'결과를 기다려요':next>.01?next.toFixed(1)+'초':g.key);if(s.phase==='round'&&w.phase==='play')arcadeSetText('arcadeStatus',t<own.judgeUntil?own.judge:own.phase==='power'?'파워 '+Math.round(own.power*100)+'% · 한 번 더 눌러 발사!':w.game==='parking'?'주차 '+own.parked+'대 · 낮은 속도 + 칸 방향 정렬 1초':w.game==='pong'?'반사 '+own.rallies+'회 · ↑/↓ 패들, Space 스매시':w.game==='volley'?'풍선 '+own.hits+'번 살림 · 풍선 아래에서 Space':w.game==='golf'?(own.hole+1)+'/3홀 · '+own.holeStrokes+'타 · 벽 반사로 우회':w.game==='bowling'?Math.min(3,own.completed+1)+'/3프레임 · 이번 '+own.framePins+'핀':own.shots+'/3투 · 과녁 중심을 노려요');}
+ if(own){arcadeSetText('arcadeOwnStatus',Math.round(own.score)+'점 · '+(t<own.judgeUntil?own.judge:own.phase==='power'?'파워 '+Math.round(own.power*100)+'%':''));const next=Math.max(0,(own.readyAt||0)-t),sweeping=w.game==='curling'&&own.phase==='moving',moving=['moving','between','done'].includes(own.phase)&&['curling','bowling','golf'].includes(w.game)&&!sweeping,button=arcadeDialog.querySelector('[data-arcade-control="action"]');button.disabled=s.phase!=='round'||w.phase!=='play'||!own||own.forfeited||own.eliminated||moving||next>.01;arcadeSetText('arcadeActionLabel',sweeping?'슥슥 쓸기':own.phase==='power'?'지금 발사!':g.action);arcadeSetText('arcadeActionHint',moving?'결과를 기다려요':next>.01?next.toFixed(1)+'초':sweeping?'쓸면 더 멀리 가요':g.key);if(s.phase==='round'&&w.phase==='play')arcadeSetText('arcadeStatus',t<own.judgeUntil?own.judge:own.phase==='power'?'파워 '+Math.round(own.power*100)+'% · 한 번 더 눌러 발사!':w.game==='parking'?'주차 '+own.parked+'대 · 정방향·후진 모두 1초 정렬':w.game==='pong'?'반사 '+own.rallies+'회 · ↑/↓ 패들, Space 스매시':w.game==='volley'?'풍선 '+own.hits+'번 살림 · 내려올 때 정확한 리시브 +10':w.game==='golf'?(own.hole+1)+'/3홀 · '+own.holeStrokes+'타 · 벽 반사로 우회':w.game==='bowling'?Math.min(3,own.completed+1)+'/3프레임 · '+own.frameShots+'/2투 · 이번 '+own.framePins+'핀':own.shots+'/3투 · 과녁 중심을 노려요');}
  $('arcadeDpad').hidden=false;
 };
 /* END_ARCADE_SPORTS_UI_V1 */
@@ -132,7 +132,7 @@ Object.assign(arcadeGames,{
  lasers:{name:'레이저 야근실',icon:'🔴',tag:'회피 · 회전과 스윕',hint:'점선은 예고, 빨간 레이저는 위험! 방향키로 피하고 Space로 짧게 대시. 맞아도 다시 돌아와요.',action:'대시!',key:'SPACE / F',input:'dash',color:'#a9c6bc',duel:true,controls:'standard'},
  frogger:{name:'횡단보도 배달왕',icon:'🚦',tag:'횡단 · 왕복 배송',hint:'방향키로 한 칸씩, Space로 바라보는 쪽 두 칸 도약! 차량과 친구를 피해서 건너편까지 왕복 배달해.',action:'두 칸!',key:'SPACE / F',input:'dash',color:'#8dc9b5',duel:true,controls:'standard'},
  bridge:{name:'나무다리 공사판',icon:'🪵',tag:'건설 · 공용 나무 경쟁',hint:'아래 땅에서 나무를 모아 내 색 다리 입구로! Space로 한 칸 건설. 나무는 최대 3개, 먼저 다리를 완성해.',action:'놓아!',key:'SPACE / F',input:'hit',color:'#bfc294',duel:true,controls:'standard'},
- claw:{name:'탕비실 집게왕',icon:'🦾',tag:'집기 · 흔들리는 공용 상품',hint:'←/→로 집게를 조준하고 Space로 내려! 상품은 먼저 잡은 사람 것. 무거운 상품은 고득점이지만 회수가 느려.',action:'내려!',key:'SPACE / F',input:'hit',color:'#c7a9d7',duel:true,controls:'standard'}
+ claw:{name:'탕비실 집게왕',icon:'🦾',tag:'집기 · 미세 조준과 조기 회수',hint:'←/→ 조준, Space로 내려! 내려갈 때도 좌우 미세 조준, 한 번 더 누르면 빈 집게를 조기 회수해요.',action:'내려!',key:'SPACE / F',input:'hit',color:'#c7a9d7',duel:true,controls:'standard'}
 });
 const actionPackKeys=new Set(['dodgeball','crown','lasers','frogger','bridge','claw']),actionPackPalette=typeof trayPalette!=='undefined'&&Array.isArray(trayPalette)&&trayPalette.length?trayPalette:['#b9d67e','#c5a0df','#e6c675','#8dccca','#eda992','#a5b7dc','#dbaa93','#b9c49c'];
 const actionPackNodes=new Map();let actionPackLayer=null,actionPackFrame=0;
@@ -175,8 +175,8 @@ arcadeDrawWorld=function(s,w,g,self){
  }
  actionPackClean();
  $('arcadeDpad').hidden=false;const action=arcadeDialog.querySelector('[data-arcade-control="action"]');action.hidden=false;
- const ready=own?(w.game==='dodgeball'?own.throwReadyAt:w.game==='frogger'?own.leapReadyAt:w.game==='bridge'?own.buildReadyAt:w.game==='claw'?own.hookReadyAt:own.dashReadyAt)||0:0,cool=Math.max(0,ready-t),busy=w.game==='claw'&&own?.hookState!=='idle';
- action.disabled=!can||cool>.05||busy||w.game==='bridge'&&(!own?.carried||own?.finishedAt>=0);arcadeSetText('arcadeActionLabel',g.action);arcadeSetText('arcadeActionHint',busy?'회수 중…':cool>.05?cool.toFixed(1)+'초 뒤 다시':g.key);
+ const ready=own?(w.game==='dodgeball'?own.throwReadyAt:w.game==='frogger'?own.leapReadyAt:w.game==='bridge'?own.buildReadyAt:w.game==='claw'?own.hookReadyAt:own.dashReadyAt)||0:0,cool=Math.max(0,ready-t),busy=w.game==='claw'&&own?.hookState==='up',lowering=w.game==='claw'&&own?.hookState==='down';
+ action.disabled=!can||cool>.05||busy||w.game==='bridge'&&(!own?.carried||own?.finishedAt>=0);arcadeSetText('arcadeActionLabel',lowering?'조기 회수':g.action);arcadeSetText('arcadeActionHint',busy?'회수 중…':cool>.05?cool.toFixed(1)+'초 뒤 다시':lowering?'좌우로 미세 조준 · 누르면 회수':g.key);
  const status=!own?'이번 판 관전 중':w.game==='dodgeball'?own.hits+'명중 · '+own.received+'피격':w.game==='crown'?own.heldSeconds.toFixed(1)+'초 보유 · '+own.steals+'번 약탈':w.game==='lasers'?own.received+'피격 · 아슬아슬 '+own.nearMisses+'회':w.game==='frogger'?own.deliveries+'배송 · '+own.crashes+'충돌':w.game==='bridge'?own.bridgeSteps+'/'+w.meta.bridgeGoal+'칸 · 나무 '+own.carried+'/3':own.score+'점 · '+own.catches+'개 확보';
  arcadeSetText('arcadeOwnStatus',own&&t<(own.resultUntil||0)?own.lastResult:status);arcadeSetText('arcadeStatus',s.phase==='between'||s.phase==='done'?s.notice:w.meta.notice||g.hint);
 };
@@ -184,12 +184,12 @@ arcadeDrawWorld=function(s,w,g,self){
 
 /* ARCADE_BRAIN_PACK_UI_V1 */
 Object.assign(arcadeGames,{
- memory:{name:'복사기 기억력 검사',icon:'💡',tag:'기억 · 불빛 순서',hint:'불빛 순서를 보고 기다려요. 꺼지면 A / W / D로 같은 순서를 재현! 틀리면 다음 문제 대기.',action:'기억!',key:'A / W / D',input:'hit',color:'#d9c6e9',duel:true,controls:'choices'},
+ memory:{name:'복사기 기억력 검사',icon:'💡',tag:'기억 · 불빛 순서',hint:'불빛을 보고 기다렸다가 A / W / D로 같은 순서를 재현! 한 문제에 한 번은 처음부터 다시 도전해요.',action:'기억!',key:'A / W / D',input:'hit',color:'#d9c6e9',duel:true,controls:'choices'},
  sorter:{name:'서류 분류 컨베이어',icon:'📁',tag:'분류 · 바뀌는 규칙',hint:'서류 그림을 보고 A / W / D로 분류! 특별 규칙이면 원래 함보다 한 칸 오른쪽으로 보내요.',action:'분류!',key:'A / W / D',input:'hit',color:'#c9dfb8',duel:true,controls:'choices'},
- receipt:{name:'영수증 암산 결재',icon:'🧾',tag:'암산 · 합계 찾기',hint:'영수증의 작은 금액을 더해서 A / W / D로 정답 합계를 골라요. 빨리 맞힐수록 추가 점수!',action:'정산!',key:'A / W / D',input:'hit',color:'#efdbb1',duel:true,controls:'choices'},
- safe:{name:'탕비실 비밀 금고',icon:'🔐',tag:'기억 · 숫자 다이얼',hint:'잠깐 보이는 세 자리 번호를 기억! ← / →로 숫자를 맞추고 Space로 한 자리씩 확정해요.',action:'확정!',key:'← / → + SPACE',input:'hit',color:'#bdd5d7',duel:true,controls:'standard'},
- auction:{name:'마지막 간식 경매',icon:'✉️',tag:'눈치 · 비공개 입찰',hint:'예산 12로 A=0, W=1, D=3을 비밀 입찰! 유일한 최고 입찰만 상품 획득. 입찰금은 소모되고 남은 예산+상품 가치가 점수예요.',action:'입찰!',key:'A / W / D',input:'hit',color:'#d8c7e1',duel:true,controls:'choices'},
- stacker:{name:'보고서 탑 쌓기',icon:'📚',tag:'타이밍 · 겹친 만큼',hint:'움직이는 블록을 Space로 멈춰 쌓아요. 겹친 부분만 남아요! 무너지면 새 탑으로 다시 도전.',action:'쌓아!',key:'SPACE / F',input:'hit',color:'#b5d6e4',duel:true,controls:'action'},
+ receipt:{name:'영수증 암산 결재',icon:'🧾',tag:'암산 · 합계 찾기',hint:'영수증 금액을 더해서 A / W / D로 합계를 골라요. 뒤로 갈수록 계산이 늘고, 연속 정답은 보너스!',action:'정산!',key:'A / W / D',input:'hit',color:'#efdbb1',duel:true,controls:'choices'},
+ safe:{name:'탕비실 비밀 금고',icon:'🔐',tag:'기억 · 숫자 다이얼',hint:'세 자리 번호를 기억! ← / →로 한 칸씩 돌리고 Space로 확정해요. 실수해도 맞힌 앞자리는 유지돼요.',action:'확정!',key:'← / → + SPACE',input:'hit',color:'#bdd5d7',duel:true,controls:'standard'},
+ auction:{name:'마지막 간식 경매',icon:'✉️',tag:'눈치 · 비공개 입찰',hint:'예산 12로 A=0, W=1, D=3 비밀 입찰! 마감 전 수정 가능. 유일한 최고 입찰만 상품 획득, 입찰금은 소모되고 예산+상품 가치가 점수예요.',action:'입찰!',key:'A / W / D',input:'hit',color:'#d8c7e1',duel:true,controls:'choices'},
+ stacker:{name:'보고서 탑 쌓기',icon:'📚',tag:'타이밍 · 겹친 만큼',hint:'양쪽에서 오는 블록을 Space로 멈춰 쌓아요. 겹친 부분만 남고 PERFECT 3연속이면 너비 회복! 무너져도 다시 도전해요.',action:'쌓아!',key:'SPACE / F',input:'hit',color:'#b5d6e4',duel:true,controls:'action'},
  reaction:{name:'결재 신호 반응전',icon:'🚨',tag:'반응 · 가짜 신호 주의',hint:'「찍…지 마!」는 가짜! 초록색 「지금 찍어!」에서 Space. 먼저 정확하게 누를수록 높은 점수!',action:'찍어!',key:'SPACE / F',input:'hit',color:'#dfc6ac',duel:true,controls:'action'}
 });
 const brainPackIds=new Set(['memory','sorter','receipt','safe','auction','stacker','reaction']),brainPackNodes=new Map();
@@ -235,13 +235,13 @@ const brainPackDrawBase=arcadeDrawWorld;
 arcadeDrawWorld=function(s,w,g,self){
  brainPackDrawBase(s,w,g,self);if(!brainPackIds.has(w.game))return;const own=w.players.find(p=>p.id===self)||w.players.find(p=>!p.forfeited)||w.players[0],t=w.elapsed;
  brainPackText('round',w.game==='stacker'?'최고의 탑에 도전':'ROUND '+((w.meta.stage||0)+1)+' / '+({memory:6,sorter:16,receipt:6,safe:3,auction:4,reaction:7}[w.game]||1));
- brainPackText('phase',w.meta.phase==='watch'?'관찰 시간':w.meta.phase==='reveal'?'결과 공개':w.meta.phase==='repeat'?'같은 순서 입력':w.meta.phase==='unlock'?'기억한 번호 입력':w.meta.phase==='choose'?(own.locked?'선택 완료':'내 선택은?'):'나의 차례');
+ brainPackText('phase',w.meta.phase==='watch'?'관찰 시간':w.meta.phase==='reveal'?'결과 공개':w.meta.phase==='repeat'?'같은 순서 입력':w.meta.phase==='unlock'?'기억한 번호 입력':w.meta.phase==='choose'?(own.locked?(w.game==='auction'?'봉투 제출 · 수정 가능':'선택 완료'):'내 선택은?'):'나의 차례');
  brainPackText('feedback',t<own.feedbackUntil?own.feedback:'');
  $('arcadeDpad').hidden=w.game!=='safe';if(w.game==='safe')$('arcadeDpad').querySelector('i').textContent='숫자';
  if(w.game==='memory'){
   brainPackText('instruction',w.meta.phase==='watch'?'순서를 기억해요':'방금 본 순서대로!');
   for(let i=0;i<3;i++)brainPackNodes.get('light'+i).classList.toggle('is-lit',w.meta.flashLane===i);
-  brainPackText('memoryProgress',Array.from({length:w.meta.patternLength},(_,i)=>i<own.memoryIndex?'●':'○').join('  ')+(own.locked?' · 다음 문제 대기':''));
+  brainPackText('memoryProgress',Array.from({length:w.meta.patternLength},(_,i)=>i<own.memoryIndex?'●':'○').join('  ')+(own.locked?' · 다음 문제 대기':own.memoryRetryUsed?' · 마지막 도전':' · 다시 도전 1회'));
  }
  if(w.game==='sorter'){
   brainPackText('rule',w.meta.rule);brainPackText('docIcon',w.meta.docIcon);brainPackText('docName',w.meta.docName);
