@@ -10,12 +10,12 @@ function setup(count,purpose='arcade',host=true){
  let now=0,finishes=0;const roster=Array.from({length:count},(_,i)=>({id:'p'+i,name:'Player '+i,menu:'menu-'+i,department:i%2?'accounting':'business'}));
  const e={console,Map,Set,WeakMap,Math,Number,String,Array,Object,Error,JSON,Date:class extends Date{static now(){return 1e9+now;}},performance:{now:()=>now},setInterval(){},setTimeout(){},netApplying:false,netPhase:purpose==='lunch'?'menuTournament':'setup',result:null,netSpec:{participants:roster},netIsActive:()=>true,netIsHost:()=>host,netSelfId:()=> 'p0',netMembers:()=>roster,netDepartment:()=> 'business',netPublish(){},notify(){},arcadeRender(){},arcadeUpdateButtons(){},arcadeClearKeys(){},arcadeOpen(){},arcadeDialog:{open:false,close(){}},arcadeGames:Object.fromEntries(keys.map(key=>[key,{name:key}])),validName:s=>typeof s==='string'&&s.length>0,rand:n=>Math.max(0,n-1),deptPracticeRequire:()=>true,deptPracticeChoice:'accounting',netRoom:{code:'BRAWL5',onDisconnect(){},send(){return true;}},netFinishMenuTournament(){finishes++;}};
  vm.createContext(e);vm.runInContext(source+`\nthis.api={get state(){return arcadeState;},get clock(){return arcadeClock;},engine:arcadeEngine,start:arcadeStartWorld,resolve:arcadeResolveRound,forfeit:arcadeForfeit,validate:arcadeValidate,handle:arcadeHandle,demo:arcadeDemoStart,init(mode='tournament'){arcadeState=arcadeMakeState(mode,'brawl',netMembers().map(m=>({...m,response:'join'})));arcadeState.purpose=${JSON.stringify(purpose)};arcadeState.activeIds=arcadeState.members.map(m=>m.id);arcadeStartWorld();return arcadeState;}};`,e);
- return {api:e.api,e,roster,get finishes(){return finishes;},setNow:value=>{now=value;},finish(scores){for(const [i,p]of e.api.state.world.players.entries())p.score=scores?.[p.id]??(count-i)*10;e.api.engine.complete(e.api.state.world);e.api.resolve();}};
+ return {api:e.api,e,roster,get finishes(){return finishes;},setNow:value=>{now=value;},finish(scores){for(const [i,p]of e.api.state.world.players.entries()){const raw=scores?.[p.id]??(count-i)*10;p.score=raw;if(e.api.state.world.meta.roundSurvival){p.eliminated=true;p.health=0;if('hp' in p)p.hp=0;p.fallAt=raw/1000;p.survived=p.fallAt;}}e.api.engine.complete(e.api.state.world);e.api.resolve();}};
 }
 for(const count of [2,3,8])for(const purpose of ['lunch','arcade']){
  const t=setup(count,purpose),s=t.api.init(),randomGames=[];
  for(let round=0;round<4;round++){
-  assert.equal(s.world.players.length,count);assert.equal(s.world.meta.partyRespawn,true);assert.equal(s.world.meta.finale,false);assert.notEqual(s.world.game,'brawl');randomGames.push(s.world.game);
+  assert.equal(s.world.players.length,count);assert.equal(s.world.meta.partyRespawn,false);assert.equal(s.world.meta.finale,false);assert.notEqual(s.world.game,'brawl');randomGames.push(s.world.game);
   t.finish();assert.equal(s.pointRounds,round+1);assert.equal(s.phase,'between');assert(s.world.players.every(p=>!p.forfeited));t.api.start();
  }
  assert.equal(new Set(randomGames).size,4,'the first four games are distinct and exclude the finale');
@@ -36,17 +36,18 @@ for(const count of [2,3,8])for(const purpose of ['lunch','arcade']){
  while(s.phase!=='done'){if(s.phase==='between')t.api.start();t.finish();}
  assert.equal(s.history.length,5);assert.equal(s.history[4].game,'brawl');assert(s.history.slice(0,4).every(h=>h.game!=='brawl'));
 }
-// Points brawl rewards an attacking trade and returns a knocked-out player safely.
+// A knockout is final for this round, never a series forfeit.
 {
  const t=setup(3),s=t.api.init();for(let i=0;i<4;i++){t.finish();t.api.start();}const w=s.world,[attacker,target,idle]=w.players;
  w.phase='play';w.elapsed=5;attacker.x=300;attacker.y=230;attacker.faceX=1;attacker.faceY=0;target.x=365;target.y=230;target.hp=16;idle.x=630;idle.y=400;
- t.api.engine.input(w,attacker.id,{seq:1,action:'hit'},5000);assert.equal(target.deaths,1);assert.equal(target.eliminated,false);assert.equal(target.hp,100);assert.equal(target.hurtUntil,6);assert(Math.hypot(target.x-attacker.x,target.y-attacker.y)>100);assert.match(w.meta.notice,/800점/);
- attacker.deaths=1;attacker.damageDealt=100;attacker.knockouts=1;attacker.hp=100;t.api.engine.step(w,.02,5020);assert(attacker.score>idle.score,'one KO and one death still rewards active damage over camping');
- let now=5020;while(w.phase!=='done'){now+=20;t.api.engine.step(w,.02,now);}assert(Math.abs(w.elapsed-30)<1e-8);assert(w.players.every(p=>!p.eliminated&&!p.forfeited),'all players remain eligible until the deadline');
+ assert.equal(t.api.engine.input(w,attacker.id,{seq:1,action:'hit'},5000),true);assert.equal(target.deaths,1);assert.equal(target.eliminated,true);assert.equal(target.hp,0);assert.equal(target.health,0);assert.equal(target.fallAt,5);assert.equal(target.forfeited,false);
+ assert.equal(t.api.engine.input(w,target.id,{seq:1,action:'hit'},5020),false,'knocked-out players cannot keep attacking');
+ let now=5020;t.api.engine.step(w,.02,now);const out=[target.x,target.y,target.score];for(let i=0;i<150;i++){now+=20;t.api.engine.step(w,.02,now);}assert.deepEqual([target.x,target.y,target.score],out,'death stays final throughout this round');assert(attacker.score>target.score&&idle.score>target.score,'every survivor outranks the eliminated player');
+ while(w.phase!=='done'){now+=20;t.api.engine.step(w,.02,now);}assert(Math.abs(w.elapsed-30)<1e-8);assert.equal(target.eliminated,true);assert.equal(s.activeIds.length,3,'round death does not remove series eligibility');
 }
 // Ordinary single brawl keeps survival rules, and guest attempts cannot run the series.
 {
  const t=setup(2),s=t.api.init('single');assert.equal(s.world.game,'brawl');assert.equal(s.world.duration,24);assert.notEqual(s.world.meta.partyRespawn,true);
  const guest=setup(3,'arcade',false),g=guest.api.init(),before=copy(g);assert.equal(guest.api.start(),false);guest.api.handle('p0',{t:'arcadeInput',gameId:g.id,worldId:'forged',seq:1,action:'hit'});assert.deepEqual(copy(g),before);
 }
-console.log('PASS: 4 distinct random non-brawl games then a 30-second whole-party brawl for 2/3/8 players and solo; ordinary final-round points, no sixth round, shared participation, forfeits, active-trade reward, protected respawn, preserved single survival and host authority.');
+console.log('PASS: 4 distinct random non-brawl games then a 30-second whole-party brawl for 2/3/8 players and solo; ordinary final-round points, no sixth round, shared participation, forfeits, round-only death, blocked dead input and preserved series eligibility and host authority.');
