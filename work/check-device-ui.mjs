@@ -216,4 +216,12 @@ function keyListeners(text) {
   assert.equal(info.getAttribute('aria-expanded'), 'true'); assert.equal(t.gameInputs.length, before, 'Space can toggle game information without firing an attack');
 }
 
-console.log('PASS: device and breakpoint classification; invited/mobile room tabs, preserved native fields and consent, busy protection, mode-correct Enter and keyboard tab focus; accessible info/final ranking state, stable controls, untouched game/transport state, coalesced layout/input release, and all three actual game key-capture paths preserve UI button keyboard activation.');
+{
+  const t=environment(),{e,ids}=t;e.arcadeEnsureUI();e.arcadeState.format='single';
+  const w=e.arcadeState.world,p=w.players[0];w.game='parking';p.parked=4;p.score=4179;e.ui.renderGame();assert.equal(ids.get('deviceOwnSummary').textContent,'내 주차 4대');
+  w.game='dodge';w.meta={roundSurvival:true};p.health=2;p.score=1_000_000+12000;e.ui.renderGame();assert.equal(ids.get('deviceOwnSummary').textContent,'생존 · ♥♥');
+  p.eliminated=true;e.ui.renderGame();assert.equal(ids.get('deviceOwnSummary').textContent,'이번 판 관전');
+  e.arcadeState.format='points';e.ui.renderGame();assert.equal(ids.get('deviceOwnSummary').textContent,'내 누적 8점');
+}
+
+console.log('PASS: device and breakpoint classification; invited/mobile room tabs, preserved native fields and consent, busy protection, mode-correct Enter and keyboard tab focus; accessible info/final ranking state, parking count and survival summaries without internal rank scores, stable controls, untouched game/transport state, coalesced layout/input release, and all three actual game key-capture paths preserve UI button keyboard activation.');
