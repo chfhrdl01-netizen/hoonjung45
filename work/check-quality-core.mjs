@@ -12,9 +12,9 @@ const make=(game,n=2)=>{
 
 // Survival score rewards deliberate close dodges / clean jumps, not only waiting.
 for(const [game,stat]of [['dodge','nearMisses'],['runner','cleared']]){
- const {w,rule,controls}=make(game);w.elapsed=10;w.meta.partyRespawn=true;w.meta.nextSpawnAt=99;w.players[0][stat]=3;
+ const {w,rule,controls}=make(game);w.elapsed=10;w.meta.partyRespawn=false;w.meta.nextSpawnAt=99;w.players[0][stat]=3;
  rule.step(w,.02,controls,()=>.5);
- assert.equal(w.players[0].score-w.players[1].score,240,game+' three skill successes earn 240 points');
+ assert.ok(Math.abs(w.players[0].score-w.players[1].score-.003)<1e-8,game+' skill successes break survivor ties without outranking a longer life');
 }
 
 // A jump pressed 140 ms before landing launches once on contact; no mid-air jump.
@@ -44,9 +44,9 @@ for(const [game,stat]of [['dodge','nearMisses'],['runner','cleared']]){
 
 // Staying idle no longer beats a player with the same survival time who lands hits.
 {
- const {w,rule,controls}=make('brawl',3),[p,target,idle]=w.players;w.elapsed=5;w.meta.partyRespawn=true;p.x=300;p.y=230;p.faceX=1;p.faceY=0;target.x=365;target.y=230;idle.x=600;idle.y=400;
- rule.input(w,p,'hit');rule.step(w,.02,controls);assert.equal(p.damageDealt,28);assert.equal(p.knockouts,0);assert.equal(p.score-idle.score,224);
- w.elapsed=6;p.hitReadyAt=0;target.x=365;target.y=230;target.hp=16;target.hurtUntil=0;rule.input(w,p,'hit');assert.equal(p.damageDealt,44,'overkill does not inflate damage rewards');assert.equal(p.knockouts,1);assert.equal(target.deaths,1);assert.equal(target.eliminated,false);assert.ok(p.score>idle.score);
+ const {w,rule,controls}=make('brawl',3),[p,target,idle]=w.players;w.elapsed=5;w.meta.partyRespawn=false;p.x=300;p.y=230;p.faceX=1;p.faceY=0;target.x=365;target.y=230;idle.x=600;idle.y=400;
+ rule.input(w,p,'hit');rule.step(w,.02,controls);assert.equal(p.damageDealt,28);assert.equal(p.knockouts,0);assert.ok(p.score>idle.score);
+ w.elapsed=6;p.hitReadyAt=0;target.x=365;target.y=230;target.hp=16;target.hurtUntil=0;rule.input(w,p,'hit');assert.equal(p.damageDealt,44,'overkill does not inflate damage rewards');assert.equal(p.knockouts,1);assert.equal(target.deaths,1);assert.equal(target.eliminated,true);rule.step(w,.02,controls);assert.ok(p.score>target.score&&idle.score>target.score);
 }
 {
  const {w,rule,controls}=make('brawl'),[p,target]=w.players;w.elapsed=5;p.x=300;p.y=230;p.faceX=1;p.faceY=0;target.x=365;target.y=230;target.hp=16;target.damageDealt=999;target.knockouts=99;
@@ -55,7 +55,7 @@ for(const [game,stat]of [['dodge','nearMisses'],['runner','cleared']]){
 
 // Fast kart finishers do not truncate the remaining players' points round.
 for(const party of [false,true]){
- const {w,rule,controls}=make('kart');w.meta.partyRespawn=party;w.elapsed=20;w.meta.nextHazardAt=99;w.meta.firstFinishAt=15;w.players[0].finishAt=15;w.players[0].progress=3;w.players[1].progress=1;
+ const {w,rule,controls}=make('kart');w.meta.partyRespawn=false;if(party)w.meta.pointsStage='regular';w.elapsed=20;w.meta.nextHazardAt=99;w.meta.firstFinishAt=15;w.players[0].finishAt=15;w.players[0].progress=3;w.players[1].progress=1;
  rule.step(w,.02,controls,()=>.5);assert.equal(w.meta.roundOver===true,!party);
 }
 
@@ -77,16 +77,15 @@ for(const party of [false,true]){
  rule.step(w,.02,controls);assert.equal(p.score,3);assert.equal(p.makes,1);w.elapsed+=.02;rule.step(w,.02,controls);assert.equal(p.score,3);
 }
 
-// Eight-player points rounds keep enough floor for movement; normal survival shrinks.
+// Points survival keeps the same shrinking floor and gives wind a reaction window.
 for(const party of [false,true]){
- const {w,rule,controls}=make('tray',8);w.elapsed=20;w.meta.partyRespawn=party;rule.step(w,.02,controls,()=>.5);
- assert.equal(w.objects.filter(tile=>tile.goneAt>w.duration).length,party?9:1);
+ const {w,rule,controls}=make('tray',8);w.elapsed=20;w.meta.partyRespawn=false;if(party)w.meta.pointsStage='regular';w.players.forEach((p,i)=>{p.x=345+i;p.y=230;});rule.step(w,.02,controls,()=>.5);
+ assert.equal(w.objects.filter(tile=>tile.goneAt>w.duration).length,1);
  assert.equal(w.meta.gustApplied,false,'wind first exposes its direction rather than hitting immediately');assert.ok(Math.abs(w.meta.gustPushAt-w.elapsed-.8)<1e-9);assert.ok(w.meta.gustUntil>w.meta.gustPushAt);
- if(party)assert.ok(w.players.every(p=>!p.eliminated));
 }
 {
  const {w,rule,controls}=make('tray');w.elapsed=20;w.players[0].x=333;w.players[0].y=230;w.players[1].x=367;w.players[1].y=230;rule.step(w,.02,controls,()=>.5);assert.equal(w.meta.gustApplied,false);
  w.elapsed=20.81;rule.step(w,.02,controls,()=>.5);assert.equal(w.meta.gustApplied,true,'warned wind applies after its reaction window');
 }
 
-console.log('PASS: core game quality—meaningful survival skill rewards, buffered landing jumps, one contact steal per dash, progressive stamp timing, offensive brawl scoring, complete points races, hidden fair choices, steady rhythm, single basketball scoring, and telegraphed wind with sufficient party floor.');
+console.log('PASS: core game quality—meaningful survival skill rewards, buffered landing jumps, one contact steal per dash, progressive stamp timing, offensive brawl scoring, complete points races, hidden fair choices, steady rhythm, single basketball scoring, and telegraphed wind, shrinking floor and round-only deaths.');
