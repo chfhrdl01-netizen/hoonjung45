@@ -32,7 +32,11 @@ setTimeout(()=>{
   };next();return;
  }
  if(phase==='game'){
-  netReady=Object.fromEntries(netRoster.map(m=>[m.id,true]));const game=query.get('game')||'frogger';arcadeRandomGame=()=>game;netBeginMenuTournament();arcadeState.world.phase='play';arcadeState.world.elapsed=2;arcadeHousekeep=()=>{};arcadeRender();qaInfo();return;
+  netReady=Object.fromEntries(netRoster.map(m=>[m.id,true]));const game=query.get('game')||'frogger';arcadeRandomGame=()=>game;netBeginMenuTournament();arcadeState.world.phase='play';arcadeState.world.elapsed=2;arcadeHousekeep=()=>{};
+  const w=arcadeState.world,p=w.players[0];
+  if(game==='crown'&&query.get('scene')==='owner'){p.x=350;p.y=230;arcadeEngine.step(w,.02,2020);}
+  if(game==='tray'&&query.get('scene')==='fallen'){p.x=-30;arcadeEngine.step(w,.02,2020);}
+  arcadeRender();qaInfo();return;
  }
  if(phase==='gallery'){
   const dialog=el('dialog');dialog.style.cssText='max-width:96vw;width:1100px;max-height:94dvh;padding:20px;overflow:auto';const heading=el('h2','','학과별 밥친구 · 118개 학과/전공');dialog.append(heading);const grid=el('div');grid.style.cssText='display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px';for(const d of deptOptions.filter(d=>d.id!=='facility')){const card=el('article');card.style.cssText='padding:10px;border:1px solid #a6987c;background:#fff4d8;border-radius:12px;text-align:center;font-size:12px';const art=el('div');art.innerHTML=deptAvatarSvg(d.id);art.style.cssText='width:120px;margin:auto';card.append(art,el('strong','',d.name),el('p','',d.college));grid.append(card);}dialog.append(grid);document.body.append(dialog);dialog.showModal();return;
