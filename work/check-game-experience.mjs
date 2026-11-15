@@ -53,6 +53,7 @@ world.id='round-2';world.game='dodge';world.phase='play';world.elapsed=1;player.
 assert.equal(ids.get('gameGuide').children[0].children[1].textContent,guides.dodge.goal);assert(ids.get('gameScoreFeedback').hidden,'new round resets feedback');
 world.elapsed=1.02;player.score=1020;context.arcadeRender();assert(ids.get('gameScoreFeedback').hidden);
 player.nearMisses=1;context.arcadeRender();assert.equal(ids.get('gameScoreFeedback').textContent,'아슬아슬 회피!');assert.equal(ids.get('gameScoreFeedback').hidden,false);
+world.meta={roundSurvival:true};player.health=2;player.score=1000000;context.arcadeRender();assert.equal(ownStatus.textContent,'생존 중 · ♥♥','internal survival ordering never leaks as a million-point score');player.eliminated=true;context.arcadeRender();assert.equal(ownStatus.textContent,'이번 판 탈락 · 다음 게임에 다시 참여');
 context.arcadeState=null;context.arcadeRender();assert(ids.get('gameGuide').hidden);assert(ids.get('gameScoreFeedback').hidden);assert.equal(dialog.dataset.timePressure,'false');
 const css=fs.readFileSync(new URL('./game-experience.css',import.meta.url),'utf8');
 assert(css.includes('prefers-reduced-motion:reduce'));
