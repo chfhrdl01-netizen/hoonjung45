@@ -1,0 +1,14 @@
+/* The fixed green footing makes the first stack target visible before any block is placed. */
+#arcadeBoard[data-game="stacker"] .brain-crane{position:relative;z-index:5;font-weight:850;color:#3b5847;line-height:1.25}
+#arcadeBoard[data-game="stacker"] .brain-stack-ground{z-index:0}
+#arcadeBoard[data-game="stacker"] .brain-stack-start{position:absolute;left:50%;bottom:1%;width:21.428571%;height:7%;transform:translateX(-50%);display:grid;place-items:center;border:1px solid #36564a;border-radius:2px;background:#547764;color:#fff6d7;font-size:clamp(8px,2.6cqh,12px);font-weight:900;font-style:normal;line-height:1;letter-spacing:.04em;z-index:1}
+#arcadeBoard[data-game="stacker"] .brain-stack-start.is-start{background:#3e7155;border-color:#224e38;box-shadow:0 0 0 2px #eaf4ce}
+#arcadeBoard[data-game="stacker"] .brain-stack-target{position:absolute;height:7%;transform:translateX(-50%);border:2px dashed #397253;border-radius:2px;background:#93b77526;z-index:2;pointer-events:none}
+#arcadeBoard[data-game="stacker"] .brain-stack-target.is-aligned{background:#8cca5a66;border-color:#285c35;box-shadow:0 0 0 1px #efffc9}
+#arcadeBoard[data-game="stacker"] .brain-stack-target-label{position:absolute;left:50%;bottom:calc(100% + 4px);transform:translateX(-50%);padding:2px 5px;border-radius:3px;background:#edf3d9;color:#315e3e;font-size:clamp(8px,2.8cqh,12px);font-weight:900;font-style:normal;white-space:nowrap;line-height:1.2}
+#arcadeBoard[data-game="stacker"] .brain-stack-target-label:after{content:"";position:absolute;left:calc(50% - 3px);top:100%;border:3px solid transparent;border-top-color:#edf3d9}
+#arcadeBoard[data-game="stacker"] .brain-stack-target-label[hidden]{display:none}
+#arcadeBoard[data-game="stacker"] .brain-stack-block{z-index:3}
+#arcadeBoard[data-game="stacker"] .brain-stack-block.is-moving{background:repeating-linear-gradient(0deg,#e9a25d 0 3px,#ffd598 3px 6px);border-color:#955529;z-index:4}
+@container(max-height:220px){#arcadeBoard[data-game="stacker"] .brain-stack-target-label{font-size:8px;padding:1px 4px;bottom:calc(100% + 2px)}#arcadeBoard[data-game="stacker"] .brain-stack-start{font-size:8px}}
+@media(prefers-reduced-motion:reduce){#arcadeBoard[data-game="stacker"] .brain-stack-target{animation:none;transition:none}}
