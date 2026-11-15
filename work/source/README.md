@@ -14,8 +14,10 @@
 | 레이스·온라인 참가 상태·아이템 | `scripts/race-and-network.js` |
 | 별도 커피·난투 게임 | `scripts/coffee-and-brawl.js` |
 | 연습·식판·방 채팅 | `scripts/practice-and-party-games.js` |
+| 30종 목표·공략·득점 피드백 | `../game-experience.mjs`, `../game-experience.css` |
+| 조준선·받기 위치·공격 범위·체력과 상태 표시 | `../game-visuals.mjs`, `../game-visuals.css` |
 | 미니게임 30종 판정 | `../game-rules.mjs` |
-| 5판 점수 계산·경기 시간·게임 진행 | `../arcade-controller.mjs` |
+| 랜덤 4판 + 대난투 피날레·누적 점수·경기 시간 | `../arcade-controller.mjs` |
 | 오락실·현재 및 최종 순위 표시 | `../arcade-ui.mjs`, `scripts/arcade-renderers.js` |
 | 점심 점수전 시작·최종 결과 데이터 | `scripts/menu-session.js` |
 | 최종 점수표·커피 주문 화면 | `scripts/scoreboard-and-coffee.js` |
@@ -32,8 +34,8 @@
 저장소 루트에서 `node work/build.mjs`를 실행합니다. 다음 배포 파일을 생성합니다.
 
 - `index.html`: 화면 HTML
-- `assets/styles-device6.css`: 순서를 보존한 CSS
-- `assets/app-device6.js`: 게임 JavaScript와 기기별 UI
+- `assets/styles-quality7.css`: 순서를 보존한 CSS
+- `assets/app-quality7.js`: 게임 JavaScript와 기기별 UI
 
 같은 파일을 `dist/`에도 생성합니다. 배포 파일을 직접 수정하면 다음 빌드에서 덮어씁니다.
 외부 CSS·JS를 먼저 배포하고, 마지막에 `index.html`을 반영하면 기존 방문자의 파일 경로가 끊기지 않습니다.
@@ -54,3 +56,9 @@ CSS의 `@source`/`@end-source` 주석은 원래 스타일 묶음을 찾는 경�
 모바일의 규칙·점수 영역을 접더라도 정보 버튼의 `aria-expanded`와 `aria-controls`를 맞추고, 종료 화면에서는 전원 순위를 표시합니다. 키보드 입력을 캡처하는 세 경로는 일반 UI 버튼의 기본 Space 동작을 허용해야 합니다. 화면·입력 방식 변경은 눌린 입력을 해제하며 게임 진행 상태를 새로 만들지 않습니다.
 
 `node work/check-device-ui.mjs`는 화면 분류, 초대와 참여 탭, 키보드·포커스, 정보 표시, 상태 보존과 입력 해제를 검사합니다. 브라우저에서는 30종의 경기장·설명·조작부가 겹치지 않는지, 선택형 게임 버튼이 잘리는지, 최종 순위에 모든 참가자가 남는지 확인합니다. 뷰포트 크기 검사와 실제 터치 기기 검사는 구분하며, 단순 iframe 크기 변경은 입력 방식(coarse/fine) 자체를 바꾸지 않습니다.
+
+## 캐릭터와 피날레
+
+참가자와 연습 캐릭터는 미선택 상태로 시작합니다. 준비·시작은 유효한 직접 선택 이후에만 허용하며, 호스트에서도 확인합니다. 학과 선택 UI와 준비 규칙을 수정할 때는 `check-character-ready.mjs`, `check-practice-character.mjs`, `check-department-avatars.mjs`를 확인합니다.
+
+점수전은 중복 없는 랜덤 4판 뒤 전원 참여 대난투 30초로 마칩니다. 피날레도 동일한 순위 배점이며 추가 결승·누적 점수 초기화가 없습니다. `check-brawl-finale.mjs`가 진행과 기권·호스트 권한을 검사합니다.
