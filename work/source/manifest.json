@@ -1,8 +1,8 @@
 {
-  "build": "party30-20261115-device6",
+  "build": "party30-20261115-quality7",
   "assets": {
-    "css": "assets/styles-device6.css",
-    "js": "assets/app-device6.js"
+    "css": "assets/styles-quality7.css",
+    "js": "assets/app-quality7.js"
   },
   "styles": [
     {
@@ -316,7 +316,9 @@
         "duel-controls.css",
         "device-shell.css",
         "desktop-ui.css",
-        "mobile-ui.css"
+        "mobile-ui.css",
+        "game-experience.css",
+        "game-visuals.css"
       ]
     }
   ],
@@ -362,6 +364,8 @@
         },
         "duel-controls.mjs",
         "adaptive-ui.mjs",
+        "game-experience.mjs",
+        "game-visuals.mjs",
         "source/scripts/bootstrap.js"
       ]
     },
