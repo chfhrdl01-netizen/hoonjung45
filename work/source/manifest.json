@@ -1,0 +1,373 @@
+{
+  "build": "party30-20261115-points5",
+  "assets": {
+    "css": "assets/styles-points5.css",
+    "js": "assets/app-points5.js"
+  },
+  "styles": [
+    {
+      "id": "baseStyles",
+      "open": "<style>",
+      "close": "</style>",
+      "files": [
+        {
+          "file": "source/styles/base-and-theme.css",
+          "section": "01-basestyles"
+        }
+      ]
+    },
+    {
+      "id": "arcadeThemeStyles",
+      "open": "<style id=\"arcadeThemeStyles\">",
+      "close": "</style>",
+      "files": [
+        {
+          "file": "source/styles/base-and-theme.css",
+          "section": "02-arcadethemestyles"
+        }
+      ]
+    },
+    {
+      "id": "compactBattleStyles",
+      "open": "<style id=\"compactBattleStyles\">",
+      "close": "</style>",
+      "files": [
+        {
+          "file": "source/styles/base-and-theme.css",
+          "section": "03-compactbattlestyles"
+        }
+      ]
+    },
+    {
+      "id": "touchBattleLayout",
+      "open": "<style id=\"touchBattleLayout\">",
+      "close": "</style>",
+      "files": [
+        {
+          "file": "source/styles/base-and-theme.css",
+          "section": "04-touchbattlelayout"
+        }
+      ]
+    },
+    {
+      "id": "roomTransportStyles",
+      "open": "<style id=\"roomTransportStyles\">",
+      "close": "</style>",
+      "files": [
+        {
+          "file": "source/styles/rooms-and-race.css",
+          "section": "05-roomtransportstyles"
+        }
+      ]
+    },
+    {
+      "id": "onlineCombatStyles",
+      "open": "<style id=\"onlineCombatStyles\">",
+      "close": "</style>",
+      "files": [
+        {
+          "file": "source/styles/rooms-and-race.css",
+          "section": "06-onlinecombatstyles"
+        }
+      ]
+    },
+    {
+      "id": "departmentRaceStyles",
+      "open": "<style id=\"departmentRaceStyles\">",
+      "close": "</style>",
+      "files": [
+        {
+          "file": "source/styles/rooms-and-race.css",
+          "section": "07-departmentracestyles"
+        }
+      ]
+    },
+    {
+      "id": "onlineGameStyles",
+      "open": "<style id=\"onlineGameStyles\">",
+      "close": "</style>",
+      "files": [
+        {
+          "file": "source/styles/rooms-and-race.css",
+          "section": "08-onlinegamestyles"
+        }
+      ]
+    },
+    {
+      "id": "onlinePolishStyles",
+      "open": "<style id=\"onlinePolishStyles\">",
+      "close": "</style>",
+      "files": [
+        {
+          "file": "source/styles/rooms-and-race.css",
+          "section": "09-onlinepolishstyles"
+        }
+      ]
+    },
+    {
+      "id": "raceItemStyles",
+      "open": "<style id=\"raceItemStyles\">",
+      "close": "</style>",
+      "files": [
+        {
+          "file": "source/styles/rooms-and-race.css",
+          "section": "10-raceitemstyles"
+        }
+      ]
+    },
+    {
+      "id": "raceSmoothStyles",
+      "open": "<style id=\"raceSmoothStyles\">",
+      "close": "</style>",
+      "files": [
+        {
+          "file": "source/styles/rooms-and-race.css",
+          "section": "11-racesmoothstyles"
+        }
+      ]
+    },
+    {
+      "id": "coffeeEventStyles",
+      "open": "<style id=\"coffeeEventStyles\">",
+      "close": "</style>",
+      "files": [
+        {
+          "file": "source/styles/rooms-and-race.css",
+          "section": "12-coffeeeventstyles"
+        }
+      ]
+    },
+    {
+      "id": "victoryImpactStyles",
+      "open": "<style id=\"victoryImpactStyles\">",
+      "close": "</style>",
+      "files": [
+        {
+          "file": "source/styles/rooms-and-race.css",
+          "section": "13-victoryimpactstyles"
+        }
+      ]
+    },
+    {
+      "id": "coffeeManittoStyles",
+      "open": "<style id=\"coffeeManittoStyles\">",
+      "close": "</style>",
+      "files": [
+        {
+          "file": "source/styles/rooms-and-race.css",
+          "section": "14-coffeemanittostyles"
+        }
+      ]
+    },
+    {
+      "id": "groupBrawlStyles",
+      "open": "<style id=\"groupBrawlStyles\">",
+      "close": "</style>",
+      "files": [
+        {
+          "file": "source/styles/party-games.css",
+          "section": "15-groupbrawlstyles"
+        }
+      ]
+    },
+    {
+      "id": "groupBrawlRoomStyles",
+      "open": "<style id=\"groupBrawlRoomStyles\">",
+      "close": "</style>",
+      "files": [
+        {
+          "file": "source/styles/party-games.css",
+          "section": "16-groupbrawlroomstyles"
+        }
+      ]
+    },
+    {
+      "id": "departmentAvatarStyles",
+      "open": "<style id=\"departmentAvatarStyles\">",
+      "close": "</style>",
+      "files": [
+        {
+          "file": "source/styles/party-games.css",
+          "section": "17-departmentavatarstyles"
+        }
+      ]
+    },
+    {
+      "id": "brawlProjectileStyles",
+      "open": "<style id=\"brawlProjectileStyles\">",
+      "close": "</style>",
+      "files": [
+        {
+          "file": "source/styles/party-games.css",
+          "section": "18-brawlprojectilestyles"
+        }
+      ]
+    },
+    {
+      "id": "throneFocusStyles",
+      "open": "<style id=\"throneFocusStyles\">",
+      "close": "</style>",
+      "files": [
+        {
+          "file": "source/styles/party-games.css",
+          "section": "19-thronefocusstyles"
+        }
+      ]
+    },
+    {
+      "id": "wonkyArcadeStyles",
+      "open": "<style id=\"wonkyArcadeStyles\">",
+      "close": "</style>",
+      "files": [
+        {
+          "file": "source/styles/party-games.css",
+          "section": "20-wonkyarcadestyles"
+        }
+      ]
+    },
+    {
+      "id": "partyMiniStyles",
+      "open": "<style id=\"partyMiniStyles\">",
+      "close": "</style>",
+      "files": [
+        {
+          "file": "source/styles/party-games.css",
+          "section": "21-partyministyles"
+        }
+      ]
+    },
+    {
+      "id": "fiveArcadeStyles",
+      "open": "<style id=\"fiveArcadeStyles\">",
+      "close": "</style>",
+      "files": [
+        {
+          "file": "source/styles/arcade-minigames.css",
+          "section": "22-five-arcade-styles"
+        },
+        {
+          "file": "source/styles/arcade-minigames.css",
+          "section": "23-ten-game-variety-layout"
+        },
+        {
+          "file": "source/styles/arcade-minigames.css",
+          "section": "24-arcade-tray-css-v1"
+        },
+        {
+          "file": "source/styles/arcade-minigames.css",
+          "section": "25-arcade-sports-css-v1"
+        },
+        {
+          "file": "source/styles/arcade-minigames.css",
+          "section": "26-arcade-action-pack-css-v1"
+        },
+        {
+          "file": "source/styles/arcade-minigames.css",
+          "section": "27-arcade-brain-pack-css-v1"
+        },
+        {
+          "file": "source/styles/arcade-minigames.css",
+          "section": "28-arcade-extra-controls-css"
+        },
+        {
+          "file": "source/styles/arcade-minigames.css",
+          "section": "29-menu-tournament-layout"
+        },
+        {
+          "file": "source/styles/arcade-minigames.css",
+          "section": "30-champion-duel-styles"
+        },
+        {
+          "file": "source/styles/arcade-minigames.css",
+          "section": "31-coffee-delivery-styles"
+        },
+        "lunch-finale.css",
+        {
+          "file": "source/styles/presentation.css",
+          "section": "32-game-stage-layout"
+        },
+        {
+          "file": "source/styles/presentation.css",
+          "section": "33-combat-arena-css-v1"
+        },
+        {
+          "file": "source/styles/presentation.css",
+          "section": "34-winner-ceremony-styles-v1"
+        },
+        {
+          "file": "source/styles/presentation.css",
+          "section": "35-lobby-main-css-v1"
+        }
+      ]
+    },
+    {
+      "id": "campusControlsStyles",
+      "open": "<style id=\"campusControlsStyles\">",
+      "close": "</style>",
+      "files": [
+        "department-picker.css",
+        {
+          "text": "\n"
+        },
+        "mobile-controls.css",
+        {
+          "text": "\n"
+        },
+        "duel-controls.css"
+      ]
+    }
+  ],
+  "scripts": [
+    {
+      "id": "roomTransportRuntime",
+      "open": "<script id=\"roomTransportRuntime\">",
+      "close": "</script>",
+      "files": [
+        "source/scripts/room-transport.js"
+      ]
+    },
+    {
+      "id": "application",
+      "open": "<script>",
+      "close": "</script>",
+      "files": [
+        "source/scripts/app-core-and-combat.js",
+        "departments.mjs",
+        "source/scripts/race-and-network.js",
+        "source/scripts/coffee-and-brawl.js",
+        "department-avatars.mjs",
+        "source/scripts/practice-and-party-games.js",
+        "game-rules.mjs",
+        {
+          "text": "\n\n"
+        },
+        "arcade-ui.mjs",
+        "source/scripts/arcade-renderers.js",
+        "arcade-controller.mjs",
+        "source/scripts/menu-session.js",
+        "lunch-decision.mjs",
+        {
+          "text": "\n\n"
+        },
+        "champion-duel.mjs",
+        "source/scripts/scoreboard-and-coffee.js",
+        "lunch-finale.mjs",
+        "source/scripts/presentation-and-score-flow.js",
+        "department-picker.mjs",
+        {
+          "text": "\n"
+        },
+        "duel-controls.mjs",
+        "source/scripts/bootstrap.js"
+      ]
+    },
+    {
+      "id": "arcadeThemeRuntime",
+      "open": "<script id=\"arcadeThemeRuntime\">",
+      "close": "</script>",
+      "files": [
+        "source/scripts/theme-decoration.js"
+      ]
+    }
+  ]
+}
