@@ -1,0 +1,5 @@
+/* Bottle bowling shows the actual lane and chosen force without an answer marker. */
+#arcadeDialog .sport-court[data-game="bowling"] .sport-power{height:12px;background:#f5e9c8;border-color:#66533d;overflow:hidden}
+#arcadeDialog .sport-court[data-game="bowling"] .sport-power i{max-width:100%;border-radius:3px;background:linear-gradient(90deg,#bca978,#d7b26f,#c88d66)}
+#arcadeDialog .sport-court.is-own[data-game="bowling"] .sport-detail{color:#4f3c2b;background:#fff0d0;border-top-color:#9a785777}
+@media(max-height:450px){#arcadeDialog .sport-court[data-game="bowling"] .sport-power{height:8px}}
