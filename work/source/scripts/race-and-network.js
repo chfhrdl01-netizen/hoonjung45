@@ -143,7 +143,9 @@ function netIsActive(){return !!netRoom?.active;}
 function netIsHost(){return netIsActive()&&netRoom.isHost;}
 function netSelfId(){return netRoom?.selfId||'';}
 function netSelfSide(){if(!netDuelMeta)return -1;return netDuelMeta.challengerId===netSelfId()?0:netDuelMeta.defenderId===netSelfId()?1:-1;}
+function netHasDepartment(id){return Object.prototype.hasOwnProperty.call(netDepartments,id)&&deptById.has(netDepartments[id]);}
 function netDepartment(id){return deptById.has(netDepartments[id])?netDepartments[id]:'business';}
+function netCanReady(id){const picks=netPicks[id];return netHasDepartment(id)&&Array.isArray(picks)&&picks.length===1&&validName(picks[0]);}
 function netMembers(){return netRoster.filter(m=>m.consent===true&&m.connected!==false);}
 function netCopy(v){return JSON.parse(JSON.stringify(v));}
 function netMenu(name){let item=pool.find(x=>x.name===name);if(!item){item={id:'remote_'+rand(10000000),name,category:'내 후보',owner:null,enabledFor:Array(8).fill(true),custom:true};pool.push(item);}return {...item};}
@@ -160,13 +162,13 @@ enabled=function(p=active,items=pool){return items.filter(x=>visibleFor(x,p)&&x.
 switchPerson=function(i){if(i!==active)notify('다른 참가자는 자신의 기기에서 메뉴를 골라요.');};
 renderSetup=function(){
  netSyncRoster();$('players').replaceChildren();
- netMembers().forEach((m,i)=>{const selected=choices[i]||[],ready=!!netReady[m.id],b=el('div','player'+(active===i?' active':'')+(selected.length?' chosen':''));b.dataset.index=i%3;b.id='person_'+i;b.setAttribute('aria-label',m.name+(ready?' 준비 완료':' 메뉴 선택 중'));
- const top=el('div','player-top'),person=el('span','person');person.append(el('span','avatar',m.name[0]),document.createTextNode(m.name+(m.id===netSelfId()?' · 나':'')));top.append(person,el('span','player-status',ready?'READY ✓':selected.length+'/1 선택'));const names=el('strong','nominee'+(selected.length?'':' empty'));if(selected.length)selected.forEach(x=>names.append(el('span','choice-line',x.name)));else names.textContent='메뉴 미정';b.append(top,names,el('span','player-hint',deptOptions.find(d=>d.id===netDepartment(m.id))?.short+' · '+(ready?'출발 대기':'준비 중')));$('players').append(b);});
+ netMembers().forEach((m,i)=>{const selected=choices[i]||[],chosen=netHasDepartment(m.id),ready=!!netReady[m.id]&&chosen,b=el('div','player'+(active===i?' active':'')+(selected.length?' chosen':''));b.dataset.index=i%3;b.dataset.characterSelected=String(chosen);b.id='person_'+i;b.setAttribute('aria-label',m.name+(ready?' 준비 완료':chosen?' 메뉴 선택 중':' 캐릭터 선택 대기'));
+ const top=el('div','player-top'),person=el('span','person');person.append(el('span','avatar',chosen?m.name[0]:'?'),document.createTextNode(m.name+(m.id===netSelfId()?' · 나':'')));top.append(person,el('span','player-status',ready?'READY ✓':chosen?selected.length+'/1 선택':'캐릭터 선택 대기'));const names=el('strong','nominee'+(selected.length?'':' empty'));if(selected.length)selected.forEach(x=>names.append(el('span','choice-line',x.name)));else names.textContent='메뉴 미정';b.append(top,names,el('span','player-hint',chosen?deptById.get(netDepartments[m.id]).short+' · '+(ready?'출발 대기':'준비 중'):'? 캐릭터 선택 대기'));$('players').append(b);});
  $('menuPanel').setAttribute('aria-label','내 점심 메뉴 선택');$('pickPrompt').textContent=(netMembers()[active]?.name||'내')+' · 내가 걸고 싸울 메뉴 '+(choices[active]?.length||0)+'/1';$('personalAddLabel').textContent='먹고 싶은 메뉴를 직접 추가할 수 있어요.';$('personalMenuInput').setAttribute('aria-label','내 새 후보 메뉴');$('manageBtn').hidden=true;renderMenus();
- const self=netSelfId(),has=(netPicks[self]||[]).length>0,ready=!!netReady[self],n=netMembers().length,r=netMembers().filter(m=>netReady[m.id]).length;
- $('startBtn').disabled=!netIsActive()||!has||netPendingPick;$('startBtn').textContent=ready?'준비 취소 · 메뉴 다시 고르기':'내 메뉴로 준비 완료';$('startBtn').classList.toggle('net-ready',ready);$('dossierStatus').textContent='준비 완료 '+r+'/'+n+(n<2?' · 2명 이상 모이면 출발':'');
- $('netReadyHint').textContent=n<2?'초대 링크로 친구를 불러주세요. 최소 2명부터 시작해요.':r===n?'전원 준비 완료! 곧 출발합니다.':'모두 메뉴를 고르고 준비 완료를 누르면 자동으로 시작해요.';
- const sel=$('netDepartment');if(sel){sel.value=netDepartment(self);sel.disabled=ready;$('netPassiveDesc').textContent=deptOptions.find(d=>d.id===sel.value)?.description||'';}
+ const self=netSelfId(),chosen=netHasDepartment(self),ready=!!netReady[self],n=netMembers().length,r=netMembers().filter(m=>netReady[m.id]&&netCanReady(m.id)).length;
+ $('startBtn').disabled=!netIsActive()||netPendingPick||!ready&&!netCanReady(self);$('startBtn').textContent=ready?'준비 취소 · 메뉴 다시 고르기':!chosen?'캐릭터를 먼저 골라주세요':'내 메뉴로 준비 완료';$('startBtn').classList.toggle('net-ready',ready);$('dossierStatus').textContent='준비 완료 '+r+'/'+n+(n<2?' · 2명 이상 모이면 출발':'');
+ $('netReadyHint').textContent=!chosen?'? 캐릭터를 직접 고른 다음 메뉴를 선택하고 준비해주세요.':n<2?'초대 링크로 친구를 불러주세요. 최소 2명부터 시작해요.':r===n?'전원 준비 완료! 곧 출발합니다.':'모두 캐릭터와 메뉴를 고르고 준비 완료를 누르면 자동으로 시작해요.';
+ const sel=$('netDepartment');if(sel){sel.value=chosen?netDepartments[self]:'';sel.disabled=ready;$('netPassiveDesc').textContent=chosen?deptById.get(netDepartments[self]).description:'아직 선택하지 않았어요. ? 버튼에서 내 학과·캐릭터를 직접 골라주세요.';}
  document.querySelectorAll('#menuGrid button,#personalAddForm input,#personalAddForm button').forEach(b=>b.disabled=ready||netPendingPick);
 };
 choose=function(item){if(!netIsActive()||mode!=='setup')return;if(netReady[netSelfId()]){notify('준비를 취소하면 메뉴를 바꿀 수 있어요.');return;}const list=netPicks[netSelfId()]||[];netRoom.send({t:'pick',name:item.name});};
@@ -180,7 +182,7 @@ function netSendCombat(action,held){if(netPhase==='duel'&&netSelfSide()>=0)netRo
 function netReadyToFight(){if(netSelfSide()>=0)netRoom.send({t:'combatReady',duelId:netDuelMeta?.id});}
 function netRoundFinished(){if(!netIsHost())return;saveRound();netPublishCombat(true);}
 function netBeginRace(){
- if(!netIsHost()||netPhase!=='setup')return;const members=netMembers();if(members.length<2||members.some(m=>!netReady[m.id]||!(netPicks[m.id]||[]).length))return;
+ if(!netIsHost()||netPhase!=='setup')return;const members=netMembers();if(members.length<2||members.some(m=>!netReady[m.id]||!netCanReady(m.id)))return;
  netPhase='race';netSpec={id:'round_'+Date.now()+'_'+rand(1000000),seed:rand(2147483647),participants:members.map(m=>({id:m.id,name:m.name,menu:netPicks[m.id][rand(netPicks[m.id].length)],department:netDepartment(m.id)})),startAt:Date.now()+3500};netDuelMeta=null;result=null;netRoom.setLocked(true);netEnterRace();netPublish();
 }
 function netEnterRace(){cancelActionDuel();mode='race';$('setupView').hidden=true;$('raceView').hidden=true;$('resultView').hidden=true;$('duelView').hidden=true;setStep(2);playLayout(true);$('dossierStatus').textContent='전원 준비 완료 · 캠퍼스 레이스';deptStart(netSpec);}
@@ -199,7 +201,7 @@ function netHandle(senderId,cmd){
  if(!netIsHost()||!cmd||typeof cmd!=='object'||JSON.stringify(cmd).length>3000)return;const member=netMembers().find(m=>m.id===senderId);if(!member)return;if(roomChatHandle(senderId,cmd))return;if(awardHandle(senderId,cmd))return;if(lunchDecisionHandle(senderId,cmd))return;if(deliveryHandle(senderId,cmd))return;if(arcadeHandle(senderId,cmd))return;if(trayHandle(senderId,cmd))return;if(coffeeHandle(senderId,cmd))return;if(groupHandle(senderId,cmd))return;
  if(cmd.t==='pick'&&netPhase==='setup'&&!netReady[senderId]&&validName(cmd.name)){const name=cmd.name.trim().normalize('NFC'),list=netPicks[senderId]||[];const i=list.findIndex(n=>n.toLocaleLowerCase()===name.toLocaleLowerCase());if(i>=0)list.splice(i,1);else list.splice(0,list.length,name);netPicks[senderId]=list;renderSetup();netPublish();return;}
  if(cmd.t==='department'&&netPhase==='setup'&&!netReady[senderId]&&deptOptions.some(d=>d.id===cmd.value)){netDepartments[senderId]=cmd.value;renderSetup();netPublish();return;}
- if(cmd.t==='ready'&&netPhase==='setup'&&typeof cmd.value==='boolean'){if(cmd.value&&!(netPicks[senderId]||[]).length)return;netReady[senderId]=cmd.value;renderSetup();netPublish();netBeginRace();return;}
+ if(cmd.t==='ready'&&netPhase==='setup'&&typeof cmd.value==='boolean'){if(cmd.value&&!netCanReady(senderId))return;netReady[senderId]=cmd.value;renderSetup();netPublish();netBeginRace();return;}
  if(cmd.t==='reset'&&senderId===netSelfId()&&netPhase==='result'){netPhase='setup';netReady={};netPicks={};netSpec=null;netDuelMeta=null;result=null;netRoom.setLocked(false);showSetup();netPublish();return;}
  if(cmd.t==='raceInput'&&netPhase==='race'&&cmd.raceId===netSpec?.id&&['jump','dash','item','cheer'].includes(cmd.action)){deptHostInput(senderId,cmd.action);return;}
  if(cmd.t==='challenge'&&netPhase==='result'&&typeof cmd.menu==='string'){netNewDuel(senderId,cmd.menu);return;}
@@ -234,10 +236,10 @@ document.addEventListener('click',e=>{const b=e.target?.closest?.('button');if(!
 },true);
 document.addEventListener('submit',e=>{if(e.target.id!=='personalAddForm'||!netIsActive())return;e.preventDefault();e.stopImmediatePropagation();if(netReady[netSelfId()])return;const r=addPersonal($('personalMenuInput').value,active);if(r.error){notify(r.error);return;}$('personalMenuInput').value='';category='내 후보';if(!(netPicks[netSelfId()]||[]).includes(r.item.name))netRoom.send({t:'pick',name:r.item.name});else renderSetup();},true);
 netRoom.onCommand(netHandle);netRoom.onState(netReceive);
-netRoom.onReady(()=>{netLastSeq=-1;netRoster=netRoom.members;netSyncRoster();if(netIsHost()){netPhase='setup';netPicks={};netReady={};netDepartments={};netSpec=null;result=null;showSetup();netPublish();}else showSetup();});
+netRoom.onReady(()=>{netLastSeq=-1;netRoster=netRoom.members;netPicks={};netReady={};netDepartments={};netPhase='setup';netSpec=null;netDuelMeta=null;result=null;netSyncRoster();showSetup();if(netIsHost())netPublish();});
 netRoom.onPresence((members,event)=>{if(!netIsHost())return;netRoster=members;if(lunchDecisionPresence(event))return;if(arcadePresence(event))return;if(groupPresence(event))return;if(event.kind==='leave'){delete netPicks[event.memberId];delete netReady[event.memberId];delete netDepartments[event.memberId];if(netPhase!=='setup'){netPhase='setup';netReady={};netSpec=null;netDuelMeta=null;result=null;netRoom.setLocked(false);showSetup();notify('참가자가 나가서 이번 판을 멈췄어요. 남은 분들이 다시 준비해주세요.');}}
  if(netPhase==='setup'){netReady={};showSetup();if(event.kind==='join')notify('새 참가자가 들어왔어요. 모두 준비를 다시 확인해주세요.');}netPublish();});
-netRoom.onDisconnect(event=>{if(event.self||event.hostLost){deptCancel();cancelActionDuel();netPhase='setup';netRoster=[];netPicks={};netReady={};netSpec=null;netDuelMeta=null;result=null;mode='setup';}});
+netRoom.onDisconnect(event=>{if(event.self||event.hostLost){deptCancel();cancelActionDuel();netPhase='setup';netRoster=[];netPicks={};netReady={};netDepartments={};netSpec=null;netDuelMeta=null;result=null;mode='setup';}});
 // rAF sleeps in background tabs; continue host physics using bounded fixed steps.
 setInterval(()=>{if(!netIsHost()||netPhase!=='duel'||!document.hidden||!duel||!['fight','countdown'].includes(duel.phase))return;const now=performance.now();let n=0;while(actionLast+16<now&&n++<90&&['fight','countdown'].includes(duel.phase)){cancelAnimationFrame(actionFrame);actionTick(actionLast+16);}cancelAnimationFrame(actionFrame);actionFrame=0;},80);
 document.addEventListener('visibilitychange',()=>{if(netIsHost()&&netPhase==='duel'&&!document.hidden&&duel&&['fight','countdown'].includes(duel.phase)){cancelAnimationFrame(actionFrame);actionLast=performance.now();actionFrame=requestAnimationFrame(actionTick);}});
