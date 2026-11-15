@@ -1,6 +1,7 @@
 // Isolated preview fixture. Never included in index.html.
 setTimeout(()=>{
  const query=new URL(location.href).searchParams,phase=query.get('phase')||'setup',count=Math.max(2,Math.min(8,Number(query.get('count')||8)));
+ if(phase==='lobby')return;
  netIsActive=()=>true;netIsHost=()=>true;netSelfId=()=> 'qa0';
  netRoom.broadcast=()=>{};netRoom.setLocked=()=>{};netRoom.send=cmd=>{netHandle('qa0',cmd);return true;};
  Object.defineProperty(netRoom,'code',{get:()=> 'QA8888'});
@@ -8,6 +9,9 @@ setTimeout(()=>{
  netDepartments=Object.fromEntries(netRoster.map((m,i)=>[m.id,deptOptions[(i*11+8)%deptOptions.length].id]));
  netReady={};netPicks=Object.fromEntries(netRoster.map((m,i)=>[m.id,[['김치찌개','돈가스','제육덮밥'][i%3]]]));netPhase='setup';
  document.body.classList.remove('online-pending');$('roomLobby').hidden=true;showSetup();
+ const qaFreeze=()=>{arcadeAdvanceWorld=()=>0;arcadeClockSeconds=()=>20;};if(['audit','game','practice-series'].includes(phase))qaFreeze();
+ const qaInfo=()=>{if(query.get('info')==='open'&&$('deviceInfoToggle')?.getAttribute('aria-expanded')==='false')$('deviceInfoToggle').click();};
+ if(phase==='menu'){arcadeEntry();return;}
  if(phase==='scores'){
   arcadeHousekeep=()=>{};netReady=Object.fromEntries(netRoster.map(m=>[m.id,true]));netBeginMenuTournament();
   for(let round=0;round<5;round++){
@@ -17,17 +21,17 @@ setTimeout(()=>{
   if(query.get('scene')==='results')awardCompleteFlow();return;
  }
  if(phase==='practice-series'){
-  netIsActive=()=>false;netIsHost=()=>false;arcadeDemoStart('coins','tournament');arcadeHousekeep=()=>{};arcadeRender();return;
+  netIsActive=()=>false;netIsHost=()=>false;arcadeDemoStart('coins','tournament');arcadeHousekeep=()=>{};arcadeRender();qaInfo();return;
  }
  if(phase==='audit'){
   arcadeHousekeep=()=>{};const rows=[],keys=[...arcadeGameKeys];let index=0;
   const next=()=>{if(index===keys.length){const output=el('output');output.id='qaLayoutReport';output.style.cssText='position:fixed;left:4px;top:4px;z-index:10000;padding:8px;background:#fff;color:#211;max-width:95vw;max-height:40vh;overflow:auto;font:11px monospace;white-space:pre-wrap';output.textContent=JSON.stringify({width:innerWidth,height:innerHeight,count,checked:rows.length,issues:rows.filter(r=>!r.ok||r.over.length),rows});document.body.append(output);return;}
-   const key=keys[index++];arcadeCancel();netPhase='setup';netReady=Object.fromEntries(netRoster.map(m=>[m.id,true]));arcadeRandomGame=()=>key;netBeginMenuTournament();arcadeState.world.phase='play';arcadeState.world.elapsed=2;arcadeRender();
+   const key=keys[index++];arcadeCancel();netPhase='setup';netReady=Object.fromEntries(netRoster.map(m=>[m.id,true]));arcadeRandomGame=()=>key;netBeginMenuTournament();arcadeState.world.phase='play';arcadeState.world.elapsed=2;arcadeRender();qaInfo();
    requestAnimationFrame(()=>requestAnimationFrame(()=>{const board=$('arcadeBoard'),b=board.getBoundingClientRect(),h=$('arcadeHelp').getBoundingClientRect(),c=$('arcadeControls').getBoundingClientRect(),hit=(a,b)=>a.left<b.right-1&&a.right>b.left+1&&a.top<b.bottom-1&&a.bottom>b.top+1;const over=[...board.querySelectorAll('.brain-layer,.brain-receipt-ticket,.brain-safe-door,.brain-memory-lights,.brain-bidders,.sports-courts,.sport-court.is-own,.ten-restaurants,.ten-restaurant,.ap-traffic-safe,.five-meter-row.is-own')].filter(e=>e.clientHeight&&e.scrollHeight>e.clientHeight+1).map(e=>[e.className,e.scrollHeight-e.clientHeight]);rows.push({game:key,ok:!hit(b,h)&&!hit(b,c)&&c.right<=innerWidth+1&&c.bottom<=innerHeight+1,noSelection:[...$('arcadeControls').querySelectorAll('button')].every(e=>getComputedStyle(e).userSelect==='none'),over});next();}));
   };next();return;
  }
  if(phase==='game'){
-  netReady=Object.fromEntries(netRoster.map(m=>[m.id,true]));const game=query.get('game')||'frogger';arcadeRandomGame=()=>game;netBeginMenuTournament();arcadeState.world.phase='play';arcadeState.world.elapsed=2;arcadeHousekeep=()=>{};arcadeRender();return;
+  netReady=Object.fromEntries(netRoster.map(m=>[m.id,true]));const game=query.get('game')||'frogger';arcadeRandomGame=()=>game;netBeginMenuTournament();arcadeState.world.phase='play';arcadeState.world.elapsed=2;arcadeHousekeep=()=>{};arcadeRender();qaInfo();return;
  }
  if(phase==='gallery'){
   const dialog=el('dialog');dialog.style.cssText='max-width:96vw;width:1100px;max-height:94dvh;padding:20px;overflow:auto';const heading=el('h2','','학과별 밥친구 · 118개 학과/전공');dialog.append(heading);const grid=el('div');grid.style.cssText='display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px';for(const d of deptOptions.filter(d=>d.id!=='facility')){const card=el('article');card.style.cssText='padding:10px;border:1px solid #a6987c;background:#fff4d8;border-radius:12px;text-align:center;font-size:12px';const art=el('div');art.innerHTML=deptAvatarSvg(d.id);art.style.cssText='width:120px;margin:auto';card.append(art,el('strong','',d.name),el('p','',d.college));grid.append(card);}dialog.append(grid);document.body.append(dialog);dialog.showModal();return;
