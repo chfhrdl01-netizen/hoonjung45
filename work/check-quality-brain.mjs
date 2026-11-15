@@ -92,7 +92,7 @@ function create(game,random=()=>.5){
 // Equal reaction times earn equal scores even if host input handling has a stable order.
 {
  const {rule,w,at}=create('reaction'),[p,q]=w.players;at(1.9);assert.equal(w.meta.signal,'go');
- assert.equal(rule.input(w,p,'hit'),true);assert.equal(rule.input(w,q,'hit'),true);assert.equal(p.reactionMs,q.reactionMs);assert.equal(p.score,q.score,'arrival rank is no longer an extra score multiplier');
+ const correct=actions[w.meta.targetLane];assert.equal(rule.input(w,p,correct),true);assert.equal(rule.input(w,q,correct),true);assert.equal(p.reactionMs,q.reactionMs);assert.equal(p.score,q.score,'arrival rank is no longer an extra score multiplier');
  at(3.6);assert.equal(rule.input(w,p,'hit'),false);assert.equal(p.roundPoints,-35);assert.equal(p.locked,true);
 }
 
