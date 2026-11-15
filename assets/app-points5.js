@@ -60,6 +60,7 @@ $('roomCopyBtn').addEventListener('click',async()=>{if(!active)return;const url=
 try{const invited=readCode(new URL(location.href).searchParams.get('room'));if(invited){$('roomCodeInput').value=invited;setStatus('초대받은 점심방이에요. 닉네임과 주문 참여 동의를 확인하고 입장하세요.');}}catch{}
 document.body.classList.add('online-pending');render();refreshButtons();
 })();
+
 ;
 
 
@@ -1982,6 +1983,7 @@ const deptSearchKey=value=>String(value||'').normalize('NFKC').toLocaleLowerCase
 const deptById=new Map(deptOptions.map(d=>[d.id,d]));
 const deptByName=new Map();for(const d of deptOptions)for(const name of [d.name,d.short,...(d.aliases||[])])if(!deptByName.has(deptSearchKey(name)))deptByName.set(deptSearchKey(name),d);
 /* END_CAMPUS_DEPARTMENTS_V1 */
+
 let deptRace=null,deptLoop=0,deptFrame=0,deptFinishTimer=0,deptView=null,deptRows=new Map(),deptRemoteAt=0,deptLastNotice='';
 const deptCourseLength=1200,deptTickStep=.04,deptHardLimit=30;
 const deptGateDefinitions=[
@@ -5005,6 +5007,7 @@ netReceiveCombatState=function(data){
 /* END_CHAMPION_DUEL_V1 */
 
 
+
 /* MENU_TOURNAMENT_UI_V1 */
 function arcadeDisplayName(p,s=arcadeState){return s?.purpose==='lunch'?(s.members.find(m=>m.id===p.id)?.menu||p.name):p.name;}
 function menuTournamentEnsureView(){
@@ -5345,6 +5348,7 @@ function lunchFinaleTick(){
 }
 setInterval(lunchFinaleTick,100);netRoom.onDisconnect(e=>{if(e.self||e.hostLost)lunchFinaleReset();});
 /* END_LUNCH_FINALE_V2 */
+
 
 /* PRACTICE_NORMAL_DIFFICULTY_V1 */
 // Only the two legacy solo practices use these brains. Human multiplayer rules stay unchanged.
