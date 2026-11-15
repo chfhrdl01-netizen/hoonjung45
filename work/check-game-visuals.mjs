@@ -30,7 +30,7 @@ for(const game of gameKeys){
 assert.ok(!/NaN|Infinity/.test(line(100,200,0,0,40)));assert.ok(!/NaN|Infinity/.test(cone(100,200,0,0,84)));
 {
  const w=make('brawl'),[p,target]=w.players;p.x=300;p.y=230;p.faceX=1;p.faceY=0;target.x=365;target.y=230;w.players.slice(2).forEach(q=>{q.x=600;q.y=400;});
- assert.equal(preview(w,p).target.x,365);target.x=235;assert.equal(preview(w,p).target,null,'a rear enemy is not highlighted as punchable');
+ assert.equal(preview(w,p).target,null,'opponents are never automatically selected or highlighted');assert.equal(preview(w,p).zone,'','the exact attack range is not painted');
  p.hitReadyAt=1;w.elapsed=.725;assert.equal(action(w,p).state,'cooling');assert.ok(Math.abs(action(w,p).ready-.5)<1e-8);
 }
 {
@@ -38,7 +38,9 @@ assert.ok(!/NaN|Infinity/.test(line(100,200,0,0,40)));assert.ok(!/NaN|Infinity/.
  const golf=make('golf');golf.players[0].phase='moving';assert.equal(action(golf,golf.players[0]).state,'watch');
 }
 {
- const w=make('frogger'),p=w.players[0];p.col=5;p.row=4;p.faceCol=1;p.faceRow=0;p.x=300;p.y=262;assert.equal(preview(w,p).target.x,400);assert.equal(preview(w,p).target.y,262,'horizontal preview preserves zero vertical direction');p.col=12;assert.equal(preview(w,p).target,null,'outside-board leaps have no fake landing marker');
+ const w=make('frogger'),p=w.players[0];p.faceCol=1;p.faceRow=0;assert.equal(preview(w,p).target,null,'no future leap landing marker');
+ for(const game of gameKeys){const world=make(game),cue=preview(world,world.players[0]);assert.equal(cue.zone,'',game+' has no assist range');assert.equal(cue.ring,null,game+' has no answer ring');assert.equal(cue.target,null,game+' has no predicted target');}
+ for(const game of ['volley','pong','bridge']){const world=make(game);assert.equal(preview(world,world.players[0]).line,'',game+' does not reveal future contact or landing');}
 }
 {
  const w=make('reaction'),p=w.players[0];w.meta.signal='fake';assert.equal(action(w,p).state,'stop');w.meta.signal='go';assert.equal(action(w,p).verb,'지금 찍어!');p.locked=true;assert.equal(action(w,p).state,'watch');
@@ -59,4 +61,4 @@ for(const [game,expected]of [['bowling',['left','right']],['pong',['up','down']]
  const w=make(game);context.arcadeBuildBoard(w);context.arcadeDrawWorld({phase:'round'},w,{},'p0');assert.deepEqual(Object.keys(directionNodes).filter(direction=>!directionNodes[direction].hidden).sort(),expected.sort(),game+' exposes only effective directions');
 }
 const css=fs.readFileSync(new URL('./game-visuals.css',import.meta.url),'utf8');assert.ok(css.includes('prefers-reduced-motion:reduce'));assert.ok(css.includes('@container (max-width:640px)'));assert.ok(css.includes('@container (max-height:300px)'));assert.ok(!css.includes('backdrop-filter')&&!css.includes('blur('));
-console.log('PASS: all30 action states, finite bounded aim cues, local-only previews, front-facing punch target, cooldown/charge states, zero-direction leaps, real SVG hiding, stable repeated DOM, focused responsive courts and reduced motion.');
+console.log('PASS: all30 action states, finite bounded aim cues, local current-direction marks without predicted paths, landing points or automatic targets, cooldown/charge states, zero-direction leaps, real SVG hiding, stable repeated DOM, focused responsive courts and reduced motion.');
