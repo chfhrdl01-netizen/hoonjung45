@@ -900,6 +900,61 @@ html:has(#coffeeDeliveryPanel[data-popup="true"]:not([hidden])),body.delivery-ga
 #lunchFinaleDialog .film-creator-card:focus-visible,#lunchFinaleDialog .film-credit-instagram:focus-visible{outline:3px solid #f1c579;outline-offset:4px}
 @media(max-width:600px){#lunchFinaleDialog .film-credit-row{margin-bottom:18px}#lunchFinaleDialog .film-credit-drink{font-size:11px;margin-top:4px}#lunchFinaleDialog .film-credit-instagram{font-size:13px}#lunchFinaleDialog .film-creator-card{width:min(285px,92%);padding:9px 12px;gap:3px 13px;margin-top:14px}#lunchFinaleDialog .film-creator-card>strong{font-size:19px}#lunchFinaleDialog .film-creator-card>small{font-size:7px}}
 @media(max-height:540px) and (min-width:541px){#lunchFinaleDialog .film-credit-row{margin-bottom:15px}#lunchFinaleDialog .film-credit-drink{font-size:11px}#lunchFinaleDialog .film-creator-card{width:280px;padding:7px 12px;gap:2px 12px;margin-top:9px}#lunchFinaleDialog .film-creator-card>span{font-size:8px}#lunchFinaleDialog .film-creator-card>strong{font-size:18px}#lunchFinaleDialog .film-creator-card>small{font-size:7px}#lunchFinaleDialog .film-outro h2{margin:7px 0}#lunchFinaleDialog .film-outro .film-outro-note{margin-top:7px}}
+/* The coffee scene keeps every final order visible throughout its 13 seconds. */
+#lunchFinaleDialog .film-watch-note{color:#c8b48e;font-size:9px;letter-spacing:0;white-space:nowrap}
+#lunchFinaleDialog .film-coffee{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(260px,.9fr);align-items:center;gap:clamp(18px,4vw,54px);padding:clamp(20px,5vh,54px) clamp(24px,5vw,70px);text-align:center}
+#lunchFinaleDialog .film-coffee-announcement{position:relative;z-index:3;min-width:0;min-height:0;width:100%;height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center}
+#lunchFinaleDialog .film-coffee-announcement h2{font-size:clamp(25px,3.4vw,45px);line-height:1.2;margin:14px 0 8px}
+#lunchFinaleDialog .film-coffee-announcement>strong{display:block;max-width:100%;font-size:clamp(36px,5.5vw,74px);font-weight:950;letter-spacing:-.07em;line-height:1.2;color:#af4f2d;text-shadow:2px 3px 0 #fff0bf;overflow-wrap:anywhere}
+#lunchFinaleDialog .film-coffee-announcement>p{font-size:13px;color:#6f5840;line-height:1.6;margin:12px 0 0;max-width:100%;overflow-wrap:anywhere}
+#lunchFinaleDialog .film-coffee-cart{position:relative;flex:0 1 220px;left:auto;right:auto;bottom:auto;width:330px;height:220px;margin:18px auto 0;scale:1;transform:none;transform-origin:center bottom}
+#lunchFinaleDialog .film-coffee-road{bottom:8%;height:25px}
+#lunchFinaleDialog .film-coffee-orders{position:relative;z-index:5;display:flex;flex-direction:column;min-width:0;min-height:0;width:100%;height:min(100%,520px);padding:clamp(14px,2.2vw,26px);border:1px solid #8f714d66;border-radius:14px;background:#fff5dcdd;box-shadow:0 12px 25px #70563818;text-align:left}
+#lunchFinaleDialog .film-coffee-orders>header{display:flex;align-items:baseline;justify-content:space-between;gap:10px;padding-bottom:12px;border-bottom:2px solid #a18b6266;flex-shrink:0}
+#lunchFinaleDialog .film-coffee-orders h3{margin:0;font-size:clamp(17px,2.2vw,25px);color:#594231;line-height:1.3;letter-spacing:-.04em}
+#lunchFinaleDialog #lunchFinaleOrderCount{font-size:14px;font-weight:850;color:#a95131;white-space:nowrap}
+#lunchFinaleDialog #lunchFinaleOrders{display:grid;grid-auto-rows:minmax(min-content,1fr);flex:1;min-height:0;margin:6px 0 0;padding:0;list-style:none;overflow:auto;overscroll-behavior:contain}
+#lunchFinaleDialog .film-coffee-order{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);align-items:center;gap:12px;padding:9px 0;border-bottom:1px dashed #a18b6244;font-size:15px;line-height:1.35;overflow-wrap:anywhere}
+#lunchFinaleDialog .film-coffee-order:last-child{border-bottom:0}
+#lunchFinaleDialog .film-coffee-order-name{color:#6d5942;min-width:0}
+#lunchFinaleDialog .film-coffee-order-drink{min-width:0;color:#3f3327;font-weight:800;text-align:right}
+#lunchFinaleDialog .film-coffee-order.is-courier .film-coffee-order-name{font-weight:850;color:#a95131}
+#lunchFinaleDialog .film-coffee-order-name>small{display:inline-block;font-size:9px;margin-left:5px;padding:2px 4px;border-radius:4px;background:#b7623b;color:#fff4d9;vertical-align:middle;white-space:nowrap}
+#lunchFinaleDialog #lunchFinaleOrdersEmpty{margin:auto 0;text-align:center;font-size:17px;line-height:1.8;color:#776043}
+@media(max-width:600px){
+ #lunchFinaleDialog .film-watch-note{font-size:7px}
+ #lunchFinaleDialog .film-coffee{grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,.9fr) minmax(0,1fr);gap:14px;padding:16px 20px 20px}
+ #lunchFinaleDialog .film-coffee-announcement{display:grid;grid-template-rows:auto auto auto auto minmax(40px,1fr);justify-items:center;align-content:center}
+ #lunchFinaleDialog .film-coffee-announcement .film-eyebrow{font-size:7px;letter-spacing:.1em}
+ #lunchFinaleDialog .film-coffee-announcement h2{font-size:27px;margin:8px 0 5px}
+ #lunchFinaleDialog .film-coffee-announcement>strong{font-size:clamp(30px,9vw,43px);line-height:1.15}
+ #lunchFinaleDialog .film-coffee-announcement>p{font-size:11px;margin:7px 0 0;line-height:1.45}
+ #lunchFinaleDialog .film-coffee-cart{flex:none;width:260px;height:100%;max-height:160px;margin:8px auto 0;scale:1;align-self:end}
+ #lunchFinaleDialog .film-courier{width:auto;height:calc(100% - 30px);max-height:115px;aspect-ratio:125/115;left:55px;top:auto;bottom:30px}
+ #lunchFinaleDialog .film-cart-body{height:min(70px,65%);left:25px;right:15px;border-width:3px}
+ #lunchFinaleDialog .film-cart-body>span{font-size:25px}
+ #lunchFinaleDialog .film-cart-body>b{font-size:12px}
+ #lunchFinaleDialog .film-cart-puff{left:-20px;font-size:15px}
+ #lunchFinaleDialog .film-coffee-orders{height:100%;padding:13px 16px;border-radius:10px}
+ #lunchFinaleDialog .film-coffee-orders>header{padding-bottom:8px}
+ #lunchFinaleDialog .film-coffee-orders h3{font-size:19px}
+ #lunchFinaleDialog .film-coffee-order{font-size:13px;gap:9px;padding:5px 0;line-height:1.3}
+ #lunchFinaleDialog .film-coffee-sun{top:4%;right:5%}
+}
+@media(max-height:540px) and (min-width:601px){
+ #lunchFinaleDialog .film-coffee{grid-template-columns:minmax(0,1fr) minmax(260px,.95fr);gap:24px;padding:14px 5%;text-align:center}
+ #lunchFinaleDialog .film-coffee-announcement{justify-content:flex-start}
+ #lunchFinaleDialog .film-coffee-announcement .film-eyebrow{font-size:7px}
+ #lunchFinaleDialog .film-coffee-announcement h2{font-size:25px;margin:8px 0 5px}
+ #lunchFinaleDialog .film-coffee-announcement>strong{font-size:clamp(28px,8dvh,43px)}
+ #lunchFinaleDialog .film-coffee-announcement>p{font-size:11px;margin:6px 0 0}
+ #lunchFinaleDialog .film-coffee-cart{width:260px;height:140px;flex:1 1 100px;margin:6px auto 0;min-height:80px;transform:none;scale:.72;transform-origin:center bottom}
+ #lunchFinaleDialog .film-coffee-orders{height:100%;padding:12px 16px;border-radius:10px}
+ #lunchFinaleDialog .film-coffee-orders>header{padding-bottom:7px}
+ #lunchFinaleDialog .film-coffee-orders h3{font-size:19px}
+ #lunchFinaleDialog .film-coffee-order{font-size:12px;gap:8px;padding:4px 0;line-height:1.25}
+ #lunchFinaleDialog .film-coffee-order-name>small{font-size:8px;padding:1px 3px;margin-left:4px}
+}
 /* END_LUNCH_FINALE_CSS_V2 */
 
 /* FOCUSED_GAME_STAGE: fit the arena after measuring help, roster and controls. */
@@ -1116,6 +1171,127 @@ body:has(#winnerAwardDialog[open]){overflow:hidden}
 @media(max-width:540px){.has-lobby-friends h2{font-size:40px;max-width:340px;margin:12px 0 0}.has-lobby-friends h2 br{display:block}.lobby-friends{height:165px;margin:2px auto 4px;width:min(100%,340px)}.lobby-friends-scene{height:130px}.lobby-friend-1{height:136px}.lobby-friends-note{font-size:11px;right:1%;top:10px}.room-lobby-copy .lobby-welcome-line{font-size:11px;text-align:center;max-width:none}.has-lobby-friends .arcade-try-tray{align-items:center;margin-top:15px;gap:9px}.lobby-play-button{width:min(100%,300px);min-height:51px;font-size:18px}.has-lobby-friends .room-lobby-rules{justify-content:center;margin-top:16px}.lobby-bonus-games{margin:5px 15px 17px}.lobby-bonus-head{display:block}.lobby-bonus-head p{margin-top:5px}.lobby-bonus-grid{gap:6px}.lobby-bonus-button{font-size:10px;padding:7px 4px}}
 @media(prefers-reduced-motion:reduce){.lobby-friend-sprite{animation:none}.lobby-play-button{transition:none}}
 /* END_LOBBY_MAIN_CSS_V1 */
+</style><style id="campusControlsStyles">.campus-picker-heading{display:flex;align-items:center;justify-content:space-between;gap:12px}.campus-picker-heading>span{font-size:11px;color:#6b604e;font-weight:750}.campus-picker-open{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:4px;width:100%;min-height:76px;margin:10px 0;padding:12px 90px 12px 16px;border:2px solid #30271f;border-radius:12px;background:#ffe5a0;box-shadow:3px 3px #30271f;font-weight:800;text-align:left;overflow-wrap:anywhere}.campus-picker-open>span{font-size:11px;color:#6e5430}.campus-picker-open>strong{font-size:18px;line-height:1.35}.campus-picker-open>b{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:13px}.campus-picker-open:disabled{opacity:.7}.net-department-wrap>small{display:block;line-height:1.7}.net-department-wrap .dept-avatar-preview-description{overflow-wrap:anywhere}
+.campus-picker-dialog{width:min(1100px,94vw);max-width:94vw;max-height:92dvh;padding:0;border:3px solid #30271f;border-radius:18px;background:#f7efd9;color:#30271f}.campus-picker-dialog[open]{display:flex;flex-direction:column}.campus-picker-head{flex:none;display:flex;align-items:center;justify-content:space-between;padding:15px 20px;background:#fff6d8;border-bottom:2px solid #30271f}.campus-picker-head span{font-size:10px;font-weight:800;letter-spacing:.1em}.campus-picker-head h2{margin:4px 0 0;font-size:24px;line-height:1.25}.campus-picker-tools{flex:none;padding:12px 18px 8px}.campus-picker-tools>label{display:block;margin-bottom:4px;font-size:12px;font-weight:800}.campus-picker-tools>input{width:100%;min-height:44px;padding:10px 12px;border:1.5px solid #4d4435;border-radius:8px;background:#fffdf4;font-size:16px}.campus-colleges{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0;max-height:100px;overflow:auto}.campus-college{flex:none;border:1.5px solid #7c6b50;background:#fff9e7;border-radius:30px;padding:7px 10px;font-size:11px;font-weight:800;min-height:34px}.campus-college[aria-pressed="true"]{background:#30271f;color:#fff6da;border-color:#30271f}.campus-picker-tools>output{font-size:11px;line-height:1.4;color:#6b604e}.campus-character-cards{min-height:0;overflow:auto;overscroll-behavior:contain;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));align-content:start;gap:12px;padding:10px 18px 18px}.campus-character-card{position:relative;min-width:0;display:flex;flex-direction:column;align-items:center;gap:6px;min-height:165px;border:2px solid #c0ac83;border-radius:12px;background:#fff9e9;padding:10px 8px;font-weight:800;box-shadow:2px 2px #30271f22}.campus-character-card:hover{border-color:#80623b;background:#ffefbf}.campus-character-card[aria-pressed="true"]{border-color:#30271f;background:#ffe5a0;box-shadow:3px 3px #30271f}.campus-character-art{width:75px;height:70px;flex:none}.campus-character-art svg{width:100%;height:100%}.campus-character-card strong{font-size:14px;line-height:1.4;overflow-wrap:anywhere}.campus-character-card small{font-size:10px;line-height:1.3;color:#766348}.campus-character-card em{font-style:normal;font-size:9px;color:#846545}.campus-picker-footer{flex:none;display:flex;justify-content:space-between;align-items:center;padding:9px 18px;border-top:1px dashed #b7a382;font-size:10px;gap:8px}.campus-picker-footer>button{margin:auto}.campus-picker-footer>span{margin-left:auto}
+@media(max-width:700px){.campus-character-cards{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:540px){.campus-picker-heading>span{font-size:10px;white-space:nowrap}.campus-picker-open{min-height:80px;padding:12px 75px 12px 12px}.campus-picker-open>strong{font-size:16px}.campus-picker-dialog{max-width:100vw;width:100vw;max-height:100dvh;height:100dvh;inset:0;margin:0;border:0;border-radius:0}.campus-picker-head{padding:12px}.campus-picker-head h2{font-size:22px}.campus-picker-tools{padding:10px 12px 6px}.campus-colleges{max-height:76px;gap:5px}.campus-college{font-size:11px;padding:6px 9px}.campus-character-cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;padding:8px 12px 14px}.campus-character-card{min-height:155px}.campus-character-card strong{font-size:13px}.campus-picker-footer{padding:8px 12px calc(8px + env(safe-area-inset-bottom))}}
+@media(max-height:500px) and (min-width:541px){.campus-picker-head{padding:7px 14px}.campus-picker-head h2{font-size:20px}.campus-picker-tools{padding:6px 12px}.campus-colleges{max-height:42px;flex-wrap:nowrap;margin:6px 0}.campus-character-cards{grid-template-columns:repeat(4,minmax(0,1fr))}.campus-character-card{min-height:140px}.campus-character-art{height:52px;width:60px}}
+
+/* Mobile thumbs stay on controls instead of selecting button labels. */
+button,button *,[data-arcade-control],[data-arcade-control] *,[data-battle-action],[data-battle-action] *{user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}
+.five-board,.five-board *,.battle-stage,.battle-stage *,.brawl-arena,.brawl-arena *{user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+.five-controls,.battle-controls,.brawl-controls{user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;touch-action:none}
+.five-controls button,.battle-controls button,.brawl-controls button{touch-action:none}
+@media(max-width:540px){
+ #arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-controls{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-areas:"move action" "status status";align-items:center;gap:6px 14px;padding:8px max(8px,env(safe-area-inset-right)) calc(8px + env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-left));width:100%}
+ #arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-dpad{grid-area:move;justify-self:start;grid-template-columns:43px 43px 43px;grid-template-rows:40px 40px 40px;gap:3px}
+ #arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-dpad button{min-width:40px;min-height:40px;padding:0;font-size:19px}
+ #arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-dpad kbd{display:none}
+ #arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-action{grid-area:action;justify-self:end;min-width:110px;max-width:100%;height:88px;min-height:88px;font-size:18px}
+ #arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-own-status{grid-area:status;justify-self:center;min-width:0;max-width:100%;font-size:11px;line-height:1.35;text-align:center;overflow-wrap:anywhere}
+ #arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) :is(.extra-choice-controls,.ten-choice-controls){grid-column:1 / -1;grid-row:1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));width:100%;max-width:100%;min-width:0;gap:7px}
+ #arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) :is(.extra-choice-controls,.ten-choice-controls) button{min-width:0;min-height:64px;padding:8px 4px;overflow-wrap:anywhere}
+ #arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-controls:has(.five-dpad[hidden]):not(:has(.extra-choice-controls:not([hidden]),.ten-choice-controls:not([hidden]))) .five-action{grid-column:1 / -1;justify-self:center}
+ #arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) #arcadePlay{min-height:390px;flex-basis:390px}
+}
+@media(max-width:359px){
+ #arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-dpad{grid-template-columns:39px 39px 39px;grid-template-rows:39px 39px 39px;gap:2px}
+ #arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-dpad button{min-width:39px;min-height:39px}
+}
+@media(max-width:540px) and (max-height:700px){
+ #arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) #arcadePlay{min-height:330px;flex-basis:330px;grid-template-rows:minmax(140px,1fr) auto auto}
+ #arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-head{min-height:48px;padding-top:5px;padding-bottom:5px}
+ #arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-head h2{font-size:19px}
+ #arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-help{font-size:11px;line-height:1.4;margin-top:3px;margin-bottom:4px}
+ #arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-controls{padding-top:4px;padding-bottom:4px;gap:4px 12px}
+ #arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-status{font-size:11px;margin:4px}
+}
+/* Landscape keeps the instructions at the left and the thumb pad at the right. */
+@media(max-height:600px) and (min-width:650px){
+ #arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) #arcadeSession{display:grid;grid-template-columns:160px minmax(0,1fr);grid-template-rows:auto auto minmax(0,1fr) auto auto;column-gap:5px}
+ #arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-round-strip{grid-column:1;grid-row:1;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;font-size:10px;padding:6px 9px;gap:4px}
+ #arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-round-strip>span{font-size:9px;white-space:normal}
+ #arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-help{grid-column:1;grid-row:2;font-size:11px;line-height:1.5;margin:4px 9px 7px;text-align:left}
+ #arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-roster{grid-column:1;grid-row:3;display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;min-height:0;height:100%;padding:3px 6px 5px 9px;overflow-x:hidden;overflow-y:auto;gap:4px}
+ #arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-player-chip{min-width:0;max-width:100%;padding:4px 5px;gap:4px;justify-content:space-between}
+ #arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-player-chip b{font-size:9px;min-width:0;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+ #arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-player-chip small{font-size:9px;white-space:nowrap}
+ #arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) #arcadePlay{grid-column:2;grid-row:1 / 4;min-height:220px;grid-template-columns:minmax(0,1fr) 130px;grid-template-rows:minmax(0,1fr) auto;padding:0 7px 0 0;column-gap:6px}
+ #arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-controls{gap:6px}
+ #arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) :is(.extra-choice-controls,.ten-choice-controls){grid-template-columns:minmax(0,1fr);width:125px;max-width:100%;gap:5px}
+ #arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) :is(.extra-choice-controls,.ten-choice-controls) button{min-height:42px;padding:5px;font-size:13px;gap:2px}
+ #arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-status{font-size:11px;line-height:1.35;margin:5px 0}
+ #arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-history{grid-column:1 / -1;grid-row:4}
+ #arcadeDialog:is([data-purpose="lunch"],[data-playing="true"]) .five-bottom{grid-column:1 / -1;grid-row:5}
+}
+
+/* DUEL_SINGLE_CONTROLS_CSS_V1 */
+#duelView .battle-controls[data-single-pad="true"]{display:block;grid-template-columns:minmax(0,1fr);width:100%;max-width:920px;margin:0 auto;padding:8px 16px 4px;min-width:0;box-sizing:border-box}
+#duelView .battle-controls[hidden],#duelView .battle-control-panel[hidden],#duelView .duel-control-toolbar[hidden],#duelView .duel-control-toolbar [hidden],#duelView .duel-spectator-controls[hidden]{display:none!important}
+#duelView .battle-controls[data-single-pad="true"] .battle-control-panel{width:100%;max-width:none;min-width:0;margin:0;padding:8px 12px;box-sizing:border-box}
+#duelView .battle-controls[data-single-pad="true"] .battle-control-panel>strong{display:block;font-size:12px;line-height:1.4}
+#duelView .battle-controls[data-single-pad="true"] .battle-key-hint{font-size:10px;min-height:0;margin:3px 0 6px;line-height:1.4}
+#duelView .battle-controls[data-single-pad="true"] .battle-touch{display:grid;grid-template-columns:repeat(2,minmax(0,1fr)) minmax(12px,.4fr) repeat(3,minmax(0,1fr));gap:7px;align-items:stretch;width:100%;min-width:0}
+#duelView .battle-controls[data-single-pad="true"] .battle-touch button{grid-row:1;grid-column:auto;min-width:0;min-height:58px;max-width:100%;margin:0;padding:6px 3px;font-size:13px;line-height:1.15;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;box-sizing:border-box}
+#duelView .battle-controls[data-single-pad="true"] .battle-touch [data-battle-action="left"]{grid-column:1}
+#duelView .battle-controls[data-single-pad="true"] .battle-touch [data-battle-action="right"]{grid-column:2}
+#duelView .battle-controls[data-single-pad="true"] .battle-touch [data-battle-action="jump"]{grid-column:4}
+#duelView .battle-controls[data-single-pad="true"] .battle-touch [data-battle-action="attack"]{grid-column:5;flex-direction:column;gap:2px}
+#duelView .battle-controls[data-single-pad="true"] .battle-touch [data-battle-action="guard"]{grid-column:6}
+#duelView .battle-controls[data-single-pad="true"] .battle-touch kbd{font-size:9px;line-height:1.1;white-space:nowrap}
+#duelView .duel-control-toolbar{display:flex;align-items:center;justify-content:center;gap:9px;flex-wrap:wrap;margin:5px 16px 0;font-size:11px;line-height:1.4;color:#5f5143}
+#duelView .duel-control-toolbar label{font-weight:850}
+#duelView .duel-control-toolbar select{max-width:220px;min-height:34px;padding:5px 8px;border:2px solid #30251e;border-radius:6px;background:#fff8df;font:inherit;color:#30251e}
+#duelView .duel-control-toolbar span{text-align:center;overflow-wrap:anywhere}
+#duelView .duel-spectator-controls{margin:8px 16px;padding:10px 14px;text-align:center;background:#e9dfc6;border:1px dashed #8a7558;border-radius:7px;font-size:12px}
+@media(max-width:600px){
+ #duelView .battle-controls[data-single-pad="true"]{padding:7px max(8px,env(safe-area-inset-right)) calc(7px + env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-left))}
+ #duelView .battle-controls[data-single-pad="true"] .battle-control-panel{padding:8px;outline-offset:0;border-radius:10px}
+ #duelView .battle-controls[data-single-pad="true"] .battle-control-panel>strong{font-size:11px}
+ #duelView .battle-controls[data-single-pad="true"] .battle-key-hint{font-size:8px;min-height:0;margin-bottom:7px}
+ #duelView .battle-controls[data-single-pad="true"] .battle-touch{gap:5px;grid-template-columns:repeat(2,minmax(0,1fr)) minmax(8px,.35fr) repeat(3,minmax(0,1fr))}
+ #duelView .battle-controls[data-single-pad="true"] .battle-touch button{min-height:64px;font-size:11px;border-width:2px;border-radius:9px;padding:7px 2px}
+ #duelView .battle-controls[data-single-pad="true"] .battle-touch kbd{font-size:8px}
+ #duelView .duel-control-toolbar{font-size:9px;margin:5px 10px 0;gap:5px}
+ #duelView .duel-control-toolbar select{max-width:190px;min-height:32px}
+ #duelView .battle-instructions{font-size:9px;line-height:1.5;padding:5px 12px}
+}
+@media(max-height:520px) and (min-width:601px){
+ #duelView[data-single-duel-pad="true"]{position:fixed;inset:0;z-index:55;display:grid;grid-template-columns:minmax(0,1fr) clamp(184px,25vw,218px);grid-template-rows:56px 24px minmax(0,1fr) 62px 18px;gap:4px 8px;width:100vw;height:100dvh;max-height:100dvh;padding:6px max(8px,env(safe-area-inset-right)) max(6px,env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-left));margin:0;background:#f5eedd;box-sizing:border-box;overflow:hidden}
+ #duelView[data-single-duel-pad="true"]>.board-head,#duelView[data-single-duel-pad="true"]>.battle-intro,#duelView[data-single-duel-pad="true"]>.battle-instructions{display:none}
+ #duelView[data-single-duel-pad="true"]>.battle-scoreboard{grid-column:1 / -1;grid-row:1;align-self:stretch;align-items:center;grid-template-columns:minmax(0,1fr) 42px minmax(0,1fr);gap:10px;min-width:0;min-height:0;margin:0;padding:0 4px;box-sizing:border-box}
+ #duelView[data-single-duel-pad="true"] .battle-score-name{align-items:center;flex-direction:row;gap:5px;margin:0 0 3px;line-height:1.15}
+ #duelView[data-single-duel-pad="true"] .battle-score-name b{font-size:12px;max-width:170px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ #duelView[data-single-duel-pad="true"] .battle-score-name small{display:none}
+ #duelView[data-single-duel-pad="true"] .battle-score-name>strong{font-size:10px;min-height:0;max-width:50%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ #duelView[data-single-duel-pad="true"] .battle-health{height:19px;border-width:2px;border-radius:5px;box-shadow:1px 1px 0 #211c18}
+ #duelView[data-single-duel-pad="true"] .battle-health b{font-size:9px;line-height:15px}
+ #duelView[data-single-duel-pad="true"] .battle-energy{height:4px;margin:3px 2px 0}
+ #duelView[data-single-duel-pad="true"] .battle-clock strong{font-size:30px}
+ #duelView[data-single-duel-pad="true"] .battle-clock span{font-size:7px}
+ body.in-play #duelView[data-single-duel-pad="true"]>.battle-stage{grid-column:1;grid-row:2 / 5;align-self:stretch;width:auto;height:100%;min-height:0;max-height:100%;min-width:0;margin:0;border-radius:10px;box-sizing:border-box}
+ #duelView[data-single-duel-pad="true"]>.battle-feedback{grid-column:1;grid-row:5;align-self:center;min-height:0;height:18px;margin:0;padding:0 2px;font-size:9px;line-height:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;box-sizing:border-box}
+ #duelView[data-single-duel-pad="true"]>.duel-control-toolbar{grid-column:2;grid-row:2;align-self:stretch;min-width:0;min-height:0;height:24px;margin:0;padding:0;font-size:8px;gap:4px;flex-wrap:nowrap;box-sizing:border-box}
+ #duelView[data-single-duel-pad="true"] .duel-control-toolbar select{min-height:24px;height:24px;max-width:132px;min-width:0;padding:1px 4px;font-size:8px;border-width:1px}
+ #duelView[data-single-duel-pad="true"] .duel-control-toolbar #duelControlPadNote{max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:9px}
+ #duelView[data-single-duel-pad="true"]>.battle-controls[data-single-pad="true"]{grid-column:2;grid-row:3;align-self:stretch;width:100%;height:100%;min-height:0;max-width:none;margin:0;padding:0;box-sizing:border-box}
+ #duelView[data-single-duel-pad="true"] .battle-controls[data-single-pad="true"] .battle-control-panel{display:flex;flex-direction:column;gap:5px;height:100%;min-height:0;padding:6px;box-sizing:border-box}
+ #duelView[data-single-duel-pad="true"] .battle-controls[data-single-pad="true"] .battle-control-panel>strong{font-size:10px;line-height:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:none}
+ #duelView[data-single-duel-pad="true"] .battle-controls[data-single-pad="true"] .battle-key-hint{display:none}
+ #duelView[data-single-duel-pad="true"] .battle-controls[data-single-pad="true"] .battle-touch{flex:1;min-height:0;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(2,minmax(42px,1fr));gap:5px}
+ #duelView[data-single-duel-pad="true"] .battle-controls[data-single-pad="true"] .battle-touch button{grid-column:auto;grid-row:auto;min-height:42px;min-width:0;font-size:11px;padding:4px 2px;box-sizing:border-box}
+ #duelView[data-single-duel-pad="true"] .battle-controls[data-single-pad="true"] [data-battle-action="left"]{grid-column:1;grid-row:2}
+ #duelView[data-single-duel-pad="true"] .battle-controls[data-single-pad="true"] [data-battle-action="right"]{grid-column:2;grid-row:2}
+ #duelView[data-single-duel-pad="true"] .battle-controls[data-single-pad="true"] [data-battle-action="jump"]{grid-column:1;grid-row:1}
+ #duelView[data-single-duel-pad="true"] .battle-controls[data-single-pad="true"] [data-battle-action="attack"]{grid-column:2;grid-row:1}
+ #duelView[data-single-duel-pad="true"] .battle-controls[data-single-pad="true"] [data-battle-action="guard"]{grid-column:3;grid-row:1 / 3}
+ #duelView[data-single-duel-pad="true"] .battle-controls[data-single-pad="true"] .battle-touch kbd{font-size:8px}
+ #duelView[data-single-duel-pad="true"]>.battle-bottom{grid-column:2;grid-row:4;align-self:stretch;display:grid!important;grid-template-columns:minmax(0,1fr)!important;align-content:end;gap:4px!important;min-width:0;min-height:0;max-height:62px;margin:0;padding:0!important;overflow:hidden;box-sizing:border-box}
+ #duelView[data-single-duel-pad="true"] .battle-bottom>.btn{min-height:32px!important;height:32px!important;padding:4px 5px!important;font-size:9px!important;line-height:1.2;box-sizing:border-box}
+ #duelView[data-single-duel-pad="true"] .battle-bottom>.link-btn{min-height:22px;height:22px;padding:3px 2px;font-size:8px;line-height:1.2;box-sizing:border-box}
+ #duelView[data-single-duel-pad="true"]>.duel-spectator-controls{grid-column:2;grid-row:3;align-self:center;min-width:0;margin:0;padding:12px 8px;font-size:11px}
+}
+/* END_DUEL_SINGLE_CONTROLS_CSS_V1 */
 </style></head>
 <body>
 <div class="shell">
@@ -1185,7 +1361,7 @@ body:has(#winnerAwardDialog[open]){overflow:hidden}
 <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 <script id="roomTransportRuntime">(function installLunchRoom(){
 'use strict';
-const VERSION=3,BUILD='party30-20261113-layout3',PREFIX='du-lunch-online-v3-',MAX_MEMBERS=8,MAX_BYTES=100000;
+const VERSION=3,BUILD='party30-20261113-campus4',PREFIX='du-lunch-online-v3-',MAX_MEMBERS=8,MAX_BYTES=100000;
 const $=id=>document.getElementById(id),handlers={command:[],state:[],ready:[],presence:[],disconnect:[],private:[]};
 let peer=null,upstream=null,roster=[],me=null,host=false,active=false,ready=false,code='',locked=false,busy=false,generation=0,loadPromise=null,joinTimeout=0,hostOpenTimeout=0,lastSnapshot=null,snapshotSeq=0,lastReceivedSeq=-1;
 const links=new Map();
@@ -1545,18 +1721,1627 @@ setInterval(()=>{if(netActionOnline()&&mode==='duel'&&duel?.phase==='fight'&&net
 
 
 /* DEPARTMENT_RACE_V1 */
+/* CAMPUS_DEPARTMENTS_V1 */
 const deptOptions=[
- {id:'business',name:'경영학부 경영학전공',short:'경영학',passive:'전략 수정',description:'첫 장애물 감속 후 1회 회복 부스트',color:'#addcbd',icon:'📊'},
- {id:'accounting',name:'경영학부 회계학전공',short:'회계학',passive:'손실 상각',description:'첫 장애물의 감속 시간을 절반으로 줄여요',color:'#c9b7ed',icon:'🧮'},
- {id:'economics',name:'경제금융통상학과',short:'경제금융통상',passive:'분산 투자',description:'첫 불리한 속도 구간에서 1회 안정 부스트',color:'#f4d46e',icon:'📈'},
- {id:'tourism',name:'호텔관광경영학부 관광항공경영전공',short:'관광항공경영',passive:'패스트트랙',description:'첫 통행 장애물을 1회 우회해요',color:'#9acdec',icon:'✈️'},
- {id:'hotel',name:'호텔관광경영학부 호텔관광외식서비스전공',short:'호텔관광외식서비스',passive:'서비스 회복',description:'첫 넘어짐 직후 1회 회복 부스트',color:'#f5b593',icon:'🛎️'},
- {id:'japanese',name:'일본어일본학과',short:'일본어일본학',passive:'꾸준한 장인',description:'8초 지점에서 집중 가속을 1회 받아요',color:'#f0acc2',icon:'🌸'},
- {id:'korean',name:'국제학부 한국어교육, 통번역학전공',short:'한국어교육·통번역',passive:'정확한 전달',description:'첫 갈림길 손실을 막거나 추가 전진해요',color:'#c2d895',icon:'💬'},
- {id:'international',name:'국제학부 국제어문학전공',short:'국제어문학',passive:'글로벌 루트',description:'첫 포털에서 추가 지름길을 1회 이용해요',color:'#c6bee8',icon:'🌐'},
- {id:'student_worker',name:'근로생',short:'근로생',passive:'점심시간 사수',description:'출발 6초 뒤 1.2초 동안 점심시간을 향해 가속해요.',color:'#efb879',icon:'🧑‍💼',kind:'role'},
- {id:'facility',name:'시설물관리',short:'시설물관리',passive:'안전점검',description:'직접 부딪히는 첫 장애물의 감속을 1회 막아요.',color:'#8ccbd0',icon:'🛠️',kind:'role'}
+ {
+  "id": "du-d200fe6d9c",
+  "name": "공공안전학부 소방·행정학전공",
+  "short": "소방·행정학전공",
+  "college": "공공인재대학",
+  "aliases": [],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/0",
+  "color": "#addcbd",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-d6c08986cb",
+  "name": "공공안전학부 공직법무전공",
+  "short": "공직법무전공",
+  "college": "공공인재대학",
+  "aliases": [],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/0",
+  "color": "#f0acc2",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-3005e0e577",
+  "name": "경찰학부 경찰행정학전공",
+  "short": "경찰행정학전공",
+  "college": "공공인재대학",
+  "aliases": [],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/0",
+  "color": "#f0acc2",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-a78d79e055",
+  "name": "경찰학부 자치경찰학전공",
+  "short": "자치경찰학전공",
+  "college": "공공인재대학",
+  "aliases": [],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/0",
+  "color": "#c9b7ed",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-11af3dc954",
+  "name": "국방군사학과",
+  "short": "국방군사학과",
+  "college": "공공인재대학",
+  "aliases": [],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/0",
+  "color": "#addcbd",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-fd3af02f53",
+  "name": "부동산·지적학과",
+  "short": "부동산·지적학과",
+  "college": "공공인재대학",
+  "aliases": [
+   "부동산지적학과"
+  ],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/0",
+  "color": "#f0acc2",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-bfe5a168bd",
+  "name": "법학부 법학전공",
+  "short": "법학전공",
+  "college": "공공인재대학",
+  "aliases": [],
+  "status": "모집중지·재학생 전공",
+  "source": "https://www.daegu.ac.kr/intro/0",
+  "color": "#9acdec",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-597517efbf",
+  "name": "법학부 공공안전법학전공",
+  "short": "공공안전법학전공",
+  "college": "공공인재대학",
+  "aliases": [],
+  "status": "모집중지·재학생 전공",
+  "source": "https://www.daegu.ac.kr/intro/0",
+  "color": "#f0acc2",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "business",
+  "name": "경영학부 경영학전공",
+  "short": "경영학",
+  "passive": "전략 수정",
+  "description": "첫 장애물 감속 후 1회 회복 부스트",
+  "color": "#addcbd",
+  "icon": "📊",
+  "college": "글로벌경영대학",
+  "aliases": [],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/1"
+ },
+ {
+  "id": "accounting",
+  "name": "경영학부 회계학전공",
+  "short": "회계학",
+  "passive": "손실 상각",
+  "description": "첫 장애물의 감속 시간을 절반으로 줄여요",
+  "color": "#c9b7ed",
+  "icon": "🧮",
+  "college": "글로벌경영대학",
+  "aliases": [],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/1"
+ },
+ {
+  "id": "economics",
+  "name": "경제금융통상학과",
+  "short": "경제금융통상",
+  "passive": "분산 투자",
+  "description": "첫 불리한 속도 구간에서 1회 안정 부스트",
+  "color": "#f4d46e",
+  "icon": "📈",
+  "college": "글로벌경영대학",
+  "aliases": [],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/1"
+ },
+ {
+  "id": "tourism",
+  "name": "호텔관광경영학부 관광항공경영전공",
+  "short": "관광항공경영",
+  "passive": "패스트트랙",
+  "description": "첫 통행 장애물을 1회 우회해요",
+  "color": "#9acdec",
+  "icon": "✈️",
+  "college": "글로벌경영대학",
+  "aliases": [],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/1"
+ },
+ {
+  "id": "hotel",
+  "name": "호텔관광경영학부 호텔관광외식서비스전공",
+  "short": "호텔관광외식서비스",
+  "passive": "서비스 회복",
+  "description": "첫 넘어짐 직후 1회 회복 부스트",
+  "color": "#f5b593",
+  "icon": "🛎️",
+  "college": "글로벌경영대학",
+  "aliases": [
+   "호텔관광경영학부 호텔외식관광전공"
+  ],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/1"
+ },
+ {
+  "id": "japanese",
+  "name": "일본어일본학과",
+  "short": "일본어일본학",
+  "passive": "꾸준한 장인",
+  "description": "8초 지점에서 집중 가속을 1회 받아요",
+  "color": "#f0acc2",
+  "icon": "🌸",
+  "college": "글로벌경영대학",
+  "aliases": [],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/1"
+ },
+ {
+  "id": "korean",
+  "name": "국제학부 한국어교육, 통번역학전공",
+  "short": "한국어교육·통번역",
+  "passive": "정확한 전달",
+  "description": "첫 갈림길 손실을 막거나 추가 전진해요",
+  "color": "#c2d895",
+  "icon": "💬",
+  "college": "글로벌경영대학",
+  "aliases": [
+   "국제학부 한국어교육·통번역학전공"
+  ],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/1"
+ },
+ {
+  "id": "international",
+  "name": "국제학부 국제어문학전공",
+  "short": "국제어문학",
+  "passive": "글로벌 루트",
+  "description": "첫 포털에서 추가 지름길을 1회 이용해요",
+  "color": "#c6bee8",
+  "icon": "🌐",
+  "college": "글로벌경영대학",
+  "aliases": [],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/1"
+ },
+ {
+  "id": "du-8c6f26327b",
+  "name": "사회복지학과",
+  "short": "사회복지학과",
+  "college": "사회과학대학",
+  "aliases": [],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/2",
+  "color": "#9acdec",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-82a138c9c4",
+  "name": "청소년상담복지학과",
+  "short": "청소년상담복지학과",
+  "college": "사회과학대학",
+  "aliases": [],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/2",
+  "color": "#f5b593",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-d0e16067d6",
+  "name": "아동가정복지학과",
+  "short": "아동가정복지학과",
+  "college": "사회과학대학",
+  "aliases": [
+   "아동가족복지학과"
+  ],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/2",
+  "color": "#f5b593",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-56e736342f",
+  "name": "평생교육실버복지학과",
+  "short": "평생교육실버복지학과",
+  "college": "사회과학대학",
+  "aliases": [],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/2",
+  "color": "#f0acc2",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-84cb05c1bb",
+  "name": "미디어커뮤니케이션학부 영상콘텐츠전공",
+  "short": "영상콘텐츠전공",
+  "college": "사회과학대학",
+  "aliases": [],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/2",
+  "color": "#c9b7ed",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-31df0bb36d",
+  "name": "미디어커뮤니케이션학부 광고PR전공",
+  "short": "광고PR전공",
+  "college": "사회과학대학",
+  "aliases": [],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/2",
+  "color": "#c9b7ed",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-d9e70fab7b",
+  "name": "문헌정보학과",
+  "short": "문헌정보학과",
+  "college": "사회과학대학",
+  "aliases": [],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/2",
+  "color": "#9acdec",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-cc1fdab9f9",
+  "name": "심리학과",
+  "short": "심리학과",
+  "college": "사회과학대학",
+  "aliases": [],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/2",
+  "color": "#9acdec",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-28944f5269",
+  "name": "국제관계학과",
+  "short": "국제관계학과",
+  "college": "사회과학대학",
+  "aliases": [],
+  "status": "모집중지·재학생 전공",
+  "source": "https://www.daegu.ac.kr/intro/2",
+  "color": "#9acdec",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-9e69ed16ad",
+  "name": "사회학과",
+  "short": "사회학과",
+  "college": "사회과학대학",
+  "aliases": [],
+  "status": "모집중지·재학생 전공",
+  "source": "https://www.daegu.ac.kr/intro/2",
+  "color": "#f0acc2",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-f402f371c5",
+  "name": "보건의료학과",
+  "short": "보건의료학과",
+  "college": "보건바이오대학",
+  "aliases": [],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/3",
+  "color": "#f0acc2",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-0b479839c2",
+  "name": "응급구조학과",
+  "short": "응급구조학과",
+  "college": "보건바이오대학",
+  "aliases": [],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/3",
+  "color": "#f4d46e",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-090a8e9e7a",
+  "name": "동물자원학과",
+  "short": "동물자원학과",
+  "college": "보건바이오대학",
+  "aliases": [],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/3",
+  "color": "#f4d46e",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-bc32b4bb80",
+  "name": "반려동물산업학과",
+  "short": "반려동물산업학과",
+  "college": "보건바이오대학",
+  "aliases": [],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/3",
+  "color": "#f4d46e",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-de8d76a7cd",
+  "name": "스마트원예학과",
+  "short": "스마트원예학과",
+  "college": "보건바이오대학",
+  "aliases": [],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/3",
+  "color": "#c9b7ed",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-89d25a3e34",
+  "name": "식품가공학과",
+  "short": "식품가공학과",
+  "college": "보건바이오대학",
+  "aliases": [
+   "식품공학과"
+  ],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/3",
+  "color": "#f5b593",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-09ff758452",
+  "name": "난임의료산업학과",
+  "short": "난임의료산업학과",
+  "college": "보건바이오대학",
+  "aliases": [],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/3",
+  "color": "#f5b593",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-92814cc23d",
+  "name": "통계학과",
+  "short": "통계학과",
+  "college": "보건바이오대학",
+  "aliases": [],
+  "status": "모집중지·재학생 전공",
+  "source": "https://www.daegu.ac.kr/intro/3",
+  "color": "#c9b7ed",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-4783abed93",
+  "name": "화장품바이오학부 화장품제약전공",
+  "short": "화장품제약전공",
+  "college": "보건바이오대학",
+  "aliases": [],
+  "status": "모집중지·재학생 전공",
+  "source": "https://www.daegu.ac.kr/intro/3",
+  "color": "#9acdec",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-21dc77551c",
+  "name": "화장품바이오학부 바이오메디컬전공",
+  "short": "바이오메디컬전공",
+  "college": "보건바이오대학",
+  "aliases": [
+   "화장품바이오학부 바이오메디칼전공"
+  ],
+  "status": "모집중지·재학생 전공",
+  "source": "https://www.daegu.ac.kr/intro/3",
+  "color": "#f5b593",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-1aebe86ead",
+  "name": "산림자원학과",
+  "short": "산림자원학과",
+  "college": "보건바이오대학",
+  "aliases": [],
+  "status": "모집중지·재학생 전공",
+  "source": "https://www.daegu.ac.kr/intro/3",
+  "color": "#f0acc2",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-d0a49ce553",
+  "name": "건축공학과",
+  "short": "건축공학과",
+  "college": "IT·공과대학",
+  "aliases": [],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/4",
+  "color": "#f0acc2",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-dc5e76e0eb",
+  "name": "소방안전방재학과",
+  "short": "소방안전방재학과",
+  "college": "IT·공과대학",
+  "aliases": [],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/4",
+  "color": "#c9b7ed",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-10a8a6394b",
+  "name": "기계자동차공학부 기계공학전공",
+  "short": "기계공학전공",
+  "college": "IT·공과대학",
+  "aliases": [],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/4",
+  "color": "#9acdec",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-c22773d586",
+  "name": "기계자동차공학부 미래자동차공학전공",
+  "short": "미래자동차공학전공",
+  "college": "IT·공과대학",
+  "aliases": [],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/4",
+  "color": "#f4d46e",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-95813ce55e",
+  "name": "식품영양학과",
+  "short": "식품영양학과",
+  "college": "IT·공과대학",
+  "aliases": [],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/4",
+  "color": "#f5b593",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-f0ca5aaaf7",
+  "name": "조경산림정원학과",
+  "short": "조경산림정원학과",
+  "college": "IT·공과대학",
+  "aliases": [],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/4",
+  "color": "#c9b7ed",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-9b576e6107",
+  "name": "친환경에너지학과",
+  "short": "친환경에너지학과",
+  "college": "IT·공과대학",
+  "aliases": [],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/4",
+  "color": "#c9b7ed",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-4a1cebf318",
+  "name": "전자전기공학부 반도체전자공학전공",
+  "short": "반도체전자공학전공",
+  "college": "IT·공과대학",
+  "aliases": [],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/4",
+  "color": "#addcbd",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-f2ffe1a902",
+  "name": "전자전기공학부 전기공학전공",
+  "short": "전기공학전공",
+  "college": "IT·공과대학",
+  "aliases": [],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/4",
+  "color": "#f4d46e",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-afa6007d7e",
+  "name": "컴퓨터정보공학부 컴퓨터공학전공",
+  "short": "컴퓨터공학전공",
+  "college": "IT·공과대학",
+  "aliases": [],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/4",
+  "color": "#addcbd",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-68a61a7945",
+  "name": "컴퓨터정보공학부 컴퓨터소프트웨어전공",
+  "short": "컴퓨터소프트웨어전공",
+  "college": "IT·공과대학",
+  "aliases": [],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/4",
+  "color": "#9acdec",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-66aa7e3b3c",
+  "name": "컴퓨터정보공학부 사이버보안전공",
+  "short": "사이버보안전공",
+  "college": "IT·공과대학",
+  "aliases": [],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/4",
+  "color": "#addcbd",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-5e775c1df4",
+  "name": "신소재에너지시스템공학부 신소재에너지공학전공",
+  "short": "신소재에너지공학전공",
+  "college": "IT·공과대학",
+  "aliases": [],
+  "status": "모집중지·재학생 전공",
+  "source": "https://www.daegu.ac.kr/intro/4",
+  "color": "#f5b593",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-f07c4a7f96",
+  "name": "건설시스템공학과",
+  "short": "건설시스템공학과",
+  "college": "IT·공과대학",
+  "aliases": [],
+  "status": "모집중지·재학생 전공",
+  "source": "https://www.daegu.ac.kr/intro/4",
+  "color": "#addcbd",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-65e54f9142",
+  "name": "환경기술공학과",
+  "short": "환경기술공학과",
+  "college": "IT·공과대학",
+  "aliases": [],
+  "status": "모집중지·재학생 전공",
+  "source": "https://www.daegu.ac.kr/intro/4",
+  "color": "#addcbd",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-a982444f1f",
+  "name": "생명공학과",
+  "short": "생명공학과",
+  "college": "IT·공과대학",
+  "aliases": [],
+  "status": "모집중지·재학생 전공",
+  "source": "https://www.daegu.ac.kr/intro/4",
+  "color": "#c9b7ed",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-d6bd23e2da",
+  "name": "화학공학과",
+  "short": "화학공학과",
+  "college": "IT·공과대학",
+  "aliases": [],
+  "status": "모집중지·재학생 전공",
+  "source": "https://www.daegu.ac.kr/intro/4",
+  "color": "#f4d46e",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-d0b2727e74",
+  "name": "전자전기공학부 정보통신공학전공",
+  "short": "정보통신공학전공",
+  "college": "IT·공과대학",
+  "aliases": [],
+  "status": "모집중지·재학생 전공",
+  "source": "https://www.daegu.ac.kr/intro/4",
+  "color": "#f4d46e",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-0e944c7799",
+  "name": "AI학과",
+  "short": "AI학과",
+  "college": "IT·공과대학",
+  "aliases": [],
+  "status": "모집중지·재학생 전공",
+  "source": "https://www.daegu.ac.kr/intro/4",
+  "color": "#9acdec",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-f8ed93b154",
+  "name": "IT융합학과",
+  "short": "IT융합학과",
+  "college": "IT·공과대학",
+  "aliases": [],
+  "status": "학사과정 계약학과",
+  "source": "https://www.daegu.ac.kr/intro/4",
+  "color": "#addcbd",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-7a0ec4e19a",
+  "name": "메카트로닉스공학과",
+  "short": "메카트로닉스공학과",
+  "college": "IT·공과대학",
+  "aliases": [],
+  "status": "학사과정 계약학과",
+  "source": "https://www.daegu.ac.kr/intro/4",
+  "color": "#f5b593",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-788f17a9f3",
+  "name": "웹툰영상애니메이션학부 영상애니메이션전공",
+  "short": "영상애니메이션전공",
+  "college": "디자인예술대학",
+  "aliases": [],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/5",
+  "color": "#9acdec",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-8f6be81e59",
+  "name": "웹툰영상애니메이션학부 웹툰전공",
+  "short": "웹툰전공",
+  "college": "디자인예술대학",
+  "aliases": [],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/5",
+  "color": "#f0acc2",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-e0bdce7334",
+  "name": "시각디자인융합학부 시각디자인전공",
+  "short": "시각디자인전공",
+  "college": "디자인예술대학",
+  "aliases": [
+   "시각디자인학과"
+  ],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/5",
+  "color": "#f5b593",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-03e409e82a",
+  "name": "시각디자인융합학부 서비스마케팅디자인전공",
+  "short": "서비스마케팅디자인전공",
+  "college": "디자인예술대학",
+  "aliases": [
+   "디자인마케팅학과"
+  ],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/5",
+  "color": "#addcbd",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-6b08676a30",
+  "name": "산업디자인학과",
+  "short": "산업디자인학과",
+  "college": "디자인예술대학",
+  "aliases": [],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/5",
+  "color": "#addcbd",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-17b767700c",
+  "name": "패션디자인학과",
+  "short": "패션디자인학과",
+  "college": "디자인예술대학",
+  "aliases": [],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/5",
+  "color": "#addcbd",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-9f8aa82a45",
+  "name": "뷰티학부 헤어디자인전공",
+  "short": "헤어디자인전공",
+  "college": "디자인예술대학",
+  "aliases": [],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/5",
+  "color": "#9acdec",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-bc83bee0f7",
+  "name": "뷰티학부 메이크업·피부전공",
+  "short": "메이크업·피부전공",
+  "college": "디자인예술대학",
+  "aliases": [
+   "뷰티학부 메이크업피부전공"
+  ],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/5",
+  "color": "#c9b7ed",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-f0dcb03771",
+  "name": "실내건축디자인학과",
+  "short": "실내건축디자인학과",
+  "college": "디자인예술대학",
+  "aliases": [],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/5",
+  "color": "#f0acc2",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-d061f0d53a",
+  "name": "게임학과",
+  "short": "게임학과",
+  "college": "디자인예술대학",
+  "aliases": [
+   "게임엔터테인먼트학과"
+  ],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/5",
+  "color": "#f5b593",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-7cfabe76d3",
+  "name": "융합예술학부 아트앤디자인전공",
+  "short": "아트앤디자인전공",
+  "college": "디자인예술대학",
+  "aliases": [],
+  "status": "모집중지·재학생 전공",
+  "source": "https://www.daegu.ac.kr/intro/5",
+  "color": "#c9b7ed",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-283d7ec451",
+  "name": "주얼리디자인학과",
+  "short": "주얼리디자인학과",
+  "college": "디자인예술대학",
+  "aliases": [],
+  "status": "모집중지·재학생 전공",
+  "source": "https://www.daegu.ac.kr/intro/5",
+  "color": "#9acdec",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-841986c8ff",
+  "name": "국어교육과",
+  "short": "국어교육과",
+  "college": "사범대학",
+  "aliases": [],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/6",
+  "color": "#9acdec",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-16d4384a88",
+  "name": "영어교육과",
+  "short": "영어교육과",
+  "college": "사범대학",
+  "aliases": [],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/6",
+  "color": "#f5b593",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-957daec280",
+  "name": "역사교육과",
+  "short": "역사교육과",
+  "college": "사범대학",
+  "aliases": [],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/6",
+  "color": "#f4d46e",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-99dd7eba28",
+  "name": "일반사회교육과",
+  "short": "일반사회교육과",
+  "college": "사범대학",
+  "aliases": [],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/6",
+  "color": "#f5b593",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-520e6e08ea",
+  "name": "지리교육과",
+  "short": "지리교육과",
+  "college": "사범대학",
+  "aliases": [],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/6",
+  "color": "#addcbd",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-78fc3b2433",
+  "name": "유아교육과",
+  "short": "유아교육과",
+  "college": "사범대학",
+  "aliases": [],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/6",
+  "color": "#9acdec",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-8f2eb82bc1",
+  "name": "특수교육과",
+  "short": "특수교육과",
+  "college": "사범대학",
+  "aliases": [
+   "특수교육학부 특수교육전공"
+  ],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/6",
+  "color": "#c9b7ed",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-f5d5fa0aa5",
+  "name": "초등특수교육과",
+  "short": "초등특수교육과",
+  "college": "사범대학",
+  "aliases": [
+   "특수교육학부 초등특수교육전공"
+  ],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/6",
+  "color": "#9acdec",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-ab27af6382",
+  "name": "유아특수교육과",
+  "short": "유아특수교육과",
+  "college": "사범대학",
+  "aliases": [
+   "특수교육학부 유아특수교육전공"
+  ],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/6",
+  "color": "#f5b593",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-312ef1d925",
+  "name": "수학교육과",
+  "short": "수학교육과",
+  "college": "사범대학",
+  "aliases": [],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/6",
+  "color": "#c9b7ed",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-f211cdd60d",
+  "name": "물리교육과",
+  "short": "물리교육과",
+  "college": "사범대학",
+  "aliases": [],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/6",
+  "color": "#c9b7ed",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-e1e5bab083",
+  "name": "화학교육과",
+  "short": "화학교육과",
+  "college": "사범대학",
+  "aliases": [],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/6",
+  "color": "#f0acc2",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-61c3a6a094",
+  "name": "생물교육과",
+  "short": "생물교육과",
+  "college": "사범대학",
+  "aliases": [],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/6",
+  "color": "#f5b593",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-436a5ed683",
+  "name": "지구과학교육과",
+  "short": "지구과학교육과",
+  "college": "사범대학",
+  "aliases": [],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/6",
+  "color": "#f0acc2",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-1007c4a15a",
+  "name": "물리치료학과",
+  "short": "물리치료학과",
+  "college": "재활과학대학",
+  "aliases": [],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/7",
+  "color": "#addcbd",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-a5693280bb",
+  "name": "작업치료학과",
+  "short": "작업치료학과",
+  "college": "재활과학대학",
+  "aliases": [],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/7",
+  "color": "#c9b7ed",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-a20b426aa6",
+  "name": "언어치료학과",
+  "short": "언어치료학과",
+  "college": "재활과학대학",
+  "aliases": [],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/7",
+  "color": "#f5b593",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-0b2c29232b",
+  "name": "재활상담심리치료학과",
+  "short": "재활상담심리치료학과",
+  "college": "재활과학대학",
+  "aliases": [],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/7",
+  "color": "#c9b7ed",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-9dd61443e6",
+  "name": "의료재활학과",
+  "short": "의료재활학과",
+  "college": "재활과학대학",
+  "aliases": [],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/7",
+  "color": "#f4d46e",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-133327c99a",
+  "name": "재활건강증진학과",
+  "short": "재활건강증진학과",
+  "college": "재활과학대학",
+  "aliases": [],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/7",
+  "color": "#f5b593",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-b23ab78795",
+  "name": "특수창의융합학과",
+  "short": "특수창의융합학과",
+  "college": "재활과학대학",
+  "aliases": [],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/7",
+  "color": "#f0acc2",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-3742058e7c",
+  "name": "라이프디자인학과",
+  "short": "라이프디자인학과",
+  "college": "재활과학대학",
+  "aliases": [],
+  "status": "2027학년도 신설",
+  "source": "https://www.daegu.ac.kr/intro/7",
+  "color": "#f5b593",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-adb54c2b50",
+  "name": "간호학과",
+  "short": "간호학과",
+  "college": "간호대학",
+  "aliases": [],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/8",
+  "color": "#f4d46e",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-820b8ab408",
+  "name": "체육학과",
+  "short": "체육학과",
+  "college": "체육레저학부",
+  "aliases": [],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/12",
+  "color": "#f4d46e",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-889ace4c03",
+  "name": "스포츠레저학과",
+  "short": "스포츠레저학과",
+  "college": "체육레저학부",
+  "aliases": [],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/12",
+  "color": "#9acdec",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-dfe6fbdefe",
+  "name": "스포츠헬스케어학과",
+  "short": "스포츠헬스케어학과",
+  "college": "체육레저학부",
+  "aliases": [],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/12",
+  "color": "#f4d46e",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-a47aaf1ca7",
+  "name": "문화콘텐츠학부",
+  "short": "문화콘텐츠학부",
+  "college": "문화콘텐츠학부",
+  "aliases": [],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/13",
+  "color": "#f0acc2",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-093ad325ff",
+  "name": "자유전공학부",
+  "short": "자유전공학부",
+  "college": "자유전공학부",
+  "aliases": [],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/14",
+  "color": "#9acdec",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-5d86fe1ebc",
+  "name": "휴먼케어창의학부 실버복지·복지상담학전공",
+  "short": "실버복지·복지상담학전공",
+  "college": "글로컬라이프대학",
+  "aliases": [
+   "실버복지·복지상담학과"
+  ],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/10",
+  "color": "#f4d46e",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-8593f00cd0",
+  "name": "휴먼케어창의학부 자산관리·6차산업학전공",
+  "short": "자산관리·6차산업학전공",
+  "college": "글로컬라이프대학",
+  "aliases": [
+   "자산·6차치유산업학과",
+   "자산관리·6차산업학과"
+  ],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/10",
+  "color": "#f5b593",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-6517d3aeec",
+  "name": "글로컬융합학부 평생교육·청소년학전공",
+  "short": "평생교육·청소년학전공",
+  "college": "글로컬라이프대학",
+  "aliases": [
+   "평생교육·청소년학과"
+  ],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/10",
+  "color": "#f4d46e",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-64e7094250",
+  "name": "글로벌한국학부 한국어교육전공",
+  "short": "한국어교육전공",
+  "college": "국제대학",
+  "aliases": [
+   "글로벌한국학부(한국어교육전공)"
+  ],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/11",
+  "color": "#f4d46e",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-7508cd1e5f",
+  "name": "글로벌한국학부 한국어통번역전공",
+  "short": "한국어통번역전공",
+  "college": "국제대학",
+  "aliases": [
+   "글로벌한국학부(한국어통번역전공)"
+  ],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/11",
+  "color": "#f0acc2",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-c713c3da01",
+  "name": "글로벌인재학부 국제경제무역전공",
+  "short": "국제경제무역전공",
+  "college": "국제대학",
+  "aliases": [
+   "글로벌인재학부(국제경제무역전공)"
+  ],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/11",
+  "color": "#c9b7ed",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-92351bfab1",
+  "name": "글로벌인재학부 글로벌경영전공",
+  "short": "글로벌경영전공",
+  "college": "국제대학",
+  "aliases": [
+   "글로벌인재학부(글로벌경영전공)"
+  ],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/11",
+  "color": "#9acdec",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-316c03d067",
+  "name": "글로벌인재학부 문화산업관리전공",
+  "short": "문화산업관리전공",
+  "college": "국제대학",
+  "aliases": [
+   "글로벌인재학부(문화산업관리전공)"
+  ],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/11",
+  "color": "#c9b7ed",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-42b87ecf32",
+  "name": "글로벌인재학부 미디어전공",
+  "short": "미디어전공",
+  "college": "국제대학",
+  "aliases": [
+   "글로벌인재학부(미디어전공)"
+  ],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/11",
+  "color": "#f4d46e",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-40e8d22da9",
+  "name": "글로벌인재학부 인재교육전공",
+  "short": "인재교육전공",
+  "college": "국제대학",
+  "aliases": [
+   "글로벌인재학부(인재교육전공)"
+  ],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/11",
+  "color": "#c9b7ed",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-1901a304a6",
+  "name": "글로벌인재학부 법학전공",
+  "short": "법학전공",
+  "college": "국제대학",
+  "aliases": [
+   "글로벌인재학부(법학전공)"
+  ],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/11",
+  "color": "#f5b593",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-f513b1dcb4",
+  "name": "글로벌인재학부 연극영화문학전공",
+  "short": "연극영화문학전공",
+  "college": "국제대학",
+  "aliases": [
+   "글로벌인재학부(연극영화문학전공)"
+  ],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/11",
+  "color": "#addcbd",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-dddbd15a6f",
+  "name": "글로벌인재학부 중국언어문학전공",
+  "short": "중국언어문학전공",
+  "college": "국제대학",
+  "aliases": [
+   "글로벌인재학부(중국언어문학전공)"
+  ],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/11",
+  "color": "#9acdec",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-adf4a33100",
+  "name": "글로벌인재학부 회계학전공",
+  "short": "회계학전공",
+  "college": "국제대학",
+  "aliases": [
+   "글로벌인재학부(회계학전공)"
+  ],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/11",
+  "color": "#addcbd",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-6b58975f2b",
+  "name": "글로벌인재학부 농산업학전공",
+  "short": "농산업학전공",
+  "college": "국제대학",
+  "aliases": [
+   "글로벌인재학부(농산업학전공)"
+  ],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/11",
+  "color": "#c9b7ed",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-9051df280b",
+  "name": "글로벌인재학부 AI컴퓨터공학전공",
+  "short": "AI컴퓨터공학전공",
+  "college": "국제대학",
+  "aliases": [
+   "글로벌인재학부(AI컴퓨터공학전공)"
+  ],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/11",
+  "color": "#f0acc2",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-9985e5dcd2",
+  "name": "글로벌인재학부 건축공학전공",
+  "short": "건축공학전공",
+  "college": "국제대학",
+  "aliases": [
+   "글로벌인재학부(건축공학전공)"
+  ],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/11",
+  "color": "#addcbd",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-3a40fa8b8b",
+  "name": "글로벌인재학부 기계공학전공",
+  "short": "기계공학전공",
+  "college": "국제대학",
+  "aliases": [
+   "글로벌인재학부(기계공학전공)"
+  ],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/11",
+  "color": "#c9b7ed",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-81e240d9f9",
+  "name": "글로벌인재학부 전자전기ICT공학전공",
+  "short": "전자전기ICT공학전공",
+  "college": "국제대학",
+  "aliases": [
+   "글로벌인재학부(전자전기ICT공학전공)"
+  ],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/11",
+  "color": "#9acdec",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "du-b328387573",
+  "name": "글로벌인재학부 디자인예술전공",
+  "short": "디자인예술전공",
+  "college": "국제대학",
+  "aliases": [
+   "글로벌인재학부(디자인예술전공)"
+  ],
+  "status": "학부 학과·전공",
+  "source": "https://www.daegu.ac.kr/intro/11",
+  "color": "#c9b7ed",
+  "icon": "🎓",
+  "passive": "내 메뉴 수호",
+  "description": "학과를 닮은 밥친구. 토너먼트 능력치는 모두 같아요."
+ },
+ {
+  "id": "facility",
+  "name": "시설물관리",
+  "short": "시설물관리",
+  "passive": "안전점검",
+  "description": "직접 부딪히는 첫 장애물의 감속을 1회 막아요.",
+  "color": "#8ccbd0",
+  "icon": "🛠️",
+  "kind": "role",
+  "college": "추가 역할",
+  "aliases": [],
+  "status": "추가 역할"
+ }
 ];
+const deptSearchKey=value=>String(value||'').normalize('NFKC').toLocaleLowerCase('ko').replace(/[\s·,()ㆍ・]/g,'');
+const deptById=new Map(deptOptions.map(d=>[d.id,d]));
+const deptByName=new Map();for(const d of deptOptions)for(const name of [d.name,d.short,...(d.aliases||[])])if(!deptByName.has(deptSearchKey(name)))deptByName.set(deptSearchKey(name),d);
+/* END_CAMPUS_DEPARTMENTS_V1 */
 let deptRace=null,deptLoop=0,deptFrame=0,deptFinishTimer=0,deptView=null,deptRows=new Map(),deptRemoteAt=0,deptLastNotice='';
 const deptCourseLength=1200,deptTickStep=.04,deptHardLimit=30;
 const deptGateDefinitions=[
@@ -1571,7 +3356,7 @@ function deptHash(value){let h=2166136261;for(const ch of String(value)){h^=ch.c
 function deptCourse(seed){return [...deptGateDefinitions].sort((a,b)=>deptHash(seed+':gate:'+a.type)-deptHash(seed+':gate:'+b.type)).map((gate,i)=>({...gate,id:'gate'+i,at:170+i*180+Math.round((deptHash(seed+':position:'+i)-.5)*36)}));}
 function deptAuthority(){return typeof netIsHost==='function'?netIsHost():true;}
 function deptOwnId(){return typeof netSelfId==='function'?String(netSelfId()||''):'';}
-function deptOption(value){return deptOptions.find(x=>x.id===value||x.name===value||x.short===value)||deptOptions[0];}
+function deptOption(value){return deptById.get(value)||deptByName.get(deptSearchKey(value))||deptById.get('business');}
 function deptText(node,value){if(node&&node.textContent!==String(value))node.textContent=String(value);}
 function deptMake(tag,cls,text){const n=document.createElement(tag);if(cls)n.className=cls;if(text!==undefined)n.textContent=text;return n;}
 function deptFood(menu){const s=String(typeof menu==='object'?(menu?.name||''):menu||'');if(/피자/.test(s))return '🍕';if(/치킨|닭/.test(s))return '🍗';if(/버거/.test(s))return '🍔';if(/초밥|스시/.test(s))return '🍣';if(/돈[까가]스|카츠/.test(s))return '🍱';if(/면|국수|파스타|우동|라멘|짜장|짬뽕/.test(s))return '🍜';if(/샐러드/.test(s))return '🥗';if(/떡|분식/.test(s))return '🍢';if(/고기|삼겹|갈비/.test(s))return '🥩';if(/국|탕|찌개/.test(s))return '🍲';return '🍚';}
@@ -1579,7 +3364,7 @@ function deptMenuName(menu){return String(typeof menu==='object'?(menu?.name||'�
 function deptEnsureUI(){
  if(deptView)return;
  deptView=deptMake('section','');deptView.id='deptRaceView';deptView.hidden=true;deptView.setAttribute('aria-label','실시간 전공 랜덤 레이스');
- deptView.innerHTML='<div class="dept-mast"><span>DAEGU UNIVERSITY · LUNCH GRAND PRIX</span><span class="dept-live">LIVE MULTIPLAYER</span></div><div class="dept-hero"><div><div class="dept-eyebrow">RANDOM COURSE / REAL PLAYERS</div><h2 class="dept-title" tabindex="-1">오늘의 점심은<br><em>달리는 자의 것.</em></h2><p class="dept-subtitle">랜덤 코스 × 전공 패시브 × 당신의 점프와 대시<br>레이스 1등은 왕관 획득! 이어지는 쟁탈전의 마지막 생존자가 메뉴를 결정해요.</p></div><div class="dept-clock"><b id="deptClock">3</b><span id="deptClockLabel">GET READY</span></div></div><div class="dept-announcer" role="status" aria-live="polite"><span id="deptAnnouncement">모두 같은 출발선! 각자 자신의 기기에서 조작해요.</span></div><div class="dept-arena"><div class="dept-lanes" id="deptLanes"></div><div class="dept-overlay" id="deptOverlay" aria-hidden="true"><b id="deptOverlayTitle">3</b><span id="deptOverlaySub">점프와 대시를 준비하세요</span></div></div><div class="dept-controls"><div class="dept-control-copy"><strong id="deptControlName">내 레이서 준비 중</strong><span id="deptControlHint">점프 Space · 대시 Shift<br>장애물 바로 앞에서 점프!</span></div><button class="dept-input" id="deptJump" data-action="jump" type="button">점프 ↑<small>SPACE · 준비 완료</small></button><button class="dept-input" id="deptDash" data-action="dash" type="button">대시 →<small>SHIFT · 준비 완료</small></button></div><div class="dept-credit">공식 전공 8개는 <a href="https://www.daegu.ac.kr/intro/1" target="_blank" rel="noopener noreferrer">대구대학교 2026학년도 글로벌경영대학 안내</a>를 참고했습니다. 근로생·시설물관리는 추가한 역할 캐릭터입니다. 모든 패시브는 전공·역할에서 착안한 게임 창작 능력이며, 같은 캐릭터도 함께 선택할 수 있어요.</div>';
+ deptView.innerHTML='<div class="dept-mast"><span>DAEGU UNIVERSITY · LUNCH GRAND PRIX</span><span class="dept-live">LIVE MULTIPLAYER</span></div><div class="dept-hero"><div><div class="dept-eyebrow">RANDOM COURSE / REAL PLAYERS</div><h2 class="dept-title" tabindex="-1">오늘의 점심은<br><em>달리는 자의 것.</em></h2><p class="dept-subtitle">랜덤 코스 × 전공 패시브 × 당신의 점프와 대시<br>레이스 1등은 왕관 획득! 이어지는 쟁탈전의 마지막 생존자가 메뉴를 결정해요.</p></div><div class="dept-clock"><b id="deptClock">3</b><span id="deptClockLabel">GET READY</span></div></div><div class="dept-announcer" role="status" aria-live="polite"><span id="deptAnnouncement">모두 같은 출발선! 각자 자신의 기기에서 조작해요.</span></div><div class="dept-arena"><div class="dept-lanes" id="deptLanes"></div><div class="dept-overlay" id="deptOverlay" aria-hidden="true"><b id="deptOverlayTitle">3</b><span id="deptOverlaySub">점프와 대시를 준비하세요</span></div></div><div class="dept-controls"><div class="dept-control-copy"><strong id="deptControlName">내 레이서 준비 중</strong><span id="deptControlHint">점프 Space · 대시 Shift<br>장애물 바로 앞에서 점프!</span></div><button class="dept-input" id="deptJump" data-action="jump" type="button">점프 ↑<small>SPACE · 준비 완료</small></button><button class="dept-input" id="deptDash" data-action="dash" type="button">대시 →<small>SHIFT · 준비 완료</small></button></div><div class="dept-credit">학과·전공 목록은 <a href="https://www.daegu.ac.kr/intro/1" target="_blank" rel="noopener noreferrer">대구대학교 공식 대학 안내</a>를 참고했습니다. 시설물관리는 별도 역할 캐릭터입니다. 모든 패시브는 전공·역할에서 착안한 게임 창작 능력이며, 같은 캐릭터도 함께 선택할 수 있어요.</div>';
  document.getElementById('game').append(deptView);
  deptView.querySelectorAll('.dept-input').forEach(button=>button.addEventListener('click',()=>deptInput(button.dataset.action)));
 }
@@ -1701,7 +3486,7 @@ function netIsActive(){return !!netRoom?.active;}
 function netIsHost(){return netIsActive()&&netRoom.isHost;}
 function netSelfId(){return netRoom?.selfId||'';}
 function netSelfSide(){if(!netDuelMeta)return -1;return netDuelMeta.challengerId===netSelfId()?0:netDuelMeta.defenderId===netSelfId()?1:-1;}
-function netDepartment(id){return netDepartments[id]||deptOptions[0].id;}
+function netDepartment(id){return deptById.has(netDepartments[id])?netDepartments[id]:'business';}
 function netMembers(){return netRoster.filter(m=>m.consent===true&&m.connected!==false);}
 function netCopy(v){return JSON.parse(JSON.stringify(v));}
 function netMenu(name){let item=pool.find(x=>x.name===name);if(!item){item={id:'remote_'+rand(10000000),name,category:'내 후보',owner:null,enabledFor:Array(8).fill(true),custom:true};pool.push(item);}return {...item};}
@@ -1803,8 +3588,7 @@ const netOldPause=actionPause;actionPause=function(reason){if(netIsHost()&&netDu
 const netOldFinish=actionFinish;actionFinish=function(winner,reason){if(netIsHost()&&result&&netDuelMeta&&!duel?.finishLocked)result.winnerId=winner===0?netDuelMeta.challengerId:netDuelMeta.defenderId;netOldFinish(winner,reason);if(netIsHost()&&duel?.finishLocked&&result)netPublishCombat(true);};
 startRace=function(){if(netIsActive())netRoom.send({t:'ready',value:!netReady[netSelfId()]});};
 $('randomBtn').hidden=true;$('motionBtn').hidden=true;$('manageBtn').hidden=true;
-const netSelectWrap=el('div','net-department-wrap');netSelectWrap.innerHTML='<label for="netDepartment">내 캐릭터 · 전공/역할</label><select id="netDepartment"></select><p id="netPassiveDesc"></p><small>전공·역할에서 착안한 게임 창작 능력이에요. 근로생·시설물관리는 역할 캐릭터예요. <a href="https://www.daegu.ac.kr/intro/1" target="_blank" rel="noopener">공식 전공 8개 기준 ↗</a></small>';
-deptOptions.forEach(d=>{const o=el('option','',d.short+' · '+d.passive);o.value=d.id;netSelectWrap.querySelector('select').append(o);});$('players').before(netSelectWrap);$('netDepartment').addEventListener('change',e=>netRoom.send({t:'department',value:e.target.value}));const hint=el('p','net-ready-hint');hint.id='netReadyHint';$('startBtn').parentElement.append(hint);
+const netSelectWrap=deptPickerCreate();$('players').before(netSelectWrap);const hint=el('p','net-ready-hint');hint.id='netReadyHint';$('startBtn').parentElement.append(hint);
 document.querySelectorAll('.hero-desc,.hero-sub,.subtitle').forEach(n=>{if(n.textContent.includes('공나영')||n.textContent.includes('세 사람'))n.textContent='점심 주문에 동의한 참가자들이 함께 고르고, 달리고, 직접 결투해요.';});
 $('helpDialog').querySelector('.dialog-body')?.replaceChildren();
 
@@ -2100,7 +3884,6 @@ renderResult=function(...args){const value=vfxOriginalResultRender(...args);vfxE
 const deptRoleBaseSimulate=deptSimulate,deptRoleBaseHazard=deptHazard;
 deptSimulate=function(dt,t){
  if(deptAuthority()&&deptRace?.phase==='running')for(const lane of deptRace.lanes){
-  if(lane.department==='student_worker'&&!lane.passiveUsed&&lane.finishedAt===null&&t>=6){lane.boostUntil=Math.max(lane.boostUntil,t+1.2);deptUsePassive(lane,t,'점심시간을 지켜라!');}
  }
  return deptRoleBaseSimulate(dt,t);
 };
@@ -2374,18 +4157,69 @@ netRoom.onDisconnect(event=>{if(event.self||event.hostLost)groupCancel();});
 
 /* DEPARTMENT_AVATARS_V1 */
 
+const deptAvatarCache=new Map();
+const deptAvatarLegacy={business:0,accounting:1,economics:2,tourism:3,hotel:4,japanese:5,korean:6,translation:6,international:7,facility:9};
+const deptAvatarSkin=['#bada73','#c8a1df','#edcc66','#8ec9d6','#efaa80','#e8a5b5','#b4c88b','#a6b3dd','#dfb27c','#8dc2a1','#d9bf86','#a9cad1','#cdb69b','#c3c782','#d6a9c2','#a9b6d1'];
+const deptAvatarWardrobe={
+ business:{label:'경영 조끼',description:'비뚤어진 넥타이와 동그란 안경. 오늘도 메뉴만큼은 기획대로!',color:'#748b70',trim:'#e9d489',glasses:'round',badge:'tie'},
+ accounting:{label:'회계 조끼',description:'계산기 주머니와 네모 안경. 밥값 계산은 진지한 편.',color:'#887a9b',trim:'#e4ca90',glasses:'square',badge:'calculator'},
+ finance:{label:'금융 재킷',description:'작은 상승 그래프를 달고 나온, 점심 수익률 전문가.',color:'#8e7957',trim:'#e7cb77',glasses:'round',badge:'chart'},
+ lab:{label:'실험 가운',description:'구겨진 흰 가운과 투명 보안경. 반응은 느려도 실험은 계속!',color:'#e3e5cd',trim:'#87aaa1',glasses:'goggles',badge:'flask'},
+ engineering:{label:'작업 조끼',description:'렌치 배지가 달린 작업 조끼. 고장 난 점심시간도 수리 중.',color:'#a68f66',trim:'#e9c35f',glasses:'square',badge:'wrench'},
+ computer:{label:'코딩 후드',description:'픽셀 주머니와 살짝 큰 헤드셋. 밥 먹기 전 저장은 필수.',color:'#788a96',trim:'#a6c6b0',headset:true,badge:'pixel'},
+ education:{label:'선생님 조끼',description:'ABC 명찰과 동그란 안경. 메뉴 발표 시간은 지금이에요.',color:'#b18f76',trim:'#eee0a8',glasses:'round',badge:'book'},
+ sports:{label:'체육 유니폼',description:'등번호가 삐뚤어진 운동복. 몸풀기보다 밥풀기가 먼저.',color:'#9a6f67',trim:'#ead6b7',badge:'number'},
+ design:{label:'작업 앞치마',description:'물감이 묻은 앞치마. 오늘의 점심에도 색감은 중요해.',color:'#b39a76',trim:'#d5b4c1',badge:'paint'},
+ law:{label:'법무 법복',description:'작은 저울 배지가 달린 구겨진 법복. 메뉴 이의 있습니다!',color:'#6e6c77',trim:'#dfd4a9',glasses:'square',badge:'scale'},
+ social:{label:'돌봄 조끼',description:'하트 주머니가 달린 조끼. 모두 같이 밥 먹는 게 목표.',color:'#a58b8b',trim:'#e7b6b0',badge:'heart'},
+ aviation:{label:'항공 스카프',description:'작은 헤드셋과 스카프. 오늘의 점심행 비행이 곧 출발합니다.',color:'#748a96',trim:'#d49583',headset:true,badge:'wing'},
+ chef:{label:'요리 앞치마',description:'흰 앞치마와 조그만 숟가락 배지. 맛 평가만큼은 엄격해.',color:'#e7dec8',trim:'#a56e5c',badge:'spoon'},
+ medical:{label:'의료 가운',description:'흰 가운에 작은 청진기. 배고픔 증세가 조금 심각합니다.',color:'#dce5d8',trim:'#8cabaa',badge:'medical'},
+ music:{label:'음악 재킷',description:'커다란 헤드폰과 음표 주머니. 오늘도 점심 박자에 맞춰.',color:'#887e9d',trim:'#d6c294',headset:true,badge:'note'},
+ languages:{label:'언어 탐험 조끼',description:'번역책 주머니와 짝짝이 안경. 맛있다는 말은 어느 언어든 통하니까.',color:'#8d987d',trim:'#d7ba87',glasses:'odd',badge:'book'}
+};
+function deptAvatarHash(value){let h=2166136261;for(const c of String(value||'business')){h^=c.charCodeAt(0);h=Math.imul(h,16777619);}return h>>>0;}
+function deptAvatarEscape(value){return String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&apos;'}[c]));}
+function deptAvatarStyle(option){
+ const aliases={science:'lab',laboratory:'lab',nursing:'medical',health:'medical',medicine:'medical',teacher:'education',teaching:'education',physical:'sports',sport:'sports',art:'design',arts:'design',it:'computer',computing:'computer',software:'computer',police:'law',legal:'law',welfare:'social',counseling:'social',flight:'aviation',pilot:'aviation',hotel:'chef',culinary:'chef',language:'languages',humanities:'languages',translation:'languages',economics:'finance',facility:'engineering',agriculture:'lab',environment:'lab',architecture:'engineering',media:'design',communication:'design'};
+ const explicit=String(option.avatarStyle||'').toLowerCase();if(deptAvatarWardrobe[explicit])return explicit;if(aliases[explicit])return aliases[explicit];
+ const id=String(option.id||''),legacy={business:'business',accounting:'accounting',economics:'finance',tourism:'aviation',hotel:'chef',japanese:'languages',korean:'education',translation:'languages',international:'languages',facility:'engineering'};if(legacy[id])return legacy[id];
+ const name=[option.name,option.short,option.college,id].filter(Boolean).join(' ');
+ for(const [pattern,style]of [[/간호|의료|보건|치료|재활|의학|임상|응급|건강|medical|nurs|health/i,'medical'],[/체육|스포츠|운동|재활스포츠|sport|physical/i,'sports'],[/항공|비행|항공서비스|aviation|flight/i,'aviation'],[/외식|조리|식품영양|호텔|요리|culinary|chef|hotel/i,'chef'],[/컴퓨터|소프트웨어|인공지능|정보통신|사이버|데이터|computer|software|ai_/i,'computer'],[/법학|경찰|행정|법무|law|police|public/i,'law'],[/사회복지|심리|상담|가정|아동복지|social|welfare|psych/i,'social'],[/교육|사범|유아|초등|특수|교직|education|teacher/i,'education'],[/디자인|미술|영상|미디어|만화|패션|조형|design|art|media/i,'design'],[/음악|성악|작곡|공연|music/i,'music'],[/회계|세무|account/i,'accounting'],[/경제|금융|무역|통상|finance|economic/i,'finance'],[/경영|마케팅|부동산|business|management/i,'business'],[/기계|전기|전자|로봇|건축|토목|산업|시설|공학|engineering|mechanic/i,'engineering'],[/화학|생명|환경|농|동물|식물|수학|물리|자연|science|biology|chem|lab/i,'lab'],[/어문|국어|영어|일어|중국|일본|언어|통번역|역사|문화|문학|철학|영문|language|english|korean/i,'languages']])if(pattern.test(name))return style;
+ return 'languages';
+}
+function deptAvatarClothes(style){
+ const t=deptAvatarWardrobe[style],stroke='#494036';
+ const shape=style==='law'?'<path d="M34 96h77l7 21H29z" fill="'+t.color+'" stroke="'+stroke+'" stroke-width="2"/>':'<path d="m35 96 20-1 15 4 15-4 24 1 2 22H33z" fill="'+t.color+'" stroke="'+stroke+'" stroke-width="2"/>';
+ const collar='<path d="m57 95 13 5 13-5-5 10-8-5-8 5z" fill="'+t.trim+'" stroke="'+stroke+'" stroke-width="1.5"/>';
+ const badges={tie:'<path d="m69 100-4 8 5 7 5-7-4-8" fill="#d79a75" stroke="#684838" stroke-width="1.5"/>',calculator:'<rect x="86" y="99" width="14" height="15" rx="2" fill="#e1d9bb" stroke="#51463a" stroke-width="1.7"/><path d="M89 102h8m-8 5h3m2 0h3m-8 4h3m2 0h3" stroke="#6f7a62" stroke-width="1.6"/>',chart:'<path d="m85 112 4-6 4 2 7-9m-5 0h5v5" fill="none" stroke="#ead38e" stroke-width="2.6" stroke-linejoin="round"/>',flask:'<path d="M90 98v5l-5 9q7 4 14 0l-5-9v-5m-6 0h8" fill="#96beb1" stroke="#5b7168" stroke-width="1.8"/>',wrench:'<path d="m86 113 11-11m-5-4q-1 9 7 7m-14 9 2 1" fill="none" stroke="#e5d9a6" stroke-width="3.2" stroke-linecap="round"/>',pixel:'<path d="M86 100h5v5h-5zm6 5h5v5h-5zm-6 5h5v5h-5z" fill="#bed5b3"/>',book:'<path d="M84 101q7-3 9 0 7-3 10 0v12q-7-3-10 0-5-3-9 0zm9 0v12" fill="#e5d9b5" stroke="#63543e" stroke-width="1.6"/>',number:'<path d="M84 100h14v14H84z" fill="#eee1bd"/><path d="M88 104h7l-4 8" fill="none" stroke="#795649" stroke-width="2.5"/>',paint:'<circle cx="89" cy="103" r="3.2" fill="#b9706f"/><circle cx="98" cy="107" r="3.2" fill="#8ca8b2"/><circle cx="87" cy="112" r="2.5" fill="#d9be71"/>',scale:'<path d="M92 99v14m-8-11h16m-12 0-4 6h8zm8 0-4 6h8z" fill="none" stroke="#dfcc96" stroke-width="1.5"/>',heart:'<path d="M92 113q-12-8-5-12 4-2 5 2 3-5 7-2 7 5-7 12" fill="#e3b1a4" stroke="#805e59" stroke-width="1.5"/>',wing:'<path d="m83 106 10-3 10 3-10 4z" fill="#e5d09b" stroke="#635949" stroke-width="1.5"/>',spoon:'<ellipse cx="92" cy="102" rx="3" ry="4" fill="#c4c5ac" stroke="#6e6d5a" stroke-width="1.5"/><path d="m92 106-2 8" stroke="#6e6d5a" stroke-width="2"/>',medical:'<path d="M52 97v6q0 9 9 9 9 0 9-9v-5m-18 0v-3m18 3v-3" fill="none" stroke="#6c8e87" stroke-width="2.5"/><circle cx="75" cy="111" r="4" fill="#b6c9bd" stroke="#637b73" stroke-width="1.8"/><path d="M88 102h12m-6-6v12" stroke="#b1847c" stroke-width="2.5"/>',note:'<path d="M92 100v11m0-11 8-2v11" fill="none" stroke="#e1d0a2" stroke-width="2.3"/><ellipse cx="89" cy="111" rx="3" ry="2.4" fill="#e1d0a2"/><ellipse cx="97" cy="109" rx="3" ry="2.4" fill="#e1d0a2"/>'};
+ return '<g class="av-costume" data-costume="'+style+'">'+shape+collar+(style==='chef'?'<path d="M45 96v17h49V96m-52 5h55" fill="none" stroke="#a8a18c" stroke-width="1.8"/>':'')+(badges[t.badge]||'')+'</g>';
+}
+function deptAvatarAccessories(style){
+ const t=deptAvatarWardrobe[style],s='#4c4840';let out='';
+ if(t.glasses==='square'||t.glasses==='goggles')out='<rect x="34" y="55" width="29" height="22" rx="'+(t.glasses==='goggles'?7:4)+'"/><rect x="74" y="52" width="29" height="25" rx="'+(t.glasses==='goggles'?7:4)+'"/><path d="m63 63 11-1m-46-1 6 2m69-3 8-3"/>';
+ if(t.glasses==='round'||t.glasses==='odd')out='<ellipse cx="48" cy="65" rx="15" ry="12"/><ellipse cx="88" cy="63" rx="'+(t.glasses==='odd'?13:15)+'" ry="'+(t.glasses==='odd'?15:12)+'"/><path d="m63 63 10-1m-47-2 7 3m70-4 8-3"/>';
+ if(out)out='<g class="av-glasses" fill="none" stroke="'+s+'" stroke-width="1.9" stroke-linecap="round">'+out+'</g>';
+ if(t.headset)out+='<g class="av-headset" fill="none" stroke="'+s+'" stroke-width="3.2"><path d="M23 62q-2-43 46-43 51-4 51 41"/><path d="m118 68-5 13-13 2" stroke-width="2.5"/><rect x="17" y="49" width="10" height="25" rx="4" fill="'+t.trim+'"/><rect x="114" y="48" width="10" height="25" rx="4" fill="'+t.trim+'"/></g>';
+ return out;
+}
+
 function deptAvatarSvg(department){
- const option=deptOption(department),i=deptOptions.indexOf(option),colors=['#bada73','#c8a1df','#edcc66','#8ec9d6','#efaa80','#e8a5b5','#b4c88b','#a6b3dd','#dfb27c','#8dc2a1'];
+ const option=deptOption(department)||deptOptions[0]||{id:'business',name:'밥친구'},id=String(option.id||'business'),hash=deptAvatarHash(id),legacy=Object.prototype.hasOwnProperty.call(deptAvatarLegacy,id),i=legacy?deptAvatarLegacy[id]:hash%12,skin=deptAvatarSkin[legacy?i:hash%deptAvatarSkin.length],style=deptAvatarStyle(option),key=[id,style,skin,option.name||''].join('|');
+ if(deptAvatarCache.has(key))return deptAvatarCache.get(key);
  const eyes=i%3===0?'<path d="m39 58 17 3m26-4 16-4" stroke="#29201f" stroke-width="5"/><circle cx="49" cy="67" r="4"/><circle cx="88" cy="63" r="3"/>':i%3===1?'<ellipse cx="48" cy="63" rx="11" ry="9" fill="#fff9e4"/><ellipse cx="89" cy="61" rx="9" ry="12" fill="#fff9e4"/><circle cx="51" cy="66" r="3"/><circle cx="85" cy="65" r="4"/>':'<path d="m37 63 20 2m24-5 20 3" stroke="#29201f" stroke-width="5"/><circle cx="48" cy="68" r="3"/><circle cx="91" cy="66" r="3"/>';
  const mouth=i%2?'<path d="M60 84q10-7 22 1l-3 10H63z" fill="#5f3434" stroke="#29201f" stroke-width="3"/><path d="M66 86h9v6h-9z" fill="#fff4d4"/>':'<path d="M54 82q8-13 16-2 9-10 18 3-12 1-18-2-8 4-16 1" fill="#47332d"/><path d="m65 93 13-1" stroke="#29201f" stroke-width="3"/>';
  const hat=i%4===0?'<path d="m28 26 16-15 18 11L82 8l15 17 17-8-4 23-80-2z" fill="#e2e27a" stroke="#29201f" stroke-width="3"/>':i%4===1?'<path d="M33 31q35-24 73 3l-3 7-74-3z" fill="#edb1bd" stroke="#29201f" stroke-width="3"/>':i%4===2?'<path d="m33 28 8-9 5 12m42-6 8-12 7 17" fill="none" stroke="#29201f" stroke-width="4"/>':'<path d="M27 33q41-13 86 2l-1 9-85-3z" fill="#f8f3d6" stroke="#29201f" stroke-width="3"/>';
- return '<svg class="dept-avatar-svg gremlin-svg" data-avatar="'+option.id+'" viewBox="0 0 140 130" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><ellipse cx="70" cy="120" rx="44" ry="5" fill="#29201f22"/><path class="gremlin-feet" d="m47 106-13 10 23 1m29-11 17 11-24 1" stroke="#29201f" stroke-width="7" stroke-linecap="round" fill="none"/><g class="av-body"><path d="M29 51Q13 10 71 20q56-3 46 39 22 49-32 51-68 8-60-31-16-21 4-28Z" fill="'+colors[i]+'" stroke="#29201f" stroke-width="4"/><path d="m30 76-16 6 8 8m90-15 18 1-8 12" stroke="#29201f" stroke-width="5" stroke-linecap="round" fill="none"/>'+hat+'<g fill="#29201f">'+eyes+'</g><ellipse cx="72" cy="73" rx="9" ry="7" fill="#ce8b73" stroke="#29201f" stroke-width="2"/>'+mouth+'<path d="m32 73 8 3m59-4 8 2" stroke="#c17c70" stroke-width="4"/><path d="m50 39 2-5m40 10 1-5" stroke="#fff9d266" stroke-width="4"/></g></svg>';
+ const bodies=['M29 51Q13 10 71 20q56-3 46 39 22 49-32 51-68 8-60-31-16-21 4-28Z','M26 50Q14 18 70 22q58-6 48 35 18 48-29 52-66 12-64-29-14-23 1-30Z','M30 49Q18 9 68 19q58-5 51 39 17 46-32 52-64 8-61-29-13-24 4-32Z'],body=bodies[legacy?0:(hash>>>4)%bodies.length],clip='av-cloth-'+hash.toString(36),safeId=deptAvatarEscape(id),title=deptAvatarEscape(option.name||'밥친구');
+ const svg='<svg class="dept-avatar-svg gremlin-svg" data-avatar="'+safeId+'" data-costume="'+style+'" viewBox="0 0 140 130" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><title>'+title+' · '+deptAvatarWardrobe[style].label+'</title><defs><clipPath id="'+clip+'"><path d="'+body+'"/></clipPath></defs><ellipse cx="70" cy="120" rx="44" ry="5" fill="#29201f22"/><path class="gremlin-feet" d="m47 106-13 10 23 1m29-11 17 11-24 1" stroke="#29201f" stroke-width="7" stroke-linecap="round" fill="none"/><g class="av-body"><path class="av-skin" d="'+body+'" fill="'+skin+'" stroke="#29201f" stroke-width="4"/><path d="m30 76-16 6 8 8m90-15 18 1-8 12" stroke="#29201f" stroke-width="5" stroke-linecap="round" fill="none"/>'+hat+'<g clip-path="url(#'+clip+')">'+deptAvatarClothes(style)+'</g><g class="av-face" fill="#29201f">'+eyes+'</g><ellipse cx="72" cy="73" rx="9" ry="7" fill="#ce8b73" stroke="#29201f" stroke-width="2"/>'+mouth+'<path d="m32 73 8 3m59-4 8 2" stroke="#c17c70" stroke-width="4"/><path d="m50 39 2-5m40 10 1-5" stroke="#fff9d266" stroke-width="4"/>'+deptAvatarAccessories(style)+'</g></svg>';
+ deptAvatarCache.set(key,svg);if(deptAvatarCache.size>512)deptAvatarCache.delete(deptAvatarCache.keys().next().value);return svg;
 }
 
 function deptAvatarPreview(){
  const select=document.getElementById('netDepartment');if(!select)return;let preview=document.getElementById('deptAvatarPreview');
  if(!preview){preview=document.createElement('div');preview.id='deptAvatarPreview';preview.className='dept-avatar-preview';preview.innerHTML='<div class="dept-avatar-preview-art"></div><div class="dept-avatar-preview-info"><span class="dept-avatar-preview-kicker">오늘의 밥친구</span><strong></strong><b></b><span class="dept-avatar-preview-description"></span></div>';select.closest('.net-department-wrap')?.append(preview);select.addEventListener('change',deptAvatarPreview);}
- const option=deptOption(select.value);if(preview.dataset.department!==option.id){preview.dataset.department=option.id;preview.querySelector('.dept-avatar-preview-art').innerHTML=deptAvatarSvg(option.id);preview.querySelector('strong').textContent=option.name;preview.querySelector('b').textContent=option.passive;preview.querySelector('.dept-avatar-preview-description').textContent=option.description;preview.title=option.name;}
+ const option=deptOption(select.value),wardrobe=deptAvatarWardrobe[deptAvatarStyle(option)],signature=[option.id,option.name,wardrobe.label].join('|');if(preview.dataset.avatarSignature!==signature){preview.dataset.department=option.id;preview.dataset.avatarSignature=signature;preview.querySelector('.dept-avatar-preview-art').innerHTML=deptAvatarSvg(option.id);preview.querySelector('strong').textContent=option.name;preview.title=option.name+' · '+wardrobe.label;}
+ const describe=()=>{if(select.value!==option.id)return;preview.querySelector('b').textContent=wardrobe.label;preview.querySelector('.dept-avatar-preview-description').textContent=(option.college?option.college+' · ':'')+wardrobe.description;};describe();if(typeof queueMicrotask==='function')queueMicrotask(describe);
  if(typeof netMembers==='function')netMembers().forEach((member,index)=>{const card=document.getElementById('person_'+index),portrait=card?.querySelector('.person>.avatar,.person>.dept-card-portrait');if(!portrait)return;const role=typeof netDepartment==='function'?netDepartment(member.id):'business';if(portrait.dataset.department!==role){portrait.className='dept-card-portrait';portrait.dataset.department=role;portrait.innerHTML=deptAvatarSvg(role);portrait.title=deptOption(role).name;}});
 }
 const deptAvatarBaseSetup=renderSetup;renderSetup=function(){const value=deptAvatarBaseSetup.apply(this,arguments);deptAvatarPreview();return value;};
@@ -3020,7 +4854,7 @@ function createArcadeCombatKartRules(){
  function direction(k){let x=Number(k.has('right'))-Number(k.has('left')),y=Number(k.has('down'))-Number(k.has('up'));const d=Math.hypot(x,y)||1;return{x:x/d,y:y/d};}
  const brawl={
   init(w){w.duration=24;w.objects=[];w.meta={notice:'붙어서 Space! 주먹은 보는 방향으로 나가요. 마지막까지 살아남아라!'};const n=w.players.length;
-   w.players.forEach((p,i)=>{const a=-Math.PI/2+i*tau/n;p.x=350+Math.cos(a)*190;p.y=230+Math.sin(a)*135;p.hp=100;p.health=3;p.score=0;p.faceX=-Math.cos(a);p.faceY=-Math.sin(a);p.vx=0;p.vy=0;p.attackUntil=0;p.hitReadyAt=0;p.hurtUntil=0;p.stunUntil=0;p.survived=0;});
+   w.players.forEach((p,i)=>{const a=-Math.PI/2+i*tau/n;p.x=350+Math.cos(a)*190;p.y=230+Math.sin(a)*135;p.hp=100;p.health=3;p.score=0;p.faceX=-Math.cos(a);p.faceY=-Math.sin(a);p.vx=0;p.vy=0;p.attackUntil=0;p.hitReadyAt=0;p.hurtUntil=0;p.stunUntil=0;p.survived=0;p.deaths=0;p.respawnUntil=0;});
   },
   input(w,p,action){
    if(action!=='hit'||w.elapsed<p.hitReadyAt||w.elapsed<p.stunUntil)return;
@@ -3030,15 +4864,21 @@ function createArcadeCombatKartRules(){
    const hit=victims[0];if(!hit)return;const q=hit.q,norm=hit.d||1,nx=hit.d?hit.dx/norm:fx,ny=hit.d?hit.dy/norm:fy;
    q.hp=Math.max(0,q.hp-28);q.health=Math.min(3,Math.ceil(q.hp/34));q.vx=nx*255;q.vy=ny*255;q.stunUntil=w.elapsed+.16;q.hurtUntil=w.elapsed+.22;
    w.objects.push({kind:'punch',x:q.x,y:q.y,until:w.elapsed+.23});
-   if(q.hp<=0){q.eliminated=true;q.survived=w.elapsed;q.score=w.elapsed*1000;w.meta.notice=p.name+' 님의 주먹! '+q.name+' 님 식판 퇴장.';}
+   if(q.hp<=0){
+    if(w.meta.partyRespawn===true){
+     const candidates=Array.from({length:12},(_,i)=>{const a=i*tau/12;return{x:350+Math.cos(a)*245,y:230+Math.sin(a)*155};}),others=w.players.filter(r=>r!==q&&alive(r));
+     const point=candidates.map((v,i)=>({...v,priority:Math.min(...others.map(r=>Math.hypot(v.x-r.x,v.y-r.y)),700),order:(i+q.index)%12})).sort((a,b)=>b.priority-a.priority||a.order-b.order)[0];
+     q.x=point.x;q.y=point.y;q.hp=100;q.health=3;q.eliminated=false;q.deaths++;q.respawnUntil=w.elapsed+1;q.hurtUntil=q.respawnUntil;q.stunUntil=w.elapsed+.65;q.vx=0;q.vy=0;q.attackUntil=0;q.actionUntil=q.respawnUntil;q.survived=w.elapsed;q.score=Math.max(0,w.elapsed*1000+10-q.deaths*3000);w.meta.notice=q.name+' 님 다시 일어났다! · 3,000점 감점';
+    }else{q.eliminated=true;q.survived=w.elapsed;q.score=w.elapsed*1000;w.meta.notice=p.name+' 님의 주먹! '+q.name+' 님 식판 퇴장.';}
+   }
   },
   step(w,dt,controls){
    w.objects=w.objects.filter(o=>o.until>w.elapsed);
    for(const p of w.players){if(!alive(p))continue;const d=direction(keys(controls,p.id));
     if(Math.hypot(d.x,d.y)>0&&w.elapsed>=p.stunUntil){p.faceX=d.x;p.faceY=d.y;}
-    const move=w.elapsed>=p.stunUntil?176:0;p.x=clamp(p.x+(d.x*move+p.vx)*dt,26,674);p.y=clamp(p.y+(d.y*move+p.vy)*dt,30,430);p.vx*=Math.exp(-9*dt);p.vy*=Math.exp(-9*dt);p.survived=w.elapsed;p.score=w.elapsed*1000+p.hp/10;
+    const move=w.elapsed>=p.stunUntil?176:0;p.x=clamp(p.x+(d.x*move+p.vx)*dt,26,674);p.y=clamp(p.y+(d.y*move+p.vy)*dt,30,430);p.vx*=Math.exp(-9*dt);p.vy*=Math.exp(-9*dt);p.survived=w.elapsed;p.score=Math.max(0,w.elapsed*1000+p.hp/10-(w.meta.partyRespawn===true?p.deaths*3000:0));
    }
-   const living=w.players.filter(alive);if(living.length<=1){w.meta.roundOver=true;w.meta.notice=living[0]?living[0].name+' 님이 식판 격투장을 지켰어요!':'모두 넉다운!';}
+   const living=w.players.filter(alive);if(w.meta.partyRespawn===true)w.meta.roundOver=false;else if(living.length<=1){w.meta.roundOver=true;w.meta.notice=living[0]?living[0].name+' 님이 식판 격투장을 지켰어요!':'모두 넉다운!';}
   },
   bot(w,p){
    const target=w.players.filter(q=>q!==p&&alive(q)).sort((a,b)=>Math.hypot(a.x-p.x,a.y-p.y)-Math.hypot(b.x-p.x,b.y-p.y)||a.index-b.index)[0];if(!target)return{held:[]};
@@ -3223,9 +5063,17 @@ function createArcadeTrayRules(){
  function direction(keys){let x=Number(keys.has('right'))-Number(keys.has('left')),y=Number(keys.has('down'))-Number(keys.has('up'));const d=Math.hypot(x,y)||1;return{x:x/d,y:y/d};}
  function tileAt(w,x,y){const col=Math.floor((x-rect.x)/rect.tileW),row=Math.floor((y-rect.y)/rect.tileH);return col<0||col>=7||row<0||row>=7?null:w.objects[row*7+col];}
  const onFloor=(w,x,y,ahead=0)=>{const tile=tileAt(w,x,y);return !!tile&&w.elapsed+ahead<tile.goneAt;};
- function score(w,p){if(!p.forfeited)p.score=Math.round(p.survived*1000)+(active(p)?3:0)+p.shoves/100;}
- function finishFall(w,p){p.eliminated=true;p.health=0;p.fallAt=w.elapsed;p.survived=w.elapsed;p.dashUntil=0;p.actionUntil=0;score(w,p);}
+ function score(w,p){if(!p.forfeited)p.score=Math.max(0,Math.round(p.survived*1000)+(active(p)?3:0)+p.shoves/100-(w.meta.partyRespawn===true?p.deaths*3000:0));}
+ function finishFall(w,p){
+  if(w.meta.partyRespawn===true){
+   const tiles=w.objects.filter(o=>o.goneAt>w.elapsed+.5),others=w.players.filter(q=>q!==p&&active(q));
+   const tile=tiles.map((o,i)=>({tile:o,safety:Math.min(o.goneAt-w.elapsed,6)*30+Math.min(...others.map(q=>Math.hypot(o.x+40-q.x,o.y+24-q.y)),700)*.1-Math.hypot(o.x+40-350,o.y+24-230)*.05,order:(i+p.index)%Math.max(1,tiles.length)})).sort((a,b)=>b.safety-a.safety||a.order-b.order)[0]?.tile;
+   p.x=tile?tile.x+40:350;p.y=tile?tile.y+24:230;p.health=3;p.eliminated=false;p.deaths++;p.respawnUntil=w.elapsed+1;p.stunUntil=p.respawnUntil;p.hurtUntil=p.respawnUntil;p.vx=0;p.vy=0;p.dashUntil=0;p.pushHits=[];p.actionUntil=p.respawnUntil;p.survived=w.elapsed;score(w,p);w.meta.notice=p.name+' 님 식판으로 복귀! · 3,000점 감점';return;
+  }
+  p.eliminated=true;p.health=0;p.fallAt=w.elapsed;p.survived=w.elapsed;p.dashUntil=0;p.actionUntil=0;score(w,p);
+ }
  function collide(w,a,b){
+  if(w.meta.partyRespawn===true&&(w.elapsed<a.respawnUntil||w.elapsed<b.respawnUntil))return;
   let dx=b.x-a.x,dy=b.y-a.y,d=Math.hypot(dx,dy);if(d>=38)return;
   if(d<.001){const angle=(a.index+1)*1.43+(b.index+1)*.7;dx=Math.cos(angle);dy=Math.sin(angle);d=1;}
   const nx=dx/d,ny=dy/d,gap=(38-d)/2;a.x-=nx*gap;a.y-=ny*gap;b.x+=nx*gap;b.y+=ny*gap;
@@ -3247,7 +5095,7 @@ function createArcadeTrayRules(){
     w.objects.push(tile);if(ring>0&&ring<3)holes.push({tile,key:random()});
    }
    holes.sort((a,b)=>a.key-b.key);holes.slice(0,5).forEach(({tile},i)=>{tile.goneAt=Math.min(tile.goneAt,5.5+i*2.1);tile.warningAt=tile.goneAt-1.25;});
-   w.players.forEach((p,i)=>{const a=-Math.PI/2+i*Math.PI*2/w.players.length;p.x=350+Math.cos(a)*135;p.y=230+Math.sin(a)*84;p.vx=0;p.vy=0;p.dx=-Math.cos(a);p.dy=-Math.sin(a);p.health=3;p.eliminated=false;p.forfeited=false;p.dashUntil=0;p.dashReadyAt=0;p.hurtUntil=0;p.stunUntil=0;p.actionUntil=0;p.pushHits=[];p.shoves=0;p.survived=0;p.fallAt=-1;p.score=3;});
+   w.players.forEach((p,i)=>{const a=-Math.PI/2+i*Math.PI*2/w.players.length;p.x=350+Math.cos(a)*135;p.y=230+Math.sin(a)*84;p.vx=0;p.vy=0;p.dx=-Math.cos(a);p.dy=-Math.sin(a);p.health=3;p.eliminated=false;p.forfeited=false;p.dashUntil=0;p.dashReadyAt=0;p.hurtUntil=0;p.stunUntil=0;p.actionUntil=0;p.pushHits=[];p.shoves=0;p.survived=0;p.fallAt=-1;p.score=3;p.deaths=0;p.respawnUntil=0;});
   },
   input(w,p,action){
    if(action!=='dash'||w.elapsed<p.dashReadyAt||w.elapsed<p.stunUntil||!active(p))return false;
@@ -3255,9 +5103,10 @@ function createArcadeTrayRules(){
   },
   step(w,dt,controls,random){
    const living=w.players.filter(active),t=w.elapsed;
-   if(living.length<=1){for(const p of living){p.survived=t;score(w,p);}w.meta.roundOver=true;return;}
-   if(t>=w.meta.nextGustAt){const a=random()*Math.PI*2;w.meta.gustX=Math.cos(a);w.meta.gustY=Math.sin(a);w.meta.gustUntil=t+.7;w.meta.nextGustAt=t+2;for(const p of living){p.vx+=Math.cos(a)*140;p.vy+=Math.sin(a)*140;}w.meta.notice='식판 흔들린다! 가운데에서 버티고 밀쳐요!';}
+   if(w.meta.partyRespawn!==true&&living.length<=1){for(const p of living){p.survived=t;score(w,p);}w.meta.roundOver=true;return;}
+   if(t>=w.meta.nextGustAt){const a=random()*Math.PI*2;w.meta.gustX=Math.cos(a);w.meta.gustY=Math.sin(a);w.meta.gustUntil=t+.7;w.meta.nextGustAt=t+2;for(const p of living){if(w.meta.partyRespawn===true&&t<p.respawnUntil)continue;p.vx+=Math.cos(a)*140;p.vy+=Math.sin(a)*140;}w.meta.notice='식판 흔들린다! 가운데에서 버티고 밀쳐요!';}
    for(const p of living){
+    if(w.meta.partyRespawn===true&&t<p.respawnUntil){p.vx=0;p.vy=0;p.survived=t;score(w,p);continue;}
     const d=direction(controls.get(p.id)?.held||new Set());
     if(t>=p.stunUntil&&t>=p.dashUntil){if(d.x||d.y){p.dx=d.x;p.dy=d.y;}const alpha=Math.min(1,dt*11);p.vx+=(d.x*158-p.vx)*alpha;p.vy+=(d.y*158-p.vy)*alpha;}
     else if(t<p.dashUntil&&t>=p.stunUntil){p.vx=p.dx*430;p.vy=p.dy*430;}
@@ -3266,7 +5115,7 @@ function createArcadeTrayRules(){
    }
    for(let i=0;i<living.length;i++)for(let j=i+1;j<living.length;j++)collide(w,living[i],living[j]);
    for(const p of living){p.x=clamp(p.x,-30,730);p.y=clamp(p.y,-30,490);if(!onFloor(w,p.x,p.y))finishFall(w,p);else score(w,p);}
-   const remaining=living.filter(active);if(remaining.length<=1){w.meta.roundOver=true;w.meta.notice=remaining.length?remaining[0].name+' 님 식판 사수!':'동반 추락! 동점이면 다른 게임으로 재경기해요.';}
+   const remaining=living.filter(active);if(w.meta.partyRespawn===true)w.meta.roundOver=false;else if(remaining.length<=1){w.meta.roundOver=true;w.meta.notice=remaining.length?remaining[0].name+' 님 식판 사수!':'동반 추락! 동점이면 다른 게임으로 재경기해요.';}
    else if(w.objects.some(o=>t>=o.warningAt&&t<o.goneAt)&&t>=w.meta.gustUntil)w.meta.notice='빨간 칸에서 나와요! Space로 밀칠 때는 앞바닥도 확인!';
   },
   bot(w,p){
@@ -3438,7 +5287,7 @@ function createArcadeTransitRules(){
    for(const row of [1,2,3,5,6,7,8]){const dir=row%2?1:-1,speed=(70+random()*55)*dir,width=48+random()*32;for(let i=0;i<2;i++)w.objects.push({id:'traffic_'+row+'_'+i,kind:'trafficCar',row,x:70+i*360+random()*45,y:430-row*42,width,height:28,vx:speed,emoji:['🚕','🚚','🚌'][Math.floor(random()*3)]});}
    w.players.forEach((p,i)=>{Object.assign(p,{col:Math.round((i+1)*12/(w.players.length+1)),row:0,goalRow:9,deliveries:0,crashes:0,faceCol:0,faceRow:1,moveReadyAt:0,leapReadyAt:0,leapUntil:0,invulnUntil:0,lastResult:'',resultUntil:0,health:3,score:0,eliminated:false});frogPosition(p);});
   },
-  input(w,p,action){if(action!=='dash'||!active(p)||w.elapsed<p.leapReadyAt||w.elapsed<p.stunUntil)return false;const dx=p.faceCol||0,dy=p.faceRow||1;if(!frogHop(w,p,dx,dy,2))return false;p.leapReadyAt=w.elapsed+1.25;p.leapUntil=w.elapsed+.2;p.actionUntil=p.leapUntil;frogScore(p);return true;},
+  input(w,p,action){if(action!=='dash'||!active(p)||w.elapsed<p.leapReadyAt||w.elapsed<p.stunUntil)return false;const dx=p.faceCol||0,dy=p.faceRow||(dx?0:1);if(!frogHop(w,p,dx,dy,2))return false;p.leapReadyAt=w.elapsed+1.25;p.leapUntil=w.elapsed+.2;p.actionUntil=p.leapUntil;frogScore(p);return true;},
   step(w,dt,controls){
    for(const car of w.objects){car.x+=car.vx*dt;if(car.x>790)car.x=-90;if(car.x< -90)car.x=790;}
    for(const p of w.players){if(!active(p))continue;const held=keys(controls,p);if(w.elapsed>=p.stunUntil&&w.elapsed>=p.moveReadyAt){let dx=0,dy=0;if(held.has('up'))dy=1;else if(held.has('down'))dy=-1;else if(held.has('left'))dx=-1;else if(held.has('right'))dx=1;if(dx||dy){p.faceCol=dx;p.faceRow=dy;frogHop(w,p,dx,dy);}}
@@ -3466,7 +5315,7 @@ function createArcadeTransitRules(){
    if(action!=='hit'||!active(p)||p.finishedAt>=0||w.elapsed<p.buildReadyAt||p.carried<1||p.y>286||Math.abs(p.x-p.laneX)>Math.min(36,700/w.players.length*.43))return false;
    p.carried--;p.bridgeSteps++;p.buildReadyAt=w.elapsed+.28;p.actionUntil=w.elapsed+.23;p.lastResult='+1 다리!';p.resultUntil=w.elapsed+.55;
    if(p.bridgeSteps>=w.meta.bridgeGoal){p.bridgeSteps=w.meta.bridgeGoal;p.finishedAt=w.elapsed;p.x=p.laneX;p.y=w.meta.finishY;p.lastResult='다리 완성! 건너편 도착';p.resultUntil=w.elapsed+3;if(w.meta.firstFinishAt<0)w.meta.firstFinishAt=w.elapsed;w.meta.notice=p.name+' 님 다리 완성! 남은 친구들도 서둘러요.';}
-   p.score=p.finishedAt>=0?100+(w.duration-p.finishedAt)*2:p.bridgeSteps*8+p.carried*.01;return true;
+   p.score=p.finishedAt>=0?w.meta.bridgeGoal*8+Math.max(0,w.duration-p.finishedAt)*2:p.bridgeSteps*8+p.carried*.01;return true;
   },
   step(w,dt,controls,random){
    for(const p of w.players){if(!active(p)||p.finishedAt>=0)continue;const d=axes(keys(controls,p));p.x=clamp(p.x+d.x*188*dt,22,678);p.y=clamp(p.y+d.y*188*dt,254,432);}
@@ -3474,7 +5323,7 @@ function createArcadeTransitRules(){
     const pick=w.players.filter(p=>active(p)&&p.finishedAt<0&&p.carried<3&&Math.hypot(p.x-o.x,p.y-o.y)<25).sort((a,b)=>Math.hypot(a.x-o.x,a.y-o.y)-Math.hypot(b.x-o.x,b.y-o.y)||a.index-b.index)[0];
     if(pick){o.active=false;o.ownerId=pick.id;o.readyAt=w.elapsed+1.15;o.generation++;pick.carried++;pick.collected++;pick.actionUntil=w.elapsed+.13;}
    }
-   for(const p of w.players)if(active(p))p.score=p.finishedAt>=0?100+(w.duration-p.finishedAt)*2:p.bridgeSteps*8+p.carried*.01;
+   for(const p of w.players)if(active(p))p.score=p.finishedAt>=0?w.meta.bridgeGoal*8+Math.max(0,w.duration-p.finishedAt)*2:p.bridgeSteps*8+p.carried*.01;
    const racers=w.players.filter(active);if(w.elapsed>=20&&(racers.length&&racers.every(p=>p.finishedAt>=0)||w.meta.firstFinishAt>=0&&w.elapsed-w.meta.firstFinishAt>=3))w.meta.roundOver=true;
   },
   bot(w,p){
@@ -3624,6 +5473,7 @@ function createArcadeEngine(){
 }
 /* END_ARCADE_ENGINE_V1 */
 
+
 /* FIVE_ARCADE_UI_V1 */
 const arcadeGames={
  sneak:{name:'교수님 몰래 튀어',icon:'🚦',tag:'멈칫멈칫',hint:'초록불엔 ↑로 달리고, 빨간불엔 손 떼! 먼저 도착할수록 높은 점수.',action:'달려!',key:'↑ / SPACE 꾹',input:'up',color:'#b9d67e'},
@@ -3632,11 +5482,16 @@ const arcadeGames={
  stamp:{name:'결재 도장 눈치싸움',icon:'🗳️',tag:'한 번의 타이밍',hint:'바늘이 초록 칸에 오면 Space! 한 차례에 딱 한 번. 잘못 찍으면 감점.',action:'쾅!',key:'SPACE / F',input:'hit',color:'#c5a0df'},
  runner:{name:'퇴근길 점프런',icon:'🏃',tag:'집에 가고 싶다',hint:'장애물이 오면 Space로 점프! 착지 후 다시 점프할 수 있어.',action:'점프!',key:'SPACE / F',input:'jump',color:'#8dccca'}
 };
-let arcadeDialog=null,arcadeUIFrame=0,arcadeBoardKey='',arcadeLastDraw=0;
+let arcadeDialog=null,arcadeUIFrame=0,arcadeBoardKey='',arcadeLastDraw=0,arcadeUIMenuKey='',arcadeUIHistoryKey='';
 const arcadeUIActors=new Map(),arcadeUIMeters=new Map(),arcadeUIKeys=new Set(),arcadeUIPointers=new Map();
 const arcadeUIObjects=new Map();let arcadeObjectFrame=0;
 function arcadeObjectNode(key,tag,cls,text){let entry=arcadeUIObjects.get(key);if(!entry){entry={node:el(tag,cls),frame:0};arcadeUIObjects.set(key,entry);$('arcadeObjects').append(entry.node);}entry.frame=arcadeObjectFrame;const node=entry.node;if(node.className!==cls)node.className=cls;if(text!==undefined&&node.textContent!==String(text))node.textContent=String(text);return node;}
 function arcadeObjectCleanup(){for(const [key,entry]of arcadeUIObjects)if(entry.frame!==arcadeObjectFrame){entry.node.remove();arcadeUIObjects.delete(key);}}
+function arcadeNodeText(node,text){if(node&&node.textContent!==String(text))node.textContent=String(text);}
+function arcadeStyle(node,key,value){if(node.style[key]!==value)node.style[key]=value;}
+function arcadePercent(value){return Number(value.toFixed(3))+'%';}
+function arcadePosition(node,left,top){arcadeStyle(node,'left',arcadePercent(left));arcadeStyle(node,'top',arcadePercent(top));}
+function arcadeRenderHistory(s,points){const list=s.mode==='tournament'?(s.history||[]):[],last=list.at(-1),key=[s.id,points,list.length,last?.round,last?.game,last?.tieReason,last?.outIds?.join(','),last?.lotteryWinnerId].join('|');if(key===arcadeUIHistoryKey)return;arcadeUIHistoryKey=key;const history=list.map(h=>'R'+h.round+' '+(arcadeGames[h.game]?.name||'')+' · '+(points?(h.tieReason||(h.tiebreak?'공동 1위 결승':(h.pointAwards||[]).map(a=>(s.members.find(m=>m.id===a.id)?.name||'참가자')+' +'+a.points).join(' · '))):h.outIds?.length?h.outIds.map(id=>arcadeDisplayName(s.members.find(m=>m.id===id)||{name:'참가자'},s)).join(', ')+' 탈락':'동점 재경기')).join('  /  ');arcadeSetText('arcadeHistory',history);$('arcadeHistory').hidden=!history;}
 const arcadeMoveKeys={ArrowUp:'up',KeyW:'up',ArrowDown:'down',KeyS:'down',ArrowLeft:'left',KeyA:'left',ArrowRight:'right',KeyD:'right'};
 function arcadeHeld(){return [...new Set([...arcadeUIKeys].map(k=>k==='Space'||k==='KeyF'?'up':arcadeMoveKeys[k]).filter(Boolean).concat([...arcadeUIPointers.values()].filter(a=>a!=='action')))];}
 function arcadeClearKeys(){const had=arcadeUIKeys.size||arcadeUIPointers.size;arcadeUIKeys.clear();arcadeUIPointers.clear();if(had&&typeof arcadeState!=='undefined'&&arcadeState?.world?.phase==='play')arcadeInput('sync',[]);arcadeDialog?.querySelectorAll('.is-held').forEach(b=>b.classList.remove('is-held'));}
@@ -3662,11 +5517,12 @@ function arcadeEntry(){arcadeEnsureUI();if(arcadeState){arcadeOpen();return;}arc
 function arcadeOpen(){arcadeEnsureUI();arcadeBoardKey='';arcadeRender();if(!arcadeDialog.open)arcadeDialog.showModal();arcadeDialog.scrollTop=0;if(!arcadeUIFrame)arcadeUIFrame=requestAnimationFrame(arcadeUIAnimate);}
 function arcadeRequestRender(){if(arcadeDialog?.open){if(!arcadeUIFrame)arcadeUIFrame=requestAnimationFrame(arcadeUIAnimate);return;}if(typeof arcadeState!=='undefined'&&arcadeState){if(arcadeState.purpose==='lunch'&&typeof menuTournamentRenderBackground==='function')menuTournamentRenderBackground();return;}arcadeRender();}
 function arcadeUIAnimate(now){arcadeUIFrame=0;if(!arcadeDialog?.open)return;if(now-arcadeLastDraw>30){arcadeLastDraw=now;arcadeRender();}arcadeUIFrame=requestAnimationFrame(arcadeUIAnimate);}
-function arcadeSetText(id,text){const n=$(id);if(n&&n.textContent!==String(text))n.textContent=String(text);}
+function arcadeSetText(id,text){arcadeNodeText($(id),text);}
 function arcadeRender(){
  if(!arcadeDialog)return;const s=typeof arcadeState==='undefined'?null:arcadeState;const online=netIsActive();
  $('arcadeMenu').hidden=!!s;$('arcadeSession').hidden=!s;arcadeDialog.dataset.purpose=s?.purpose||'arcade';arcadeDialog.dataset.playing=String(!!s?.world);arcadeSetText('arcadeCloseBtn',s?.purpose==='lunch'?'경기 접기':'닫기');$('arcadeCloseBtn').setAttribute('aria-label',s?.purpose==='lunch'?'메뉴 토너먼트 접기':'오락실 닫기');
- if(!s){arcadeSetText('arcadeTitle','조교 오락실');arcadeSetText('arcadeEyebrow','NEW · 서른 가지 승부');arcadeSetText('arcadeMenuNote',online?'같은 방 친구들을 초대해요. 참가자가 2명 이상 필요해요.':'친구들과 하려면 방에 입장! 여기서는 컴퓨터와 연습할 수 있어요.');for(const card of $('arcadeGameCards').children){card.querySelector('em').textContent=online?'이 게임으로 초대 →':'혼자 연습 →';card.disabled=online&&netMembers().length<2;}$('arcadeTournamentBtn').disabled=online&&netMembers().length<2;return;}
+ if(!s){const count=online?netMembers().length:0,key=online+':'+count;if(arcadeUIMenuKey===key)return;arcadeUIMenuKey=key;arcadeSetText('arcadeTitle','조교 오락실');arcadeSetText('arcadeEyebrow','NEW · 서른 가지 승부');arcadeSetText('arcadeMenuNote',online?'같은 방 친구들을 초대해요. 참가자가 2명 이상 필요해요.':'친구들과 하려면 방에 입장! 여기서는 컴퓨터와 연습할 수 있어요.');for(const card of $('arcadeGameCards').children){arcadeNodeText(card.querySelector('em'),online?'이 게임으로 초대 →':'혼자 연습 →');card.disabled=online&&count<2;}$('arcadeTournamentBtn').disabled=online&&count<2;return;}
+ arcadeUIMenuKey='';
  if(s.purpose==='lunch')menuTournamentRenderBackground();
  const w=s.world,g=arcadeGames[w?.game||s.chosen]||arcadeGames.coins,self=arcadeSelf(),own=s.members.find(m=>m.id===self);
  arcadeSetText('arcadeTitle',s.phase==='invite'?(s.mode==='tournament'?'랜덤 토너먼트':g.name):s.phase==='done'&&s.mode==='tournament'?'토너먼트 우승!':g.name);
@@ -3681,29 +5537,29 @@ function arcadeRender(){
  if(s.phase==='invite'){arcadeSetText('arcadeInviteTitle',s.mode==='tournament'?'퇴근할 때까지 살아남을 사람?':'한 판 할 사람?');arcadeSetText('arcadeInviteText',s.mode==='tournament'?'게임은 매번 랜덤. 참가 또는 관전을 골라주세요.':g.hint);const waiting=s.members.filter(m=>m.response==='pending').length,joined=s.members.filter(m=>m.response==='join').length;arcadeSetText('arcadeInviteHint',waiting?'아직 '+waiting+'명 선택 중':joined<2?'참가자가 2명 이상 필요해요.':'곧 시작!');$('arcadeJoinBtn').disabled=own?.response==='join';$('arcadePassBtn').disabled=own?.response==='pass';}
  $('arcadeCancelBtn').hidden=!arcadeHost();arcadeSetText('arcadeCancelBtn',s.purpose==='lunch'?'메뉴 선택으로 돌아가기':'오락실 종료');$('arcadeReplayBtn').hidden=s.phase!=='done'||!arcadeHost()||s.purpose==='lunch';$('arcadeMenuBtn').hidden=s.phase!=='done'||!arcadeHost()||s.purpose==='lunch';
  arcadeSetText('arcadeBottomNote',points?'5판 모두 함께! 내 누적 '+(s.totalPoints?.[self]||0)+'점 · 매판 순위에 따라 점수 획득':s.purpose==='lunch'?'본선 우승 메뉴를 걸고 마지막 승부!':arcadeDemo?'보통 난이도 · 나 + 컴퓨터 3명':s.mode==='tournament'?'끝까지 살아남아라 · 탈락 후에는 채팅하며 관전':'방 친구들과 한 판 · 점심 메뉴는 그대로');
- const hist=(s.mode==='tournament'?(s.history||[]):[]).map(h=>'R'+h.round+' '+(arcadeGames[h.game]?.name||'')+' · '+(points?h.tieReason||h.tiebreak?'공동 1위 결승':(h.pointAwards||[]).map(a=>(s.members.find(m=>m.id===a.id)?.name||'참가자')+' +'+a.points).join(' · '):h.outIds?.length?h.outIds.map(id=>arcadeDisplayName(s.members.find(m=>m.id===id)||{name:'참가자'},s)).join(', ')+' 탈락':'동점 재경기')).join('  /  ');arcadeSetText('arcadeHistory',hist);$('arcadeHistory').hidden=!hist;
+ arcadeRenderHistory(s,points);
  if(w)arcadeDrawWorld(s,w,g,self);
 }
 function arcadeBuildBoard(w){
  arcadeBoardKey=w.id+':'+w.game;arcadeUIActors.clear();arcadeUIMeters.clear();arcadeUIObjects.clear();arcadeObjectFrame=0;for(const id of ['arcadeScenery','arcadeObjects','arcadeActors','arcadeMeters'])$(id).replaceChildren();$('arcadeBoard').dataset.game=w.game;$('arcadeBoard').dataset.crowded=String(w.players.length>4);
  if(w.game==='sneak'){const line=el('div','five-finish','퇴근 성공');$('arcadeScenery').append(line);for(const p of w.players){const lane=el('i','five-sneak-lane');lane.style.left=p.x/7+'%';$('arcadeScenery').append(lane);}}
  if(w.game==='runner'){for(const p of w.players){const lane=el('div','five-run-lane');lane.style.top=(p.index+.5)/w.players.length*100+'%';lane.style.height=100/w.players.length+'%';lane.append(el('span','',arcadeDisplayName(p)));$('arcadeScenery').append(lane);}}
- if(w.game==='stamp'){for(const p of [...w.players].sort((a,b)=>Number(b.id===arcadeSelf())-Number(a.id===arcadeSelf()))){const row=el('div','five-meter-row');row.style.setProperty('--p-color',trayPalette[p.index%8]);const head=el('div','five-meter-head');head.append(el('b','',arcadeDisplayName(p)+(p.id===arcadeSelf()?' · 내 메뉴':'')),el('strong','five-meter-score'));const meter=el('div','five-meter');meter.append(el('i','five-meter-target'),el('i','five-meter-pointer'),el('i','five-meter-mark'));const reaction=el('small','five-meter-reaction');row.append(head,meter,reaction);$('arcadeMeters').append(row);arcadeUIMeters.set(p.id,row);}return;}
- for(const p of w.players){const actor=el('div','five-actor');actor.dataset.id=p.id;actor.style.setProperty('--p-color',trayPalette[p.index%8]);actor.innerHTML=deptAvatarSvg(p.department||'business');actor.append(el('b','five-actor-name',arcadeDisplayName(p)),el('small','five-actor-tag',p.id===arcadeSelf()?(arcadeState?.purpose==='lunch'?'▼ 내 메뉴':'▼ 나'):''));$('arcadeActors').append(actor);arcadeUIActors.set(p.id,actor);}
+ if(w.game==='stamp'){for(const p of [...w.players].sort((a,b)=>Number(b.id===arcadeSelf())-Number(a.id===arcadeSelf()))){const row=el('div','five-meter-row');row.style.setProperty('--p-color',trayPalette[p.index%8]);const head=el('div','five-meter-head'),score=el('strong','five-meter-score');head.append(el('b','',arcadeDisplayName(p)+(p.id===arcadeSelf()?' · 내 메뉴':'')),score);const meter=el('div','five-meter'),target=el('i','five-meter-target'),pointer=el('i','five-meter-pointer'),mark=el('i','five-meter-mark');meter.append(target,pointer,mark);const reaction=el('small','five-meter-reaction');row.append(head,meter,reaction);row.arcadeMeterRefs={target,pointer,mark,score,reaction};$('arcadeMeters').append(row);arcadeUIMeters.set(p.id,row);}return;}
+ for(const p of w.players){const actor=el('div','five-actor');actor.dataset.id=p.id;actor.style.setProperty('--p-color',trayPalette[p.index%8]);actor.innerHTML=deptAvatarSvg(p.department||'business');const tag=el('small','five-actor-tag',p.id===arcadeSelf()?(arcadeState?.purpose==='lunch'?'▼ 내 메뉴':'▼ 나'):'');actor.append(el('b','five-actor-name',arcadeDisplayName(p)),tag);actor.arcadeTag=tag;$('arcadeActors').append(actor);arcadeUIActors.set(p.id,actor);}
 }
 function arcadeDrawWorld(s,w,g,self){
  if(arcadeBoardKey!==w.id+':'+w.game)arcadeBuildBoard(w);const t=w.elapsed,can=w.phase==='play'&&s.phase==='round',own=w.players.find(p=>p.id===self),alive=own&&!own.eliminated&&!own.forfeited,objects=$('arcadeObjects');
- const seconds=w.phase==='countdown'?Math.ceil(w.countdown):Math.max(0,Math.ceil(w.duration-t));arcadeSetText('arcadeClock',w.phase==='done'?'종료':w.phase==='countdown'?'준비!':seconds+'초');
+ const seconds=Math.ceil(typeof arcadeClockSeconds==='function'?arcadeClockSeconds(w):w.phase==='countdown'?w.countdown:Math.max(0,w.duration-t));arcadeSetText('arcadeClock',w.phase==='done'?'종료':w.phase==='countdown'?'준비!':seconds+'초');
  $('arcadeSignal').hidden=w.game!=='sneak';if(w.game==='sneak'){$('arcadeSignal').dataset.signal=w.meta.signal;arcadeSetText('arcadeSignal',w.meta.signal==='green'?'🟢 달려!':'🔴 멈춰!');}
  arcadeObjectFrame++;
- if(w.game==='coins'){for(const o of w.objects){const coin=arcadeObjectNode('coin:'+o.id,'span',t<o.readyAt?'five-coin five-preview':'five-coin',t<o.readyAt?'+':'●');coin.style.left=o.x/7+'%';coin.style.top=o.y/4.6+'%';}}
- if(w.game==='dodge'){for(const o of w.objects){const warning=arcadeObjectNode('food:'+o.id,'i','five-food-zone',t>=o.impactAt?o.emoji:'!');warning.style.left=o.x/7+'%';warning.style.top=o.y/4.6+'%';warning.style.width=o.radius*2/7+'%';warning.style.height=o.radius*2/4.6+'%';warning.dataset.hit=String(t>=o.impactAt);}}
- if(w.game==='runner'){for(const p of w.players)for(const o of w.objects){const n=arcadeObjectNode('hurdle:'+p.id+':'+o.id,'span','five-hurdle',o.emoji||'📚');n.style.left=o.x/7+'%';n.style.top=((p.index+.5)/w.players.length*100)+'%';n.style.width=Math.max(24,o.width)/7+'%';n.style.height=Math.min(54,72/w.players.length)+'px';}}
- if(w.game==='stamp'){for(const p of w.players){const row=arcadeUIMeters.get(p.id),target=row.querySelector('.five-meter-target'),pointer=row.querySelector('.five-meter-pointer'),mark=row.querySelector('.five-meter-mark');target.style.left=(w.meta.target-w.meta.window/2)*100+'%';target.style.width=w.meta.window*100+'%';pointer.style.left=(p.pointer??w.meta.pointer)*100+'%';row.querySelector('.five-meter-score').textContent=Math.round(p.score)+'점';mark.hidden=p.lastStampStage!==w.meta.stage;mark.style.left=(p.stampPos||0)*100+'%';const fresh=t-p.stampAt<1.1;row.dataset.result=fresh?p.stampResult:'';row.querySelector('.five-meter-reaction').textContent=p.lastStampStage===w.meta.stage?(p.stampResult==='perfect'?'완벽한 결재! +'+p.stampPoints:p.stampResult==='hit'?'통과! +'+p.stampPoints:'반려! '+p.stampPoints):'초록 칸에서 한 번만 찍어!';row.classList.toggle('is-own',p.id===self);}}
- else for(const p of w.players){const actor=arcadeUIActors.get(p.id);actor.style.left=p.x/7+'%';actor.style.top=w.game==='runner'?((p.index+.5)/w.players.length*100-(p.jumpHeight||0)/4.6*Math.min(.4,2/w.players.length))+'%':p.y/4.6+'%';actor.classList.toggle('is-own',p.id===self);actor.classList.toggle('is-out',p.eliminated||p.forfeited);actor.classList.toggle('is-action',t<(p.dashUntil||0));actor.classList.toggle('is-hurt',t<(p.caughtUntil||0)||t<(p.stunUntil||0));const tag=actor.querySelector('.five-actor-tag');tag.textContent=(p.id===self?(s.purpose==='lunch'?'▼ 내 메뉴 ':'▼ 나 '):'')+(['dodge','runner'].includes(w.game)?'♥'.repeat(Math.max(0,p.health)):w.game==='coins'?Math.round(p.score)+'원':p.finishAt>=0?'도착!':'');}
+ if(w.game==='coins'){for(const o of w.objects){const coin=arcadeObjectNode('coin:'+o.id,'span',t<o.readyAt?'five-coin five-preview':'five-coin',t<o.readyAt?'+':'●');arcadePosition(coin,o.x/7,o.y/4.6);}}
+ if(w.game==='dodge'){for(const o of w.objects){const warning=arcadeObjectNode('food:'+o.id,'i','five-food-zone',t>=o.impactAt?o.emoji:'!');arcadePosition(warning,o.x/7,o.y/4.6);arcadeStyle(warning,'width',arcadePercent(o.radius*2/7));arcadeStyle(warning,'height',arcadePercent(o.radius*2/4.6));const hit=String(t>=o.impactAt);if(warning.dataset.hit!==hit)warning.dataset.hit=hit;}}
+ if(w.game==='runner'){for(const p of w.players)for(const o of w.objects){const n=arcadeObjectNode('hurdle:'+p.id+':'+o.id,'span','five-hurdle',o.emoji||'📚');arcadePosition(n,o.x/7,(p.index+.5)/w.players.length*100);arcadeStyle(n,'width',arcadePercent(Math.max(24,o.width)/7));arcadeStyle(n,'height',Math.min(54,72/w.players.length)+'px');}}
+ if(w.game==='stamp'){for(const p of w.players){const row=arcadeUIMeters.get(p.id),refs=row.arcadeMeterRefs,{target,pointer,mark}=refs;arcadeStyle(target,'left',arcadePercent((w.meta.target-w.meta.window/2)*100));arcadeStyle(target,'width',arcadePercent(w.meta.window*100));arcadeStyle(pointer,'left',arcadePercent((p.pointer??w.meta.pointer)*100));arcadeNodeText(refs.score,Math.round(p.score)+'점');mark.hidden=p.lastStampStage!==w.meta.stage;arcadeStyle(mark,'left',arcadePercent((p.stampPos||0)*100));const fresh=t-p.stampAt<1.1,outcome=fresh?p.stampResult:'';if(row.dataset.result!==outcome)row.dataset.result=outcome;arcadeNodeText(refs.reaction,p.lastStampStage===w.meta.stage?(p.stampResult==='perfect'?'완벽한 결재! +'+p.stampPoints:p.stampResult==='hit'?'통과! +'+p.stampPoints:'반려! '+p.stampPoints):'초록 칸에서 한 번만 찍어!');row.classList.toggle('is-own',p.id===self);}}
+ else for(const p of w.players){const actor=arcadeUIActors.get(p.id);arcadePosition(actor,p.x/7,w.game==='runner'?(p.index+.5)/w.players.length*100-(p.jumpHeight||0)/4.6*Math.min(.4,2/w.players.length):p.y/4.6);actor.classList.toggle('is-own',p.id===self);actor.classList.toggle('is-out',p.eliminated||p.forfeited);actor.classList.toggle('is-action',t<(p.dashUntil||0));actor.classList.toggle('is-hurt',t<(p.caughtUntil||0)||t<(p.stunUntil||0));arcadeNodeText(actor.arcadeTag,(p.id===self?(s.purpose==='lunch'?'▼ 내 메뉴 ':'▼ 나 '):'')+(['dodge','runner'].includes(w.game)?'♥'.repeat(Math.max(0,p.health)):w.game==='coins'?Math.round(p.score)+'원':p.finishAt>=0?'도착!':''));}
  $('arcadeOverlay').hidden=can;
- if(w.phase==='countdown'){arcadeSetText('arcadeOverlayTitle',Math.max(1,Math.ceil(w.countdown)));arcadeSetText('arcadeOverlayHint',g.name+' · '+(s.tiebreakIds?.length?(s.format==='points'?'공동 1위 결승':'최하위 동점 재경기'):'준비!'));}
- else if(s.phase==='between'){arcadeSetText('arcadeOverlayTitle',s.notice||'다음 라운드!');arcadeSetText('arcadeOverlayHint',Math.max(0,Math.ceil((s.nextAt-Date.now())/1000))+'초 뒤 다른 게임이 랜덤으로 나와요');}
+ if(w.phase==='countdown'){arcadeSetText('arcadeOverlayTitle',Math.max(1,seconds));arcadeSetText('arcadeOverlayHint',g.name+' · '+(s.tiebreakIds?.length?(s.format==='points'?'공동 1위 결승':'최하위 동점 재경기'):'준비!'));}
+ else if(s.phase==='between'){arcadeSetText('arcadeOverlayTitle',s.notice||'다음 라운드!');arcadeSetText('arcadeOverlayHint',Math.max(0,Math.ceil((s.nextAt-(typeof arcadeServerNow==='function'?arcadeServerNow():Date.now()))/1000))+'초 뒤 다른 게임이 랜덤으로 나와요');}
  else if(s.phase==='done'){const ids=s.championIds?.length?s.championIds:w.winnerIds;const names=ids?.map(id=>s.members.find(m=>m.id===id)?.name||'참가자').join(' · ');arcadeSetText('arcadeOverlayTitle',names?names+' 우승!':'한 판 끝!');arcadeSetText('arcadeOverlayHint',s.mode==='tournament'?(s.format==='points'?'5판 점수전 완료! 최종 순위를 확인해요.':'끝까지 살아남았다. 이제 밥 먹자.'):'다른 게임도 도전해봐!' );}
  const cool=own?Math.max(0,(own.dashReadyAt||0)-t):0,stamped=w.game==='stamp'&&own?.lastStampStage===w.meta.stage;
  $('arcadeDpad').hidden=!['sneak','dodge','coins'].includes(w.game);arcadeSetText('arcadeActionLabel',g.action);arcadeSetText('arcadeActionHint',stamped?'다음 결재 대기':cool>.05?cool.toFixed(1)+'초 뒤 다시':g.key);
@@ -3713,7 +5569,7 @@ function arcadeDrawWorld(s,w,g,self){
  if(!['brawl','kart','basket','rhythm'].includes(w.game))arcadeObjectCleanup();
 }
 function arcadeUpdateButtons(){
- const active=netIsActive()&&netPhase==='result'&&!result?.tournamentHistory;for(const id of ['arcadeRoomBtn','arcadeResultBtn']){const b=$(id);if(b){b.hidden=!active;b.disabled=false;}}
+ const active=netIsActive()&&netPhase==='result'&&!result?.tournamentHistory;for(const id of ['arcadeRoomBtn','arcadeResultBtn']){const b=$(id);if(b){if(b.hidden===active)b.hidden=!active;if(b.disabled)b.disabled=false;}}
 }
 function arcadeInstall(){
  const home=el('button','btn five-home-button','미니게임 30종 연습 ↗');home.id='fiveArcadeTryBtn';home.type='button';home.addEventListener('click',arcadeEntry);const tray=document.querySelector('.arcade-try-tray');tray?.insertBefore(home,tray.querySelector('small'));
@@ -3721,10 +5577,11 @@ function arcadeInstall(){
  const resultButton=el('button','btn five-result-button','🎲 미니게임 30종 · 번외 경기');resultButton.id='arcadeResultBtn';resultButton.type='button';resultButton.addEventListener('click',arcadeEntry);$('resultView').querySelector('.result-actions')?.append(resultButton);
  document.addEventListener('keydown',e=>{if(!arcadeDialog?.open||!arcadeState?.world||['doors','rhythm'].includes(arcadeState.world.game)||arcadeGames[arcadeState.world.game]?.controls==='choices'||e.target?.matches?.('input,textarea,select,[contenteditable="true"]'))return;const move=arcadeMoveKeys[e.code],action=['Space','KeyF'].includes(e.code),game=arcadeState.world.game;if(!move&&!action)return;e.preventDefault();e.stopImmediatePropagation();if(e.repeat)return;if(action&&game!=='sneak')arcadeInput(arcadeGames[game].input,true);else{arcadeUIKeys.add(e.code);arcadeInput('sync',arcadeHeld());}},true);
  document.addEventListener('keyup',e=>{const had=arcadeUIKeys.delete(e.code);if(!arcadeDialog?.open||!had)return;e.preventDefault();e.stopImmediatePropagation();arcadeInput('sync',arcadeHeld());},true);
- document.addEventListener('focusin',e=>{if(e.target?.matches?.('input,textarea,select,[contenteditable="true"]'))arcadeClearKeys();});window.addEventListener('blur',arcadeClearKeys);document.addEventListener('visibilitychange',()=>{if(document.hidden)arcadeClearKeys();});
+ document.addEventListener('focusin',e=>{if(e.target?.matches?.('input,textarea,select,[contenteditable="true"]'))arcadeClearKeys();});window.addEventListener('blur',arcadeClearKeys);window.addEventListener('resize',arcadeClearKeys);window.addEventListener('orientationchange',arcadeClearKeys);document.addEventListener('visibilitychange',()=>{if(document.hidden)arcadeClearKeys();});
  setInterval(()=>{arcadeUpdateButtons();if(arcadeDialog?.open&&!arcadeState)arcadeRender();},200);arcadeUpdateButtons();
 }
 /* END_FIVE_ARCADE_UI_V1 */
+
 
 /* TEN_GAME_VARIETY_UI */
 Object.assign(arcadeGames,{
@@ -4029,6 +5886,27 @@ function arcadeExtraInstall(){
 const arcadeEngine=createArcadeEngine(),arcadeGameKeys=typeof arcadeGames==='object'&&arcadeGames?Object.keys(arcadeGames):['sneak','dodge','coins','stamp','runner'];
 let arcadeState=null,arcadeDemo=false,arcadeInputSeq=0,arcadeLastPublish=0,arcadePumpAt=0,arcadeAccum=0,arcadePrevious=null,arcadeReceivedAt=0,arcadeLastWorldId='',arcadeBotAt=0,arcadeHeartbeatAt=0;
 const arcadeBotSeq=new Map(),arcadeBotBrains=new Map();
+let arcadeClock=null,arcadeClockOffset=0;
+const arcadeFixedStepMs=16,arcadeMaxCatchupSteps=64;
+function arcadeStartClock(w,now){const countdown=w.phase==='countdown'?w.countdown*1000:0;arcadeClock={worldId:w.id,countdownEnd:now+countdown-w.elapsed*1000,end:now+countdown+(w.duration-w.elapsed)*1000};arcadePumpAt=now;arcadeAccum=0;}
+function arcadeServerNow(){return Date.now()+(arcadeHost()?0:arcadeClockOffset);}
+function arcadeClockSeconds(w){if(!w)return 0;if(arcadeHost()&&arcadeClock?.worldId===w.id){const deadline=w.phase==='countdown'?arcadeClock.countdownEnd:arcadeClock.end;return Math.max(0,(deadline-performance.now())/1000);}const clock=arcadeState?.clock;if(clock?.worldId===w.id)return Math.max(0,((w.phase==='countdown'?clock.countdownEndAt:clock.endAt)-arcadeServerNow())/1000);return w.phase==='countdown'?Math.max(0,w.countdown):Math.max(0,w.duration-w.elapsed);}
+function arcadeAdvanceWorld(now){
+ const s=arcadeState,w=s?.world;if(!arcadeHost()||s?.phase!=='round'||!w||w.phase==='done'||!Number.isFinite(now))return 0;if(arcadeClock?.worldId!==w.id)arcadeStartClock(w,now);
+ arcadeAccum+=Math.max(0,now-arcadePumpAt);arcadePumpAt=now;let steps=0,resyncedCountdown=false;
+ while(arcadeAccum>=arcadeFixedStepMs&&w.phase!=='done'&&steps<arcadeMaxCatchupSteps){arcadeEngine.step(w,arcadeFixedStepMs/1000,now);arcadeAccum-=arcadeFixedStepMs;steps++;}
+ if(w.phase==='done'){arcadeAccum=0;return steps;}
+ // Countdown has no physics. Reconcile it directly after a throttled callback.
+ if(w.phase==='countdown'&&(arcadeAccum>=arcadeFixedStepMs||now>=arcadeClock.countdownEnd)){w.countdown=Math.max(0,(arcadeClock.countdownEnd-now)/1000);arcadeAccum=0;if(w.countdown<=1e-8){arcadeEngine.step(w,arcadeFixedStepMs/1000,now);steps++;resyncedCountdown=true;}}
+ // Long suspensions must not replay thousands of frames or extend the deadline.
+ // One final rule tick still resolves timed scoring/stage changes before ranking.
+ if(w.phase==='play'&&(resyncedCountdown||arcadeAccum>=arcadeFixedStepMs||now>=arcadeClock.end)){
+  const target=Math.min(w.duration,Math.max(w.elapsed,(now-arcadeClock.countdownEnd)/1000)),dt=Math.min(arcadeFixedStepMs/1000,Math.max(0,target-w.elapsed));
+  if(dt>1e-8){w.elapsed=target-dt;arcadeEngine.step(w,dt,now);steps++;}else if(now>=arcadeClock.end){arcadeEngine.complete(w);}
+  arcadeAccum=0;
+ }
+ return steps;
+}
 let arcadeRandomBag=null;
 function arcadeGamePool(count){const excluded=new Set(['sneak','dodge','coins','doors']);const selected=count===2?arcadeGameKeys.filter(k=>{const meta=typeof arcadeGames==='object'?arcadeGames[k]:null;return meta?.duel===false?false:meta?.duel===true?true:!excluded.has(k);}):[...arcadeGameKeys];return selected.length?selected:[...arcadeGameKeys];}
 function arcadeSelf(){return arcadeDemo?'arcade-you':netSelfId();}
@@ -4037,11 +5915,11 @@ function arcadeClone(v){return v?JSON.parse(JSON.stringify(v)):null;}
 function arcadeBaseContext(){return netPhase+':'+(result?.id||'setup');}
 function arcadeBusy(){return !!arcadeState&&['invite','round','between'].includes(arcadeState.phase);}
 function arcadeRenderSafe(){if(typeof arcadeRequestRender==='function')arcadeRequestRender();else if(typeof arcadeRender==='function')arcadeRender();if(typeof arcadeUpdateButtons==='function')arcadeUpdateButtons();}
-function arcadeGetState(){return !arcadeDemo&&netIsActive()&&arcadeState?arcadeClone(arcadeState):null;}
+function arcadeGetState(){if(arcadeDemo||!netIsActive()||!arcadeState)return null;const state=arcadeClone(arcadeState);if(netIsHost()){state.serverNow=Date.now();if(arcadeClock?.worldId===state.world?.id){const now=performance.now();state.clock={worldId:state.world.id,countdownEndAt:state.serverNow+arcadeClock.countdownEnd-now,endAt:state.serverNow+arcadeClock.end-now};}}return state;}
 function arcadePublish(force=false){if(arcadeDemo||!netIsHost()||netApplying)return;const n=performance.now();if(!force&&n-arcadeLastPublish<80)return;arcadeLastPublish=n;netPublish();}
 function arcadeSend(cmd){if(arcadeDemo)return arcadeHandle(arcadeSelf(),cmd);return netRoom.send(cmd);}
 function arcadeInput(action,held){if(!arcadeState?.world)return false;return arcadeSend({t:'arcadeInput',gameId:arcadeState.id,worldId:arcadeState.world.id,seq:++arcadeInputSeq,action,held});}
-function arcadeCancel(){arcadeState=null;arcadeDemo=false;arcadePrevious=null;arcadeLastWorldId='';arcadeRandomBag=null;arcadeBotSeq.clear();arcadeBotBrains.clear();if(typeof arcadeClearKeys==='function')arcadeClearKeys();if(typeof arcadeDialog!=='undefined')arcadeDialog?.close();arcadeRenderSafe();}
+function arcadeCancel(){arcadeState=null;arcadeDemo=false;arcadePrevious=null;arcadeLastWorldId='';arcadeRandomBag=null;arcadeClock=null;arcadeClockOffset=0;arcadeAccum=0;arcadeBotSeq.clear();arcadeBotBrains.clear();if(typeof arcadeClearKeys==='function')arcadeClearKeys();if(typeof arcadeDialog!=='undefined')arcadeDialog?.close();arcadeRenderSafe();}
 function arcadeClose(){
  if(!arcadeState){if(typeof arcadeDialog!=='undefined')arcadeDialog?.close();return;}
  if(arcadeDemo){arcadeCancel();return;}
@@ -4091,7 +5969,7 @@ function arcadeStartWorld(){
  if(ids.length<2){arcadeFinishTournament();return;}const game=s.mode==='single'?s.chosen:arcadeRandomGame(s.lastGame,ids.length);
  s.round++;s.lastGame=game;s.phase='round';s.nextAt=0;s.world=arcadeEngine.create({id:s.id+':'+s.round,game,participants:ids.map(id=>s.members.find(m=>m.id===id)),seed:rand(0xffffffff)});
  if(s.tiebreakIds.length)s.world.duration=Math.min(s.world.duration,arcadeIsPoints(s)?12:16);s.world.meta.tiebreak=s.tiebreakIds.length>0;s.world.meta.safeIds=[...s.safeIds];if(arcadeIsPoints(s)){s.world.meta.pointsStage=s.pointsStage;s.world.meta.pointsRound=s.pointRounds+Number(s.pointsStage==='regular');if(s.pointsStage==='regular')s.world.meta.partyRespawn=true;}
- arcadeInputSeq=0;arcadeLastWorldId=s.world.id;arcadeBotSeq.clear();arcadeBotBrains.clear();arcadeBotAt=0;arcadePumpAt=performance.now();arcadeAccum=0;arcadePrevious=null;const poolLabel=s.mode==='single'?'선택한 게임 · 단판 승부':ids.length===2?'2인전 전용 '+arcadeGamePool(2).length+'종':'파티전 '+arcadeGamePool(ids.length).length+'종';s.notice=poolLabel+' · '+(arcadeIsPoints(s)?s.pointsStage==='tiebreak'?'공동 1위 결승 '+(s.pointsTiebreaks+1)+'/3 · 재경기 점수는 누적하지 않아요.':'전원 참여 '+(s.pointRounds+1)+'/'+s.pointRoundLimit+'경기 · 순위 점수를 합산해요.':s.tiebreakIds.length?'최하위 동점! 동점자끼리 재경기 · 나머지는 다음 라운드 진출':'매판 다른 게임! 이번 판에서 살아남으세요.');arcadeRenderSafe();arcadePublish(true);
+ arcadeInputSeq=0;arcadeLastWorldId=s.world.id;arcadeBotSeq.clear();arcadeBotBrains.clear();arcadeBotAt=0;arcadeStartClock(s.world,performance.now());arcadePrevious=null;const poolLabel=s.mode==='single'?'선택한 게임 · 단판 승부':ids.length===2?'2인전 전용 '+arcadeGamePool(2).length+'종':'파티전 '+arcadeGamePool(ids.length).length+'종';s.notice=poolLabel+' · '+(arcadeIsPoints(s)?s.pointsStage==='tiebreak'?'공동 1위 결승 '+(s.pointsTiebreaks+1)+'/3 · 재경기 점수는 누적하지 않아요.':'전원 참여 '+(s.pointRounds+1)+'/'+s.pointRoundLimit+'경기 · 순위 점수를 합산해요.':s.tiebreakIds.length?'최하위 동점! 동점자끼리 재경기 · 나머지는 다음 라운드 진출':'매판 다른 게임! 이번 판에서 살아남으세요.');arcadeRenderSafe();arcadePublish(true);
 }
 function arcadeMaybeStart(){const s=arcadeState;if(!s||!arcadeHost()||s.phase!=='invite'||s.members.some(m=>m.response==='pending'))return;const joined=s.members.filter(m=>m.response==='join'&&!m.left);if(joined.length<2){const hint='2명 이상 준비해야 시작할 수 있어요. 참가 또는 관전을 다시 골라주세요.';if(s.notice!==hint){s.notice=hint;arcadeRenderSafe();arcadePublish(true);}return;}s.activeIds=joined.map(m=>m.id);arcadeStartWorld();}
 function arcadeFinishTournament(){const s=arcadeState;if(!s)return;if(arcadeIsPoints(s)){arcadePointsSync(s);if(s.pointsStage==='tiebreak')return arcadePointsFinal(s,s.tiebreakIds);if(s.activeIds.length<2)return arcadePointsFinish(s.activeIds[0]||'');return false;}s.phase='done';s.nextAt=0;s.tiebreakIds=[];s.safeIds=[];s.championIds=[...s.activeIds];s.notice=s.championIds.length?'최후의 생존자! 토너먼트 우승!':'참가자가 모두 나가 경기를 마쳤어요.';if(s.purpose==='lunch'&&typeof netFinishMenuTournament==='function'){netFinishMenuTournament(s);return;}arcadeRenderSafe();arcadePublish(true);}
@@ -4135,7 +6013,7 @@ function arcadeHandle(senderId,cmd){
  const s=arcadeState;if(!s||cmd.gameId!==s.id)return true;const m=s.members.find(m=>m.id===senderId);if(!m)return true;
  if(cmd.t==='arcadeCancel'&&senderId===arcadeSelf()){if(s.purpose==='lunch'&&typeof netCancelMenuTournament==='function')netCancelMenuTournament();else{arcadeCancel();if(netIsHost())netPublish();}return true;}
  if(cmd.t==='arcadeReply'&&s.phase==='invite'&&['join','pass'].includes(cmd.response)&&!m.left){m.response=cmd.response;arcadeRenderSafe();arcadePublish(true);arcadeMaybeStart();return true;}
- if(cmd.t==='arcadeInput'&&s.phase==='round'&&s.activeIds.includes(senderId)&&s.world&&cmd.worldId===s.world.id){if(arcadeEngine.input(s.world,senderId,cmd,performance.now())){arcadeRenderSafe();arcadePublish(false);}return true;}
+ if(cmd.t==='arcadeInput'&&s.phase==='round'&&s.activeIds.includes(senderId)&&s.world&&cmd.worldId===s.world.id){const now=performance.now();arcadeAdvanceWorld(now);arcadeResolveRound();if(arcadeState!==s||s.phase!=='round'||cmd.worldId!==s.world?.id)return true;if(arcadeEngine.input(s.world,senderId,cmd,now)){arcadeRenderSafe();arcadePublish(false);}return true;}
  if(cmd.t==='arcadeForfeit'&&m.response==='join'&&['round','between'].includes(s.phase)){arcadeForfeit(senderId);return true;}return true;
 }
 function arcadeValidatePoints(data){
@@ -4162,6 +6040,7 @@ function arcadeValidate(data){
  const known=new Set(data.members.map(m=>m.id));for(const k of ['activeIds','championIds','tiebreakIds','safeIds'])if(!Array.isArray(data[k])||data[k].length>8||new Set(data[k]).size!==data[k].length||data[k].some(id=>!known.has(id)))return false;
  if(!Number.isSafeInteger(data.round)||data.round<0||!Number.isFinite(data.nextAt)||!Array.isArray(data.history)||data.history.length>60||typeof data.notice!=='string')return false;
  const w=data.world;if(!w)return data.phase==='invite'&&arcadeValidatePoints(data);if(typeof w.id!=='string'||!arcadeGameKeys.includes(w.game)||!['countdown','play','done'].includes(w.phase)||!Number.isSafeInteger(w.seq)||w.seq<0||!Number.isFinite(w.elapsed)||w.elapsed<0||!Number.isFinite(w.countdown)||!Number.isFinite(w.duration)||w.duration<=0||w.duration>60||!Array.isArray(w.players)||w.players.length<2||w.players.length>8||!Array.isArray(w.objects)||w.objects.length>220||!w.meta||typeof w.meta!=='object')return false;
+ if(data.serverNow!==undefined&&(!Number.isFinite(data.serverNow)||data.serverNow<0))return false;if(data.clock!==undefined&&(!data.clock||data.clock.worldId!==w.id||!Number.isFinite(data.clock.countdownEndAt)||!Number.isFinite(data.clock.endAt)||data.clock.countdownEndAt<0||data.clock.endAt<data.clock.countdownEndAt||Math.abs(data.clock.endAt-data.clock.countdownEndAt-w.duration*1000)>2||!Number.isFinite(data.serverNow)))return false;
  if(w.players.some(p=>!p||!known.has(p.id)||typeof p.name!=='string'||!Number.isInteger(p.index)||p.index<0||p.index>7||['x','y','score','health','stunUntil','actionUntil'].some(k=>!Number.isFinite(p[k]))||p.x< -100||p.x>800||p.y< -100||p.y>560||!Number.isInteger(p.health)||p.health<0||p.health>3||typeof p.eliminated!=='boolean'||typeof p.forfeited!=='boolean')||new Set(w.players.map(p=>p.id)).size!==w.players.length)return false;
  if(!Array.isArray(w.winnerIds)||w.winnerIds.some(id=>!w.players.some(p=>p.id===id))||!Array.isArray(w.ranking)||w.ranking.some(p=>!p||!w.players.some(q=>q.id===p.id)||!Number.isFinite(p.score)||!Number.isInteger(p.rank)))return false;
  const finite=(v,depth=0)=>depth>7?false:typeof v==='number'?Number.isFinite(v):Array.isArray(v)?v.length<=220&&v.every(x=>finite(x,depth+1)):v&&typeof v==='object'?Object.keys(v).length<=40&&Object.values(v).every(x=>finite(x,depth+1)):v===null||['string','boolean'].includes(typeof v);
@@ -4170,7 +6049,7 @@ function arcadeValidate(data){
 function arcadeReceive(data){
  if(arcadeDemo||netIsHost())return;if(!data){if(arcadeState)arcadeCancel();return;}if(!arcadeValidate(data))return;const fresh=arcadeState?.id!==data.id,newWorld=arcadeState?.world?.id!==data.world?.id;
  if(!fresh&&(data.round<arcadeState.round||!newWorld&&data.world?.seq<arcadeState.world?.seq||arcadeIsPoints(arcadeState)&&(data.pointRounds<arcadeState.pointRounds||data.pointsTiebreaks<arcadeState.pointsTiebreaks)))return;
- arcadePrevious=!fresh&&arcadeState?.world?arcadeClone(arcadeState.world):null;arcadeState=arcadeClone(data);arcadeReceivedAt=performance.now();if(fresh||newWorld){arcadeInputSeq=0;arcadeLastWorldId=data.world?.id||'';if(typeof arcadeClearKeys==='function')arcadeClearKeys();}
+ arcadePrevious=!fresh&&arcadeState?.world?arcadeState.world:null;arcadeState=arcadeClone(data);arcadeReceivedAt=performance.now();if(Number.isFinite(data.serverNow))arcadeClockOffset=data.serverNow-Date.now();else if(fresh)arcadeClockOffset=0;if(fresh||newWorld){arcadeInputSeq=0;arcadeLastWorldId=data.world?.id||'';if(typeof arcadeClearKeys==='function')arcadeClearKeys();}
  if(fresh)arcadeOpen();arcadeRenderSafe();
 }
 function arcadePresence(event){
@@ -4210,14 +6089,15 @@ function arcadeHousekeep(now){
  if(!arcadeHost())return;
  if(!arcadeDemo){const present=new Set(netMembers().map(m=>m.id));for(const m of s.members)if(!m.left&&!present.has(m.id)){m.left=true;if(s.phase==='invite')m.response='pass';else arcadeForfeit(m.id);}if(arcadeState!==s)return;if(s.phase==='invite')arcadeMaybeStart();}
  if(s.phase==='between'&&Date.now()>=s.nextAt)arcadeStartWorld();
- if(s.phase==='round'&&s.world){if(!arcadePumpAt)arcadePumpAt=now;arcadeAccum+=Math.min(75,Math.max(0,now-arcadePumpAt));arcadePumpAt=now;
+ if(s.phase==='round'&&s.world){arcadeAdvanceWorld(now);if(arcadeState!==s)return;
   if(arcadeDemo&&now-arcadeBotAt>=180&&s.world.phase==='play'){arcadeBotAt=now;for(const p of s.world.players)if(p.id!==arcadeSelf()&&!p.eliminated&&!p.forfeited){const v=arcadeNormalBot(s.world,p);let seq=arcadeBotSeq.get(p.id)||0;arcadeEngine.input(s.world,p.id,{seq:++seq,action:'sync',held:v.held||[]},now);if(v.action)arcadeEngine.input(s.world,p.id,{seq:++seq,action:v.action},now);arcadeBotSeq.set(p.id,seq);}}
-  while(arcadeAccum>=16&&s.world.phase!=='done'){arcadeEngine.step(s.world,.016,now);arcadeAccum-=16;}arcadeResolveRound();arcadePublish(false);
+  arcadeResolveRound();arcadePublish(false);
  }
 }
 setInterval(()=>{const now=performance.now();arcadeHousekeep(now);if(arcadeState?.phase==='round'&&arcadeState.world?.phase==='play'&&now-arcadeHeartbeatAt>=200){arcadeHeartbeatAt=now;arcadeInput('sync',typeof arcadeHeld==='function'?arcadeHeld():[]);}if(arcadeState?.phase==='between')arcadeRenderSafe();},32);
 netRoom.onDisconnect(e=>{if(e.self||e.hostLost)arcadeCancel();});
 /* END_ARCADE_CONTROLLER_V1 */
+
 
 /* MENU_TOURNAMENT_V1 */
 const menuTournamentSavedIds=new Set();
@@ -4274,7 +6154,7 @@ function lunchDecisionBegin(value){
  const participants=value.nominations.map(n=>({id:n.id,name:n.person,menu:Array.isArray(n.menus)&&n.menus.length===1?n.menus[0]:''}));
  if(participants.length<2||participants.length>8||participants.some(p=>typeof p.id!=='string'||typeof p.name!=='string'||!validName(p.menu))||new Set(participants.map(p=>p.id)).size!==participants.length||!participants.some(p=>p.id===value.winnerId&&p.menu===value.menu))return false;
  lunchDecisionClear();value.provisional=true;value.mission='현재 1등 메뉴예요. 모두 승낙하거나, 각자 한 번 내 메뉴로 1대1 이의를 제기할 수 있어요.';
- lunchDecisionState={roundId:value.id,roomCode:String(netRoom.code||''),seq:1,version:1,winnerId:value.winnerId,menu:value.menu,tournamentChampionId:value.winnerId,participants,usedIds:[],acceptedIds:[],qualifiedIds:[],duelKind:'',phase:'review',duelId:'',challengerId:'',defenderId:'',notice:'우승 메뉴가 나왔어요. 각자 승낙하거나, 내 메뉴로 단 한 번 1대1 이의를 제기할 수 있어요.'};lunchDecisionRender();return true;
+ lunchDecisionState={roundId:value.id,roomCode:String(netRoom.code||''),seq:1,version:1,winnerId:value.winnerId,menu:value.menu,tournamentChampionId:value.winnerId,participants,usedIds:[],defeatedIds:[],acceptedIds:[],qualifiedIds:[],duelKind:'',phase:'review',duelId:'',challengerId:'',defenderId:'',notice:'우승 메뉴가 나왔어요. 각자 승낙하거나, 내 메뉴로 단 한 번 1대1 이의를 제기할 수 있어요. 이의를 받고 패하면 재도전할 수 없어요.'};lunchDecisionRender();return true;
 }
 function lunchDecisionResetMeal(message='메뉴 선택으로 돌아왔어요. 모두 다시 준비해주세요.'){
  if(!netIsHost())return false;if(typeof cancelActionDuel==='function')cancelActionDuel();lunchDecisionClear();netPhase='setup';netReady={};netSpec=null;netDuelMeta=null;result=null;netRoom.setLocked(false);showSetup();if(message)notify(message);netPublish();return true;
@@ -4287,7 +6167,7 @@ function lunchDecisionStartCoffee(){
 function lunchDecisionFinalize(){
  const s=lunchDecisionState;if(!netIsHost()||!lunchDecisionActive()||s.phase!=='review')return false;const required=lunchDecisionRequired();if(!required.length||!required.some(p=>p.id===s.winnerId))return lunchDecisionResetMeal('현재 우승자가 방을 나가 메뉴를 다시 선택해야 해요.');
  if(!required.every(p=>s.acceptedIds.includes(p.id)))return false;
- s.phase='coffee';s.notice='모두 승낙했어요! 점심 메뉴 최종 승인. 이제 커피에 참여할 사람만 골라주세요.';s.seq++;result.provisional=false;result.approvedAt=new Date().toISOString();result.approval={unanimous:true,version:s.version,acceptedIds:required.map(p=>p.id),usedIds:[...s.usedIds]};result.mission='모두 승낙한 점심 메뉴예요. 커피는 원하는 사람만 참여하세요.';
+ s.phase='coffee';s.notice='모두 승낙했어요! 점심 메뉴 최종 승인. 이제 커피에 참여할 사람만 골라주세요.';s.seq++;result.provisional=false;result.approvedAt=new Date().toISOString();result.approval={unanimous:true,version:s.version,acceptedIds:required.map(p=>p.id),usedIds:[...s.usedIds],defeatedIds:[...(s.defeatedIds||[])]};result.mission='모두 승낙한 점심 메뉴예요. 커피는 원하는 사람만 참여하세요.';
  if(!lunchDecisionSavedRounds.has(s.roundId)){lunchDecisionSavedRounds.add(s.roundId);lunchDecisionSaving=true;try{saveRound();}finally{lunchDecisionSaving=false;}}
  lunchDecisionStartCoffee();renderResult();netPublish();return true;
 }
@@ -4296,7 +6176,7 @@ function lunchDecisionStampDuel(){
  s.duelId=netDuelMeta.id;netDuelMeta.lunchDecisionId=s.roundId;netDuelMeta.tournamentChampionId=s.tournamentChampionId;netDuelMeta.duelKind=s.duelKind||'objection';netDuelMeta.qualifiedIds=[...(s.qualifiedIds||[])];
 }
 function lunchDecisionObject(senderId){
- const s=lunchDecisionState,p=s?.participants.find(p=>p.id===senderId);if(!netIsHost()||!lunchDecisionActive()||s.phase!=='review'||!p||!lunchDecisionRequired().some(x=>x.id===senderId)||senderId===s.winnerId||p.menu===s.menu||s.usedIds.includes(senderId)||s.acceptedIds.includes(senderId))return false;
+ const s=lunchDecisionState,p=s?.participants.find(p=>p.id===senderId);if(!netIsHost()||!lunchDecisionActive()||s.phase!=='review'||!p||!lunchDecisionRequired().some(x=>x.id===senderId)||senderId===s.winnerId||p.menu===s.menu||s.usedIds.includes(senderId)||(s.defeatedIds||[]).includes(senderId)||s.acceptedIds.includes(senderId))return false;
  const previousWinner=s.winnerId;s.phase='duel';s.duelKind='objection';s.challengerId=senderId;s.defenderId=previousWinner;s.duelId='';s.usedIds.push(senderId);s.notice=p.name+' 님이 단 한 번의 이의를 제기했어요. '+p.menu+' vs '+s.menu+'!';s.seq++;lunchDecisionReturnAt=0;
  netPicks[senderId]=[p.menu];
  try{netNewDuel(senderId,p.menu);}catch(error){s.phase='review';s.usedIds=s.usedIds.filter(id=>id!==senderId);s.duelId='';s.challengerId='';s.defenderId='';throw error;}
@@ -4307,9 +6187,14 @@ function lunchDecisionDuelFinished(){
  const s=lunchDecisionState;if(!netIsHost()||!lunchDecisionActive()||s.phase!=='duel'||!duel?.finishLocked||duel.phase!=='done'||!s.duelId||lunchDecisionResolvedDuels.has(s.duelId))return false;
  const winner=s.participants.find(p=>p.id===result.winnerId&&[s.challengerId,s.defenderId].includes(p.id));
  if(!winner||!netMembers().some(m=>m.id===winner.id))return lunchDecisionResetMeal('결투 우승자가 방에 없어 메뉴 선택으로 돌아왔어요.');
- lunchDecisionResolvedDuels.add(s.duelId);const changed=s.winnerId!==winner.id||s.menu!==winner.menu;s.winnerId=winner.id;s.menu=winner.menu;
+ lunchDecisionResolvedDuels.add(s.duelId);const changed=s.winnerId!==winner.id||s.menu!==winner.menu;
+ // Losing a requested defense consumes the former winner's right as well:
+ // an objection must never become an endless winner/loser revenge loop.
+ const defeatedDefender=s.duelKind!=='final'&&winner.id===s.challengerId?s.defenderId:'';
+ if(defeatedDefender){if(!Array.isArray(s.defeatedIds))s.defeatedIds=[];if(!s.defeatedIds.includes(defeatedDefender))s.defeatedIds.push(defeatedDefender);if(!s.usedIds.includes(defeatedDefender))s.usedIds.push(defeatedDefender);}
+ s.winnerId=winner.id;s.menu=winner.menu;
  result.winnerId=winner.id;result.person=winner.name;result.menu=winner.menu;result.provisional=true;
- if(changed){s.version++;s.acceptedIds=[];s.notice='메뉴가 '+winner.menu+'(으)로 바뀌었어요. 모두 새 메뉴에 다시 승낙해주세요.';}else s.notice=winner.name+' 님이 메뉴를 지켰어요. 남은 참가자들의 승낙을 기다려요.';
+ if(changed){s.version++;s.acceptedIds=[];s.notice='메뉴가 '+winner.menu+'(으)로 바뀌었어요. 모두 새 메뉴에 다시 승낙해주세요.'+(defeatedDefender?' 패한 이전 우승자는 이번 점심에서 재도전할 수 없어요.':'');}else s.notice=winner.name+' 님이 메뉴를 지켰어요. 남은 참가자들의 승낙을 기다려요.';
  s.seq++;lunchDecisionReturnAt=Date.now()+1800;netPublishCombat(true);return true;
 }
 function lunchDecisionReturnReview(){
@@ -4348,6 +6233,9 @@ function lunchDecisionValidate(data){
  const nominations=result.nominations||[];if(data.participants.some(p=>!p||typeof p.id!=='string'||typeof p.name!=='string'||!validName(p.menu)||!nominations.some(n=>n.id===p.id&&n.person===p.name&&n.menus?.length===1&&n.menus[0]===p.menu))||new Set(data.participants.map(p=>p.id)).size!==data.participants.length||data.participants.length!==nominations.length)return false;
  const ids=new Set(data.participants.map(p=>p.id));if(!ids.has(data.tournamentChampionId)||!ids.has(data.winnerId)||data.winnerId!==result.winnerId||data.menu!==result.menu||!data.participants.some(p=>p.id===data.winnerId&&p.menu===data.menu))return false;
  for(const key of ['usedIds','acceptedIds'])if(!Array.isArray(data[key])||data[key].length>8||new Set(data[key]).size!==data[key].length||data[key].some(id=>!ids.has(id)))return false;
+ const defeated=data.defeatedIds===undefined?[]:data.defeatedIds;
+ if(!Array.isArray(defeated)||defeated.length>8||new Set(defeated).size!==defeated.length||defeated.some(id=>!ids.has(id)||!data.usedIds.includes(id)))return false;
+ if(lunchDecisionState?.roundId===data.roundId&&(lunchDecisionState.usedIds.some(id=>!data.usedIds.includes(id))||(lunchDecisionState.defeatedIds||[]).some(id=>!defeated.includes(id))))return false;
  if(data.qualifiedIds!==undefined&&(!Array.isArray(data.qualifiedIds)||data.qualifiedIds.length>2||new Set(data.qualifiedIds).size!==data.qualifiedIds.length||data.qualifiedIds.some(id=>!ids.has(id))))return false;
  if(data.championship!==undefined&&typeof data.championship!=='boolean')return false;
  if(data.championship===true&&(!Array.isArray(data.qualifiedIds)||data.participants.length===2&&data.qualifiedIds.length>0||data.qualifiedIds.length>0&&!data.qualifiedIds.includes(data.tournamentChampionId)))return false;
@@ -4357,12 +6245,13 @@ function lunchDecisionValidate(data){
  if(data.phase==='qualification'&&(data.participants.length<3||data.winnerId!==data.tournamentChampionId))return false;
  if(typeof data.notice!=='string'||data.notice.length>300||typeof data.duelId!=='string'||data.duelId.length>100||typeof data.challengerId!=='string'||typeof data.defenderId!=='string')return false;
  if(data.phase==='duel'&&(!data.duelId||!ids.has(data.challengerId)||!ids.has(data.defenderId)||data.challengerId===data.defenderId||(data.duelKind==='final'?(data.championship!==true||data.participants.length<3||data.qualifiedIds?.length!==2||!data.qualifiedIds.includes(data.challengerId)||!data.qualifiedIds.includes(data.defenderId)||data.defenderId!==data.tournamentChampionId):!data.usedIds.includes(data.challengerId))||netPhase==='duel'&&netDuelMeta?.id!==data.duelId))return false;
+ if(data.phase==='duel'&&data.duelKind!=='final'&&data.winnerId===data.challengerId&&!defeated.includes(data.defenderId))return false;
  if(data.phase==='coffee'&&(result.provisional===true||netMembers().filter(m=>ids.has(m.id)).some(m=>!data.acceptedIds.includes(m.id))))return false;
  return true;
 }
 function lunchDecisionReceive(data){
  if(netIsHost())return false;if(!data){if(lunchDecisionState)lunchDecisionClear();return false;}if(!lunchDecisionValidate(data))return false;
- if(lunchDecisionState?.roundId===data.roundId&&(data.seq<lunchDecisionState.seq||data.version<lunchDecisionState.version||data.tournamentChampionId!==lunchDecisionState.tournamentChampionId))return false;lunchDecisionState=lunchDecisionClone(data);if(data.phase==='coffee'&&result.provisional===false&&!lunchDecisionSavedRounds.has(data.roundId)){lunchDecisionSavedRounds.add(data.roundId);lunchDecisionSaving=true;try{saveRound();}finally{lunchDecisionSaving=false;}}lunchDecisionRender();return true;
+ if(lunchDecisionState?.roundId===data.roundId&&(data.seq<lunchDecisionState.seq||data.version<lunchDecisionState.version||data.tournamentChampionId!==lunchDecisionState.tournamentChampionId||lunchDecisionState.usedIds.some(id=>!data.usedIds.includes(id))||(lunchDecisionState.defeatedIds||[]).some(id=>!(data.defeatedIds||[]).includes(id))))return false;lunchDecisionState=lunchDecisionClone(data);if(data.phase==='coffee'&&result.provisional===false&&!lunchDecisionSavedRounds.has(data.roundId)){lunchDecisionSavedRounds.add(data.roundId);lunchDecisionSaving=true;try{saveRound();}finally{lunchDecisionSaving=false;}}lunchDecisionRender();return true;
 }
 function lunchDecisionEnsureUI(){
  if(typeof document==='undefined'||$('lunchDecisionPanel'))return;const view=$('resultView');if(!view)return;
@@ -4378,11 +6267,11 @@ function lunchDecisionRender(){
  const view=$('resultView'),badge=view?.querySelector('.approval'),label=view?.querySelector('.section-label'),pill=view?.querySelector('.board-head .pill'),kicker=view?.querySelector('.result-kicker');if(view)view.setAttribute('aria-label',s.phase==='coffee'?'모두 승낙한 최종 점심 메뉴':'현재 1등 메뉴와 승낙 대기');if(badge)badge.textContent=s.phase==='coffee'?'최종 승인':'승낙 대기';if(label)label.textContent=s.phase==='coffee'?'APPROVED · 점심 최종 승인':'REVIEW · 점심 메뉴 승낙 대기';if(pill)pill.textContent=s.phase==='coffee'?'커피는 원하는 사람만':'승낙 또는 1회 이의';if(kicker)kicker.textContent=s.phase==='coffee'?"TODAY'S LUNCH":'PROVISIONAL WINNER';
  $('lunchDecisionTitle').textContent=s.phase==='coffee'?'모두 승낙 · 점심 메뉴 최종 승인':'잠깐! 이 메뉴로 점심 먹을까요?';
  $('lunchDecisionStatus').textContent=s.phase==='duel'?'1대1 이의 결투 중 · 다른 참가자는 관전해요.':s.phase==='coffee'?'만장일치 '+accepted+'/'+required.length+'명 · 커피는 원하는 사람만 참여해요.':s.notice+' · 승낙 '+accepted+'/'+required.length+'명';
- const list=$('lunchDecisionRoster');list.replaceChildren();for(const p of s.participants){const row=el('li');row.classList.toggle('accepted',s.acceptedIds.includes(p.id));row.classList.toggle('left',!present.has(p.id));row.append(el('strong','',p.name+(p.id===self?' · 나':'')+(p.id===s.winnerId?' · 현재 1등':'')),el('span','',p.menu),el('small','',!present.has(p.id)?'퇴장':s.acceptedIds.includes(p.id)?'승낙 ✓':s.usedIds.includes(p.id)?'이의 1회 사용':'승낙 대기'));list.append(row);}
- const eligible=!!own&&present.has(self),ownAccepted=s.acceptedIds.includes(self),used=s.usedIds.includes(self);
- $('lunchDecisionSelf').textContent=!eligible?'처음 메뉴를 낸 참가자만 승낙과 이의 제기에 참여해요.':s.phase==='coffee'?'모든 참가자가 이 메뉴를 승낙했어요.':used?'내 이의 제기 기회는 사용했어요. 메뉴가 바뀌면 새 메뉴를 다시 승낙해주세요.':ownAccepted?'이 메뉴를 승낙했어요. 메뉴가 바뀌면 다시 승낙할 수 있어요.':'이의 제기는 오늘 점심 전체에서 1인 1회. 승낙한 메뉴에는 이의를 제기할 수 없어요.';
+ const list=$('lunchDecisionRoster');list.replaceChildren();for(const p of s.participants){const row=el('li');row.classList.toggle('accepted',s.acceptedIds.includes(p.id));row.classList.toggle('left',!present.has(p.id));row.append(el('strong','',p.name+(p.id===self?' · 나':'')+(p.id===s.winnerId?' · 현재 1등':'')),el('span','',p.menu),el('small','',!present.has(p.id)?'퇴장':s.acceptedIds.includes(p.id)?'승낙 ✓':(s.defeatedIds||[]).includes(p.id)?'방어전 패배 · 재도전 불가':s.usedIds.includes(p.id)?'이의 1회 사용':'승낙 대기'));list.append(row);}
+ const eligible=!!own&&present.has(self),ownAccepted=s.acceptedIds.includes(self),defeated=(s.defeatedIds||[]).includes(self),used=s.usedIds.includes(self)||defeated;
+ $('lunchDecisionSelf').textContent=!eligible?'처음 메뉴를 낸 참가자만 승낙과 이의 제기에 참여해요.':s.phase==='coffee'?'모든 참가자가 이 메뉴를 승낙했어요.':defeated?'이의를 받고 패배해 이번 점심에서 다시 이의를 제기할 수 없어요. 새 메뉴를 승낙해주세요.':used?'내 이의 제기 기회는 사용했어요. 메뉴가 바뀌면 새 메뉴를 다시 승낙해주세요.':ownAccepted?'이 메뉴를 승낙했어요. 메뉴가 바뀌면 다시 승낙할 수 있어요.':'이의 제기는 오늘 점심 전체에서 1인 1회. 이의를 받고 패하면 재도전할 수 없어요.';
  const accept=$('lunchAcceptBtn');accept.hidden=!eligible||s.phase==='coffee';accept.disabled=s.phase!=='review'||ownAccepted;accept.textContent=ownAccepted?'이 메뉴 승낙 완료 ✓':'이 메뉴로 점심 먹을게요';
- const objection=$('lunchObjectBtn');objection.hidden=!eligible||self===s.winnerId||own.menu===s.menu||s.phase==='coffee';objection.disabled=s.phase!=='review'||used||ownAccepted;objection.textContent=used?'이의 제기 1회 사용 완료':'내 메뉴로 이의 제기 · 1대1';
+ const objection=$('lunchObjectBtn');objection.hidden=!eligible||self===s.winnerId||own.menu===s.menu||s.phase==='coffee';objection.disabled=s.phase!=='review'||used||ownAccepted;objection.textContent=defeated?'방어전 패배 · 재도전 불가':used?'이의 제기 1회 사용 완료':'내 메뉴로 이의 제기 · 1대1';
  $('lunchResetBtn').hidden=!netIsHost()||s.phase!=='review';const old=$('objectBtn');if(old)old.hidden=true;const again=$('againBtn');if(again){again.disabled=s.phase!=='coffee'||!done;again.title=again.disabled?'모두 승낙하고 커피 뽑기까지 마치면 다음 점심을 시작할 수 있어요.':'';}const copy=$('copyBtn');if(copy){copy.disabled=result.provisional===true;copy.title=copy.disabled?'모두 승낙한 뒤 최종 점심 결과를 복사할 수 있어요.':'';}
 }
 function lunchDecisionTick(){
@@ -4401,6 +6290,7 @@ renderResult=function(){const out=lunchDecisionPreviousResult();lunchDecisionRen
 netRoom.onDisconnect(event=>{if(event.self||event.hostLost)lunchDecisionClear();});
 setInterval(lunchDecisionTick,200);
 /* END_LUNCH_DECISION_V1 */
+
 
 /* CHAMPION_DUEL_V1 */
 function championDuelScope(){
@@ -4488,7 +6378,7 @@ renderResult=function(...args){
 /* END_MENU_TOURNAMENT_UI_V1 */
 
 const menuTournamentSetupLabels=renderSetup;
-renderSetup=function(){const out=menuTournamentSetupLabels.apply(this,arguments);const desc=$('netPassiveDesc');if(desc)desc.textContent='내 메뉴를 지킬 캐릭터예요. 토너먼트는 모두 같은 규칙으로 승부해요.';const select=$('netDepartment');if(select)for(const option of select.options)option.textContent=deptOptions.find(d=>d.id===option.value)?.short||option.textContent;const preview=$('deptAvatarPreview');if(preview){preview.querySelector('b').textContent='내 메뉴는 내가 지킨다!';preview.querySelector('.dept-avatar-preview-description').textContent='못생겼지만 든든한 나의 밥친구';}return out;};
+renderSetup=function(){const out=menuTournamentSetupLabels.apply(this,arguments);const desc=$('netPassiveDesc');if(desc)desc.textContent='내 메뉴를 지킬 캐릭터예요. 토너먼트는 모두 같은 규칙으로 승부해요.';return out;};
 const menuTournamentTrayButtons=trayUpdateButtons;
 trayUpdateButtons=function(){menuTournamentTrayButtons();for(const id of ['trayRoomBtn','trayResultBtn']){const b=$(id);if(b&&netPhase!=='result'||b&&result?.tournamentHistory)b.hidden=true;}};
 
@@ -4664,7 +6554,7 @@ setInterval(()=>{deliveryHousekeep();deliveryRender();},200);netRoom.onDisconnec
 
 /* LUNCH_FINALE_V2 */
 let lunchFinaleDialog=null,lunchFinaleReplay=null,lunchFinaleRoom='',lunchFinaleRound='',lunchFinaleShownKey='',lunchFinaleFocus=null,lunchFinaleSoundTimers=[],lunchFinaleStartedAt=0,lunchFinaleCurrentScene=-1;
-let lunchFinaleSceneTimes=[0,2500,8000,12500,18500,27500],lunchFinaleDuration=32000;
+let lunchFinaleSceneTimes=[0,2500,8000,21000,27000,39000],lunchFinaleDuration=43500;
 let lunchFinaleShared=null,lunchFinaleLocalEnd=0,lunchFinaleLocalStart=0,lunchFinaleLeaveTimer=0,lunchFinaleLeaving=false;
 const lunchFinaleHostGrace=600,lunchFinaleInstagram='https://www.instagram.com/mid_jhs/';
 const lunchFinaleSeen=new Set(),lunchFinaleSceneLabels=['상영을 시작합니다','오늘의 점심','커피 원정대','밥친구 퍼레이드','오늘의 출연진','우리의 오후를 응원하며'];
@@ -4679,7 +6569,7 @@ function lunchFinaleData(){
 }
 function lunchFinaleNow(){return typeof performance!=='undefined'&&typeof performance.now==='function'?performance.now():Date.now();}
 function lunchFinaleCopy(value){return value?JSON.parse(JSON.stringify(value)):null;}
-function lunchFinaleTimeline(data){const count=Math.max(1,Math.min(8,Math.max(data.names?.length||0,data.orders?.length||0))),credits=Math.min(12000,8000+count*500),times=[0,2500,8000,12500,18500,18500+credits];return{sceneTimes:times,duration:times[5]+4500,credits};}
+function lunchFinaleTimeline(data){const count=Math.max(1,Math.min(8,Math.max(data.names?.length||0,data.orders?.length||0))),credits=Math.min(12000,8000+count*500),times=[0,2500,8000,21000,27000,27000+credits];return{sceneTimes:times,duration:times[5]+4500,credits};}
 function lunchFinaleContext(){return{room:netIsActive()?String(netRoom.code||''):'',round:typeof result!=='undefined'?result?.id||'':''};}
 function lunchFinaleScheduleCurrent(){const context=lunchFinaleContext();return !!lunchFinaleShared&&!!context.room&&context.room===lunchFinaleShared.roomCode&&context.round===lunchFinaleShared.roundId;}
 function lunchFinaleSyncContext(){const context=lunchFinaleContext();if(context.room!==lunchFinaleRoom||context.round!==lunchFinaleRound){lunchFinaleReset();lunchFinaleRoom=context.room;lunchFinaleRound=context.round;}return context;}
@@ -4710,11 +6600,12 @@ function lunchFinaleGetState(){
  lunchFinaleSyncContext();if(netIsHost())lunchFinaleEnsureSchedule();return lunchFinaleScheduleCurrent()?{...lunchFinaleCopy(lunchFinaleShared),serverNow:Date.now()}:null;
 }
 function lunchFinaleValidate(data){
- if(!data||data.version!==1||typeof data.id!=='string'||data.id.length>600||typeof data.key!=='string'||data.key.length>550||data.roomCode!==String(netRoom.code||'')||data.roundId!==result?.id||typeof data.deliveryId!=='string'||data.deliveryId.length>120||!Number.isFinite(data.startAt)||!Number.isFinite(data.endAt)||!Number.isFinite(data.serverNow)||!Number.isFinite(data.duration)||data.duration<30000||data.duration>38000||data.endAt-data.startAt!==data.duration||data.serverNow<data.startAt-10000||data.serverNow>data.endAt+10000||!Array.isArray(data.sceneTimes)||data.sceneTimes.length!==6)return false;
+ if(!data||data.version!==1||typeof data.id!=='string'||data.id.length>600||typeof data.key!=='string'||data.key.length>550||data.roomCode!==String(netRoom.code||'')||data.roundId!==result?.id||typeof data.deliveryId!=='string'||data.deliveryId.length>120||!Number.isFinite(data.startAt)||!Number.isFinite(data.endAt)||!Number.isFinite(data.serverNow)||!Number.isFinite(data.duration)||data.duration<40000||data.duration>43500||data.endAt-data.startAt!==data.duration||data.serverNow<data.startAt-10000||data.serverNow>data.endAt+10000||!Array.isArray(data.sceneTimes)||data.sceneTimes.length!==6)return false;
  const p=data.data,nominations=result?.nominations||[],names=nominations.map(n=>n.person),decision=typeof lunchDecisionGetState==='function'?lunchDecisionGetState():null,delivery=typeof deliveryGetState==='function'?deliveryGetState():null;
  if(!p||result.provisional!==false||netPhase!=='result'||decision?.roundId!==data.roundId||decision.phase!=='coffee'||delivery?.id!==data.deliveryId||delivery.roundId!==data.roundId||delivery.phase!=='done'||p.key!==data.key||p.roundId!==data.roundId||p.deliveryId!==data.deliveryId||p.menu!==result.menu||p.person!==result.person||p.winnerId!==result.winnerId||typeof p.coffeeName!=='string'||typeof p.coffeeId!=='string'||Array.from(p.coffeeName).length>24||!Array.isArray(p.names)||p.names.length<1||p.names.length>8||new Set(p.names).size!==p.names.length||p.names.some(n=>!names.includes(n))||!Array.isArray(p.orders)||p.orders.length>8||new Set(p.orders.map(o=>o?.name)).size!==p.orders.length||p.orders.some(o=>!o||!p.names.includes(o.name)||typeof o.drink!=='string'||!o.drink.trim()||Array.from(o.drink).length>20)||!Array.isArray(p.nominations)||JSON.stringify(p.nominations)!==JSON.stringify(nominations))return false;
  if(p.names.length!==new Set(names).size)return false;
- if(p.coffeeId?!delivery.members.some(m=>m.id===p.coffeeId&&m.name===p.coffeeName):p.coffeeName!=='')return false;
+ const expectedOrders=delivery.members.filter(m=>m.response==='join'&&!m.left).map(m=>({name:m.name,drink:m.drink})),coffee=delivery.winnerId?delivery.members.find(m=>m.id===delivery.winnerId&&m.response==='join'&&!m.left):null;
+ if(delivery.needsRedraw||delivery.winnerId&&!coffee||p.coffeeId!==(coffee?.id||'')||p.coffeeName!==(coffee?.name||'')||JSON.stringify(p.orders)!==JSON.stringify(expectedOrders))return false;
  const plan=lunchFinaleTimeline(p),key=data.roomCode+':'+data.roundId+':'+data.deliveryId+':'+(p.coffeeId||'pass');if(data.key!==key||data.id!=='finale:'+key||plan.duration!==data.duration||plan.sceneTimes.some((t,i)=>data.sceneTimes[i]!==t))return false;
  return true;
 }
@@ -4734,22 +6625,20 @@ function lunchFinaleClose(){
 function lunchFinaleReset(){clearTimeout(lunchFinaleLeaveTimer);lunchFinaleLeaveTimer=0;lunchFinaleShared=null;lunchFinaleLocalEnd=0;lunchFinaleLocalStart=0;lunchFinaleLeaving=false;lunchFinaleClose();lunchFinaleShownKey='';if(lunchFinaleReplay)lunchFinaleReplay.hidden=true;}
 function lunchFinaleEnsureUI(){
  if(lunchFinaleDialog)return;
- lunchFinaleDialog=el('dialog','lunch-finale-dialog');lunchFinaleDialog.id='lunchFinaleDialog';lunchFinaleDialog.setAttribute('aria-label','점심결재 대작전 엔딩 영화');
- lunchFinaleDialog.innerHTML='<div class="film-grain" aria-hidden="true"></div><div class="film-letterbox film-letterbox-top" aria-hidden="true"></div><div class="film-letterbox film-letterbox-bottom" aria-hidden="true"></div><header class="film-top"><span>점심결재 대작전 <i>THE FINALE</i></span><button id="lunchFinaleCloseBtn" type="button" aria-label="엔딩 건너뛰기">건너뛰기 ↗</button></header><main class="film-stage"><section class="film-scene film-intro" data-film-scene="0" aria-label="상영 시작"><div class="film-intro-spot" aria-hidden="true"></div><span class="film-eyebrow">A VERY SMALL · VERY SERIOUS LUNCH STORY</span><div class="film-intro-seal">결<br>재</div><h2>오늘도,<br><em>우리는 살아남았다.</em></h2><p>업무도. 메뉴 고민도. 방금 그 게임도.</p><div class="film-intro-credit">신정훈의 <b>점심결재 대작전</b></div></section><section class="film-scene film-lunch" data-film-scene="1" aria-label="오늘의 점심 발표" hidden><div class="film-spotlight" aria-hidden="true"></div><div class="film-lunch-crown">✦ TODAY’S CHAMPION ✦</div><div id="lunchFinaleChampion" class="film-champion" aria-hidden="true"></div><div class="film-receipt"><span class="film-receipt-kicker">축하합니다! · 오늘의 점심 메뉴는</span><small id="lunchFinalePerson"></small><div class="film-receipt-menu"><span id="lunchFinaleFood" aria-hidden="true"></span><h2 id="lunchFinaleMenu"></h2></div><p>입니다.</p><i class="film-approved" aria-hidden="true">점심<br>최종 승인</i></div><p class="film-lunch-caption" id="lunchFinaleLunchAnnounce"></p><div class="film-burst film-burst-a" aria-hidden="true">✷</div><div class="film-burst film-burst-b" aria-hidden="true">✧</div><div class="film-sparkles" aria-hidden="true">✦　·　✧　✦　·　✦　✧　·　✦</div></section><section class="film-scene film-coffee" data-film-scene="2" aria-label="커피 배달 당첨자 발표" hidden><div class="film-coffee-sun" aria-hidden="true"></div><span class="film-eyebrow">ONE MORE MISSION · 커피 원정대 출동</span><h2 id="lunchFinaleCoffeeTitle">오늘의 커피 배달은</h2><strong id="lunchFinaleCoffeeName"></strong><p id="lunchFinaleCoffeeText"></p><div class="film-coffee-road" aria-hidden="true"></div><div class="film-coffee-cart"><div id="lunchFinaleCourier" class="film-courier" aria-hidden="true"></div><div class="film-cart-body"><span>☕</span><b>CAFE<br>EXPRESS</b><span>☕</span><i class="film-wheel"></i><i class="film-wheel"></i></div><div class="film-cart-puff" aria-hidden="true">뿌　뿌　☁</div></div><div id="lunchFinaleOrderRibbon" class="film-order-ribbon"></div></section><section class="film-scene film-parade" data-film-scene="3" aria-label="밥친구 퍼레이드" hidden><span class="film-eyebrow">NOT PERFECT. STILL TOGETHER.</span><h2>잘했든, 망했든.<br><em>같이 밥 먹으면 됐지!</em></h2><p>오늘의 주인공, 전원 입장.</p><div class="film-parade-banner" aria-hidden="true">고 생 했 어 요　 밥 은 먹 고 합 시 다</div><div class="film-parade-track"><div id="lunchFinaleParade" class="film-parade-march"></div><div class="film-parade-ground" aria-hidden="true"></div></div><div class="film-parade-small">※ 행진이 조금 엉망이어도, 마음만은 진지합니다.</div><div class="film-parade-confetti" aria-hidden="true">▰　✧　▱　✦　▱　▰　✧　▱　✦　▰　▱</div></section><section class="film-scene film-credits" data-film-scene="4" aria-label="엔딩 크레딧" hidden><div class="film-credits-title"><span>THE PEOPLE WHO MADE LUNCH HAPPEN</span><h2>오늘의 출연진</h2></div><div class="film-credit-window"><div id="lunchFinaleCreditRoll" class="film-credit-roll"></div></div><div class="film-credits-warmth" aria-hidden="true">✦</div></section><section class="film-scene film-outro" data-film-scene="5" aria-label="감사 인사" hidden><div class="film-outro-glow" aria-hidden="true"></div><span class="film-eyebrow">TO EVERYONE WHO MADE IT TO LUNCH</span><h2>오늘도 일하시느라<br><em>고생 많으셨어요.</em></h2><p id="lunchFinaleThanks">저의 <b>점심결재 대작전</b>을<br>플레이해주셔서 감사합니다.</p><p class="film-outro-note">잠깐의 웃음과 든든한 한 끼가,<br>우리의 오후를 버티는 힘이 되길.</p><div id="lunchFinaleFinalMascots" class="film-outro-mascots" aria-hidden="true"></div><div class="film-end-title">점심결재 대작전<small>THE END · BUT LUNCH BEGINS</small></div><button id="lunchFinaleReplayBtn" type="button">한 번 더 보고 싶다면 ↻</button></section></main><footer class="film-bottom"><span id="lunchFinaleSceneName">상영을 시작합니다</span><div class="film-progress" aria-hidden="true"><i id="lunchFinaleProgressFill"></i></div><span>SEE YOU NEXT LUNCH</span></footer>';
+ lunchFinaleDialog=el('dialog','lunch-finale-dialog');lunchFinaleDialog.id='lunchFinaleDialog';lunchFinaleDialog.setAttribute('aria-label','점심결재 대작전 엔딩 영화');lunchFinaleDialog.setAttribute('closedby','none');lunchFinaleDialog.tabIndex=-1;
+ lunchFinaleDialog.innerHTML='<div class="film-grain" aria-hidden="true"></div><div class="film-letterbox film-letterbox-top" aria-hidden="true"></div><div class="film-letterbox film-letterbox-bottom" aria-hidden="true"></div><header class="film-top"><span>점심결재 대작전 <i>THE FINALE</i></span><span class="film-watch-note">함께 보는 엔딩 · 종료 후 로비로</span></header><main class="film-stage"><section class="film-scene film-intro" data-film-scene="0" aria-label="상영 시작"><div class="film-intro-spot" aria-hidden="true"></div><span class="film-eyebrow">A VERY SMALL · VERY SERIOUS LUNCH STORY</span><div class="film-intro-seal">결<br>재</div><h2>오늘도,<br><em>우리는 살아남았다.</em></h2><p>업무도. 메뉴 고민도. 방금 그 게임도.</p><div class="film-intro-credit">신정훈의 <b>점심결재 대작전</b></div></section><section class="film-scene film-lunch" data-film-scene="1" aria-label="오늘의 점심 발표" hidden><div class="film-spotlight" aria-hidden="true"></div><div class="film-lunch-crown">✦ TODAY’S CHAMPION ✦</div><div id="lunchFinaleChampion" class="film-champion" aria-hidden="true"></div><div class="film-receipt"><span class="film-receipt-kicker">축하합니다! · 오늘의 점심 메뉴는</span><small id="lunchFinalePerson"></small><div class="film-receipt-menu"><span id="lunchFinaleFood" aria-hidden="true"></span><h2 id="lunchFinaleMenu"></h2></div><p>입니다.</p><i class="film-approved" aria-hidden="true">점심<br>최종 승인</i></div><p class="film-lunch-caption" id="lunchFinaleLunchAnnounce"></p><div class="film-burst film-burst-a" aria-hidden="true">✷</div><div class="film-burst film-burst-b" aria-hidden="true">✧</div><div class="film-sparkles" aria-hidden="true">✦　·　✧　✦　·　✦　✧　·　✦</div></section><section class="film-scene film-coffee" data-film-scene="2" aria-label="커피 배달 당첨자 발표" hidden><div class="film-coffee-sun" aria-hidden="true"></div><div class="film-coffee-announcement"><span class="film-eyebrow">ONE MORE MISSION · 커피 원정대 출동</span><h2 id="lunchFinaleCoffeeTitle">오늘의 커피 배달은</h2><strong id="lunchFinaleCoffeeName"></strong><p id="lunchFinaleCoffeeText"></p><div class="film-coffee-road" aria-hidden="true"></div><div class="film-coffee-cart"><div id="lunchFinaleCourier" class="film-courier" aria-hidden="true"></div><div class="film-cart-body"><span>☕</span><b>CAFE<br>EXPRESS</b><span>☕</span><i class="film-wheel"></i><i class="film-wheel"></i></div><div class="film-cart-puff" aria-hidden="true">뿌　뿌　☁</div></div></div><aside class="film-coffee-orders" aria-label="최종 주문 음료 내역"><header><h3>오늘의 주문 내역</h3><span id="lunchFinaleOrderCount"></span></header><ol id="lunchFinaleOrders"></ol><p id="lunchFinaleOrdersEmpty" hidden>오늘은 모두 커피 패스.<br>가벼운 발걸음으로 맛점!</p></aside></section><section class="film-scene film-parade" data-film-scene="3" aria-label="밥친구 퍼레이드" hidden><span class="film-eyebrow">NOT PERFECT. STILL TOGETHER.</span><h2>잘했든, 망했든.<br><em>같이 밥 먹으면 됐지!</em></h2><p>오늘의 주인공, 전원 입장.</p><div class="film-parade-banner" aria-hidden="true">고 생 했 어 요　 밥 은 먹 고 합 시 다</div><div class="film-parade-track"><div id="lunchFinaleParade" class="film-parade-march"></div><div class="film-parade-ground" aria-hidden="true"></div></div><div class="film-parade-small">※ 행진이 조금 엉망이어도, 마음만은 진지합니다.</div><div class="film-parade-confetti" aria-hidden="true">▰　✧　▱　✦　▱　▰　✧　▱　✦　▰　▱</div></section><section class="film-scene film-credits" data-film-scene="4" aria-label="엔딩 크레딧" hidden><div class="film-credits-title"><span>THE PEOPLE WHO MADE LUNCH HAPPEN</span><h2>오늘의 출연진</h2></div><div class="film-credit-window"><div id="lunchFinaleCreditRoll" class="film-credit-roll"></div></div><div class="film-credits-warmth" aria-hidden="true">✦</div></section><section class="film-scene film-outro" data-film-scene="5" aria-label="감사 인사" hidden><div class="film-outro-glow" aria-hidden="true"></div><span class="film-eyebrow">TO EVERYONE WHO MADE IT TO LUNCH</span><h2>오늘도 일하시느라<br><em>고생 많으셨어요.</em></h2><p id="lunchFinaleThanks">저의 <b>점심결재 대작전</b>을<br>플레이해주셔서 감사합니다.</p><p class="film-outro-note">잠깐의 웃음과 든든한 한 끼가,<br>우리의 오후를 버티는 힘이 되길.</p><div id="lunchFinaleFinalMascots" class="film-outro-mascots" aria-hidden="true"></div><div class="film-end-title">점심결재 대작전<small>THE END · BUT LUNCH BEGINS</small></div></section></main><footer class="film-bottom"><span id="lunchFinaleSceneName">상영을 시작합니다</span><div class="film-progress" aria-hidden="true"><i id="lunchFinaleProgressFill"></i></div><span>SEE YOU NEXT LUNCH</span></footer>';
  const creator=el('a','film-creator-card');creator.id='lunchFinaleCreator';creator.href=lunchFinaleInstagram;creator.target='_blank';creator.rel='noopener noreferrer';creator.setAttribute('aria-label','제작자 신정훈의 인스타그램 @mid_jhs 새 창에서 보기');creator.append(el('span','','기획 · 제작  신정훈'),el('strong','','@mid_jhs'),el('small','','INSTAGRAM ↗'));lunchFinaleDialog.querySelector('.film-outro').append(creator);
- lunchFinaleDialog.querySelector('.film-bottom>span:last-child').textContent='엔딩 후 모두 로비로';document.body.append(lunchFinaleDialog);$('lunchFinaleCloseBtn').addEventListener('click',lunchFinaleClose);$('lunchFinaleReplayBtn').textContent='결과 화면 보기 ↗';$('lunchFinaleReplayBtn').addEventListener('click',lunchFinaleClose);lunchFinaleDialog.addEventListener('cancel',e=>{e.preventDefault();lunchFinaleClose();});
+ lunchFinaleDialog.querySelector('.film-bottom>span:last-child').textContent='엔딩 후 모두 로비로';document.body.append(lunchFinaleDialog);lunchFinaleDialog.addEventListener('cancel',e=>e.preventDefault());
 }
-function lunchFinaleEnsureReplay(){
- if(lunchFinaleReplay)return;const view=$('resultView');if(!view)return;
- lunchFinaleReplay=el('button','btn lunch-finale-replay','🎬 엔딩 이어 보기 · 종료 후 자동 퇴장');lunchFinaleReplay.id='lunchFinaleOpenBtn';lunchFinaleReplay.type='button';lunchFinaleReplay.hidden=true;lunchFinaleReplay.addEventListener('click',()=>lunchFinaleOpen(true));(view.querySelector('.result-actions')||view).append(lunchFinaleReplay);
-}
+function lunchFinaleEnsureReplay(){if(lunchFinaleReplay)lunchFinaleReplay.hidden=true;}
 function lunchFinaleCredit(label,value,extra=false){const row=el('div','film-credit-row'+(extra?' film-credit-extra':''));row.append(el('span','',label),el('b','',value));return row;}
 function lunchFinaleDepartment(id,fallback='business'){return typeof netDepartment==='function'&&id?netDepartment(id):fallback;}
 function lunchFinaleBuild(data){
  $('lunchFinalePerson').textContent=data.person+' 님이 선택하신';$('lunchFinaleMenu').textContent=data.menu;$('lunchFinaleFood').textContent=typeof actionFood==='function'?actionFood(data.menu):'🍱';$('lunchFinaleLunchAnnounce').textContent='오늘의 점심 메뉴는 '+data.person+' 님이 선택하신 '+data.menu+'입니다.';
  $('lunchFinaleChampion').innerHTML=deptAvatarSvg(lunchFinaleDepartment(data.winnerId));$('lunchFinaleCourier').innerHTML=deptAvatarSvg(lunchFinaleDepartment(data.coffeeId,'accounting'));
  $('lunchFinaleCoffeeTitle').textContent=data.coffeeName?'오늘의 커피 배달은':'오늘의 커피는';$('lunchFinaleCoffeeName').textContent=data.coffeeName?data.coffeeName+' 님!':'잠깐 쉬어갑니다.';$('lunchFinaleCoffeeText').textContent=data.coffeeName?'당첨되셨습니다! 커피 원정대를 이끌어주세요.':'모두 커피 패스. 오늘은 가벼운 발걸음으로 맛점!';
- $('lunchFinaleOrderRibbon').textContent=data.orders.length?data.orders.map(o=>o.name+' · '+o.drink).join('　/　'):'커피는 쉬어도, 오후의 응원은 계속됩니다.';
+ const orders=$('lunchFinaleOrders');orders.replaceChildren();$('lunchFinaleOrderCount').textContent=data.orders.length+'잔';$('lunchFinaleOrdersEmpty').hidden=data.orders.length!==0;orders.hidden=data.orders.length===0;
+ for(const order of data.orders){const row=el('li','film-coffee-order'),name=el('span','film-coffee-order-name',order.name),drink=el('strong','film-coffee-order-drink',order.drink);row.append(name,drink);if(order.name===data.coffeeName){row.classList.add('is-courier');name.append(el('small','','배달'));}orders.append(row);}
  const names=data.names.length?data.names:[data.person],roll=$('lunchFinaleCreditRoll'),maker=lunchFinaleCredit('기획 · 제작','신정훈'),instagram=el('a','film-credit-instagram','@mid_jhs');instagram.href=lunchFinaleInstagram;instagram.target='_blank';instagram.rel='noopener noreferrer';instagram.setAttribute('aria-label','제작자 인스타그램 @mid_jhs 새 창에서 보기');maker.append(instagram);roll.replaceChildren(maker,lunchFinaleCredit('오늘의 메뉴 수호대왕',data.person+' · '+data.menu),lunchFinaleCredit('커피 원정대장',data.coffeeName||'오늘은 모두 커피 패스'));
  for(const name of names){const row=lunchFinaleCredit('오늘의 주연',name),order=data.orders.find(o=>o.name===name);if(order)row.append(el('small','film-credit-drink','주문 음료 · '+order.drink));roll.append(row);}
  const losing=data.nominations.filter(m=>m.id!==data.winnerId).map(m=>m.menus?.[0]).filter(Boolean);if(losing.length)roll.append(lunchFinaleCredit('명예로운 탈락 메뉴',[...new Set(losing)].join(' · '),true));
@@ -4778,14 +6667,15 @@ function lunchFinaleAdvance(now=lunchFinaleNow()){
 function lunchFinaleOpen(replay=false){
  lunchFinaleSyncContext();if(netIsHost())lunchFinaleEnsureSchedule();const data=lunchFinaleScheduleCurrent()?lunchFinaleShared.data:null;if(!data||lunchFinaleNow()>=lunchFinaleLocalEnd||!replay&&lunchFinaleSeen.has(data.key))return false;
  lunchFinaleEnsureUI();lunchFinaleEnsureReplay();lunchFinaleBuild(data);lunchFinalePlan(data);lunchFinaleShownKey=data.key;lunchFinaleSeen.add(data.key);if(lunchFinaleSeen.size>20)lunchFinaleSeen.delete(lunchFinaleSeen.values().next().value);
- if(!lunchFinaleDialog.open)lunchFinaleFocus=document.activeElement;lunchFinaleStopSound();lunchFinaleCurrentScene=-1;lunchFinaleStartedAt=lunchFinaleLocalStart;if(!lunchFinaleDialog.open)lunchFinaleDialog.showModal();lunchFinaleAdvance();$('lunchFinaleCloseBtn').focus({preventScroll:true});return true;
+ if(!lunchFinaleDialog.open)lunchFinaleFocus=document.activeElement;lunchFinaleStopSound();lunchFinaleCurrentScene=-1;lunchFinaleStartedAt=lunchFinaleLocalStart;if(!lunchFinaleDialog.open)lunchFinaleDialog.showModal();lunchFinaleAdvance();lunchFinaleDialog.focus({preventScroll:true});return true;
 }
 function lunchFinaleTick(){
  lunchFinaleSyncContext();const created=netIsHost()&&lunchFinaleEnsureSchedule();if(created&&typeof netPublish==='function'&&(typeof netApplying==='undefined'||!netApplying))netPublish();
- const data=lunchFinaleScheduleCurrent()?lunchFinaleShared.data:null;lunchFinaleEnsureReplay();if(lunchFinaleReplay)lunchFinaleReplay.hidden=!data||lunchFinaleNow()>=lunchFinaleLocalEnd;
+ const data=lunchFinaleScheduleCurrent()?lunchFinaleShared.data:null;lunchFinaleEnsureReplay();if(lunchFinaleReplay)lunchFinaleReplay.hidden=true;
  if(!data){if(lunchFinaleDialog?.open)lunchFinaleClose();return;}if(lunchFinaleMaybeLeave())return;
  if(lunchFinaleDialog?.open&&lunchFinaleShownKey!==data.key)lunchFinaleClose();
- if(!lunchFinaleSeen.has(data.key))lunchFinaleOpen(false);else lunchFinaleAdvance();
+ // A browser dismissal must never expose the result controls during the shared film.
+ if(!lunchFinaleDialog?.open&&lunchFinaleNow()<lunchFinaleLocalEnd)lunchFinaleOpen(true);else lunchFinaleAdvance();
 }
 setInterval(lunchFinaleTick,100);netRoom.onDisconnect(e=>{if(e.self||e.hostLost)lunchFinaleReset();});
 /* END_LUNCH_FINALE_V2 */
@@ -5185,6 +7075,90 @@ function lobbyMainInstall(){
 
 arcadeInstall();arcadeTenInstall();arcadeExtraInstall();lobbyMainInstall();
 /* FIVE_NEW_GAMES_END */
+/* CAMPUS_DEPARTMENT_PICKER */
+function deptPickerCreate(){
+ const wrap=el('div','net-department-wrap');
+ wrap.innerHTML='<div class="campus-picker-heading"><label for="deptPickerOpen">내 캐릭터 · 학과/전공</label><span>학과·전공 118개</span></div><button id="deptPickerOpen" class="campus-picker-open" type="button" aria-haspopup="dialog"><span>학과·캐릭터 고르기</span><strong>경영학부 경영학전공</strong><b aria-hidden="true">변경 →</b></button><select id="netDepartment" aria-label="내 캐릭터 · 학과/전공" hidden tabindex="-1"></select><p id="netPassiveDesc"></p><small>학과별 옷과 소품을 고르는 선택이에요. 경기 능력치는 모두 같아요. <a href="https://www.daegu.ac.kr/intro/0" target="_blank" rel="noopener">학교 공식 학과 안내 ↗</a></small>';
+ const select=wrap.querySelector('#netDepartment');for(const d of deptOptions){const option=el('option','',d.name);option.value=d.id;select.append(option);}select.value='business';
+ select.addEventListener('change',event=>{netRoom.send({t:'department',value:event.target.value});deptPickerSync();if(typeof deptAvatarPreview==='function')deptAvatarPreview();});
+ wrap.querySelector('#deptPickerOpen').addEventListener('click',deptPickerOpen);return wrap;
+}
+function deptPickerEnsureDialog(){
+ let dialog=$('deptPickerDialog');if(dialog)return dialog;
+ dialog=el('dialog','campus-picker-dialog');dialog.id='deptPickerDialog';dialog.setAttribute('aria-labelledby','deptPickerTitle');
+ dialog.innerHTML='<header class="campus-picker-head"><div><span>오늘의 밥친구</span><h2 id="deptPickerTitle">학과를 닮은 캐릭터</h2></div><button id="deptPickerClose" class="tiny-btn" type="button" aria-label="학과 선택 닫기">닫기</button></header><div class="campus-picker-tools"><label for="deptSearch">학과 찾기</label><input id="deptSearch" type="search" autocomplete="off" placeholder="학과명 또는 예전 학과명으로 검색" aria-describedby="deptSearchCount"><div id="deptCollegeButtons" class="campus-colleges" role="group" aria-label="대학·학부별 보기"></div><output id="deptSearchCount" aria-live="polite"></output></div><div id="deptCharacterCards" class="campus-character-cards" aria-label="학과 캐릭터 선택"></div><footer class="campus-picker-footer"><button id="deptPickerMore" class="tiny-btn" type="button">더 보기</button><span>같은 학과도 함께 선택할 수 있어요.</span></footer>';
+ document.body.append(dialog);dialog.dataset.college='';dialog.dataset.limit='24';
+ for(const name of ['',...new Set(deptOptions.map(d=>d.college))]){const button=el('button','campus-college',name||'전체');button.type='button';button.dataset.college=name;button.setAttribute('aria-pressed',String(!name));button.addEventListener('click',()=>{dialog.dataset.college=name;dialog.dataset.limit='24';deptPickerFilter();});$('deptCollegeButtons').append(button);}
+ $('deptSearch').addEventListener('input',()=>{dialog.dataset.limit='24';deptPickerFilter();});
+ $('deptPickerMore').addEventListener('click',()=>{dialog.dataset.limit=String(Number(dialog.dataset.limit)+24);deptPickerFilter();});
+ $('deptPickerClose').addEventListener('click',()=>dialog.close());dialog.addEventListener('close',()=>$('deptPickerOpen')?.focus({preventScroll:true}));return dialog;
+}
+function deptPickerOpen(){
+ if(netReady[netSelfId()])return;const dialog=deptPickerEnsureDialog();dialog.dataset.limit='24';deptPickerFilter();if(!dialog.open)dialog.showModal();$('deptSearch').focus({preventScroll:true});
+}
+function deptPickerFilter(){
+ const dialog=$('deptPickerDialog');if(!dialog)return;const query=deptSearchKey($('deptSearch').value),college=dialog.dataset.college,current=$('netDepartment').value;
+ const found=deptOptions.filter(d=>(!college||d.college===college)&&(!query||deptSearchKey([d.name,d.short,d.college,...d.aliases].join(' ')).includes(query)));
+ const cards=$('deptCharacterCards'),fragment=document.createDocumentFragment(),limit=Number(dialog.dataset.limit||24);
+ for(const d of found.slice(0,limit)){const button=el('button','campus-character-card');button.type='button';button.dataset.department=d.id;button.setAttribute('aria-pressed',String(d.id===current));button.setAttribute('aria-label',d.name+' 캐릭터 선택');const portrait=el('span','campus-character-art');portrait.innerHTML=deptAvatarSvg(d.id);button.append(portrait,el('strong','',d.name),el('small','',d.college));if(/모집중지|2027|계약/.test(d.status))button.append(el('em','',/모집중지/.test(d.status)?'재학생 전공':d.status));button.addEventListener('click',()=>{if(netReady[netSelfId()])return;const select=$('netDepartment');select.value=d.id;select.dispatchEvent(new Event('change',{bubbles:true}));dialog.close();});fragment.append(button);}
+ cards.replaceChildren(fragment);$('deptSearchCount').textContent=found.length?found.length+'개 중 '+Math.min(limit,found.length)+'개 표시 · 캐릭터를 누르면 선택돼요':'찾는 학과가 없어요. 다른 이름으로 검색해주세요.';
+ $('deptPickerMore').hidden=found.length<=limit;
+ for(const button of $('deptCollegeButtons').children)button.setAttribute('aria-pressed',String(button.dataset.college===college));
+}
+function deptPickerSync(){
+ const wrap=document.querySelector('.net-department-wrap');if(!wrap)return;const ready=!!netReady[netSelfId()],select=$('netDepartment'),current=netDepartment(netSelfId());select.value=current;const option=deptOption(current),button=$('deptPickerOpen');button.disabled=ready;button.querySelector('strong').textContent=option.name;button.querySelector('b').textContent=ready?'준비 완료':'변경 →';button.setAttribute('aria-label','학과·캐릭터 고르기 · 현재 '+option.name);if(ready&&$('deptPickerDialog')?.open)$('deptPickerDialog').close();
+}
+const deptPickerSetupBase=renderSetup;renderSetup=function(){const out=deptPickerSetupBase.apply(this,arguments);deptPickerSync();return out;};
+/* END_CAMPUS_DEPARTMENT_PICKER */
+
+/* DUEL_SINGLE_CONTROLS_V1 */
+let duelControlsLocalSide=0,duelControlsLastKey='',duelControlsView=null;
+function duelControlsOnline(){return typeof netActionOnline==='function'?netActionOnline():typeof netIsActive==='function'&&netIsActive();}
+function duelControlsSide(){if(!duelControlsOnline())return duelControlsLocalSide;const side=typeof netActionSide==='function'?netActionSide():typeof netSelfSide==='function'?netSelfSide():-1;return side===0||side===1?side:-1;}
+function duelControlsElements(){
+ const view=typeof $==='function'?$('duelView'):document.getElementById('duelView');if(!view)return null;
+ if(duelControlsView?.view===view)return duelControlsView;
+ const controls=view.querySelector('.battle-controls'),panels=controls?[...controls.querySelectorAll('.battle-control-panel')]:[];if(!controls||panels.length!==2)return null;
+ const toolbar=document.createElement('div');toolbar.className='duel-control-toolbar';toolbar.id='duelControlToolbar';
+ const label=document.createElement('label');label.htmlFor='duelControlSideSelect';label.textContent='터치 조작 대상';
+ const select=document.createElement('select');select.id='duelControlSideSelect';select.setAttribute('aria-label','이 기기에서 터치로 조작할 캐릭터');
+ for(const [value,text]of [[0,'도전자'],[1,'방어자']]){const option=document.createElement('option');option.value=String(value);option.textContent=text;select.append(option);}
+ const note=document.createElement('span');note.id='duelControlPadNote';toolbar.append(label,select,note);controls.before(toolbar);
+ const spectator=document.createElement('p');spectator.id='duelSpectatorControls';spectator.className='duel-spectator-controls';spectator.hidden=true;spectator.textContent='관전 중이에요. 두 선수의 승부를 지켜봐 주세요.';controls.after(spectator);
+ select.addEventListener('change',()=>{if(duelControlsOnline())return;const side=Number(select.value);if(side!==0&&side!==1)return;if(typeof actionReleaseAll==='function')actionReleaseAll();duelControlsLocalSide=side;duelControlsLastKey='';duelControlsRefresh();});
+ duelControlsView={view,controls,panels,toolbar,label,select,note,spectator};return duelControlsView;
+}
+function duelControlsRefresh(){
+ if(typeof document==='undefined')return;const ui=duelControlsElements();if(!ui)return;
+ if(typeof mode==='undefined'||mode!=='duel'||!duel||ui.view.hidden){ui.toolbar.hidden=true;ui.spectator.hidden=true;duelControlsLastKey='';return;}
+ const online=duelControlsOnline(),side=duelControlsSide(),phase=duel.phase||'idle',names=[duel.challenger||'도전자',duel.defender||'방어자'];
+ const key=[online,side,duel.id||'',phase,names.join('|')].join(':');if(key===duelControlsLastKey)return;duelControlsLastKey=key;
+ ui.controls.dataset.singlePad='true';ui.controls.dataset.controlSide=String(side);ui.view.dataset.singleDuelPad='true';
+ ui.controls.hidden=online&&side<0;ui.spectator.hidden=!ui.controls.hidden;ui.toolbar.hidden=online&&side<0;ui.label.hidden=online;ui.select.hidden=online;ui.select.value=String(duelControlsLocalSide);
+ ui.note.textContent=online?'내 캐릭터 키패드 · 이동과 공격을 함께 누를 수 있어요.':'화면에는 선택한 캐릭터 키패드만 보여요. 두 사람의 키보드는 모두 사용할 수 있어요.';
+ for(let i=0;i<2;i++){
+  const panel=ui.panels[i],own=i===side;panel.hidden=!own;panel.setAttribute('aria-label',(online?'내 캐릭터':names[i])+' 조작 키패드');
+  const title=panel.querySelector('strong');if(title)title.textContent=names[i]+(online?' · 내 조작':' · 터치 조작');
+  const hint=panel.querySelector('.battle-key-hint');if(hint)hint.textContent=online?'A/D 또는 ←/→ 이동 · W/↑ 점프 · F/K 공격 · G/L 방어':i===0?'A / D 이동 · W 점프 · F 공격 · G 방어':'← / → 이동 · ↑ 점프 · K 공격 · L 방어';
+  ui.select.options[i].textContent=(i===0?'도전자 · ':'방어자 · ')+names[i];
+  for(const button of panel.querySelectorAll('[data-battle-action]')){
+   const action=button.dataset.battleAction,labels={left:'왼쪽 이동',right:'오른쪽 이동',jump:'점프',attack:'공격',guard:'방어'},keys=online?{left:'A / ←',right:'D / →',jump:'W / ↑',attack:'F / K',guard:'G / L'}:i===0?{left:'A',right:'D',jump:'W',attack:'F',guard:'G'}:{left:'←',right:'→',jump:'↑',attack:'K',guard:'L'};
+   button.setAttribute('aria-label',(online?'내 캐릭터':names[i])+' '+(labels[action]||action));const kbd=button.querySelector('kbd');if(kbd)kbd.textContent=keys[action]||'';
+  }
+ }
+ const instructions=ui.view.querySelector('.battle-instructions');if(instructions)instructions.textContent=online?(side<0?'관전자에게는 조작 키패드가 표시되지 않아요.':'내 키패드 하나로 조작해요. 왼손은 이동, 오른손은 점프·공격·방어! 머리를 밟으면 추가 피해를 줘요.'):'터치 조작 대상을 바꿔 하나의 키패드로 조종해요. 키보드는 A/D/W/F/G와 방향키/K/L 두 사람 모두 그대로 사용할 수 있어요.';
+ const intro=ui.view.querySelector('.battle-intro p');if(intro)intro.textContent=online?'내 기기에서는 내 캐릭터만 조작해요. 점프로 머리를 밟고, 방어로 공격을 버티세요.':'터치는 한 키패드로, 키보드는 두 사람 그대로! 점프와 공격으로 메뉴를 지켜요.';
+ if(online&&['idle','paused'].includes(phase)){const status=typeof $==='function'?$('battleStatus'):document.getElementById('battleStatus');if(status)status.textContent=side<0?'관전 중 · 두 선수의 준비를 기다리고 있어요.':'내 캐릭터 준비 완료를 누르세요. 내 키패드만 표시되며 키보드는 두 방식 모두 사용할 수 있어요.';}
+}
+const duelControlsBaseActionControls=actionControls;
+actionControls=function(...args){const out=duelControlsBaseActionControls(...args);duelControlsRefresh();return out;};
+const duelControlsBaseNetRefresh=netRefreshCombatControls;
+netRefreshCombatControls=function(...args){const out=duelControlsBaseNetRefresh(...args);duelControlsRefresh();return out;};
+const duelControlsBaseRender=actionRender;
+actionRender=function(...args){const out=duelControlsBaseRender(...args);duelControlsRefresh();return out;};
+setInterval(duelControlsRefresh,200);
+/* END_DUEL_SINGLE_CONTROLS_V1 */
+
 safeRead();showSetup();if(!canStore)$('storageNote').textContent='이번 게임은 정상 진행돼요. 이 환경에서는 기록 저장이 제한돼요.';
 })();
 
@@ -5225,3 +7199,4 @@ safeRead();showSetup();if(!canStore)$('storageNote').textContent='이번 게임�
 </script>
 </body>
 </html>
+
