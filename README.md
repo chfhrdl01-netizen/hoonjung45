@@ -55,7 +55,7 @@ node work/build.mjs
 | --- | --- |
 | `index.html` | 화면 HTML |
 | `assets/styles-secret8.css` | 기기별·게임별 스타일 |
-| `assets/app-secret8.js` | 방 통신·판정·진행·화면 코드 |
+| `assets/app-secret8a.js` | 방 통신·판정·진행·화면 코드 |
 
 같은 세 파일을 `dist/`에도 생성합니다. CSS·JS를 먼저 배포하고 마지막에 `index.html`을 반영합니다. 이전 캐시 방문자를 위한 자산은 보존합니다. 방 통신·메인 앱·장식의 세 실행 범위를 유지하며 소스 조각을 각각 ES 모듈로 불러오지 않습니다.
 
