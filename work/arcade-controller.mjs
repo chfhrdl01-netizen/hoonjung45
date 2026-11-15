@@ -110,8 +110,8 @@ function arcadeForfeit(id){
  arcadeRenderSafe();arcadePublish(true);
 }
 function arcadeDemoStart(game='coins',mode='single'){
- if(!arcadeGameKeys.includes(game)||!['single','tournament'].includes(mode)||arcadeState?.purpose==='lunch'&&arcadeBusy())return false;if(arcadeState)arcadeCancel();
- arcadeDemo=true;const members=[{id:'arcade-you',name:'내 캐릭터',department:'business'},...['반찬도둑','월급요정','퇴근장인'].map((name,i)=>({id:'arcade-bot-'+i,name,department:['accounting','hotel','tourism'][i]}))].map(m=>({...m,response:'join'}));
+ if(!arcadeGameKeys.includes(game)||!['single','tournament'].includes(mode)||arcadeState?.purpose==='lunch'&&arcadeBusy())return false;if(!deptPracticeRequire(()=>arcadeDemoStart(game,mode)))return false;if(arcadeState)arcadeCancel();
+ arcadeDemo=true;const members=[{id:'arcade-you',name:'내 캐릭터',department:deptPracticeChoice},...['반찬도둑','월급요정','퇴근장인'].map((name,i)=>({id:'arcade-bot-'+i,name,department:['accounting','hotel','tourism'][i]}))].map(m=>({...m,response:'join'}));
  arcadeState=arcadeMakeState(mode,game,members);arcadeState.difficulty='normal';arcadeState.activeIds=members.map(m=>m.id);arcadeOpen();arcadeStartWorld();return true;
 }
 function arcadeHandle(senderId,cmd){
