@@ -1,0 +1,70 @@
+/* Game-specific learning and quiet feedback; the arena keeps its existing space. */
+#arcadeDialog[data-game-guide="true"] #arcadeHelp{display:none!important}
+#arcadeDialog .game-guide{color:#423722;text-wrap:pretty}
+#arcadeDialog .game-guide-row{display:grid;grid-template-columns:25px minmax(0,1fr);gap:6px;align-items:start;margin:0 0 6px;line-height:1.5;font-size:11px}
+#arcadeDialog .game-guide-row:last-child{margin-bottom:0}
+#arcadeDialog .game-guide-row>b{color:#705c36;font-size:10px;padding-top:1px}
+#arcadeDialog .game-guide-row:first-child>span{font-weight:900;color:#30271f}
+#arcadeDialog .game-countdown-tip{max-width:min(90%,470px);padding:8px 13px;border-radius:8px;background:#30271f;color:#fff4cf;font-size:12px;font-weight:800;line-height:1.5;text-wrap:balance}
+#arcadeDialog #gameOwnStatus{position:relative}
+#arcadeDialog #gameOwnStatus #arcadeOwnStatus{display:block;min-width:0;max-width:none;font:inherit;line-height:inherit}
+#arcadeDialog #gameOwnStatus:has(.game-score-feedback:not([hidden])) #arcadeOwnStatus{visibility:hidden}
+#arcadeDialog .game-score-feedback{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);z-index:1;max-width:100%;box-sizing:border-box;padding:1px 4px;border:1px solid #347449;border-radius:99px;background:#e8ffde;color:#25552e;font-size:inherit;font-weight:950;line-height:inherit;text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;pointer-events:none;font-variant-numeric:tabular-nums;animation:game-score-arrive .15s ease-out}
+#arcadeDialog .game-score-feedback[data-direction="loss"]{background:#ffe5dfee;color:#863b29;border-color:#ac5942}
+#arcadeDialog .game-time-track{position:absolute;inset:auto 0 0;height:4px;z-index:8;background:#30271f14;pointer-events:none;overflow:hidden}
+#arcadeDialog .game-time-track>i{display:block;width:100%;height:100%;transform-origin:left center;background:#6e965d;will-change:transform}
+#arcadeDialog[data-time-pressure="true"] #arcadeClock{background:#5f3025;color:#fff6db;border-color:#5f3025}
+#arcadeDialog[data-time-pressure="true"] .game-time-track>i{background:#c0603f}
+#arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]) .game-guide-row{font-size:11px;grid-template-columns:24px minmax(0,1fr);gap:5px;margin-bottom:5px}
+#arcadeDialog:is([data-device-layout="phone"],[data-device-layout="touch-wide"]) .game-countdown-tip{font-size:10px;padding:5px 8px;max-width:95%}
+@media(max-height:450px){#arcadeDialog .game-countdown-tip{font-size:10px;padding:4px 7px}#arcadeDialog .five-overlay{gap:7px}}
+@keyframes game-score-arrive{from{opacity:.4}to{opacity:1}}
+@media(prefers-reduced-motion:reduce){#arcadeDialog .game-score-feedback{animation:none}#arcadeDialog .game-time-track>i{will-change:auto}}
+
+/* Paint-only stage polish: hazards keep their exact dimensions and positions. */
+#arcadeDialog .five-board{box-shadow:inset 0 0 0 1px #fff5d980,3px 4px 0 #30271f33}
+#arcadeDialog .five-actor.is-own .five-actor-name{background:#ffdc6a;color:#30271f;box-shadow:0 2px 0 #30271f33}
+#arcadeDialog .five-actor.is-own::after{content:"";position:absolute;left:50%;bottom:2%;width:75%;height:13%;transform:translateX(-50%);border:2px solid #fff0a9;border-radius:50%;background:#d5a83f77;z-index:-1}
+#arcadeDialog .five-board[data-game="coins"]{background-image:radial-gradient(ellipse at 50% 35%,#f8f4c74d,transparent 70%),linear-gradient(#6571431a 1px,transparent 1px),linear-gradient(90deg,#6571431a 1px,transparent 1px);background-size:auto,8% 12%,8% 12%}
+#arcadeDialog .five-coin:not(.five-preview){border-color:#856125;color:#a77615;background:radial-gradient(circle at 35% 25%,#fff1a9,#efc04c 70%);box-shadow:0 2px 0 #8d6b27}
+#arcadeDialog .five-board[data-game="dodge"]{background-image:radial-gradient(ellipse at center,#eff2df99,transparent 65%),radial-gradient(#566f5d33 1px,transparent 1px);background-size:auto,20px 20px}
+#arcadeDialog .five-food-zone:not([data-hit="true"]){background:repeating-linear-gradient(135deg,#d9622826 0 5px,#ffdd9d12 5px 10px);color:#9b371d;border-color:#ac482c}
+#arcadeDialog .five-board[data-game="sneak"]{background-image:linear-gradient(90deg,transparent 49.7%,#fff4ce55 49.7% 50.3%,transparent 50.3%),repeating-linear-gradient(0deg,#e0d7b8 0 55px,#bfae88 56px,#e0d7b8 58px)}
+#arcadeDialog .five-board[data-game="runner"] .five-run-lane:nth-child(odd){background:linear-gradient(0deg,#526d5f12,transparent 70%)}
+#arcadeDialog .five-board[data-game="stamp"] .five-meter{background:linear-gradient(#afa1a8,#d5c9cf)}
+#arcadeDialog .five-meter-target{background:repeating-linear-gradient(135deg,#bfe193 0 5px,#aad579 5px 10px)}
+#arcadeDialog .five-meter-row.is-own{box-shadow:0 2px 0 #5b483326}
+#arcadeDialog .five-board[data-game="brawl"]{background:radial-gradient(ellipse at 50% 50%,#e9cd9e 0 38%,#cda983 39% 40%,#dabb95 41% 61%,#c7a67f 62%);box-shadow:inset 0 0 0 10px #7a5d4233,3px 4px 0 #30271f33}
+#arcadeDialog .five-board[data-game="kart"] .ten-kart-track{box-shadow:inset 0 0 0 2px #fff4d777,0 0 0 2px #4f665644}
+#arcadeDialog .five-board[data-game="basket"] .ten-hoop{border-color:#874b30;box-shadow:0 2px 0 #fff6d9aa}
+#arcadeDialog .ten-restaurant{box-shadow:inset 0 3px 0 #fff8e8aa,0 3px 0 #30271f22}
+#arcadeDialog .ten-restaurant.is-own{outline:2px solid #fff1a1;outline-offset:2px}
+#arcadeDialog .ten-rhythm-note{border-color:#3e5147;box-shadow:0 2px 0 #3e514766}
+#arcadeDialog .ten-hit-line{box-shadow:0 2px 0 #fff7d999}
+#arcadeDialog .tray-arcade-tile.is-warning{background-image:repeating-linear-gradient(135deg,#ffe5a122 0 7px,#8f392333 7px 14px);border-style:dashed}
+#arcadeDialog .sport-court.is-own{border-color:#755832;box-shadow:0 0 0 2px #f8d477}
+#arcadeDialog .sport-court.is-own .sport-head{background:#f8df9a;color:#3e3528}
+#arcadeDialog .sport-court.is-own .sport-field{box-shadow:inset 0 0 0 1px #fff8d970}
+#arcadeDialog .sport-curl-target{border-color:#a95d58;background:radial-gradient(circle,#a45d53 0 10%,#fff4d7 11% 16%,#b0ced8 17% 39%,#fff2d4 40% 65%,#b0ced8 66%);box-shadow:0 0 0 1px #fff7dc88}
+#arcadeDialog .sport-parking-slot{color:#fff4c6;border-color:#fff4c6;background:#dddcbe19}
+#arcadeDialog .sport-parking-slot.is-parking{background:#b7db8399;color:#203923;border-color:#e3f7bf}
+#arcadeDialog .sport-golf-hole{outline:2px solid #d9eac0;outline-offset:1px}
+#arcadeDialog .ap-laser.is-warning{background:repeating-linear-gradient(90deg,#e6b56e 0 8px,transparent 8px 15px);opacity:.85}
+#arcadeDialog .ap-laser.is-active{background:linear-gradient(#ffe1ba 0 18%,#ed765a 19% 81%,#ffe1ba 82%)}
+#arcadeDialog .ap-crown.is-owned{background:#fff0ad55;border-radius:50%}
+#arcadeDialog .ap-traffic-road{background:linear-gradient(0deg,#46525422,transparent),#626b6f}
+#arcadeDialog .ap-traffic-safe{border-color:#5e7c51}
+#arcadeDialog .ap-bridge-water{background:repeating-linear-gradient(0deg,#c1e1d022 0 2px,transparent 2px 20px),#6eaaa5}
+#arcadeDialog .ap-bridge-wood{filter:drop-shadow(0 2px 0 #3c514233)}
+#arcadeDialog .ap-claw-cabinet{background:linear-gradient(120deg,#fff9df44,transparent 34%),repeating-linear-gradient(90deg,#fff5d10d 0 35px,#c6cdd31a 35px 70px),#8d9eaf}
+#arcadeDialog .ap-claw-prize.mass-3{border-color:#8c603b;background:#f5d7a8}
+#arcadeDialog .brain-memory{background:radial-gradient(ellipse at 50% 25%,#fff7e4,#d2d9d1)}
+#arcadeDialog .brain-sorter{background:repeating-linear-gradient(0deg,#fff4d808 0 25px,#9e8b6722 26px 27px),#e5d9b8}
+#arcadeDialog .brain-receipt{background:radial-gradient(ellipse at 50% 20%,#f7e9c7,#cfc8b5)}
+#arcadeDialog .brain-safe{background:linear-gradient(140deg,#d4dfd6,#a8beb7)}
+#arcadeDialog .brain-auction{background:radial-gradient(ellipse at 50% 20%,#fff1c9,#ddd0b0)}
+#arcadeDialog .brain-stacker{background:linear-gradient(#d3e1dc,#ebdfbd)}
+#arcadeDialog .brain-reaction{background:radial-gradient(ellipse at 50% 35%,#f9ecd1,#d5c3a7)}
+#arcadeDialog .brain-memory-light.is-lit{background:#f8d76d;border-color:#886b31;box-shadow:inset 0 -5px #b5944333,0 0 0 3px #fff2bc99}
+#arcadeDialog .brain-reaction-signal[data-signal="go"]{background:#badb86;border-color:#4f784c;box-shadow:0 5px 0 #4d633333,inset 0 0 0 2px #e5f4be}
+#arcadeDialog .brain-reaction-signal[data-signal="go"] .brain-signal-dot{background:#477c42;border-color:#315a32;box-shadow:0 0 0 3px #d6eea9}
