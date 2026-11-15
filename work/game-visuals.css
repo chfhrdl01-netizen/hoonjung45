@@ -1,0 +1,80 @@
+/* GAME_VISUALS_V1 — aiming, target ranges and local field hierarchy. */
+.gv-field-lines{position:absolute;inset:0;width:100%;height:100%;z-index:3;overflow:hidden;pointer-events:none;fill:none}
+.gv-field-lines[hidden],.gv-field-lines circle[hidden]{display:none}
+.gv-aim-line{fill:none;stroke:#fff8dc;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:7 7}
+.gv-range-zone{fill:#f5d67520;stroke:#f9e6a3;stroke-width:2;stroke-dasharray:5 5}
+.gv-target-ring{fill:none;stroke:#fff6c9;stroke-width:3;stroke-dasharray:5 5}
+.gv-contact-target{fill:#a4f2c13b;stroke:#f7ffe5;stroke-width:3}
+.gv-field-lines[data-state="cooling"] .gv-range-zone{fill:#ffffff0d;stroke:#e2d7bd;stroke-dasharray:3 8}
+.gv-field-lines[data-state="recover"]{opacity:.25}
+.sport-field .gv-field-lines{z-index:4}
+.sport-field .gv-aim-line{stroke:#fffbe6;stroke-width:3.5}
+.sport-field .gv-range-zone{fill:#c4f2b342;stroke:#eaffcf;stroke-width:2}
+.sport-court[data-game="parking"] .gv-target-ring{stroke:#e1f8b2;stroke-width:4}
+.sport-court[data-game="parking"] .gv-range-zone{fill:none;stroke:#f1ffcf;stroke-dasharray:none;stroke-width:3}
+.sport-court[data-game="volley"] .gv-contact-target{fill:#fff1b7;stroke:#5e7657;stroke-width:2}
+.sport-court.is-own .sport-aim{display:none}
+.sport-court.is-own .sport-gremlin{width:clamp(38px,11cqw,64px)}
+.sport-court.is-own .sport-bowlingPin{width:clamp(8px,2.7cqw,14px);height:clamp(16px,5cqh,28px);border-width:1.5px;box-shadow:1px 2px #523b2b33}
+.sport-court.is-own .sport-bowlingBall{width:clamp(14px,4.2cqw,23px);border-width:2px}
+.sport-court.is-own .sport-golfBall{width:clamp(11px,3.2cqw,17px)}
+.sport-court.is-own .sport-curlStone{width:clamp(17px,4.8cqw,25px)}
+.sport-court.is-own .sport-pongBall{width:clamp(12px,3.6cqw,18px)}
+.sport-court.is-own .sport-volleyBall{width:clamp(25px,7cqw,36px);height:clamp(31px,9cqw,44px)}
+.sport-court.is-own[data-game="bowling"] .sport-field{background:linear-gradient(90deg,#80664c 0 3%,transparent 3% 97%,#80664c 97%),repeating-linear-gradient(90deg,#ba8f5944 0 7%,transparent 7% 14%),linear-gradient(#e8c18b,#f3d7a3);box-shadow:inset 0 8px #7d654233}
+.sports-courts.gv-focused,.sports-courts.gv-focused.is-crowded{display:grid;grid-template-columns:minmax(0,2.6fr) minmax(105px,1fr);grid-template-rows:repeat(var(--gv-rivals,1),minmax(0,1fr));gap:7px;padding:34px 8px 8px}
+.sports-courts.gv-focused .sport-court{grid-column:2;grid-row:auto;border-radius:7px}
+.sports-courts.gv-focused .sport-court.is-own{grid-column:1;grid-row:1 / -1;border-width:3px;box-shadow:none}
+.sports-courts.gv-focused .sport-court:not(.is-own) .sport-gremlin{width:24px}
+.sports-courts.gv-focused .sport-court:not(.is-own) .sport-detail,.sports-courts.gv-focused .sport-court:not(.is-own) .sport-judge{display:none}
+.sports-courts.gv-focused .sport-court:not(.is-own) .sport-head{min-height:16px;font-size:9px;padding:2px 4px}
+.sports-courts.gv-focused .sport-court:not(.is-own) .sport-head strong{font-size:9px}
+.five-board[data-game="brawl"] .five-actor-tag{bottom:calc(100% + 11px);font-size:10px;color:#fff8e8;text-shadow:0 1px 2px #1c292a,1px 0 #1c292a,-1px 0 #1c292a}
+.gv-health{position:absolute;left:4%;right:4%;bottom:calc(100% + 2px);height:6px;box-sizing:border-box;background:#482f31;border:1px solid #263b39;border-radius:4px;overflow:hidden;box-shadow:0 1px #fff7dc66}
+.gv-health i{display:block;height:100%;width:100%;background:#b0df99}
+.gv-health[data-low="true"] i{background:#f3a584}
+.five-actor.is-own .gv-health{height:8px;border-color:#fff3be;box-shadow:0 0 0 1px #263b39}
+#arcadeBoard[data-game="brawl"][data-visual-arena="cafeteria"]{background:repeating-linear-gradient(0deg,transparent 0 59px,#577b7240 59px 61px),repeating-linear-gradient(90deg,transparent 0 59px,#577b7240 59px 61px),#b8c9af;box-shadow:inset 0 0 0 11px #819c8966}
+#arcadeBoard[data-game="brawl"][data-visual-arena="rooftop"]{background:linear-gradient(90deg,transparent 49.6%,#fff1bc44 49.6% 50.4%,transparent 50.4%),repeating-linear-gradient(0deg,#b9c5c5 0 58px,#a5b6b8 58px 61px);box-shadow:inset 0 0 0 11px #637e8399}
+#arcadeBoard[data-game="brawl"][data-visual-arena="office"]{background:repeating-linear-gradient(45deg,#728d8d 0 15px,#6e8887 15px 30px),#728d8d;box-shadow:inset 0 0 0 11px #415f61aa}
+.five-action[data-visual-state]{position:relative;overflow:hidden;isolation:isolate}
+.five-action[data-visual-state]:after{content:"";position:absolute;inset:auto 0 0;height:5px;background:#456b50;transform:scaleX(var(--gv-ready,1));transform-origin:left;pointer-events:none;opacity:.65}
+.five-action[data-visual-state="charge"]:after{height:8px;background:#78a663;opacity:.95}
+.five-action[data-visual-state="stop"]{background:#e8b096!important;border-color:#95503b!important}
+.five-action[data-visual-state="watch"]:after,.five-action[data-visual-state="recover"]:after{display:none}
+#arcadeDialog #arcadeDpad[data-visual-axes] button[hidden]{display:none!important}
+#arcadeDialog #arcadeDpad[data-visual-axes="horizontal"]{--gv-axis-key:var(--mobile-dpad-size,40px);grid-template-columns:repeat(3,var(--gv-axis-key));grid-template-rows:var(--gv-axis-key);gap:3px}
+#arcadeDialog #arcadeDpad[data-visual-axes="horizontal"] [data-arcade-control="left"]{grid-column:1;grid-row:1}
+#arcadeDialog #arcadeDpad[data-visual-axes="horizontal"] i{grid-column:2;grid-row:1}
+#arcadeDialog #arcadeDpad[data-visual-axes="horizontal"] [data-arcade-control="right"]{grid-column:3;grid-row:1}
+#arcadeDialog #arcadeDpad[data-visual-axes="vertical"]{--gv-axis-key:var(--mobile-dpad-size,40px);grid-template-columns:var(--gv-axis-key);grid-template-rows:var(--gv-axis-key) 18px var(--gv-axis-key);gap:3px}
+#arcadeDialog #arcadeDpad[data-visual-axes="vertical"] [data-arcade-control="up"]{grid-column:1;grid-row:1}
+#arcadeDialog #arcadeDpad[data-visual-axes="vertical"] i{grid-column:1;grid-row:2}
+#arcadeDialog #arcadeDpad[data-visual-axes="vertical"] [data-arcade-control="down"]{grid-column:1;grid-row:3}
+#arcadeDialog #arcadeDpad[data-visual-axes="up"]{--gv-axis-key:var(--mobile-dpad-size,40px);grid-template-columns:var(--gv-axis-key);grid-template-rows:var(--gv-axis-key) 18px;gap:3px}
+#arcadeDialog #arcadeDpad[data-visual-axes="up"] [data-arcade-control="up"]{grid-column:1;grid-row:1}
+#arcadeDialog #arcadeDpad[data-visual-axes="up"] i{grid-column:1;grid-row:2}
+.five-board[data-visual-kind="decision"][data-visual-phase="watch"] .brain-memory-lights{background:#c9b57625;border-radius:18px}
+.five-board[data-visual-kind="decision"][data-visual-phase="repeat"] .brain-memory-lights{background:#8cbd8b20;border-radius:18px}
+@container (max-width:640px){
+ .sports-courts.gv-focused,.sports-courts.gv-focused.is-crowded{display:flex;flex-direction:column;padding:32px 6px 6px;gap:0}
+ .sports-courts.gv-focused .sport-court:not(.is-own){display:none}
+ .sports-courts.gv-focused .sport-court.is-own{display:flex;flex:1;min-height:0;width:100%;border-width:2px}
+ .five-board[data-game="brawl"] .five-actor-tag{font-size:8px}
+ .gv-health{height:5px}
+ .five-actor.is-own .gv-health{height:6px}
+}
+@container (max-height:300px){
+ .sports-courts.gv-focused,.sports-courts.gv-focused.is-crowded{display:flex;flex-direction:column;padding:31px 5px 5px;gap:0}
+ .sports-courts.gv-focused .sport-court:not(.is-own){display:none}
+ .sports-courts.gv-focused .sport-court.is-own{display:flex;flex:1;min-height:0;width:100%;border-width:2px}
+}
+/* Independent courts can use a tall phone field; all physics and cues use the same percentages. */
+@media(orientation:portrait){
+ #arcadeDialog[data-device-layout="phone"]:is([data-purpose="lunch"],[data-playing="true"]) .five-board[data-visual-kind="court"]{width:100%;height:100%;max-height:100%;aspect-ratio:auto;align-self:stretch}
+ #arcadeDialog[data-device-layout="phone"] .sports-courts.gv-focused{padding:32px 5px 5px;display:flex;flex-direction:column;gap:0}
+ #arcadeDialog[data-device-layout="phone"] .sports-courts.gv-focused .sport-court:not(.is-own){display:none}
+ #arcadeDialog[data-device-layout="phone"] .sports-courts.gv-focused .sport-court.is-own{display:flex;flex:1;min-height:0;width:100%}
+}
+@media(prefers-reduced-motion:reduce){.gv-field-lines,.gv-health,.five-action[data-visual-state]:after{animation:none;transition:none}}
+/* END_GAME_VISUALS_V1 */
