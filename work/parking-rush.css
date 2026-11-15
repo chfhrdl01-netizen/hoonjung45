@@ -1,0 +1,12 @@
+/* Parking uses one actual destination bay; its bounds match the rule geometry. */
+.sport-court[data-game="parking"] .sport-field{background:linear-gradient(#fff2ce14,#202f3919),repeating-linear-gradient(90deg,transparent 0 12%,#f6edcf18 12% 12.5%,transparent 12.5% 25%),#8b9799}
+.sport-court[data-game="parking"] .sport-parking-slot{box-sizing:border-box;border:3px solid #fff0af;background:#f9dc6d38;color:#fffbe4;text-shadow:0 2px #506569;font-size:clamp(12px,3.5cqw,27px);border-radius:5px;box-shadow:inset 0 0 0 2px #51696b66,0 2px 0 #52626444;z-index:2}
+.sport-court[data-game="parking"] .sport-car{box-sizing:border-box;width:7%;height:5.2%;min-width:0;min-height:0;border:1.5px solid #493d38;border-radius:5px;background:linear-gradient(90deg,#e59b77 0 19%,#8ec2c6 20% 40%,#f8b58a 41% 76%,#f7ddac 77% 100%);box-shadow:0 2px 0 #34484b66;z-index:5}
+.sport-court[data-game="parking"] .sport-car:after{content:"";position:absolute;right:-2px;top:15%;width:3px;height:70%;background:linear-gradient(#fff0b1 0 24%,transparent 25% 74%,#fff0b1 75%);border-radius:1px}
+.sport-court[data-game="parking"] .sport-car.is-braking{filter:brightness(1.1);box-shadow:-3px 0 0 #f87d6055,0 2px 0 #34484b66}
+.sport-court[data-game="parking"] .sport-parking-obstacle{box-sizing:border-box;border:2px solid #5b6260;border-radius:4px;background:repeating-linear-gradient(135deg,#c7ab78 0 7px,#eadbb8 7px 14px);box-shadow:0 3px 0 #42545755;z-index:3}
+.sport-court[data-game="parking"] .sport-head strong{font-variant-numeric:tabular-nums;color:#253d3d}
+.sport-court[data-game="parking"] .sport-detail{font-variant-numeric:tabular-nums;font-weight:900;background:#fff4d8;color:#354e50}
+.sport-court[data-game="parking"] .sport-judge{max-width:94%;white-space:normal;line-height:1.25;overflow-wrap:anywhere}
+@media(max-width:600px){.sport-court[data-game="parking"].is-own .sport-parking-slot{border-width:2px;font-size:clamp(14px,4cqw,22px)}.sport-court[data-game="parking"].is-own .sport-car{border-width:1px}.sport-court[data-game="parking"] .sport-parking-obstacle{border-width:1.5px}.sport-court[data-game="parking"].is-own .sport-detail{font-size:11px;line-height:1.25}}
+@media(orientation:landscape) and (max-height:560px){.sport-court[data-game="parking"].is-own .sport-detail{font-size:10px;min-height:16px;padding:2px 5px}.sport-court[data-game="parking"] .sport-judge{font-size:11px}.sport-court[data-game="parking"] .sport-parking-slot{border-width:2px}}
