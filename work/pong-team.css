@@ -1,0 +1,54 @@
+/* Shared table: teams, one ball and clearly owned paddles. */
+#arcadeDialog .five-board[data-game="pong"]{background:#dfd8ba}
+#arcadeDialog .five-board[data-game="pong"] :is(#arcadeActors,#arcadeObjects,#arcadeMeters){display:none}
+#arcadeDialog .pong-team-court{position:absolute;inset:0;z-index:3;display:flex;flex-direction:column;min-width:0;min-height:0;padding:32px 9px 9px;gap:7px;background:linear-gradient(135deg,#f1e7c8,#d9cfb1)}
+#arcadeDialog .pong-team-scoreboard{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:8px;flex:0 0 auto;min-width:0;min-height:43px;padding:5px 8px;border:1px solid #697c6a;border-radius:7px;background:#fff6dc;box-shadow:0 2px 0 #51453522}
+#arcadeDialog .pong-team-summary{display:flex;flex-direction:column;min-width:0;gap:2px;line-height:1.2}
+#arcadeDialog .pong-team-summary.pong-side-1{text-align:right}
+#arcadeDialog .pong-team-title{color:#365c54;font-size:clamp(9px,1.9cqw,13px);font-weight:950;white-space:nowrap}
+#arcadeDialog .pong-side-1 .pong-team-title{color:#805b59}
+#arcadeDialog .pong-team-names{display:block;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#665943;font-size:clamp(8px,1.5cqw,11px)}
+#arcadeDialog .pong-team-bonus{color:#8c622d;font-size:clamp(7px,1.3cqw,9px);min-height:1em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#arcadeDialog .pong-team-score{display:block;min-width:62px;padding:5px 9px;border:2px solid #374f49;border-radius:8px;background:#3c625b;color:#fff3bd;font-size:clamp(20px,4cqw,29px);line-height:1;font-weight:950;letter-spacing:.03em;text-align:center;font-variant-numeric:tabular-nums;box-shadow:0 2px 0 #253d35}
+#arcadeDialog .pong-team-field{position:relative;flex:1;min-width:0;min-height:0;overflow:hidden;border:4px solid #f7e9bc;border-radius:5px;background:linear-gradient(90deg,#4f928b 0 49.5%,#4a8983 49.5% 50.5%,#548b86 50.5% 100%);box-shadow:inset 0 0 0 2px #315f59,0 0 0 1px #567363}
+#arcadeDialog .pong-team-field:before{content:"";position:absolute;inset:4.8% 7.2%;border:1px solid #f7f0c477;pointer-events:none}
+#arcadeDialog .pong-team-field:after{content:"";position:absolute;inset:0;border-top:2px solid #f8efc8aa;border-bottom:2px solid #f8efc8aa;pointer-events:none;z-index:4}
+#arcadeDialog .pong-team-net{position:absolute;top:0;bottom:0;left:50%;width:3px;transform:translateX(-50%);border-left:2px dashed #ffefb9b3;pointer-events:none;z-index:1}
+#arcadeDialog .pong-team-items{position:absolute;inset:0;pointer-events:none;z-index:3}
+#arcadeDialog .pong-team-paddle{position:absolute;width:10px;min-width:6px;max-width:2%;transform:translate(-50%,-50%);border:1.5px solid #2f4b3f;border-radius:5px;background:#e1edb8;box-shadow:1px 2px 0 #264d4555;z-index:3;pointer-events:none}
+#arcadeDialog .pong-team-paddle[data-side="1"]{background:#efc5b7;border-color:#674a49}
+#arcadeDialog .pong-team-paddle.is-own{border-color:#fff6bf;background:#ffe292;box-shadow:0 0 0 2px #704c21,0 0 0 4px #ffe9a866;z-index:5}
+#arcadeDialog .pong-team-paddle.is-smash{background:#f1a36a;box-shadow:0 0 0 3px #ffe6a866}
+#arcadeDialog .pong-paddle-avatar{position:absolute;top:50%;right:calc(100% + 3px);width:clamp(20px,5cqw,34px);height:clamp(20px,5cqw,34px);transform:translateY(-50%);filter:drop-shadow(0 2px #234a4255)}
+#arcadeDialog .pong-team-paddle[data-side="1"] .pong-paddle-avatar{right:auto;left:calc(100% + 3px)}
+#arcadeDialog .pong-paddle-avatar svg{display:block;width:100%;height:100%}
+#arcadeDialog .pong-paddle-name{position:absolute;top:calc(50% + clamp(12px,2.8cqw,19px));left:50%;max-width:74px;width:max-content;transform:translateX(-50%);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:1px 4px;border-radius:3px;background:#f6efc9d9;color:#345248;font-size:clamp(7px,1.2cqw,9px);font-weight:850;line-height:1.2;text-align:center}
+#arcadeDialog .pong-team-paddle.is-own .pong-paddle-name{background:#ffe18a;color:#503d23}
+#arcadeDialog .pong-team-ball{position:absolute;width:clamp(8px,1.85cqw,13px);aspect-ratio:1;transform:translate(-50%,-50%);border:1px solid #5c613d;border-radius:50%;background:#fff4b9;box-shadow:1px 2px 0 #244f4666;z-index:8;font-style:normal;pointer-events:none}
+#arcadeDialog .pong-team-ball.is-fast{background:#ffbb76;border-color:#8d5735}
+#arcadeDialog .pong-team-serve{position:absolute;left:50%;top:45%;max-width:75%;transform:translate(-50%,-50%);padding:5px 9px;border:1px solid #e9e2b466;border-radius:6px;background:#244c45d9;color:#fff3c9;font-size:clamp(9px,1.7cqw,12px);font-weight:850;line-height:1.4;text-align:center;font-style:normal;white-space:normal;z-index:9;pointer-events:none}
+#arcadeDialog .pong-team-serve[hidden],#arcadeDialog .pong-team-ball[hidden]{display:none}
+@container(max-width:640px){
+ #arcadeDialog .pong-team-court{padding:29px 5px 5px;gap:5px}
+ #arcadeDialog .pong-team-scoreboard{min-height:40px;padding:4px 5px;gap:5px}
+ #arcadeDialog .pong-team-score{min-width:51px;font-size:22px;padding:4px 6px}
+ #arcadeDialog .pong-team-field{border-width:3px}
+ #arcadeDialog .pong-paddle-name{max-width:48px;padding:1px 3px}
+}
+@container(max-height:250px){
+ #arcadeDialog .pong-team-court{padding:27px 5px 5px;gap:4px}
+ #arcadeDialog .pong-team-scoreboard{min-height:29px;padding:2px 5px;gap:5px}
+ #arcadeDialog .pong-team-summary{gap:0}
+ #arcadeDialog .pong-team-title{font-size:9px}
+ #arcadeDialog .pong-team-names{font-size:8px}
+ #arcadeDialog .pong-team-bonus{font-size:7px}
+ #arcadeDialog .pong-team-score{font-size:19px;padding:3px 6px}
+ #arcadeDialog .pong-paddle-avatar{width:20px;height:20px}
+ #arcadeDialog .pong-paddle-name{font-size:7px;top:calc(50% + 11px)}
+}
+@media(orientation:portrait){
+ #arcadeDialog[data-device-layout="phone"]:is([data-purpose="lunch"],[data-playing="true"]) .five-board[data-game="pong"]{width:100%;height:100%;max-height:100%;aspect-ratio:auto;align-self:stretch}
+}
+@media(prefers-reduced-motion:reduce){
+ #arcadeDialog .pong-team-paddle,#arcadeDialog .pong-team-ball{transition:none;animation:none}
+}
