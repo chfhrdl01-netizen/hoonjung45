@@ -47,7 +47,11 @@ function deptAvatarAccessories(style){
  return out;
 }
 
+function deptUnselectedSvg(){
+ return '<svg class="dept-avatar-svg dept-avatar-unselected" data-avatar="unselected" viewBox="0 0 140 130" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><title>캐릭터 미선택</title><ellipse cx="70" cy="120" rx="42" ry="5" fill="#29201f18"/><path d="M30 47Q25 18 70 18q47 0 43 32 19 59-43 60-63 1-40-63Z" fill="#e5dfcd" stroke="#8b8068" stroke-width="3" stroke-dasharray="6 5"/><text x="70" y="89" text-anchor="middle" fill="#796b50" font-family="system-ui,sans-serif" font-size="68" font-weight="900">?</text></svg>';
+}
 function deptAvatarSvg(department){
+ if(department==='unselected')return deptUnselectedSvg();
  const option=deptOption(department)||deptOptions[0]||{id:'business',name:'밥친구'},id=String(option.id||'business'),hash=deptAvatarHash(id),legacy=Object.prototype.hasOwnProperty.call(deptAvatarLegacy,id),i=legacy?deptAvatarLegacy[id]:hash%12,skin=deptAvatarSkin[legacy?i:hash%deptAvatarSkin.length],style=deptAvatarStyle(option),key=[id,style,skin,option.name||''].join('|');
  if(deptAvatarCache.has(key))return deptAvatarCache.get(key);
  const eyes=i%3===0?'<path d="m39 58 17 3m26-4 16-4" stroke="#29201f" stroke-width="5"/><circle cx="49" cy="67" r="4"/><circle cx="88" cy="63" r="3"/>':i%3===1?'<ellipse cx="48" cy="63" rx="11" ry="9" fill="#fff9e4"/><ellipse cx="89" cy="61" rx="9" ry="12" fill="#fff9e4"/><circle cx="51" cy="66" r="3"/><circle cx="85" cy="65" r="4"/>':'<path d="m37 63 20 2m24-5 20 3" stroke="#29201f" stroke-width="5"/><circle cx="48" cy="68" r="3"/><circle cx="91" cy="66" r="3"/>';
@@ -61,9 +65,16 @@ function deptAvatarSvg(department){
 function deptAvatarPreview(){
  const select=document.getElementById('netDepartment');if(!select)return;let preview=document.getElementById('deptAvatarPreview');
  if(!preview){preview=document.createElement('div');preview.id='deptAvatarPreview';preview.className='dept-avatar-preview';preview.innerHTML='<div class="dept-avatar-preview-art"></div><div class="dept-avatar-preview-info"><span class="dept-avatar-preview-kicker">오늘의 밥친구</span><strong></strong><b></b><span class="dept-avatar-preview-description"></span></div>';select.closest('.net-department-wrap')?.append(preview);select.addEventListener('change',deptAvatarPreview);}
- const option=deptOption(select.value),wardrobe=deptAvatarWardrobe[deptAvatarStyle(option)],signature=[option.id,option.name,wardrobe.label].join('|');if(preview.dataset.avatarSignature!==signature){preview.dataset.department=option.id;preview.dataset.avatarSignature=signature;preview.querySelector('.dept-avatar-preview-art').innerHTML=deptAvatarSvg(option.id);preview.querySelector('strong').textContent=option.name;preview.title=option.name+' · '+wardrobe.label;}
- const describe=()=>{if(select.value!==option.id)return;preview.querySelector('b').textContent=wardrobe.label;preview.querySelector('.dept-avatar-preview-description').textContent=(option.college?option.college+' · ':'')+wardrobe.description;};describe();if(typeof queueMicrotask==='function')queueMicrotask(describe);
- if(typeof netMembers==='function')netMembers().forEach((member,index)=>{const card=document.getElementById('person_'+index),portrait=card?.querySelector('.person>.avatar,.person>.dept-card-portrait');if(!portrait)return;const role=typeof netDepartment==='function'?netDepartment(member.id):'business';if(portrait.dataset.department!==role){portrait.className='dept-card-portrait';portrait.dataset.department=role;portrait.innerHTML=deptAvatarSvg(role);portrait.title=deptOption(role).name;}});
+ const chosen=deptById.has(select.value),option=chosen?deptOption(select.value):null,wardrobe=option?deptAvatarWardrobe[deptAvatarStyle(option)]:null,signature=option?[option.id,option.name,wardrobe.label].join('|'):'unselected';
+ if(preview.dataset.avatarSignature!==signature){
+  preview.dataset.department=option?.id||'unselected';preview.dataset.avatarSignature=signature;preview.querySelector('.dept-avatar-preview-art').innerHTML=option?deptAvatarSvg(option.id):deptUnselectedSvg();preview.querySelector('strong').textContent=option?.name||'캐릭터를 골라주세요';preview.title=option?option.name+' · '+wardrobe.label:'캐릭터 미선택';
+ }
+ const describe=()=>{if((option&&select.value!==option.id)||(!option&&deptById.has(select.value)))return;preview.querySelector('b').textContent=wardrobe?.label||'아직 미선택';preview.querySelector('.dept-avatar-preview-description').textContent=option?(option.college?option.college+' · ':'')+wardrobe.description:'학과·캐릭터를 직접 선택해야 준비를 완료할 수 있어요.';};describe();if(typeof queueMicrotask==='function')queueMicrotask(describe);
+ if(typeof netMembers==='function')netMembers().forEach((member,index)=>{
+  const card=document.getElementById('person_'+index),portrait=card?.querySelector('.person>.avatar,.person>.dept-card-portrait');if(!portrait)return;
+  const selected=typeof netHasDepartment==='function'?netHasDepartment(member.id):deptById.has(typeof netDepartments==='object'?netDepartments[member.id]:undefined),role=selected?netDepartment(member.id):'unselected';
+  if(portrait.dataset.department!==role){portrait.className='dept-card-portrait';portrait.dataset.department=role;portrait.innerHTML=deptAvatarSvg(role);portrait.title=selected?deptOption(role).name:'캐릭터 미선택';}
+ });
 }
 const deptAvatarBaseSetup=renderSetup;renderSetup=function(){const value=deptAvatarBaseSetup.apply(this,arguments);deptAvatarPreview();return value;};
 const deptAvatarBaseRender=deptRender;deptRender=function(){deptAvatarBaseRender();if(!deptRace||!deptView||deptView.hidden)return;const t=deptRace.elapsed;for(const lane of deptRace.lanes){const runner=deptRows.get(lane.id)?.runner;if(!runner)continue;runner.classList.toggle('is-moving',deptRace.phase==='running'&&lane.finishedAt===null&&t>=lane.stunUntil);runner.classList.toggle('is-jump',t<lane.jumpUntil);runner.classList.toggle('is-hit',t<lane.stunUntil);}};
