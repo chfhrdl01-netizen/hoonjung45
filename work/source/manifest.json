@@ -1,8 +1,8 @@
 {
-  "build": "party30-20261115-quality7",
+  "build": "party30-20261116-secret8",
   "assets": {
-    "css": "assets/styles-quality7.css",
-    "js": "assets/app-quality7.js"
+    "css": "assets/styles-secret8.css",
+    "js": "assets/app-secret8.js"
   },
   "styles": [
     {
@@ -318,7 +318,15 @@
         "desktop-ui.css",
         "mobile-ui.css",
         "game-experience.css",
-        "game-visuals.css"
+        "game-visuals.css",
+        "stacker-clarity.css",
+        "kart-track.css",
+        "bowling-clarity.css",
+        "crown-clarity.css",
+        "pong-team.css",
+        "reaction-challenge.css",
+        "parking-rush.css",
+        "game-impact.css"
       ]
     }
   ],
@@ -366,6 +374,7 @@
         "adaptive-ui.mjs",
         "game-experience.mjs",
         "game-visuals.mjs",
+        "game-impact.mjs",
         "source/scripts/bootstrap.js"
       ]
     },
