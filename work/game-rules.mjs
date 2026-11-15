@@ -81,7 +81,7 @@ function createArcadeMotionRules(){
     }
    }
    w.objects=w.objects.filter(o=>w.elapsed<=o.endAt);
-   for(const p of w.players)if(!p.forfeited)p.score=survivalScore(w,p,p.nearMisses/100);
+   for(const p of w.players)if(!p.forfeited)p.score=survivalScore(w,p,p.nearMisses*(w.meta.partyRespawn===true?80:.01));
    if(w.meta.partyRespawn===true)w.meta.roundOver=false;else if(w.players.filter(active).length<=1&&w.elapsed>1)w.meta.roundOver=true;
   },
   bot(w,p,random){
@@ -93,13 +93,13 @@ function createArcadeMotionRules(){
    return{held:keys,...urgent&&w.elapsed>=p.dashReadyAt&&random()<.65?{action:'dash'}:{}};
   }
  };
- function jump(w,p){if(p.jumpHeight>.01||w.elapsed<p.stunUntil)return false;p.jumpVy=510;p.actionUntil=w.elapsed+.3;return true;}
+ function jump(w,p){if(p.jumpHeight>.01||w.elapsed<p.stunUntil)return false;p.jumpVy=510;p.jumpQueuedUntil=0;p.actionUntil=w.elapsed+.3;return true;}
  const runner={
   init(w,random){
    w.duration=24;w.objects=[];w.meta={width:W,height:H,serial:0,nextSpawnAt:.2,groundY:382,speed:218,roundOver:false};
-   w.players.forEach(p=>{base(w,p);p.x=118;p.y=382;p.jumpHeight=0;p.jumpVy=0;p.cleared=0;p.survived=0;p.lastHurtAt=-10;});
+   w.players.forEach(p=>{base(w,p);p.x=118;p.y=382;p.jumpHeight=0;p.jumpVy=0;p.jumpQueuedUntil=0;p.cleared=0;p.survived=0;p.lastHurtAt=-10;});
   },
-  input(w,p,action){if(action==='jump')return jump(w,p);return false;},
+  input(w,p,action){if(action!=='jump')return false;if(jump(w,p))return true;if(p.jumpVy<0&&w.elapsed>=p.stunUntil){p.jumpQueuedUntil=w.elapsed+.14;return true;}return false;},
   step(w,dt,controls,random){
    dt=clamp(dt,0,.04);w.meta.speed=218+Math.min(45,w.elapsed*2);
    if(w.elapsed>=w.meta.nextSpawnAt){
@@ -109,7 +109,7 @@ function createArcadeMotionRules(){
    for(const p of w.players){
     if(!active(p))continue;
     p.jumpVy-=1250*dt;p.jumpHeight+=p.jumpVy*dt;
-    if(p.jumpHeight<=0){p.jumpHeight=0;p.jumpVy=0;}
+    if(p.jumpHeight<=0){p.jumpHeight=0;p.jumpVy=0;if(p.jumpQueuedUntil>=w.elapsed&&p.jumpQueuedUntil>0)jump(w,p);}
     p.y=w.meta.groundY-p.jumpHeight;p.survived=w.elapsed;
    }
    for(const o of w.objects){
@@ -125,7 +125,7 @@ function createArcadeMotionRules(){
     }
    }
    w.objects=w.objects.filter(o=>o.x> -65);
-   for(const p of w.players)if(!p.forfeited)p.score=survivalScore(w,p,p.cleared/100);
+   for(const p of w.players)if(!p.forfeited)p.score=survivalScore(w,p,p.cleared*(w.meta.partyRespawn===true?80:.01));
    if(w.meta.partyRespawn===true)w.meta.roundOver=false;else if(w.players.filter(active).length<=1&&w.elapsed>1)w.meta.roundOver=true;
   },
   bot(w,p){
@@ -147,24 +147,27 @@ function createArcadeSkillRules(){
   const n=++w.meta.coinSerial;
   w.objects.push({id:'coin_'+n,kind:'coin',x:38+random()*624,y:38+random()*384,readyAt:w.elapsed+delay,expiresAt:w.elapsed+delay+7.5,value:1});
  }
+ function coinSteal(w,p,range){
+  if(p.dashStolen||w.elapsed<p.shieldUntil)return false;
+  const victims=w.players.filter(q=>q.id!==p.id&&alive(q)&&q.score>=1&&w.elapsed>=q.shieldUntil&&Math.hypot(q.x-p.x,q.y-p.y)<range).sort((a,b)=>Math.hypot(a.x-p.x,a.y-p.y)-Math.hypot(b.x-p.x,b.y-p.y)||a.index-b.index),q=victims[0];
+  if(!q)return false;p.dashStolen=true;q.score--;p.score++;p.stolen++;p.lastEvent='steal';q.lastEvent='stolen';p.shieldUntil=w.elapsed+.6;q.shieldUntil=w.elapsed+.6;q.actionUntil=w.elapsed+.3;w.meta.notice=p.name+' 님이 '+q.name+' 님 월급 한 닢 슬쩍!';return true;
+ }
  const coins={
   init(w,random){
    w.duration=24;w.meta={coinSerial:0,nextCoinAt:.65,notice:'금색 동전을 줍고, 가까이 붙어서 Space로 월급 한 닢 슬쩍!'};w.objects=[];
    const n=w.players.length;
-   w.players.forEach((p,i)=>{const a=-Math.PI/2+i*tau/n;p.x=350+Math.cos(a)*204;p.y=230+Math.sin(a)*138;p.score=0;p.health=3;p.dirX=-Math.cos(a);p.dirY=-Math.sin(a);p.dashReadyAt=0;p.dashUntil=0;p.shieldUntil=0;p.coinsCollected=0;p.stolen=0;p.lastEvent='';});
+   w.players.forEach((p,i)=>{const a=-Math.PI/2+i*tau/n;p.x=350+Math.cos(a)*204;p.y=230+Math.sin(a)*138;p.score=0;p.health=3;p.dirX=-Math.cos(a);p.dirY=-Math.sin(a);p.dashReadyAt=0;p.dashUntil=0;p.dashStolen=false;p.shieldUntil=0;p.coinsCollected=0;p.stolen=0;p.lastEvent='';});
    for(let i=0;i<8;i++)coinSpawn(w,random,.65);
   },
   input(w,p,action){
    if(action!=='dash'&&action!=='hit')return;
    if(w.elapsed+1e-7<p.dashReadyAt)return;
-   p.dashReadyAt=w.elapsed+2;p.dashUntil=w.elapsed+.18;p.actionUntil=p.dashUntil;p.lastEvent='dash';
+   p.dashReadyAt=w.elapsed+2;p.dashUntil=w.elapsed+.18;p.dashStolen=false;p.actionUntil=p.dashUntil;p.lastEvent='dash';
    const norm=Math.hypot(p.dirX,p.dirY)||1;p.dirX/=norm;p.dirY/=norm;
-   if(w.elapsed<p.shieldUntil)return;
-   const victims=w.players.filter(q=>q.id!==p.id&&alive(q)&&q.score>=1&&w.elapsed>=q.shieldUntil&&Math.hypot(q.x-p.x,q.y-p.y)<82).sort((a,b)=>Math.hypot(a.x-p.x,a.y-p.y)-Math.hypot(b.x-p.x,b.y-p.y)||a.index-b.index);
-   const q=victims[0];if(q){q.score--;p.score++;p.stolen++;p.lastEvent='steal';q.lastEvent='stolen';p.shieldUntil=w.elapsed+.6;q.shieldUntil=w.elapsed+.6;q.actionUntil=w.elapsed+.3;w.meta.notice=p.name+' 님이 '+q.name+' 님 월급 한 닢 슬쩍!';}
+   coinSteal(w,p,82);
   },
   step(w,dt,controls,random){
-   for(const p of w.players){if(!alive(p))continue;const d=direction(held(controls,p.id));if(Math.hypot(d.x,d.y)>0&&w.elapsed>=p.dashUntil){p.dirX=d.x;p.dirY=d.y;}const isDash=w.elapsed<p.dashUntil,speed=isDash?540:188;const x=isDash?p.dirX:d.x,y=isDash?p.dirY:d.y;p.x=clamp(p.x+x*speed*dt,20,680);p.y=clamp(p.y+y*speed*dt,20,440);}
+   for(const p of w.players){if(!alive(p))continue;const d=direction(held(controls,p.id));if(Math.hypot(d.x,d.y)>0&&w.elapsed>=p.dashUntil){p.dirX=d.x;p.dirY=d.y;}const isDash=w.elapsed<p.dashUntil,speed=isDash?540:188;const x=isDash?p.dirX:d.x,y=isDash?p.dirY:d.y;p.x=clamp(p.x+x*speed*dt,20,680);p.y=clamp(p.y+y*speed*dt,20,440);if(isDash)coinSteal(w,p,54);}
    while(w.elapsed>=w.meta.nextCoinAt&&w.meta.nextCoinAt<=w.duration){coinSpawn(w,random);w.meta.nextCoinAt+=.62;}
    const keep=[];
    for(const c of w.objects){
@@ -186,7 +189,7 @@ function createArcadeSkillRules(){
  const stampPeriod=1.7,stampStageLength=2.4;
  function stampPointer(t){const phase=((t/stampPeriod)%1+1)%1;return phase<.5?phase*2:2-phase*2;}
  function stampStage(w){
-  const stage=Math.min(w.meta.targets.length-1,Math.floor((w.elapsed+1e-8)/stampStageLength));w.meta.stage=stage;w.meta.target=w.meta.targets[stage];w.meta.window=.26;w.meta.stageLeft=Math.max(0,stampStageLength-(w.elapsed-stage*stampStageLength));w.meta.pointer=stampPointer(w.elapsed);
+  const stage=Math.min(w.meta.targets.length-1,Math.floor((w.elapsed+1e-8)/stampStageLength));w.meta.stage=stage;w.meta.target=w.meta.targets[stage];w.meta.window=stage<3?.30:stage<7?.26:.22;w.meta.stageLeft=Math.max(0,stampStageLength-(w.elapsed-stage*stampStageLength));w.meta.pointer=stampPointer(w.elapsed);
   return stage;
  }
  const stamp={
@@ -210,9 +213,10 @@ function createArcadeCombatKartRules(){
  const clamp=(n,a,b)=>Math.max(a,Math.min(b,n)),tau=Math.PI*2,alive=p=>!p.eliminated&&!p.forfeited;
  const keys=(c,id)=>c.get(id)?.held||new Set();
  function direction(k){let x=Number(k.has('right'))-Number(k.has('left')),y=Number(k.has('down'))-Number(k.has('up'));const d=Math.hypot(x,y)||1;return{x:x/d,y:y/d};}
+ function brawlScore(w,p){return Math.max(0,p.survived*1000+p.hp/10+(w.meta.partyRespawn===true?p.damageDealt*8+p.knockouts*600-p.deaths*800:0));}
  const brawl={
   init(w){w.duration=24;w.objects=[];w.meta={notice:'붙어서 Space! 주먹은 보는 방향으로 나가요. 마지막까지 살아남아라!'};const n=w.players.length;
-   w.players.forEach((p,i)=>{const a=-Math.PI/2+i*tau/n;p.x=350+Math.cos(a)*190;p.y=230+Math.sin(a)*135;p.hp=100;p.health=3;p.score=0;p.faceX=-Math.cos(a);p.faceY=-Math.sin(a);p.vx=0;p.vy=0;p.attackUntil=0;p.hitReadyAt=0;p.hurtUntil=0;p.stunUntil=0;p.survived=0;p.deaths=0;p.respawnUntil=0;});
+   w.players.forEach((p,i)=>{const a=-Math.PI/2+i*tau/n;p.x=350+Math.cos(a)*190;p.y=230+Math.sin(a)*135;p.hp=100;p.health=3;p.score=0;p.faceX=-Math.cos(a);p.faceY=-Math.sin(a);p.vx=0;p.vy=0;p.attackUntil=0;p.hitReadyAt=0;p.hurtUntil=0;p.stunUntil=0;p.survived=0;p.deaths=0;p.respawnUntil=0;p.damageDealt=0;p.knockouts=0;});
   },
   input(w,p,action){
    if(action!=='hit'||w.elapsed<p.hitReadyAt||w.elapsed<p.stunUntil)return;
@@ -220,21 +224,22 @@ function createArcadeCombatKartRules(){
    const len=Math.hypot(p.faceX,p.faceY)||1,fx=p.faceX/len,fy=p.faceY/len;
    const victims=w.players.filter(q=>q!==p&&alive(q)&&w.elapsed>=q.hurtUntil).map(q=>{const dx=q.x-p.x,dy=q.y-p.y,d=Math.hypot(dx,dy);return{q,dx,dy,d,dot:d>0?(dx*fx+dy*fy)/d:1};}).filter(v=>v.d<=84&&v.dot>=.05).sort((a,b)=>a.d-b.d||a.q.index-b.q.index);
    const hit=victims[0];if(!hit)return;const q=hit.q,norm=hit.d||1,nx=hit.d?hit.dx/norm:fx,ny=hit.d?hit.dy/norm:fy;
-   q.hp=Math.max(0,q.hp-28);q.health=Math.min(3,Math.ceil(q.hp/34));q.vx=nx*255;q.vy=ny*255;q.stunUntil=w.elapsed+.16;q.hurtUntil=w.elapsed+.22;
+   p.damageDealt+=Math.min(q.hp,28);q.hp=Math.max(0,q.hp-28);q.health=Math.min(3,Math.ceil(q.hp/34));q.vx=nx*255;q.vy=ny*255;q.stunUntil=w.elapsed+.16;q.hurtUntil=w.elapsed+.22;
    w.objects.push({kind:'punch',x:q.x,y:q.y,until:w.elapsed+.23});
-   if(q.hp<=0){
+   if(q.hp<=0){p.knockouts++;
     if(w.meta.partyRespawn===true){
      const candidates=Array.from({length:12},(_,i)=>{const a=i*tau/12;return{x:350+Math.cos(a)*245,y:230+Math.sin(a)*155};}),others=w.players.filter(r=>r!==q&&alive(r));
      const point=candidates.map((v,i)=>({...v,priority:Math.min(...others.map(r=>Math.hypot(v.x-r.x,v.y-r.y)),700),order:(i+q.index)%12})).sort((a,b)=>b.priority-a.priority||a.order-b.order)[0];
-     q.x=point.x;q.y=point.y;q.hp=100;q.health=3;q.eliminated=false;q.deaths++;q.respawnUntil=w.elapsed+1;q.hurtUntil=q.respawnUntil;q.stunUntil=w.elapsed+.65;q.vx=0;q.vy=0;q.attackUntil=0;q.actionUntil=q.respawnUntil;q.survived=w.elapsed;q.score=Math.max(0,w.elapsed*1000+10-q.deaths*3000);w.meta.notice=q.name+' 님 다시 일어났다! · 3,000점 감점';
-    }else{q.eliminated=true;q.survived=w.elapsed;q.score=w.elapsed*1000;w.meta.notice=p.name+' 님의 주먹! '+q.name+' 님 식판 퇴장.';}
+     q.x=point.x;q.y=point.y;q.hp=100;q.health=3;q.eliminated=false;q.deaths++;q.respawnUntil=w.elapsed+1;q.hurtUntil=q.respawnUntil;q.stunUntil=w.elapsed+.65;q.vx=0;q.vy=0;q.attackUntil=0;q.actionUntil=q.respawnUntil;q.survived=w.elapsed;q.score=brawlScore(w,q);w.meta.notice=q.name+' 님 다시 일어났다! · 800점 감점';
+    }else{q.eliminated=true;q.survived=w.elapsed;q.score=brawlScore(w,q);w.meta.notice=p.name+' 님의 주먹! '+q.name+' 님 식판 퇴장.';}
    }
+   p.survived=w.elapsed;p.score=brawlScore(w,p);
   },
   step(w,dt,controls){
    w.objects=w.objects.filter(o=>o.until>w.elapsed);
    for(const p of w.players){if(!alive(p))continue;const d=direction(keys(controls,p.id));
     if(Math.hypot(d.x,d.y)>0&&w.elapsed>=p.stunUntil){p.faceX=d.x;p.faceY=d.y;}
-    const move=w.elapsed>=p.stunUntil?176:0;p.x=clamp(p.x+(d.x*move+p.vx)*dt,26,674);p.y=clamp(p.y+(d.y*move+p.vy)*dt,30,430);p.vx*=Math.exp(-9*dt);p.vy*=Math.exp(-9*dt);p.survived=w.elapsed;p.score=Math.max(0,w.elapsed*1000+p.hp/10-(w.meta.partyRespawn===true?p.deaths*3000:0));
+    const move=w.elapsed>=p.stunUntil?176:0;p.x=clamp(p.x+(d.x*move+p.vx)*dt,26,674);p.y=clamp(p.y+(d.y*move+p.vy)*dt,30,430);p.vx*=Math.exp(-9*dt);p.vy*=Math.exp(-9*dt);p.survived=w.elapsed;p.score=brawlScore(w,p);
    }
    const living=w.players.filter(alive);if(w.meta.partyRespawn===true)w.meta.roundOver=false;else if(living.length<=1){w.meta.roundOver=true;w.meta.notice=living[0]?living[0].name+' 님이 식판 격투장을 지켰어요!':'모두 넉다운!';}
   },
@@ -264,7 +269,7 @@ function createArcadeCombatKartRules(){
     if(p.progress>=w.meta.totalProgress-1e-8){p.progress=w.meta.totalProgress;p.finishAt=w.elapsed;if(w.meta.firstFinishAt<0)w.meta.firstFinishAt=w.elapsed;w.meta.notice=p.name+' 님 '+w.meta.laps+'바퀴 완주!';}
     p.score=p.finishAt>=0?10000+(w.duration-p.finishAt)*100:p.progress*1000;
    }
-   const racers=w.players.filter(alive);if(racers.length&&racers.every(p=>p.finishAt>=0)||w.meta.firstFinishAt>=0&&w.elapsed-w.meta.firstFinishAt>=3)w.meta.roundOver=true;
+   const racers=w.players.filter(alive);if(racers.length&&racers.every(p=>p.finishAt>=0)||w.meta.partyRespawn!==true&&w.meta.firstFinishAt>=0&&w.elapsed-w.meta.firstFinishAt>=3)w.meta.roundOver=true;
   },
   bot(w,p,random){const held=['up'],ahead=w.objects.filter(o=>o.lane===p.lane&&o.kind==='puddle'&&o.until>w.elapsed&&angularDistance(p.angle+Math.PI*.1,o.angle)<.43).sort((a,b)=>angularDistance(p.angle,a.angle)-angularDistance(p.angle,b.angle))[0];
    if(ahead){if(p.lane===-1)held.push('right');else if(p.lane===1)held.push('left');else held.push(p.index%2?'left':'right');}
@@ -326,7 +331,9 @@ function createArcadeSocialRhythmRules(){
  const rhythm={
   init(w,random){
    w.duration=24;w.meta={travelTime:1.65,hitWindow:.24,perfectWindow:.09,noteTotal:26,notice:'왼쪽 A · 가운데 W/Space · 오른쪽 D. 복사기 박자에 맞춰 눌러!'};
-   w.objects=Array.from({length:26},(_,i)=>({id:'beat_'+i,kind:'note',lane:Math.floor(random()*3)%3,hitAt:1.4+i*.84+(random()-.5)*.08}));
+   const phrases=[[0,1,2,1],[0,0,1,2],[2,1,0,1],[1,2,1,0],[0,2,0,2],[1,1,0,2]],chart=[];
+   for(let phrase=0;phrase<7;phrase++){const pattern=phrases[Math.floor(random()*phrases.length)],rotate=Math.floor(random()*3);chart.push(...pattern.map(lane=>(lane+rotate)%3));}
+   w.objects=Array.from({length:26},(_,i)=>({id:'beat_'+i,kind:'note',lane:chart[i],hitAt:1.4+i*.84}));
    const people=new Map();
    for(const p of w.players){p.x=350;p.y=230;p.score=0;p.health=3;p.combo=0;p.judge='';p.judgeUntil=0;p.hits=0;p.misses=0;p.lastHitLane=-1;p.resolvedNotes=[];people.set(p.id,{resolved:new Set(),nextActionAt:0});}
    rhythmSecrets.set(w,{people});
@@ -421,7 +428,7 @@ function createArcadeTrayRules(){
  function direction(keys){let x=Number(keys.has('right'))-Number(keys.has('left')),y=Number(keys.has('down'))-Number(keys.has('up'));const d=Math.hypot(x,y)||1;return{x:x/d,y:y/d};}
  function tileAt(w,x,y){const col=Math.floor((x-rect.x)/rect.tileW),row=Math.floor((y-rect.y)/rect.tileH);return col<0||col>=7||row<0||row>=7?null:w.objects[row*7+col];}
  const onFloor=(w,x,y,ahead=0)=>{const tile=tileAt(w,x,y);return !!tile&&w.elapsed+ahead<tile.goneAt;};
- function score(w,p){if(!p.forfeited)p.score=Math.max(0,Math.round(p.survived*1000)+(active(p)?3:0)+p.shoves/100-(w.meta.partyRespawn===true?p.deaths*3000:0));}
+ function score(w,p){if(!p.forfeited)p.score=Math.max(0,Math.round(p.survived*1000)+(active(p)?3:0)+p.shoves*(w.meta.partyRespawn===true?120:.01)-(w.meta.partyRespawn===true?p.deaths*3000:0));}
  function finishFall(w,p){
   if(w.meta.partyRespawn===true){
    const tiles=w.objects.filter(o=>o.goneAt>w.elapsed+.5),others=w.players.filter(q=>q!==p&&active(q));
@@ -445,7 +452,7 @@ function createArcadeTrayRules(){
  }
  const tray={
   init(w,random){
-   w.duration=28;w.meta={...rect,width:700,height:460,roundOver:false,notice:'빨간 바닥은 곧 무너져요. Space로 밀쳐 마지막까지 식판을 지켜요!',nextGustAt:20,gustUntil:0,gustX:0,gustY:0};
+   w.duration=28;w.meta={...rect,width:700,height:460,roundOver:false,notice:'빨간 바닥은 곧 무너져요. Space로 밀쳐 마지막까지 식판을 지켜요!',nextGustAt:20,gustUntil:0,gustX:0,gustY:0,gustPushAt:0,gustApplied:true,partyFloorAdapted:false};
    const holes=[];w.objects=[];
    for(let row=0;row<7;row++)for(let col=0;col<7;col++){
     const ring=Math.max(Math.abs(row-3),Math.abs(col-3)),goneAt=ring===3?7:ring===2?13:ring===1?19:29;
@@ -461,8 +468,10 @@ function createArcadeTrayRules(){
   },
   step(w,dt,controls,random){
    const living=w.players.filter(active),t=w.elapsed;
+   if(w.meta.partyRespawn===true&&!w.meta.partyFloorAdapted){for(const tile of w.objects)if(tile.ring<=1){tile.goneAt=w.duration+1;tile.warningAt=tile.goneAt-1.25;}w.meta.partyFloorAdapted=true;}
    if(w.meta.partyRespawn!==true&&living.length<=1){for(const p of living){p.survived=t;score(w,p);}w.meta.roundOver=true;return;}
-   if(t>=w.meta.nextGustAt){const a=random()*Math.PI*2;w.meta.gustX=Math.cos(a);w.meta.gustY=Math.sin(a);w.meta.gustUntil=t+.7;w.meta.nextGustAt=t+2;for(const p of living){if(w.meta.partyRespawn===true&&t<p.respawnUntil)continue;p.vx+=Math.cos(a)*140;p.vy+=Math.sin(a)*140;}w.meta.notice='식판 흔들린다! 가운데에서 버티고 밀쳐요!';}
+   if(t>=w.meta.nextGustAt){const a=random()*Math.PI*2;w.meta.gustX=Math.cos(a);w.meta.gustY=Math.sin(a);w.meta.gustPushAt=t+.8;w.meta.gustUntil=t+1.3;w.meta.gustApplied=false;w.meta.nextGustAt=t+3;w.meta.notice='바람 예고! 화살표를 보고 반대쪽으로 자리를 잡아요!';}
+   if(!w.meta.gustApplied&&t>=w.meta.gustPushAt){w.meta.gustApplied=true;for(const p of living){if(w.meta.partyRespawn===true&&t<p.respawnUntil)continue;p.vx+=w.meta.gustX*140;p.vy+=w.meta.gustY*140;}w.meta.notice='식판 흔들린다! 가운데에서 버티고 밀쳐요!';}
    for(const p of living){
     if(w.meta.partyRespawn===true&&t<p.respawnUntil){p.vx=0;p.vy=0;p.survived=t;score(w,p);continue;}
     const d=direction(controls.get(p.id)?.held||new Set());
@@ -502,44 +511,47 @@ function createArcadeSportsRules(){
  const own=(w,p,kind)=>w.objects.find(o=>o.ownerId===p.id&&(!kind||o.kind===kind));
  function setup(w,duration,notice){w.duration=duration;w.objects=[];w.meta={serial:0,notice};for(const p of w.players){Object.assign(p,{x:350,y:400,score:0,health:3,phase:'ready',readyAt:0,aim:0,power:0,chargeAt:0,shots:0,completed:0,judge:'',judgeUntil:0});}}
  function say(w,p,text){p.judge=text;p.judgeUntil=w.elapsed+.8;p.actionUntil=w.elapsed+.23;}
+ // A player's Nth serve has the same trajectory as every other player's Nth serve.
+ function serveRandom(w,attempt,salt){let seed=(w.meta.serveSeed^Math.imul(attempt+1,0x9e3779b1)^salt)>>>0;seed^=seed<<13;seed^=seed>>>17;seed^=seed<<5;return(seed>>>0)/4294967296;}
  function powerInput(w,p,action,launch){if(!live(p)||action!=='hit'||w.elapsed<p.readyAt)return;if(p.phase==='ready'){p.phase='power';p.chargeAt=w.elapsed;p.power=0;p.readyAt=w.elapsed+.14;say(w,p,'한 번 더 눌러 발사!');}else if(p.phase==='power'){p.power=wave(w.elapsed,p.chargeAt);launch();}}
  function ball(w,p,kind,x,y,extra={}){const o={id:'sport_'+(++w.meta.serial),kind,ownerId:p.id,x,y,vx:0,vy:0,active:true,...extra};w.objects.push(o);return o;}
  function settleMotion(o,dt,friction){o.x+=o.vx*dt;o.y+=o.vy*dt;const f=Math.exp(-friction*dt);o.vx*=f;o.vy*=f;for(const [axis,min,max]of [['x',30,670],['y',38,430]])if(o[axis]<min||o[axis]>max){o[axis]=clamp(o[axis],min,max);o[axis==='x'?'vx':'vy']*= -.55;}return Math.hypot(o.vx,o.vy)<13;}
  const pong={
-  init(w,rng){setup(w,26,'↑/↓로 패들을 움직여 반사! Space 스매시는 짧은 순간만 강해요.');for(const p of w.players){p.x=62;p.y=230;p.paddleY=230;p.rallies=0;p.misses=0;p.smashUntil=0;ball(w,p,'pongBall',410,150+rng()*150,{vx:-235,vy:(rng()-.5)*210,serveAt:0});}},
+  init(w,rng){setup(w,26,'↑/↓로 패들을 움직여 반사! Space 스매시는 짧은 순간만 강해요.');const serveY=150+rng()*150,serveVy=(rng()-.5)*210;w.meta.serveSeed=Math.floor(rng()*4294967296);for(const p of w.players){p.x=62;p.y=230;p.paddleY=230;p.rallies=0;p.misses=0;p.smashUntil=0;ball(w,p,'pongBall',410,serveY,{vx:-235,vy:serveVy,serveAt:0});}},
   input(w,p,a){if(!live(p)||a!=='hit'||w.elapsed<p.readyAt)return;p.smashUntil=w.elapsed+.24;p.readyAt=w.elapsed+.68;say(w,p,'스매시!');},
-  step(w,dt,controls,rng){for(const p of w.players){if(!live(p))continue;const k=keys(controls,p);p.paddleY=clamp(p.paddleY+(Number(k.has('down'))-Number(k.has('up')))*310*dt,64,396);p.y=p.paddleY;const b=own(w,p);if(w.elapsed<b.serveAt)continue;const before=b.x;b.x+=b.vx*dt;b.y+=b.vy*dt;if(b.y<22||b.y>438){b.y=clamp(b.y,22,438);b.vy*= -1;}if(b.x>660){b.x=660;b.vx=-Math.abs(b.vx);}if(b.vx<0&&before>=78&&b.x<78&&Math.abs(b.y-p.paddleY)<60){const smash=w.elapsed<p.smashUntil;b.x=78;b.vx=Math.min(480,Math.abs(b.vx)*(smash?1.32:1.04));b.vy=clamp((b.y-p.paddleY)*4,-260,260);p.score+=smash?7:4;p.rallies++;say(w,p,smash?'강스매시 +7':'반사 +4');}if(b.x<12){p.score=Math.max(0,p.score-2);p.misses++;Object.assign(b,{x:410,y:100+rng()*260,vx:-235,vy:(rng()-.5)*210,serveAt:w.elapsed+.55});say(w,p,'놓쳤다! 곧 재서브');}}},
+  step(w,dt,controls,rng){for(const p of w.players){if(!live(p))continue;const k=keys(controls,p);p.paddleY=clamp(p.paddleY+(Number(k.has('down'))-Number(k.has('up')))*310*dt,64,396);p.y=p.paddleY;const b=own(w,p);if(w.elapsed<b.serveAt)continue;const before=b.x;b.x+=b.vx*dt;b.y+=b.vy*dt;if(b.y<22||b.y>438){b.y=clamp(b.y,22,438);b.vy*= -1;}if(b.x>660){b.x=660;b.vx=-Math.abs(b.vx);}if(b.vx<0&&before>=78&&b.x<78&&Math.abs(b.y-p.paddleY)<60){const smash=w.elapsed<p.smashUntil;b.x=78;b.vx=Math.min(480,Math.abs(b.vx)*(smash?1.32:1.04));b.vy=clamp((b.y-p.paddleY)*4,-260,260);p.score+=smash?7:4;p.rallies++;say(w,p,smash?'강스매시 +7':'반사 +4');}if(b.x<12){p.score=Math.max(0,p.score-2);p.misses++;Object.assign(b,{x:410,y:100+serveRandom(w,p.misses,1)*260,vx:-235,vy:(serveRandom(w,p.misses,2)-.5)*210,serveAt:w.elapsed+.55});say(w,p,'놓쳤다! 곧 재서브');}}},
   bot(w,p){const b=own(w,p),dy=b.y-p.paddleY;return{held:Math.abs(dy)>15?[dy>0?'down':'up']:[],...(b.x<155&&b.vx<0&&w.elapsed>=p.readyAt?{action:'hit'}:{})};}
  };
  const curling={
-  init(w){setup(w,26,'←/→로 조준 → Space로 파워 시작 → 한 번 더 눌러 발사! 3번의 합계.');for(const p of w.players){p.y=422;p.activeShot='';p.finishedIds=[];}},
-  input(w,p,a){powerInput(w,p,a,()=>{const speed=240+p.power*500,o=ball(w,p,'curlStone',350,418,{vx:Math.sin(p.aim)*speed,vy:-Math.cos(p.aim)*speed,settled:false,points:0,shot:p.shots+1});p.activeShot=o.id;p.shots++;p.phase='moving';p.readyAt=w.elapsed+.3;say(w,p,'미끄러진다!');});},
-  step(w,dt,controls){for(const p of w.players){if(!live(p))continue;const k=keys(controls,p);if(['ready','power'].includes(p.phase))p.aim=clamp(p.aim+(Number(k.has('right'))-Number(k.has('left')))*.75*dt,-.6,.6);if(p.phase==='power')p.power=wave(w.elapsed,p.chargeAt);const stones=w.objects.filter(o=>o.ownerId===p.id);for(const o of stones)if(!o.settled){if(settleMotion(o,dt,1.32)){o.vx=0;o.vy=0;o.settled=true;if(!p.finishedIds.includes(o.id)){p.finishedIds.push(o.id);if(o.id===p.activeShot){p.completed++;p.phase=p.shots>=3?'done':'ready';p.readyAt=w.elapsed+.4;say(w,p,'중심에서 '+Math.round(Math.hypot(o.x-350,o.y-125))+'px');}}}}
+  init(w){setup(w,26,'←/→ 조준, Space 두 번으로 발사! 굴러갈 때 Space로 쓸면 더 멀리. 3개 돌의 합계!');for(const p of w.players){p.y=422;p.activeShot='';p.finishedIds=[];p.sweepUntil=0;}},
+  input(w,p,a){if(a==='hit'&&live(p)&&p.phase==='moving'&&w.elapsed>=p.readyAt){p.sweepUntil=w.elapsed+.28;p.readyAt=w.elapsed+.22;say(w,p,'슥슥! 마찰을 줄여 더 멀리');return;}powerInput(w,p,a,()=>{const speed=240+p.power*500,o=ball(w,p,'curlStone',350,418,{vx:Math.sin(p.aim)*speed,vy:-Math.cos(p.aim)*speed,settled:false,points:0,shot:p.shots+1});p.activeShot=o.id;p.shots++;p.phase='moving';p.readyAt=w.elapsed+.3;say(w,p,'미끄러진다! Space로 쓸기');});},
+  step(w,dt,controls){for(const p of w.players){if(!live(p))continue;const k=keys(controls,p);if(['ready','power'].includes(p.phase))p.aim=clamp(p.aim+(Number(k.has('right'))-Number(k.has('left')))*.75*dt,-.6,.6);if(p.phase==='power')p.power=wave(w.elapsed,p.chargeAt);const stones=w.objects.filter(o=>o.ownerId===p.id);for(const o of stones)if(!o.settled){if(settleMotion(o,dt,o.id===p.activeShot&&w.elapsed<p.sweepUntil?.82:1.32)){o.vx=0;o.vy=0;o.settled=true;if(!p.finishedIds.includes(o.id)){p.finishedIds.push(o.id);if(o.id===p.activeShot){p.completed++;p.phase=p.shots>=3?'done':'ready';p.readyAt=w.elapsed+.4;say(w,p,'중심에서 '+Math.round(Math.hypot(o.x-350,o.y-125))+'px');}}}}
     for(let i=0;i<stones.length;i++)for(let j=i+1;j<stones.length;j++){const a=stones[i],b=stones[j],d=dist(a,b);if(d>=29||d<.01||a.settled&&b.settled)continue;const nx=(b.x-a.x)/d,ny=(b.y-a.y)/d,rv=(a.vx-b.vx)*nx+(a.vy-b.vy)*ny;if(rv>0){a.vx-=rv*nx*.8;a.vy-=rv*ny*.8;b.vx+=rv*nx*.8;b.vy+=rv*ny*.8;a.settled=false;b.settled=false;}const overlap=(29-d)/2;a.x-=nx*overlap;a.y-=ny*overlap;b.x+=nx*overlap;b.y+=ny*overlap;}
     p.score=stones.reduce((sum,o)=>sum+(o.settled?Math.max(0,Math.round(110-Math.hypot(o.x-350,o.y-125)*.34)):0),0);
    }if(w.elapsed>=20&&w.players.filter(live).every(p=>p.phase==='done')&&w.objects.every(o=>o.settled))w.meta.roundOver=true;},
   bot(w,p){return{held:p.aim>.035?['left']:p.aim<-.035?['right']:[],...((p.phase==='ready'&&w.elapsed>=p.readyAt)||(p.phase==='power'&&(p.power>=.34||w.elapsed-p.chargeAt>1.3))?{action:'hit'}:{})};}
  };
- function pins(w,p){w.objects=w.objects.filter(o=>o.ownerId!==p.id);let serial=0;for(let row=0;row<4;row++)for(let c=0;c<=row;c++)ball(w,p,'bowlingPin',350+(c-row/2)*25,112-row*23,{id:'pin_'+p.id+'_'+p.completed+'_'+serial++,down:false,active:false,vx:0,vy:0});}
+ function pins(w,p){w.objects=w.objects.filter(o=>o.ownerId!==p.id);p.framePins=0;p.frameShots=0;let serial=0;for(let row=0;row<4;row++)for(let c=0;c<=row;c++)ball(w,p,'bowlingPin',350+(c-row/2)*25,112-row*23,{id:'pin_'+p.id+'_'+p.completed+'_'+serial++,down:false,active:false,vx:0,vy:0});}
  const bowling={
-  init(w){setup(w,27,'←/→로 방향 조준, Space 두 번으로 파워 투구. 3프레임, 핀 1개당 10점!');for(const p of w.players){p.y=420;p.framePins=0;p.flightAt=0;p.nextFrameAt=0;p.phase='ready';pins(w,p);}},
-  input(w,p,a){powerInput(w,p,a,()=>{const speed=390+p.power*420;ball(w,p,'bowlingBall',350,420,{vx:Math.sin(p.aim)*speed,vy:-Math.cos(p.aim)*speed});p.shots++;p.flightAt=w.elapsed;p.framePins=0;p.phase='moving';say(w,p,'굴러간다!');});},
+  init(w){setup(w,27,'한 프레임에 최대 두 번! ←/→ 조준, Space 두 번 투구. 스트라이크 +15 · 스페어 +8!');for(const p of w.players){p.y=420;p.framePins=0;p.flightAt=0;p.nextFrameAt=0;p.phase='ready';pins(w,p);}},
+  input(w,p,a){powerInput(w,p,a,()=>{const speed=390+p.power*420;ball(w,p,'bowlingBall',350,420,{vx:Math.sin(p.aim)*speed,vy:-Math.cos(p.aim)*speed});p.shots++;p.frameShots++;p.flightAt=w.elapsed;p.phase='moving';say(w,p,p.frameShots===1?'첫 번째 투구!':'남은 핀을 노려!');});},
   step(w,dt,controls){for(const p of w.players){if(!live(p))continue;const k=keys(controls,p);if(['ready','power'].includes(p.phase))p.aim=clamp(p.aim+(Number(k.has('right'))-Number(k.has('left')))*.5*dt,-.38,.38);if(p.phase==='power')p.power=wave(w.elapsed,p.chargeAt);const b=own(w,p,'bowlingBall');if(p.phase==='moving'&&b){b.x+=b.vx*dt;b.y+=b.vy*dt;const ps=w.objects.filter(o=>o.ownerId===p.id&&o.kind==='bowlingPin');const knocked=[];for(const pin of ps)if(!pin.down&&dist(b,pin)<24){pin.down=true;pin.vx=b.vx*.28+(pin.x-b.x)*4;pin.vy=b.vy*.22;knocked.push(pin);p.score+=10;p.framePins++;say(w,p,'핀 '+p.framePins+'개!');}for(const pin of ps)if(pin.down){pin.x=clamp(pin.x+pin.vx*dt,20,680);pin.y=clamp(pin.y+pin.vy*dt,25,435);pin.vx*=Math.exp(-3*dt);pin.vy*=Math.exp(-3*dt);if(Math.hypot(pin.vx,pin.vy)>20)for(const next of ps)if(!next.down&&dist(pin,next)<23){next.down=true;next.vx=pin.vx*.65;next.vy=pin.vy*.65;p.score+=10;p.framePins++;}}
-      if(b.y<20||b.x<20||b.x>680||w.elapsed-p.flightAt>2.1){p.completed++;if(p.framePins===10){p.score+=15;say(w,p,'스트라이크! +15');}p.phase=p.completed>=3?'done':'between';p.nextFrameAt=w.elapsed+.7;w.objects=w.objects.filter(o=>o.id!==b.id);}
+      if(b.y<20||b.x<20||b.x>680||w.elapsed-p.flightAt>2.1){const complete=p.framePins===10||p.frameShots>=2;if(complete){p.completed++;if(p.framePins===10){const bonus=p.frameShots===1?15:8;p.score+=bonus;say(w,p,p.frameShots===1?'스트라이크! +15':'스페어! +8');}p.phase=p.completed>=3?'done':'between';p.nextFrameAt=w.elapsed+.7;}else{p.phase='ready';p.readyAt=w.elapsed+.35;say(w,p,'남은 '+(10-p.framePins)+'핀 · 한 번 더!');}w.objects=w.objects.filter(o=>o.id!==b.id);}
     }if(p.phase==='between'&&w.elapsed>=p.nextFrameAt){pins(w,p);p.phase='ready';p.readyAt=w.elapsed;}}
    if(w.elapsed>=20&&w.players.filter(live).every(p=>p.phase==='done'))w.meta.roundOver=true;},
   bot(w,p){return{held:p.aim>.025?['left']:p.aim<-.025?['right']:[],...((p.phase==='ready'&&w.elapsed>=p.readyAt)||(p.phase==='power'&&p.power>.64)?{action:'hit'}:{})};}
  };
+ function volleyReceive(w,p,b){if(w.elapsed<b.serveAt||b.vy<=0||b.y<=205||b.y>=442||Math.abs(b.x-p.x)>=90||w.elapsed-b.lastHitAt<=.4)return false;const precise=b.y>=330&&Math.abs(b.x-p.x)<35,points=precise?10:7;b.vy=-270;b.vx=clamp((b.x-p.x)*2.3,-160,160);b.lastHitAt=w.elapsed;p.bufferUntil=0;p.hits++;p.score+=points;say(w,p,precise?'정확한 리시브! +10':'살렸다! +7');return true;}
  const volley={
-  init(w,rng){setup(w,26,'←/→로 풍선 아래 이동, Space로 받아쳐! 바닥에 떨어져도 바로 다시 시작해요.');for(const p of w.players){p.x=350;p.y=410;p.hits=0;p.misses=0;ball(w,p,'volleyBall',230+rng()*240,95,{vx:(rng()-.5)*70,vy:0,serveAt:0,lastHitAt:-1});}},
-  input(w,p,a){if(!live(p)||a!=='hit'||w.elapsed<p.readyAt)return;p.readyAt=w.elapsed+.42;p.actionUntil=w.elapsed+.23;const b=own(w,p);if(w.elapsed>=b.serveAt&&b.y>205&&b.y<442&&Math.abs(b.x-p.x)<90&&w.elapsed-b.lastHitAt>.4){b.vy=-270;b.vx=clamp((b.x-p.x)*2.3,-160,160);b.lastHitAt=w.elapsed;p.hits++;p.score+=7;say(w,p,'살렸다! +7');}else say(w,p,'헛손질! 풍선 아래로');},
-  step(w,dt,controls,rng){for(const p of w.players){if(!live(p))continue;const k=keys(controls,p);p.x=clamp(p.x+(Number(k.has('right'))-Number(k.has('left')))*280*dt,45,655);const b=own(w,p);if(w.elapsed<b.serveAt)continue;b.vy+=185*dt;b.x+=b.vx*dt;b.y+=b.vy*dt;b.vx*=Math.exp(-.1*dt);if(b.x<25||b.x>675){b.x=clamp(b.x,25,675);b.vx*= -1;}if(b.y<27){b.y=27;b.vy=Math.abs(b.vy)*.6;}if(b.y>438){p.score=Math.max(0,p.score-5);p.misses++;Object.assign(b,{x:200+rng()*300,y:95,vx:(rng()-.5)*75,vy:0,serveAt:w.elapsed+.55});say(w,p,'툭… 다시 띄워요!');}}},
+  init(w,rng){setup(w,26,'내려오는 풍선 아래에서 Space! 낮은 위치에서 정중앙 리시브는 +10, 일반 +7.');const serveX=230+rng()*240,serveVx=(rng()-.5)*70;w.meta.serveSeed=Math.floor(rng()*4294967296);for(const p of w.players){p.x=350;p.y=410;p.hits=0;p.misses=0;p.bufferUntil=0;ball(w,p,'volleyBall',serveX,95,{vx:serveVx,vy:0,serveAt:0,lastHitAt:-1});}},
+  input(w,p,a){if(!live(p)||a!=='hit'||w.elapsed<p.readyAt)return;p.readyAt=w.elapsed+.42;p.actionUntil=w.elapsed+.23;const b=own(w,p);if(!volleyReceive(w,p,b)){p.bufferUntil=w.elapsed+.18;say(w,p,b.vy<0?'올라갈 땐 기다려요':'조금 더 기다려 받아쳐!');}},
+  step(w,dt,controls,rng){for(const p of w.players){if(!live(p))continue;const k=keys(controls,p);p.x=clamp(p.x+(Number(k.has('right'))-Number(k.has('left')))*280*dt,45,655);const b=own(w,p);if(w.elapsed<b.serveAt)continue;b.vy+=185*dt;b.x+=b.vx*dt;b.y+=b.vy*dt;b.vx*=Math.exp(-.1*dt);if(b.x<25||b.x>675){b.x=clamp(b.x,25,675);b.vx*= -1;}if(b.y<27){b.y=27;b.vy=Math.abs(b.vy)*.6;}if(w.elapsed<=p.bufferUntil)volleyReceive(w,p,b);if(b.y>438){p.score=Math.max(0,p.score-5);p.misses++;p.bufferUntil=0;Object.assign(b,{x:200+serveRandom(w,p.misses,3)*300,y:95,vx:(serveRandom(w,p.misses,4)-.5)*75,vy:0,serveAt:w.elapsed+.55});say(w,p,'툭… 다시 띄워요!');}}},
   bot(w,p){const b=own(w,p),dx=b.x-p.x;return{held:Math.abs(dx)>20?[dx>0?'right':'left']:[],...(b.y>285&&b.vy>0&&Math.abs(dx)<80&&w.elapsed>=p.readyAt?{action:'hit'}:{})};}
  };
  const golfLayouts=[{start:{x:90,y:360},hole:{x:600,y:105},walls:[{x:295,y:145,w:50,h:220}]},{start:{x:90,y:110},hole:{x:595,y:360},walls:[{x:300,y:40,w:46,h:210}]},{start:{x:110,y:355},hole:{x:585,y:105},walls:[{x:270,y:220,w:180,h:38},{x:470,y:50,w:40,h:160}]}];
  function golfPlace(w,p){const layout=golfLayouts[p.hole%3];let b=own(w,p);if(!b)b=ball(w,p,'golfBall',layout.start.x,layout.start.y,{vx:0,vy:0});Object.assign(b,{x:layout.start.x,y:layout.start.y,vx:0,vy:0});p.x=b.x;p.y=b.y;p.aim=Math.atan2(layout.hole.y-b.y,layout.hole.x-b.x);p.holeStrokes=0;p.phase='ready';p.readyAt=w.elapsed+.25;}
  const golf={
-  init(w){setup(w,28,'←/→로 방향 조준, Space 두 번으로 퍼팅. 벽을 튕겨 3홀! 적은 타수일수록 높은 점수.');w.meta.layouts=golfLayouts;for(const p of w.players){p.hole=0;p.baseScore=0;p.holeStrokes=0;p.nextHoleAt=0;golfPlace(w,p);}},
+  init(w){setup(w,32,'←/→로 방향 조준, Space 두 번으로 퍼팅. 벽을 튕겨 3홀! 적은 타수일수록 높은 점수.');w.meta.layouts=golfLayouts;for(const p of w.players){p.hole=0;p.baseScore=0;p.holeStrokes=0;p.nextHoleAt=0;golfPlace(w,p);}},
   input(w,p,a){powerInput(w,p,a,()=>{const b=own(w,p),speed=200+p.power*620;b.vx=Math.cos(p.aim)*speed;b.vy=Math.sin(p.aim)*speed;p.phase='moving';p.holeStrokes++;p.shots++;say(w,p,p.holeStrokes+'타!');});},
   step(w,dt,controls){for(const p of w.players){if(!live(p)||p.phase==='done')continue;const k=keys(controls,p);if(['ready','power'].includes(p.phase))p.aim=angleDiff(p.aim+(Number(k.has('right'))-Number(k.has('left')))*1.15*dt);if(p.phase==='power')p.power=wave(w.elapsed,p.chargeAt);const layout=golfLayouts[p.hole%3],b=own(w,p);if(p.phase==='moving'){const x0=b.x,y0=b.y;const stopped=settleMotion(b,dt,1.52);for(const r of layout.walls)if(b.x>r.x-8&&b.x<r.x+r.w+8&&b.y>r.y-8&&b.y<r.y+r.h+8){if(x0<=r.x-8||x0>=r.x+r.w+8){b.x=x0<=r.x-8?r.x-8:r.x+r.w+8;b.vx*= -.8;}else{b.y=y0<=r.y-8?r.y-8:r.y+r.h+8;b.vy*= -.8;}}
       if(dist(b,layout.hole)<21&&Math.hypot(b.vx,b.vy)<185){b.vx=0;b.vy=0;b.x=layout.hole.x;b.y=layout.hole.y;p.baseScore+=Math.max(20,130-p.holeStrokes*15);p.completed++;p.phase=p.completed>=3?'done':'between';p.nextHoleAt=w.elapsed+.7;say(w,p,'홀인! '+p.holeStrokes+'타');}else if(stopped){p.phase='ready';p.readyAt=w.elapsed+.2;}
@@ -549,10 +561,10 @@ function createArcadeSportsRules(){
  };
  const parkingSpots=[{x:590,y:105,angle:-Math.PI/2},{x:120,y:100,angle:Math.PI},{x:575,y:360,angle:Math.PI/2},{x:120,y:350,angle:0}],parkingWalls=[{x:285,y:165,w:130,h:90}];
  const parking={
-  init(w){setup(w,28,'↑/↓로 전후진, ←/→로 조향, Space 브레이크. 주차칸에서 천천히 방향을 맞춰 1초!');w.meta.spots=parkingSpots;w.meta.walls=parkingWalls;for(const p of w.players){p.x=120;p.y=350;p.angle=-.7;p.speed=0;p.target=0;p.parkHold=0;p.bumpAt=-1;p.baseScore=0;p.parked=0;}},
+  init(w){setup(w,32,'↑/↓ 전후진, ←/→ 조향, Space 브레이크. 정방향·후진 모두 주차칸에 1초!');w.meta.spots=parkingSpots;w.meta.walls=parkingWalls;for(const p of w.players){p.x=120;p.y=350;p.angle=-.7;p.speed=0;p.target=0;p.parkHold=0;p.bumpAt=-1;p.baseScore=0;p.parked=0;}},
   input(w,p,a){if(!live(p)||a!=='hit'||w.elapsed<p.readyAt)return;p.speed*=.18;p.readyAt=w.elapsed+.25;say(w,p,'끼익! 브레이크');},
   step(w,dt,controls){for(const p of w.players){if(!live(p))continue;const k=keys(controls,p),gas=Number(k.has('up'))-Number(k.has('down')),steer=Number(k.has('right'))-Number(k.has('left'));p.speed=clamp((p.speed+gas*210*dt)*Math.exp(-.75*dt),-100,185);p.angle=angleDiff(p.angle+steer*1.9*dt*(p.speed< -6?-1:1)*Math.max(.45,Math.min(1,Math.abs(p.speed)/55)));const x0=p.x,y0=p.y;p.x+=Math.cos(p.angle)*p.speed*dt;p.y+=Math.sin(p.angle)*p.speed*dt;let bump=p.x<32||p.x>668||p.y<42||p.y>425;for(const r of parkingWalls)if(p.x>r.x-18&&p.x<r.x+r.w+18&&p.y>r.y-18&&p.y<r.y+r.h+18)bump=true;if(bump){p.x=clamp(x0,32,668);p.y=clamp(y0,42,425);p.speed*= -.22;if(w.elapsed-p.bumpAt>.5){p.bumpAt=w.elapsed;p.baseScore=Math.max(0,p.baseScore-4);say(w,p,'콩! 조금 천천히');}}
-    const target=parkingSpots[p.target%parkingSpots.length],d=dist(p,target),error=Math.abs(angleDiff(p.angle-target.angle));p.parkHold=d<30&&error<.34&&Math.abs(p.speed)<17?p.parkHold+dt:0;if(p.parkHold>=1){p.baseScore+=100;p.parked++;p.target++;p.parkHold=0;say(w,p,'주차 완료! +100');}p.score=p.baseScore+Math.max(0,Math.round(35-d*.065));}
+    const target=parkingSpots[p.target%parkingSpots.length],d=dist(p,target),rawError=Math.abs(angleDiff(p.angle-target.angle)),error=Math.min(rawError,Math.PI-rawError);p.parkHold=d<32&&error<.38&&Math.abs(p.speed)<20?p.parkHold+dt:Math.max(0,p.parkHold-dt*2);if(p.parkHold>=1){p.baseScore+=100;p.parked++;p.target++;p.parkHold=0;say(w,p,'주차 완료! +100');}p.score=p.baseScore+Math.max(0,Math.round(35-d*.065));}
   },
   bot(w,p){const target=parkingSpots[p.target%parkingSpots.length],d=dist(p,target),wall=parkingWalls[0];let waypoint=target;if(p.x<wall.x-15&&target.x>wall.x&&p.y>wall.y-25&&p.y<wall.y+wall.h+110)waypoint={x:wall.x-45,y:wall.y-55};const nav=dist(p,waypoint),desired=waypoint===target&&d<45?target.angle:Math.atan2(waypoint.y-p.y,waypoint.x-p.x),delta=angleDiff(desired-p.angle),held=[];if(Math.abs(delta)>.09)held.push(delta>0?'right':'left');if(nav>26&&Math.abs(delta)<1.0)held.push('up');else if(d<18&&Math.abs(delta)>.6)held.push('down');return{held,...((d<65&&Math.abs(p.speed)>18)||Math.abs(delta)>1.1&&Math.abs(p.speed)>35?{action:'hit'}:{})};}
  };
@@ -575,7 +587,7 @@ function createArcadeActionPackRules(){
    const t=w.elapsed;
    for(const p of w.players){if(!active(p)||t<p.stunUntil||t<p.respawnUntil)continue;const d=axes(held(controls,p));if(d.x||d.y){p.faceX=d.x;p.faceY=d.y;}p.x=clamp(p.x+d.x*184*dt,36,664);p.y=clamp(p.y+d.y*184*dt,74,418);}
    for(const o of w.objects){if(o.until<=t)continue;o.x+=o.vx*dt;o.y+=o.vy*dt;if(o.x<25||o.x>675){o.x=clamp(o.x,25,675);o.vx*=-1;o.bounces++;}if(o.y<62||o.y>430){o.y=clamp(o.y,62,430);o.vy*=-1;o.bounces++;}if(o.bounces>1){o.until=t;continue;}
-    const victim=w.players.filter(p=>active(p)&&p.id!==o.ownerId&&t>=p.invincibleUntil&&t>=p.respawnUntil&&!o.hitIds.includes(p.id)).find(p=>Math.hypot(p.x-o.x,p.y-o.y)<29);if(!victim)continue;
+    const victim=w.players.filter(p=>active(p)&&p.id!==o.ownerId&&t>=p.invincibleUntil&&t>=p.respawnUntil&&!o.hitIds.includes(p.id)&&Math.hypot(p.x-o.x,p.y-o.y)<29).sort((a,b)=>Math.hypot(a.x-o.x,a.y-o.y)-Math.hypot(b.x-o.x,b.y-o.y)||((a.index+o.id.length+Math.floor(t*20))%w.players.length)-((b.index+o.id.length+Math.floor(t*20))%w.players.length))[0];if(!victim)continue;
     o.hitIds.push(victim.id);o.until=t;victim.received++;victim.stunUntil=t+.36;victim.respawnUntil=t+.55;victim.invincibleUntil=t+1.15;Object.assign(victim,courtSpawn(victim,w.players.length));const thrower=w.players.find(p=>p.id===o.ownerId);if(thrower)thrower.hits++;w.meta.notice=(thrower?.name||'누군가')+' 님 명중! '+victim.name+' 님은 바로 복귀해요.';
    }
    w.objects=w.objects.filter(o=>o.until>t);for(const p of w.players)p.score=p.hits*100-p.received*18;
@@ -587,11 +599,11 @@ function createArcadeActionPackRules(){
   input(w,p,action){if(action!=='dash'||!active(p)||w.elapsed<p.dashReadyAt||w.elapsed<p.stunUntil)return false;p.dashUntil=w.elapsed+.16;p.dashReadyAt=w.elapsed+2.25;p.actionUntil=p.dashUntil;return true;},
   step(w,dt,controls){
    const t=w.elapsed,m=w.meta,o=w.objects[0];let owner=w.players.find(p=>p.id===m.ownerId&&active(p));if(!owner){m.ownerId='';owner=null;}
-   for(const p of w.players){if(!active(p))continue;const d=axes(held(controls,p));if(d.x||d.y){p.dx=d.x;p.dy=d.y;}const dash=t<p.dashUntil,speed=dash?395:p.id===m.ownerId?140:175;p.x=clamp(p.x+(dash?p.dx:d.x)*speed*dt,55,645);p.y=clamp(p.y+(dash?p.dy:d.y)*speed*dt,75,405);}
+   for(const p of w.players){if(!active(p)||t<p.stunUntil)continue;const d=axes(held(controls,p));if(d.x||d.y){p.dx=d.x;p.dy=d.y;}const dash=t<p.dashUntil,speed=dash?395:p.id===m.ownerId?140:175;p.x=clamp(p.x+(dash?p.dx:d.x)*speed*dt,55,645);p.y=clamp(p.y+(dash?p.dy:d.y)*speed*dt,75,405);}
    if(owner){
-    const challenger=w.players.filter(p=>p!==owner&&active(p)&&t<p.dashUntil&&t>=m.protectionUntil&&Math.hypot(p.x-owner.x,p.y-owner.y)<48).sort((a,b)=>a.index-b.index)[0];
+    const challenger=w.players.filter(p=>p!==owner&&active(p)&&t>=p.stunUntil&&t<p.dashUntil&&t>=m.protectionUntil&&Math.hypot(p.x-owner.x,p.y-owner.y)<48).sort((a,b)=>Math.hypot(a.x-owner.x,a.y-owner.y)-Math.hypot(b.x-owner.x,b.y-owner.y)||((a.index+Math.floor(t*20))%w.players.length)-((b.index+Math.floor(t*20))%w.players.length))[0];
     if(challenger){m.ownerId=challenger.id;m.protectionUntil=t+.85;challenger.steals++;challenger.cornerTime=0;owner.stunUntil=t+.16;owner=challenger;m.notice=owner.name+' 님 왕관 낚아채기! 잠깐의 보호 시간!';}
-   }else{const pickup=w.players.filter(active).find(p=>Math.hypot(p.x-o.x,p.y-o.y)<29);if(pickup){owner=pickup;m.ownerId=pickup.id;m.protectionUntil=t+.85;m.notice=pickup.name+' 님 왕관 획득!';}}
+   }else{const pickup=w.players.filter(p=>active(p)&&t>=p.stunUntil&&Math.hypot(p.x-o.x,p.y-o.y)<29).sort((a,b)=>Math.hypot(a.x-o.x,a.y-o.y)-Math.hypot(b.x-o.x,b.y-o.y)||((a.index+Math.floor(t*20))%w.players.length)-((b.index+Math.floor(t*20))%w.players.length))[0];if(pickup){owner=pickup;m.ownerId=pickup.id;m.protectionUntil=t+.85;m.notice=pickup.name+' 님 왕관 획득!';}}
    if(owner){
     const corner=(owner.x<120||owner.x>580)&&(owner.y<125||owner.y>345);owner.cornerTime=corner?owner.cornerTime+dt:Math.max(0,owner.cornerTime-dt*2);
     if(owner.cornerTime>=1.1){m.notice=owner.name+' 님, 모서리 캠핑 금지! 왕관이 중앙으로 돌아와요.';owner.cornerTime=0;m.ownerId='';owner=null;m.protectionUntil=t+.35;o.x=350;o.y=230;}
@@ -633,7 +645,7 @@ function createArcadeTransitRules(){
  function frogPosition(p){p.x=50+p.col*50;p.y=430-p.row*42;}
  function frogHop(w,p,dx,dy,length=1){
   const col=clamp(p.col+dx*length,0,12),row=clamp(p.row+dy*length,0,9);if(col===p.col&&row===p.row)return false;
-  if(w.players.some(q=>q!==p&&active(q)&&q.col===col&&q.row===row))return false;
+  if(!w.meta.safeRows.includes(row)&&w.players.some(q=>q!==p&&active(q)&&q.col===col&&q.row===row))return false;
   p.col=col;p.row=row;p.faceCol=dx;p.faceRow=dy;frogPosition(p);p.moveReadyAt=w.elapsed+.17;p.actionUntil=w.elapsed+.15;
   if(p.row===p.goalRow){p.deliveries++;p.goalRow=p.goalRow===9?0:9;p.lastResult='배송 완료! 반대편으로 한 번 더';p.resultUntil=w.elapsed+.8;w.meta.notice=p.name+' 님 배송 성공!';}
   return true;
@@ -697,7 +709,7 @@ function createArcadeTransitRules(){
    for(let i=0;i<14;i++){const mass=1+Math.floor(random()*3),o={id:'prize_'+i,kind:'clawPrize',baseX:50+random()*600,baseY:176+random()*158,amplitude:15+random()*30,speed:.65+random()*.8,phase:random()*Math.PI*2,mass,value:mass===1?5:mass===2?9:14,emoji:mass===1?'🍬':mass===2?'🍱':'🧸',x:0,y:0,active:true,ownerId:'',readyAt:0,generation:0};Object.assign(o,prizeAt(o,0));w.objects.push(o);}
    w.players.forEach((p,i)=>{p.x=50+(i+.5)*600/w.players.length;p.y=80;p.hookX=p.x;p.hookY=86;p.hookState='idle';p.hookPrizeId='';p.hookReadyAt=0;p.catches=0;p.attempts=0;p.health=3;p.score=0;p.lastResult='';p.resultUntil=0;p.eliminated=false;});
   },
-  input(w,p,action){if(action!=='hit'||!active(p)||p.hookState!=='idle'||w.elapsed<p.hookReadyAt)return false;p.hookState='down';p.hookY=w.meta.hookTop;p.hookX=p.x;p.hookPrizeId='';p.attempts++;p.actionUntil=w.elapsed+.2;return true;},
+  input(w,p,action){if(action!=='hit'||!active(p)||w.elapsed<p.hookReadyAt)return false;if(p.hookState==='down'){p.hookState='up';p.lastResult='빈 집게 조기 회수!';p.resultUntil=w.elapsed+.65;return true;}if(p.hookState!=='idle')return false;p.hookState='down';p.hookY=w.meta.hookTop;p.hookX=p.x;p.hookPrizeId='';p.attempts++;p.actionUntil=w.elapsed+.2;return true;},
   step(w,dt,controls){
    const t=w.elapsed;
    for(const o of w.objects){if(o.ownerId&&!w.players.some(p=>p.id===o.ownerId&&active(p))){o.ownerId='';o.active=false;o.readyAt=t+.45;}
@@ -706,7 +718,7 @@ function createArcadeTransitRules(){
    }
    for(const p of w.players){if(!active(p))continue;
     if(p.hookState==='idle'){const held=keys(controls,p),dx=Number(held.has('right'))-Number(held.has('left'));p.x=clamp(p.x+dx*178*dt,30,670);p.hookX=p.x;p.hookY=w.meta.hookTop;continue;}
-    const oldY=p.hookY;p.hookX=clamp(p.x+Math.sin(t*3+p.index*.6)*9,27,673);
+    const oldY=p.hookY;if(p.hookState==='down'){const held=keys(controls,p);p.x=clamp(p.x+(Number(held.has('right'))-Number(held.has('left')))*72*dt,30,670);}p.hookX=clamp(p.x+Math.sin(t*3+p.index*.6)*9,27,673);
     if(p.hookState==='down'){
      p.hookY=Math.min(w.meta.hookBottom,p.hookY+238*dt);
      const caught=w.objects.filter(o=>o.active&&!o.ownerId&&Math.abs(o.x-p.hookX)<25&&o.y>=oldY-15&&o.y<=p.hookY+15).sort((a,b)=>a.y-b.y||Math.abs(a.x-p.hookX)-Math.abs(b.x-p.hookX))[0];
@@ -734,56 +746,56 @@ function createArcadeBrainPackRules(){
  const keys=(controls,id)=>controls.get(id)?.held||new Set();
  function feedback(w,p,text){p.feedback=text;p.feedbackUntil=w.elapsed+.85;p.actionUntil=w.elapsed+.2;}
  function players(w){for(const p of w.players){p.x=75+p.index*550/Math.max(1,w.players.length-1);p.y=395;p.score=0;p.health=3;p.locked=false;p.choiceLocked=false;p.nextInputAt=0;p.feedback='';p.feedbackUntil=0;p.roundPoints=0;}}
- function align(w,s,length,total,begin,resolve){const stage=Math.min(total-1,Math.floor((w.elapsed+1e-8)/length));while(s.stage<stage){if(resolve)resolve(w,s);s.stage++;begin(w,s);}w.meta.stage=s.stage;w.meta.stageLeft=Math.max(0,length-(w.elapsed-s.stage*length));return w.elapsed-s.stage*length;}
+ function align(w,s,length,total,begin,resolve){const stage=Math.min(total-1,Math.floor((w.elapsed+1e-8)/length));while(s.stage<stage){if(resolve)resolve(w,s);s.stage++;begin(w,s);}const local=Math.max(0,w.elapsed-s.stage*length);w.meta.stage=s.stage;w.meta.stageLeft=clamp(length-local,0,length);return local;}
  function choice(w,p,action){const lane=actions.indexOf(action);return alive(p)&&lane>=0&&w.elapsed+1e-8>=p.nextInputAt?lane:-1;}
  function setReady(w,p,gap=.13){p.nextInputAt=w.elapsed+gap;}
- function memoryBegin(w,s){s.pattern=Array.from({length:2+Math.floor(s.stage/2)},()=>Math.floor(s.random()*3));w.meta.patternLength=s.pattern.length;w.meta.showLength=s.pattern.length*.38+.15;w.meta.phase='watch';w.meta.flashLane=-1;for(const p of w.players){p.memoryIndex=0;p.locked=false;p.choiceLocked=false;p.roundPoints=0;}}
- function memoryUpdate(w,s){const local=align(w,s,4,6,memoryBegin);w.meta.phase=local<w.meta.showLength?'watch':local<3.75?'repeat':'reveal';const tick=Math.floor(local/.38);w.meta.flashLane=w.meta.phase==='watch'&&tick<s.pattern.length&&local%.38<.29?s.pattern[tick]:-1;for(const p of w.players)p.choiceLocked=p.locked||w.meta.phase!=='repeat';w.meta.notice=w.meta.phase==='watch'?'불빛 순서를 기억해! 아직 누르지 말고.':w.meta.phase==='repeat'?'방금 본 순서대로 A / W / D! 한 번 틀리면 다음 순서 대기.':'다음 기억을 준비해요.';return local;}
+ function memoryBegin(w,s){s.pattern=Array.from({length:2+Math.floor(s.stage/2)},()=>Math.floor(s.random()*3));w.meta.patternLength=s.pattern.length;w.meta.showLength=s.pattern.length*.48+.18;w.meta.phase='watch';w.meta.flashLane=-1;for(const p of w.players){p.memoryIndex=0;p.memoryBest=0;p.memoryRetryUsed=false;p.locked=false;p.choiceLocked=false;p.roundPoints=0;}}
+ function memoryUpdate(w,s){const local=align(w,s,4.5,6,memoryBegin);w.meta.phase=local<w.meta.showLength?'watch':local<4.2?'repeat':'reveal';const tick=Math.floor(local/.48);w.meta.flashLane=w.meta.phase==='watch'&&tick<s.pattern.length&&local%.48<.36?s.pattern[tick]:-1;for(const p of w.players)p.choiceLocked=p.locked||w.meta.phase!=='repeat';w.meta.notice=w.meta.phase==='watch'?'불빛 순서를 기억해! 아직 누르지 말고.':w.meta.phase==='repeat'?'방금 본 순서대로 A / W / D! 한 번은 다시 도전할 수 있어요.':'다음 기억을 준비해요.';return local;}
  const memory={
-  init(w,random){w.duration=24;w.objects=[];players(w);w.meta={stage:0,stageLeft:4,phase:'watch',patternLength:2,showLength:.91,flashLane:-1,choiceLabels:['◀ 왼쪽','● 가운데','▶ 오른쪽'],notice:''};const s={stage:0,pattern:[],random};privateGames.set(w,s);memoryBegin(w,s);memoryUpdate(w,s);},
-  input(w,p,action){const s=privateGames.get(w);if(!s)return false;memoryUpdate(w,s);const lane=choice(w,p,action);if(lane<0||p.locked||w.meta.phase!=='repeat')return false;setReady(w,p);if(lane!==s.pattern[p.memoryIndex]){p.score=Math.max(0,p.score-12);p.locked=true;p.choiceLocked=true;feedback(w,p,'앗! 순서가 꼬였다. 다음 문제!');return false;}p.memoryIndex++;p.score+=12;p.roundPoints+=12;if(p.memoryIndex===s.pattern.length){const bonus=40+s.stage*10;p.score+=bonus;p.roundPoints+=bonus;p.locked=true;p.choiceLocked=true;feedback(w,p,'완벽 재현! +'+p.roundPoints);}else feedback(w,p,p.memoryIndex+'/'+s.pattern.length+' 기억 성공');return true;},
+  init(w,random){w.duration=27;w.objects=[];players(w);w.meta={stage:0,stageLeft:4.5,phase:'watch',patternLength:2,showLength:1.14,flashLane:-1,choiceLabels:['◀ 왼쪽','● 가운데','▶ 오른쪽'],notice:''};const s={stage:0,pattern:[],random};privateGames.set(w,s);memoryBegin(w,s);memoryUpdate(w,s);},
+  input(w,p,action){const s=privateGames.get(w);if(!s)return false;memoryUpdate(w,s);const lane=choice(w,p,action);if(lane<0||p.locked||w.meta.phase!=='repeat')return false;setReady(w,p);if(lane!==s.pattern[p.memoryIndex]){p.score=Math.max(0,p.score-12);p.roundPoints-=12;if(!p.memoryRetryUsed){p.memoryRetryUsed=true;p.memoryIndex=0;setReady(w,p,.32);feedback(w,p,'한 번 더! 처음 불빛부터 다시 눌러요.');}else{p.locked=true;p.choiceLocked=true;feedback(w,p,'다음 문제에서 다시 도전!');}return false;}p.memoryIndex++;if(p.memoryIndex>p.memoryBest){p.memoryBest=p.memoryIndex;p.score+=12;p.roundPoints+=12;}if(p.memoryIndex===s.pattern.length){const bonus=40+s.stage*10;p.score+=bonus;p.roundPoints+=bonus;p.locked=true;p.choiceLocked=true;feedback(w,p,'순서 재현! +'+p.roundPoints);}else feedback(w,p,p.memoryIndex+'/'+s.pattern.length+' 기억 성공');return true;},
   step(w){const s=privateGames.get(w);if(s)memoryUpdate(w,s);},
   bot(w,p,random){const s=privateGames.get(w);if(!s||p.locked||w.meta.phase!=='repeat'||w.elapsed<p.nextInputAt||random()>.8)return{held:[]};return{held:[],action:actions[s.pattern[p.memoryIndex]]};}
  };
  const docNames=['행정 서류','회계 전표','학생 신청서'],docIcons=['📁','🧾','🎓'];
  function sorterBegin(w,s){s.type=Math.floor(s.random()*3);s.shift=Math.floor(s.stage/4)%2;w.meta.docType=s.type;w.meta.docIcon=docIcons[s.type];w.meta.docName=docNames[s.type];w.meta.ruleShift=s.shift;w.meta.rule=s.shift?'특별 규칙 · 원래 함보다 한 칸 오른쪽!':'기본 규칙 · 서류와 같은 그림 함!';for(const p of w.players){p.locked=false;p.choiceLocked=false;p.roundPoints=0;}}
- function sorterUpdate(w,s){const local=align(w,s,1.5,16,sorterBegin);w.meta.phase=local<1.25?'choose':'reveal';w.meta.belt=local/1.5;w.meta.notice=w.meta.rule;return local;}
+ function sorterUpdate(w,s){const local=align(w,s,1.7,16,sorterBegin),preview=s.stage>0&&s.stage%4===0&&local<.36;w.meta.ruleChanged=s.stage>0&&s.stage%4===0;w.meta.phase=preview?'watch':local<1.45?'choose':'reveal';w.meta.belt=local/1.7;for(const p of w.players)p.choiceLocked=p.locked||w.meta.phase!=='choose';w.meta.notice=preview?'규칙 변경! 새 분류 방법을 먼저 확인해요.':w.meta.rule;return local;}
  const sorter={
-  init(w,random){w.duration=24;w.objects=[];players(w);w.meta={stage:0,stageLeft:1.5,phase:'choose',docType:0,docIcon:'📁',docName:'행정 서류',ruleShift:0,rule:'',belt:0,choiceLabels:['📁 행정함','🧾 회계함','🎓 학생함'],notice:''};const s={stage:0,type:0,shift:0,random};privateGames.set(w,s);sorterBegin(w,s);sorterUpdate(w,s);},
-  input(w,p,action){const s=privateGames.get(w);if(!s)return false;const local=sorterUpdate(w,s),lane=choice(w,p,action);if(lane<0||p.locked||w.meta.phase!=='choose')return false;p.locked=true;p.choiceLocked=true;setReady(w,p);const correct=lane===(s.type+s.shift)%3,points=correct?50+Math.round(20*(1-local/1.25)):-12;p.score=Math.max(0,p.score+points);p.roundPoints=points;feedback(w,p,correct?'분류 완료! +'+points:'함이 달라! 특별 규칙도 확인해.');return correct;},
+  init(w,random){w.duration=27.2;w.objects=[];players(w);w.meta={stage:0,stageLeft:1.7,phase:'choose',docType:0,docIcon:'📁',docName:'행정 서류',ruleShift:0,rule:'',belt:0,choiceLabels:['📁 행정함','🧾 회계함','🎓 학생함'],notice:''};const s={stage:0,type:0,shift:0,random};privateGames.set(w,s);sorterBegin(w,s);sorterUpdate(w,s);},
+  input(w,p,action){const s=privateGames.get(w);if(!s)return false;const local=sorterUpdate(w,s),lane=choice(w,p,action);if(lane<0||p.locked||w.meta.phase!=='choose')return false;p.locked=true;p.choiceLocked=true;setReady(w,p);const start=w.meta.ruleChanged ? .36 : 0,correct=lane===(s.type+s.shift)%3,points=correct?50+Math.round(20*(1-(local-start)/(1.45-start))):-12;p.score=Math.max(0,p.score+points);p.roundPoints=points;feedback(w,p,correct?'분류 완료! +'+points:'함이 달라! 특별 규칙도 확인해.');return correct;},
   step(w){const s=privateGames.get(w);if(s)sorterUpdate(w,s);},
-  bot(w,p,random){const s=privateGames.get(w);return s&&!p.locked&&w.meta.phase==='choose'&&w.elapsed-s.stage*1.5>.22+p.index*.015&&random()<.8?{held:[],action:actions[(s.type+s.shift)%3]}:{held:[]};}
+  bot(w,p,random){const s=privateGames.get(w);return s&&!p.locked&&w.meta.phase==='choose'&&w.elapsed-s.stage*1.7>.32+p.index*.015&&random()<.8?{held:[],action:actions[(s.type+s.shift)%3]}:{held:[]};}
  };
- function receiptBegin(w,s){const count=2+s.stage%2,numbers=Array.from({length:count},()=>1+Math.floor(s.random()*9)),total=numbers.reduce((a,b)=>a+b,0),options=[total,total+1+Math.floor(s.random()*4),Math.max(1,total-1-Math.floor(s.random()*3))];for(let i=2;i>0;i--){const j=Math.floor(s.random()*(i+1));[options[i],options[j]]=[options[j],options[i]];}s.answer=options.indexOf(total);s.total=total;w.meta.numbers=numbers;w.meta.choiceLabels=options.map(n=>n+'원');w.meta.answer=-1;for(const p of w.players){p.locked=false;p.choiceLocked=false;p.roundPoints=0;}}
+ function receiptBegin(w,s){const count=s.stage<2?2:3,max=s.stage<2?5:s.stage<4?9:15,numbers=Array.from({length:count},()=>1+Math.floor(s.random()*max)),total=numbers.reduce((a,b)=>a+b,0),options=[total,total+1+Math.floor(s.random()*4),Math.max(1,total-1-Math.floor(s.random()*3))];for(let i=2;i>0;i--){const j=Math.floor(s.random()*(i+1));[options[i],options[j]]=[options[j],options[i]];}s.answer=options.indexOf(total);s.total=total;w.meta.numbers=numbers;w.meta.choiceLabels=options.map(n=>n+'원');w.meta.answer=-1;for(const p of w.players){if(s.stage>0&&!p.locked)p.receiptStreak=0;p.locked=false;p.choiceLocked=false;p.roundPoints=0;}}
  function receiptUpdate(w,s){const local=align(w,s,4,6,receiptBegin);w.meta.phase=local<3.3?'choose':'reveal';w.meta.answer=w.meta.phase==='reveal'?s.total:-1;w.meta.notice=w.meta.phase==='choose'?'영수증 금액을 더해서 합계를 골라요. 계산기는 마음속에!':'정답은 '+s.total+'원! 다음 영수증이 나와요.';return local;}
  const receipt={
-  init(w,random){w.duration=24;w.objects=[];players(w);w.meta={stage:0,stageLeft:4,phase:'choose',numbers:[],choiceLabels:[],answer:-1,notice:''};const s={stage:0,answer:0,total:0,random};privateGames.set(w,s);receiptBegin(w,s);receiptUpdate(w,s);},
-  input(w,p,action){const s=privateGames.get(w);if(!s)return false;const local=receiptUpdate(w,s),lane=choice(w,p,action);if(lane<0||p.locked||w.meta.phase!=='choose')return false;p.locked=true;p.choiceLocked=true;setReady(w,p);const correct=lane===s.answer,points=correct?70+Math.round(30*(1-local/3.3)):-15;p.score=Math.max(0,p.score+points);p.roundPoints=points;feedback(w,p,correct?'정산 일치! +'+points:'한 번 더 더해볼걸…');return correct;},
+  init(w,random){w.duration=24;w.objects=[];players(w);for(const p of w.players)p.receiptStreak=0;w.meta={stage:0,stageLeft:4,phase:'choose',numbers:[],choiceLabels:[],answer:-1,notice:''};const s={stage:0,answer:0,total:0,random};privateGames.set(w,s);receiptBegin(w,s);receiptUpdate(w,s);},
+  input(w,p,action){const s=privateGames.get(w);if(!s)return false;const local=receiptUpdate(w,s),lane=choice(w,p,action);if(lane<0||p.locked||w.meta.phase!=='choose')return false;p.locked=true;p.choiceLocked=true;setReady(w,p);const correct=lane===s.answer;p.receiptStreak=correct?p.receiptStreak+1:0;const bonus=correct?Math.min(3,p.receiptStreak-1)*10:0,points=correct?70+Math.round(30*(1-local/3.3))+bonus:-15;p.score=Math.max(0,p.score+points);p.roundPoints=points;feedback(w,p,correct?'정산 일치! +'+points+(bonus?' · 연속 정답 +'+bonus:''):'한 번 더 더해볼걸…');return correct;},
   step(w){const s=privateGames.get(w);if(s)receiptUpdate(w,s);},
   bot(w,p,random){const s=privateGames.get(w);return s&&!p.locked&&w.meta.phase==='choose'&&w.elapsed-s.stage*4>.65+p.index*.035&&random()<.65?{held:[],action:actions[s.answer]}:{held:[]};}
  };
- function safeBegin(w,s){s.pin=Array.from({length:3},()=>Math.floor(s.random()*10));for(const p of w.players){p.dialFloat=0;p.dial=0;p.safeProgress=0;p.entered=[];p.locked=false;p.choiceLocked=false;p.roundPoints=0;}}
+ function safeBegin(w,s){s.pin=Array.from({length:3},()=>Math.floor(s.random()*10));for(const p of w.players){p.dialFloat=0;p.dial=0;p.dialDirection=0;p.dialRepeatAt=0;p.safeProgress=0;p.safeMistakes=0;p.safePenaltyPaid=0;p.entered=[];p.locked=false;p.choiceLocked=false;p.roundPoints=0;}}
  function safeUpdate(w,s){const local=align(w,s,8,3,safeBegin);w.meta.phase=local<1.35?'watch':'unlock';w.meta.pinDisplay=w.meta.phase==='watch'?s.pin.join(' '):'● ● ●';w.meta.notice=w.meta.phase==='watch'?'금고 비밀번호 세 자리를 기억해요!':'←/→로 숫자를 맞추고 Space로 한 자리씩 확정!';return local;}
  const safe={
   init(w,random){w.duration=24;w.objects=[];players(w);w.meta={stage:0,stageLeft:8,phase:'watch',pinDisplay:'',notice:''};const s={stage:0,pin:[],random};privateGames.set(w,s);safeBegin(w,s);safeUpdate(w,s);},
-  input(w,p,action){const s=privateGames.get(w);if(!s)return false;const local=safeUpdate(w,s);if(!['hit','dash','jump'].includes(action)||!alive(p)||p.locked||w.meta.phase!=='unlock'||w.elapsed<p.nextInputAt)return false;setReady(w,p,.24);const digit=p.dial;if(digit!==s.pin[p.safeProgress]){p.score=Math.max(0,p.score-15);p.safeProgress=0;p.entered=[];feedback(w,p,'삐빅! 처음 숫자부터 다시.');return false;}p.entered.push(digit);p.safeProgress++;if(p.safeProgress===3){const points=180+Math.round((8-local)*10);p.score+=points;p.roundPoints=points;p.locked=true;p.choiceLocked=true;feedback(w,p,'찰칵! 금고 열림 +'+points);}else feedback(w,p,p.safeProgress+'번째 숫자 통과');return true;},
-  step(w,dt,controls){const s=privateGames.get(w);if(!s)return;safeUpdate(w,s);for(const p of w.players){if(!alive(p)||p.locked||w.meta.phase!=='unlock')continue;const held=keys(controls,p.id),d=Number(held.has('right'))-Number(held.has('left'));p.dialFloat=((p.dialFloat+d*4.4*dt)%10+10)%10;p.dial=Math.round(p.dialFloat)%10;}},
+  input(w,p,action){const s=privateGames.get(w);if(!s)return false;const local=safeUpdate(w,s);if(!['hit','dash','jump'].includes(action)||!alive(p)||p.locked||w.meta.phase!=='unlock'||w.elapsed<p.nextInputAt)return false;setReady(w,p,.24);const digit=p.dial;p.dialFloat=digit;if(digit!==s.pin[p.safeProgress]){p.safeMistakes++;const before=p.score;p.score=Math.max(0,p.score-8);p.safePenaltyPaid+=before-p.score;setReady(w,p,.42);feedback(w,p,'이 자리가 달라요! 맞힌 숫자는 유지돼요.');return false;}p.entered.push(true);p.safeProgress++;if(p.safeProgress===3){const unpaid=Math.max(0,p.safeMistakes*8-p.safePenaltyPaid),points=Math.max(0,180+Math.round((8-local)*10)-unpaid);p.score+=points;p.roundPoints=points;p.locked=true;p.choiceLocked=true;feedback(w,p,'찰칵! 금고 열림 +'+points);}else feedback(w,p,p.safeProgress+'번째 숫자 통과');return true;},
+  step(w,dt,controls){const s=privateGames.get(w);if(!s)return;safeUpdate(w,s);for(const p of w.players){if(!alive(p)||p.locked||w.meta.phase!=='unlock'){p.dialDirection=0;continue;}const held=keys(controls,p.id),d=Number(held.has('right'))-Number(held.has('left'));if(d&&(d!==p.dialDirection||w.elapsed+1e-8>=p.dialRepeatAt)){p.dial=(p.dial+d+10)%10;p.dialFloat=p.dial;p.dialRepeatAt=w.elapsed+(d!==p.dialDirection ? .28 : .16);}p.dialDirection=d;}},
   bot(w,p,random){const s=privateGames.get(w);if(!s||p.locked||w.meta.phase!=='unlock')return{held:[]};const target=s.pin[p.safeProgress],delta=(target-p.dial+10)%10;if(delta===0)return{held:[],...(w.elapsed>=p.nextInputAt&&random()<.9?{action:'hit'}:{})};return{held:delta>5?['left']:['right']};}
  };
  function auctionBegin(w,s){s.choices.clear();s.resolved=false;w.meta.prize=3+Math.floor(s.random()*5);w.meta.phase='choose';w.meta.winnerId='';w.meta.choiceLabels=['0 · 불참','1 · 한 장','3 · 세 장'];for(const p of w.players){p.bid=-1;p.locked=false;p.choiceLocked=false;p.roundPoints=0;}}
- function auctionResolve(w,s){if(s.resolved)return;s.resolved=true;w.meta.phase='reveal';const chosen=w.players.filter(p=>alive(p)&&s.choices.has(p.id)),highest=Math.max(0,...chosen.map(p=>s.choices.get(p.id))),leaders=chosen.filter(p=>s.choices.get(p.id)===highest),winner=highest>0&&leaders.length===1?leaders[0]:null;w.meta.winnerId=winner?.id||'';for(const p of w.players){if(!alive(p))continue;const bid=s.choices.get(p.id)??0;p.bid=s.choices.has(p.id)?bid:-1;p.budget-=bid;if(winner?.id===p.id)p.goods+=w.meta.prize;p.score=p.budget+p.goods;p.roundPoints=(winner?.id===p.id?w.meta.prize:0)-bid;feedback(w,p,winner?.id===p.id?'단독 최고 입찰! 상품 +'+w.meta.prize:bid?'입찰금 '+bid+' 소비. 낙찰은 다음에!':'예산을 아꼈다.');}w.meta.notice=winner?winner.name+' 님 낙찰! '+w.meta.prize+'점 상품 획득.':'최고 입찰이 겹쳤어요. 이번 상품은 유찰!';}
- function auctionUpdate(w,s){const local=align(w,s,6,4,auctionBegin,auctionResolve);if(local>=4.7)auctionResolve(w,s);w.meta.phase=s.resolved?'reveal':'choose';if(!s.resolved)w.meta.notice='입찰금은 돌려주지 않아요. 유일한 최고 입찰만 상품 획득!';return local;}
+ function auctionResolve(w,s){if(s.resolved)return;s.resolved=true;w.meta.phase='reveal';const chosen=w.players.filter(p=>alive(p)&&s.choices.has(p.id)),highest=Math.max(0,...chosen.map(p=>s.choices.get(p.id))),leaders=chosen.filter(p=>s.choices.get(p.id)===highest),winner=highest>0&&leaders.length===1?leaders[0]:null;w.meta.winnerId=winner?.id||'';for(const p of w.players){if(!alive(p))continue;const bid=s.choices.get(p.id)??0;p.bid=s.choices.has(p.id)?bid:-1;p.choiceLocked=true;p.budget-=bid;if(winner?.id===p.id)p.goods+=w.meta.prize;p.score=p.budget+p.goods;p.roundPoints=(winner?.id===p.id?w.meta.prize:0)-bid;feedback(w,p,winner?.id===p.id?'단독 최고 입찰! 상품 +'+w.meta.prize:bid?'입찰금 '+bid+' 소비. 낙찰은 다음에!':'예산을 아꼈다.');}w.meta.notice=winner?winner.name+' 님 낙찰! '+w.meta.prize+'점 상품 획득.':'최고 입찰이 겹쳤어요. 이번 상품은 유찰!';}
+ function auctionUpdate(w,s){const local=align(w,s,6,4,auctionBegin,auctionResolve);if(local>=4.7)auctionResolve(w,s);w.meta.phase=s.resolved?'reveal':'choose';if(!s.resolved)w.meta.notice='마감 전에는 봉투를 다시 고를 수 있어요. 입찰금은 돌려주지 않고, 유일한 최고 입찰만 상품 획득!';return local;}
  const auction={
   init(w,random){w.duration=24;w.objects=[];players(w);for(const p of w.players){p.budget=12;p.goods=0;p.bid=-1;p.score=12;}w.meta={stage:0,stageLeft:6,phase:'choose',prize:3,winnerId:'',choiceLabels:[],notice:''};const s={stage:0,choices:new Map(),resolved:false,random};privateGames.set(w,s);auctionBegin(w,s);auctionUpdate(w,s);},
-  input(w,p,action){const s=privateGames.get(w);if(!s)return false;auctionUpdate(w,s);const lane=choice(w,p,action);if(lane<0||p.locked||w.meta.phase!=='choose')return false;const bid=[0,1,3][lane];if(bid>p.budget){feedback(w,p,'예산이 부족해! 더 작은 금액을 골라요.');return false;}s.choices.set(p.id,bid);p.locked=true;p.choiceLocked=true;setReady(w,p);feedback(w,p,'봉투 제출 완료. 금액은 공개 전까지 비밀!');return true;},
+  input(w,p,action){const s=privateGames.get(w);if(!s)return false;auctionUpdate(w,s);const lane=choice(w,p,action);if(lane<0||w.meta.phase!=='choose')return false;const bid=[0,1,3][lane];if(bid>p.budget){feedback(w,p,'예산이 부족해! 더 작은 금액을 골라요.');return false;}const revised=s.choices.has(p.id);s.choices.set(p.id,bid);p.locked=true;p.choiceLocked=false;setReady(w,p);feedback(w,p,revised?'봉투 수정 완료. 금액은 공개 전까지 비밀!':'봉투 제출 완료. 마감 전에는 수정할 수 있어요!');return true;},
   step(w){const s=privateGames.get(w);if(s)auctionUpdate(w,s);},
   bot(w,p,random){const s=privateGames.get(w);if(!s||p.locked||w.meta.phase!=='choose'||w.elapsed-s.stage*6<.6+p.index*.12)return{held:[]};const affordable=[0,1,3].filter(n=>n<=p.budget),bid=affordable[Math.floor(random()*affordable.length)];return{held:[],action:actions[[0,1,3].indexOf(bid)]};}
  };
- function stackReset(w,p,delay=0){p.stackWidth=150;p.stackCenter=350;p.stackLevel=0;p.stackRects=[];p.stackSpawnAt=w.elapsed;p.stackReadyAt=w.elapsed+delay;p.movingX=350;p.movingWidth=150;}
- function stackUpdate(w,p){const speed=1.7+Math.min(10,p.stackLevel)*.14;p.movingX=350+Math.sin((w.elapsed-p.stackSpawnAt)*speed+p.index*.41)*235;p.movingWidth=p.stackWidth;}
+ function stackReset(w,p,delay=0){p.stackWidth=150;p.stackCenter=350;p.stackLevel=0;p.perfectChain=0;p.stackRects=[];p.stackSpawnAt=w.elapsed;p.stackReadyAt=w.elapsed+delay;p.movingX=585;p.movingWidth=150;}
+ function stackUpdate(w,p){const speed=1.7+Math.min(10,p.stackLevel)*.14,side=(p.blocks+p.failures)%2?-1:1;p.movingX=350+Math.cos((w.elapsed-p.stackSpawnAt)*speed)*235*side;p.movingWidth=p.stackWidth;}
  const stacker={
-  init(w){w.duration=24;w.objects=[];players(w);w.meta={notice:'움직이는 블록을 Space로 멈춰요. 겹친 부분만 남고, 완벽히 맞추면 보너스!'};for(const p of w.players){p.blocks=0;p.perfects=0;p.failures=0;p.bestLevel=0;stackReset(w,p);stackUpdate(w,p);}},
-  input(w,p,action){if(!['hit','dash','jump'].includes(action)||!alive(p)||w.elapsed<p.nextInputAt||w.elapsed<p.stackReadyAt)return false;setReady(w,p,.23);stackUpdate(w,p);const difference=Math.abs(p.movingX-p.stackCenter),perfect=difference<=8,overlap=perfect?p.stackWidth:p.stackWidth-difference;if(overlap<=6){p.failures++;p.score=Math.max(0,p.score-12);feedback(w,p,'와르르! 새 탑으로 다시 도전.');stackReset(w,p,.65);return false;}const left=Math.max(p.stackCenter-p.stackWidth/2,p.movingX-p.stackWidth/2),right=Math.min(p.stackCenter+p.stackWidth/2,p.movingX+p.stackWidth/2);p.stackCenter=perfect?p.stackCenter:(left+right)/2;p.stackWidth=overlap;p.stackLevel++;p.blocks++;p.bestLevel=Math.max(p.bestLevel,p.stackLevel);if(perfect)p.perfects++;const points=25+Math.round(overlap/6)+(perfect?20:0);p.score+=points;p.stackRects.push([p.stackCenter,p.stackWidth,p.stackLevel]);p.stackRects=p.stackRects.slice(-8);p.stackSpawnAt=w.elapsed;feedback(w,p,perfect?'딱 맞았다! PERFECT +'+points:'남은 너비 '+Math.round(overlap)+' · +'+points);return true;},
+  init(w){w.duration=24;w.objects=[];players(w);w.meta={notice:'양쪽에서 오는 블록을 Space로 멈춰요. PERFECT 3연속이면 너비 회복!'};for(const p of w.players){p.blocks=0;p.perfects=0;p.failures=0;p.bestLevel=0;stackReset(w,p,.3);stackUpdate(w,p);}},
+  input(w,p,action){if(!['hit','dash','jump'].includes(action)||!alive(p)||w.elapsed<p.nextInputAt||w.elapsed<p.stackReadyAt)return false;setReady(w,p,.23);stackUpdate(w,p);const difference=Math.abs(p.movingX-p.stackCenter),perfect=difference<=Math.max(5,p.stackWidth*.06),overlap=perfect?p.stackWidth:p.stackWidth-difference;if(overlap<=6){p.failures++;p.score=Math.max(0,p.score-12);feedback(w,p,'와르르! 새 탑으로 다시 도전.');stackReset(w,p,.65);return false;}const left=Math.max(p.stackCenter-p.stackWidth/2,p.movingX-p.stackWidth/2),right=Math.min(p.stackCenter+p.stackWidth/2,p.movingX+p.stackWidth/2);p.stackCenter=perfect?p.stackCenter:(left+right)/2;p.perfectChain=perfect?p.perfectChain+1:0;p.stackWidth=Math.min(150,overlap+(p.perfectChain>0&&p.perfectChain%3===0?12:0));p.stackLevel++;p.blocks++;p.bestLevel=Math.max(p.bestLevel,p.stackLevel);if(perfect)p.perfects++;const points=25+Math.round(overlap/6)+(perfect?20:0);p.score+=points;p.stackRects.push([p.stackCenter,p.stackWidth,p.stackLevel]);p.stackRects=p.stackRects.slice(-8);p.stackSpawnAt=w.elapsed;feedback(w,p,perfect?'PERFECT '+p.perfectChain+'연속! +'+points+(p.perfectChain%3===0?' · 너비 회복!':''):'남은 너비 '+Math.round(overlap)+' · +'+points);return true;},
   step(w){for(const p of w.players)if(alive(p))stackUpdate(w,p);},
   bot(w,p,random){return w.elapsed>=p.stackReadyAt&&w.elapsed>=p.nextInputAt&&Math.abs(p.movingX-p.stackCenter)<22&&random()<.85?{held:[],action:'hit'}:{held:[]};}
  };
@@ -791,7 +803,7 @@ function createArcadeBrainPackRules(){
  function reactionUpdate(w,s){const local=align(w,s,3.5,7,reactionBegin);w.meta.phase=local<3.15?'react':'reveal';if(local>=3.15){w.meta.signal='reveal';w.meta.signalText='다음 신호 준비';}else if(local>=s.goAt){w.meta.signal='go';w.meta.signalText='지금 찍어!';}else if(local>.28&&local<.55||local>s.goAt-.5&&local<s.goAt-.24){w.meta.signal='fake';w.meta.signalText='찍…지 마!';}else{w.meta.signal='wait';w.meta.signalText='아직…';}w.meta.notice='가짜 신호에는 참아요. 초록색 「지금 찍어!」에서 Space!';return local;}
  const reaction={
   init(w,random){w.duration=24.5;w.objects=[];players(w);w.meta={stage:0,stageLeft:3.5,phase:'react',signal:'wait',signalText:'아직…',notice:''};const s={stage:0,goAt:1,order:0,random};privateGames.set(w,s);reactionBegin(w,s);reactionUpdate(w,s);},
-  input(w,p,action){const s=privateGames.get(w);if(!s)return false;const local=reactionUpdate(w,s);if(!['hit','jump','dash'].includes(action)||!alive(p)||p.locked||local>=3.15||w.elapsed<p.nextInputAt)return false;p.locked=true;p.choiceLocked=true;setReady(w,p);if(local<s.goAt){p.score=Math.max(0,p.score-35);p.roundPoints=-35;feedback(w,p,'성급했다! 이번 신호는 대기.');return false;}p.reactionMs=Math.max(0,Math.round((local-s.goAt)*1000));p.reactionRank=++s.order;const points=Math.round(120-Math.min(100,(local-s.goAt)*100))+Math.max(0,35-(p.reactionRank-1)*8);p.score+=points;p.roundPoints=points;feedback(w,p,p.reactionMs+'ms · '+p.reactionRank+'번째! +'+points);return true;},
+  input(w,p,action){const s=privateGames.get(w);if(!s)return false;const local=reactionUpdate(w,s);if(!['hit','jump','dash'].includes(action)||!alive(p)||p.locked||local>=3.15||w.elapsed<p.nextInputAt)return false;p.locked=true;p.choiceLocked=true;setReady(w,p);if(local<s.goAt){p.score=Math.max(0,p.score-35);p.roundPoints=-35;feedback(w,p,'성급했다! 이번 신호는 대기.');return false;}p.reactionMs=Math.max(0,Math.round((local-s.goAt)*1000));p.reactionRank=++s.order;const points=Math.round(150-Math.min(120,(local-s.goAt)*110));p.score+=points;p.roundPoints=points;feedback(w,p,p.reactionMs+'ms · +'+points);return true;},
   step(w){const s=privateGames.get(w);if(s)reactionUpdate(w,s);},
   bot(w,p,random){const s=privateGames.get(w);return s&&!p.locked&&w.meta.signal==='go'&&w.elapsed-s.stage*3.5>s.goAt+.18+p.index*.018&&random()<.8?{held:[],action:'hit'}:{held:[]};}
  };
