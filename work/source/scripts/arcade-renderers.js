@@ -8,11 +8,16 @@ Object.assign(arcadeGames,{
  doors:{name:'빈 식당 눈치전',icon:'🚪',tag:'눈치 · 몰리면 손해',hint:'세 식당 중 하나를 몰래 골라! 적게 몰린 식당일수록 높은 점수. 선택은 공개 전까지 비밀.',action:'선택!',key:'A / W / D',input:'hit',color:'#c5a7d7'},
  rhythm:{name:'복사기 리듬전',icon:'🎵',tag:'리듬 액션 · 칼퇴 박자',hint:'음표가 아래 선에 오면 A / W / D! 왼쪽·가운데·오른쪽 박자를 맞춰 콤보를 쌓아.',action:'박자!',key:'A / W / D',input:'hit',color:'#abc985'}
 });
+function arcadeKartCircuitSvg(){
+ const road=arcadeKartTrackPath(),start=arcadeKartTrackPoint(-Math.PI/2),heading=Math.atan2(start.ty,start.tx)*180/Math.PI;
+ const arrows=Array.from({length:7},(_,i)=>{const p=arcadeKartTrackPoint((i+.7)/7*Math.PI*2-Math.PI/2);return'<path class="kart-track-arrow" d="M-7 -6 0 0-7 6" transform="translate('+p.x.toFixed(2)+' '+p.y.toFixed(2)+') rotate('+(Math.atan2(p.ty,p.tx)*180/Math.PI).toFixed(2)+')"/>';}).join('');
+ return '<svg viewBox="0 0 700 460" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><pattern id="kartFinishChecks" width="12" height="12" patternUnits="userSpaceOnUse"><rect width="12" height="12" fill="#fff5da"/><path d="M0 0h6v6H0zM6 6h6v6H6z" fill="#293f3d"/></pattern></defs><path class="kart-track-shadow" d="'+road+'"/><path class="kart-track-guard" d="'+road+'"/><path class="kart-track-curb" d="'+road+'"/><path class="kart-track-curb-stripe" d="'+road+'"/><path class="kart-track-road" d="'+road+'"/><path class="kart-track-lane" d="'+arcadeKartTrackPath(-.5)+'"/><path class="kart-track-lane" d="'+arcadeKartTrackPath(.5)+'"/>'+arrows+'<g transform="translate('+start.x.toFixed(2)+' '+start.y.toFixed(2)+') rotate('+heading.toFixed(2)+')"><rect class="kart-finish-line" x="-7" y="-41" width="14" height="82" fill="url(#kartFinishChecks)"/><path class="kart-start-direction" d="M24 -7 36 0 24 7"/></g><text class="kart-start-label" x="'+start.x.toFixed(2)+'" y="'+(start.y-57).toFixed(2)+'" text-anchor="middle">START / FINISH</text><text class="kart-infield-cup" x="350" y="174" text-anchor="middle">☕</text><text class="kart-infield-label" x="350" y="197" text-anchor="middle">COFFEE CUP CIRCUIT</text><text class="kart-chicane-label" x="360" y="330" text-anchor="middle">SLOW CORNER</text></svg>';
+}
 let arcadeTenChoices=null;
 const arcadeTenBuildBase=arcadeBuildBoard;
 arcadeBuildBoard=function(w){
  arcadeTenBuildBase(w);const scene=$('arcadeScenery');
- if(w.game==='kart'){scene.append(el('div','ten-kart-track'),el('div','ten-kart-grass'),el('div','ten-kart-finish','START / FINISH'));}
+ if(w.game==='kart'){const circuit=el('div','kart-circuit');circuit.innerHTML=arcadeKartCircuitSvg();scene.append(circuit);}
  if(w.game==='basket'){scene.append(el('div','ten-basket-floor'));const hoop=el('div','ten-hoop');hoop.id='tenHoop';hoop.append(el('i'));scene.append(hoop);}
  if(w.game==='doors'){const room=el('div','ten-restaurants');for(let i=0;i<3;i++){const card=el('div','ten-restaurant');card.dataset.choice=i;card.append(el('span','','🚪'),el('b','',w.meta.labels[i]),el('strong','','?명'),el('small','','예약 '+(w.meta.reservedCounts?.[i]||0)+'명'));room.append(card);}scene.append(room);}
  if(w.game==='rhythm'){scene.append(el('div','ten-beat-lane lane-0'),el('div','ten-beat-lane lane-1'),el('div','ten-beat-lane lane-2'),el('div','ten-hit-line'));const judge=el('div','ten-rhythm-judge');judge.id='tenRhythmJudge';scene.append(judge);}
@@ -30,7 +35,7 @@ arcadeDrawWorld=function(s,w,g,self){
  const center=$('arcadeDpad').querySelector('i');center.textContent=w.game==='basket'?'각도':w.game==='kart'?'조향':'이동';
  for(const [i,b]of [...arcadeTenChoices.children].entries()){b.disabled=!play||(w.game==='doors'&&(w.meta.phase!=='choose'||own.locked));b.firstChild.textContent=w.game==='doors'?(w.meta.labels[i]||['왼쪽','가운데','오른쪽'][i]):['←','●','→'][i];}
  if(w.game==='brawl'){for(const p of w.players){const a=arcadeUIActors.get(p.id);a.querySelector('.five-actor-tag').textContent=(p.id===self?'▼ 내 메뉴 ':'')+Math.ceil(p.hp)+' HP';a.classList.toggle('is-punching',t<p.attackUntil);if(t<p.attackUntil){const punch=arcadeObjectNode('punch:'+p.id,'span','ten-punch','💥');punch.style.left=(p.x+p.faceX*55)/7+'%';punch.style.top=(p.y+p.faceY*55)/4.6+'%';}}}
- if(w.game==='kart'){for(const o of w.objects){if(!['puddle','boost'].includes(o.kind))continue;const n=arcadeObjectNode('kart:'+o.id,'span','ten-kart-object '+o.kind,o.kind==='puddle'?'💧':'⚡');n.style.left=o.x/7+'%';n.style.top=o.y/4.6+'%';n.classList.toggle('is-preview',t<o.readyAt);}for(const p of w.players){const a=arcadeUIActors.get(p.id);a.classList.add('is-kart');a.querySelector('.five-actor-tag').textContent=(p.id===self?'▼ ':'')+Math.min(3,Math.floor(p.progress)+1)+'/3바퀴';}}
+ if(w.game==='kart'){for(const o of w.objects){if(!['puddle','boost'].includes(o.kind))continue;const n=arcadeObjectNode('kart:'+o.id,'span','ten-kart-object '+o.kind,o.kind==='puddle'?'💧':'⚡');n.style.left=o.x/7+'%';n.style.top=o.y/4.6+'%';n.classList.toggle('is-preview',t<o.readyAt);}for(const p of w.players){const a=arcadeUIActors.get(p.id),point=arcadeKartTrackPoint(p.angle+(p.visualOffset||0),p.lane);a.classList.add('is-kart');a.style.setProperty('--kart-heading',(Math.atan2(point.ty,point.tx)*180/Math.PI).toFixed(1)+'deg');a.querySelector('.five-actor-tag').textContent=(p.id===self?'▼ ':'')+(p.finishAt>=0?'완주!':Math.min(3,Math.floor(p.progress)+1)+'/3바퀴');}}
  if(w.game==='basket'){const h=$('tenHoop');h.style.left=w.meta.hoopX/7+'%';h.style.top=w.meta.hoopY/4.6+'%';h.style.width=w.meta.hoopRadius*2/7+'%';for(const p of w.players){const aim=arcadeObjectNode('aim:'+p.id,'i','ten-basket-aim');aim.style.left=p.x/7+'%';aim.style.top=p.y/4.6+'%';aim.style.transform='rotate('+(-p.aim)+'deg)';}for(const o of w.objects){const ball=arcadeObjectNode('ball:'+o.id,'span','ten-basket-ball','🏀');ball.style.left=o.x/7+'%';ball.style.top=o.y/4.6+'%';}arcadeSetText('arcadeStatus',own?'슛 각도 '+Math.round(own.aim)+'° · '+own.makes+'골 / '+own.attempts+'슛':g.hint);}
  if(w.game==='doors'){const reveal=w.meta.phase==='reveal';for(const card of $('arcadeScenery').querySelectorAll('.ten-restaurant')){const i=Number(card.dataset.choice);card.querySelector('strong').textContent=reveal?w.meta.counts[i]+'명':'?명';card.querySelector('small').textContent=reveal?'총 '+(w.meta.totalCounts?.[i]??w.meta.counts[i])+'명':'예약 '+(w.meta.reservedCounts?.[i]||0)+'명 · 선택 비밀';card.classList.toggle('is-own',reveal&&own?.choice===i);}arcadeSetText('arcadeStatus','눈치 '+(w.meta.stage+1)+'/6 · '+(reveal?'공개! 다음 선택을 준비해':own?.locked?'선택 완료! 다른 사람을 기다려':'어느 식당이 덜 붐빌까?')+' · '+w.meta.stageLeft.toFixed(1)+'초');arcadeSetText('arcadeOwnStatus',own?Math.round(own.score)+'점'+(own.locked?' · 선택 완료':''):'관전 중');}
  if(w.game==='rhythm'){const resolved=new Set(own?.resolvedNotes||[]);for(const o of w.objects){const until=o.hitAt-t;if(resolved.has(o.id)||until>w.meta.travelTime||until<-.25)continue;const n=arcadeObjectNode('note:'+o.id,'span','ten-rhythm-note lane-'+o.lane,['◀','●','▶'][o.lane]);n.style.left=[20,50,80][o.lane]+'%';n.style.top=(8+(1-until/w.meta.travelTime)*72)+'%';}arcadeSetText('tenRhythmJudge',own?(t<own.judgeUntil?own.judge:own.combo+' COMBO'):'박자에 맞춰!');arcadeSetText('arcadeOwnStatus',own?Math.round(own.score)+'점 · '+own.combo+' COMBO':'관전 중');}
@@ -68,12 +73,12 @@ arcadeDrawWorld=function(s,w,g,self){
 
 /* ARCADE_SPORTS_UI_V1 */
 Object.assign(arcadeGames,{
- pong:{name:'식판 탁구',icon:'🏓',tag:'스포츠 · 반사 랠리',hint:'목표: 반사 점수! ↑/↓로 패들을 옮기고 Space로 스매시. 공이 닿는 위치로 반사각을 바꿔요.',action:'스매시!',key:'↑ / ↓ · SPACE',input:'hit',color:'#81c6bf',duel:true,controls:'standard'},
+ pong:{name:'식판 탁구',icon:'🏓',tag:'스포츠 · 함께 치는 팀전',hint:'같은 탁구대에서 1대1·2대2 팀전! ↑/↓로 내 패들, Space 스매시. 인원이 적은 팀은 패들과 이동 속도 보정.',action:'스매시!',key:'↑ / ↓ · SPACE',input:'hit',color:'#81c6bf',duel:true,controls:'standard'},
  curling:{name:'얼음컵 컬링',icon:'🥌',tag:'빙판 · 조준과 쓸기',hint:'3개 돌을 과녁 중심으로! ←/→ 조준, Space 두 번 발사. 굴러갈 때 Space로 쓸면 더 멀리 가요.',action:'파워 / 발사',key:'← / → · SPACE 두 번',input:'hit',color:'#abd5df',duel:true,controls:'standard'},
- bowling:{name:'생수병 볼링',icon:'🎳',tag:'볼링 · 스트라이크와 스페어',hint:'3프레임, 한 프레임 최대 두 번! ←/→ 조준, Space 두 번 투구. 스트라이크 +15, 스페어 +8.',action:'파워 / 투구',key:'← / → · SPACE 두 번',input:'hit',color:'#dfb37e',duel:true,controls:'standard'},
+ bowling:{name:'생수병 볼링',icon:'🎳',tag:'볼링 · 핀 배치와 커브',hint:'매 프레임 핀 배치가 달라요! ←/→ 조준, Space 두 번 투구. 굴러갈 때 ←/→ 커브. 강한 공은 빠르고, 약한 공은 보정 시간이 길어요.',action:'파워 / 투구',key:'← / → · SPACE 두 번',input:'hit',color:'#dfb37e',duel:true,controls:'standard'},
  volley:{name:'풍선 배구',icon:'🎈',tag:'유지 액션 · 정확한 리시브',hint:'내려오는 풍선 아래에서 Space! 일반 리시브 +7, 낮은 위치 정중앙 +10. 떨어져도 다시 시작해요.',action:'받아쳐!',key:'← / → · SPACE',input:'hit',color:'#e9a8b6',duel:true,controls:'standard'},
  golf:{name:'식당 미니골프',icon:'⛳',tag:'미니골프 · 벽 반사',hint:'목표: 적은 타수로 3홀! ←/→ 방향, Space 두 번으로 파워 퍼팅. 장애물과 벽의 반사각을 이용해요.',action:'파워 / 퍼팅',key:'← / → · SPACE 두 번',input:'hit',color:'#a6c980',duel:true,controls:'standard'},
- parking:{name:'도시락 주차왕',icon:'🚗',tag:'운전 · 정방향과 후진 주차',hint:'주차칸에 천천히 1초 안착! ↑/↓ 전후진, ←/→ 회전, Space 브레이크. 후진 주차도 성공이에요.',action:'브레이크!',key:'방향키 · SPACE',input:'hit',color:'#a9b5cf',duel:true,controls:'standard'}
+ parking:{name:'도시락 주차왕',icon:'🚗',tag:'운전 · 32초 주차 대수 경쟁',hint:'32초 동안 더 많이 주차! P칸에 도착하면 바로 다음 칸. 갈수록 칸이 좁아지고 장애물이 늘어요. ↑/↓ 전후진 · ←/→ 조향 · Space 브레이크',action:'브레이크!',key:'방향키 · SPACE',input:'hit',color:'#a9b5cf',duel:true,controls:'standard'}
 });
 const arcadeSportsKeys=new Set(['pong','curling','bowling','volley','golf','parking']);
 let arcadeSportsBoard='';const arcadeSportsPanels=new Map();
@@ -87,16 +92,36 @@ function arcadeSportsPanel(w,p,self){
 function arcadeSportNode(view,key,cls,text){let node=view.nodes.get(key);if(!node){node=el('i',cls);view.nodes.set(key,node);view.layer.append(node);}if(node.className!==cls)node.className=cls;if(text!==undefined&&node.textContent!==String(text))node.textContent=String(text);view.used.add(key);return node;}
 function arcadeSportPlace(node,x,y){node.style.left=(x/7)+'%';node.style.top=(y/4.6)+'%';}
 function arcadeSportRect(node,r){arcadeSportPlace(node,r.x,r.y);node.style.width=(r.w/7)+'%';node.style.height=(r.h/4.6)+'%';}
+let arcadePongView=null;
+function arcadePongBuild(w){
+ const court=el('section','pong-team-court');court.id='pongTeamCourt';court.setAttribute('aria-label','양팀이 공을 주고받는 공유 탁구대');
+ const head=el('header','pong-team-scoreboard'),teams=[];
+ for(const side of [0,1]){const summary=el('div','pong-team-summary pong-side-'+side),title=el('strong','pong-team-title'),names=el('span','pong-team-names'),bonus=el('small','pong-team-bonus');summary.append(title,names,bonus);teams.push({summary,title,names,bonus});if(side===0)head.append(summary);}
+ const score=el('b','pong-team-score');head.append(score,teams[1].summary);
+ const field=el('div','pong-team-field'),net=el('div','pong-team-net'),items=el('div','pong-team-items'),serve=el('i','pong-team-serve');net.setAttribute('aria-hidden','true');field.append(net,items,serve);court.append(head,field);$('arcadeScenery').append(court);
+ const paddles=new Map();for(const p of w.players){const paddle=el('div','pong-team-paddle'),avatar=el('div','pong-paddle-avatar'),name=el('span','pong-paddle-name',p.name);paddle.dataset.side=String(p.team);paddle.dataset.owner=p.id;avatar.innerHTML=deptAvatarSvg(p.department||'business');paddle.append(avatar,name);items.append(paddle);paddles.set(p.id,paddle);}
+ const ball=el('i','pong-team-ball');ball.setAttribute('aria-label','탁구공');items.append(ball);arcadePongView={key:w.id,court,field,teams,score,serve,paddles,ball};
+}
+function arcadePongDraw(s,w,g,self){
+ const v=arcadePongView;if(!v)return;const own=w.players.find(p=>p.id===self),t=w.elapsed,live=s.phase==='round'&&w.phase==='play',scores=w.meta.teamGoals||[0,0],counts=w.meta.teamSizes||[0,0];
+ for(const side of [0,1]){const entry=v.teams[side],members=w.players.filter(p=>p.team===side&&!p.forfeited);arcadeNodeText(entry.title,(side?'B':'A')+'팀'+(own?.team===side?' · 우리 팀':''));arcadeNodeText(entry.names,members.map(p=>p.name).join(' · '));arcadeNodeText(entry.bonus,w.meta.handicapTeam===side?'소수 팀 · 큰 패들 + 빠른 이동':counts[0]===counts[1]?'동일한 패들·속도':'기본 패들·속도');entry.summary.classList.toggle('is-own',own?.team===side);entry.summary.dataset.teamSize=String(counts[side]);}
+ arcadeNodeText(v.score,scores[0]+' : '+scores[1]);
+ for(const p of w.players){const paddle=v.paddles.get(p.id);if(!paddle)continue;arcadePosition(paddle,p.x/7,p.paddleY/4.6);paddle.style.width=12/7+'%';paddle.style.height=p.paddleHeight/4.6+'%';paddle.hidden=p.forfeited||p.eliminated;paddle.classList.toggle('is-own',p.id===self);paddle.classList.toggle('is-smash',t<p.smashUntil);paddle.setAttribute('aria-label',p.name+' · '+(p.team?'B':'A')+'팀 패들'+(p.id===self?' · 내 조작':''));}
+ const ball=w.objects.find(o=>o.kind==='pongBall');if(ball){arcadePosition(v.ball,ball.x/7,ball.y/4.6);v.ball.hidden=t<ball.serveAt;v.ball.classList.toggle('is-fast',Math.hypot(ball.vx,ball.vy)>400);v.serve.hidden=!live||t>=ball.serveAt;arcadeNodeText(v.serve,t<w.meta.goalUntil?(w.meta.lastScorerTeam?'B':'A')+'팀 득점!':'서브 준비');}
+ $('arcadeDpad').hidden=false;const button=arcadeDialog.querySelector('[data-arcade-control="action"]'),cool=own?Math.max(0,own.readyAt-t):0;button.hidden=false;button.disabled=!live||!own||own.forfeited||own.eliminated||cool>.01;arcadeSetText('arcadeActionLabel','스매시!');arcadeSetText('arcadeActionHint',cool>.01?cool.toFixed(1)+'초 뒤 다시':'공이 닿을 때 눌러요');
+ arcadeSetText('arcadeOwnStatus',own?(own.team?'B':'A')+'팀 · '+scores[own.team]+'골 · '+own.rallies+'회 랠리':'양팀 경기 관전 중');
+ arcadeSetText('arcadeStatus',s.phase==='between'||s.phase==='done'?s.notice:live?t<w.meta.goalUntil?w.meta.notice:counts[0]+' 대 '+counts[1]+' 팀전 · ↑/↓로 내 패들 이동, Space 스매시':'팀을 확인해요 · 인원이 적은 쪽은 패들 크기와 이동 속도 보정');
+}
 const arcadeSportsBuildBase=arcadeBuildBoard;
 arcadeBuildBoard=function(w){
  arcadeSportsBuildBase(w);arcadeSportsBoard='';arcadeSportsPanels.clear();if(!arcadeSportsKeys.has(w.game))return;
- arcadeSportsBoard=w.id+':'+w.game;const root=el('div','sports-courts');root.id='arcadeSportsCourts';root.dataset.count=String(w.players.length);root.classList.toggle('is-crowded',w.players.length>4);
+ arcadeSportsBoard=w.id+':'+w.game;if(w.game==='pong'){arcadePongBuild(w);return;}const root=el('div','sports-courts');root.id='arcadeSportsCourts';root.dataset.count=String(w.players.length);root.classList.toggle('is-crowded',w.players.length>4);
  const self=arcadeSelf();for(const p of [...w.players].sort((a,b)=>Number(b.id===self)-Number(a.id===self))){const v=arcadeSportsPanel(w,p,self);arcadeSportsPanels.set(p.id,v);root.append(v.panel);}
  $('arcadeScenery').append(root);
 };
 const arcadeSportsDrawBase=arcadeDrawWorld;
 arcadeDrawWorld=function(s,w,g,self){
- arcadeSportsDrawBase(s,w,g,self);if(!arcadeSportsKeys.has(w.game))return;
+ arcadeSportsDrawBase(s,w,g,self);if(w.game==='pong'){if(arcadeSportsBoard!==w.id+':'+w.game||!$('pongTeamCourt'))arcadeBuildBoard(w);arcadePongDraw(s,w,g,self);return;}if(!arcadeSportsKeys.has(w.game))return;
  if(arcadeSportsBoard!==w.id+':'+w.game||!$('arcadeSportsCourts'))arcadeBuildBoard(w);
  const own=w.players.find(p=>p.id===self),t=w.elapsed;
  for(const p of w.players){const v=arcadeSportsPanels.get(p.id);if(!v)continue;v.used.clear();v.panel.classList.toggle('is-out',p.forfeited||p.eliminated);v.score.textContent=Math.round(p.score)+'점';v.judge.textContent=t<p.judgeUntil?p.judge:'';v.power.hidden=p.phase!=='power';v.fill.style.width=(p.power*100)+'%';v.actor.classList.toggle('is-action',t<p.actionUntil);v.actor.hidden=!['pong','curling','bowling','volley'].includes(w.game);
@@ -108,28 +133,29 @@ arcadeDrawWorld=function(s,w,g,self){
    arcadeSportPlace(arcadeSportNode(v,'target','sport-curl-target'),350,125);arcadeSportPlace(v.actor,350,425);const aim=arcadeSportNode(v,'aim','sport-aim sport-aim-up');arcadeSportPlace(aim,350,419);aim.style.transform='translate(-50%,-100%) rotate('+p.aim+'rad)';aim.hidden=!['ready','power'].includes(p.phase);detail=p.shots+'/3투 · '+(p.phase==='done'?'완료':p.phase==='power'?'한 번 더 눌러 발사':p.phase==='moving'?t<p.sweepUntil?'슥슥! 쓸기 중':'Space로 쓸어 더 멀리':'조준 후 Space');
   }
   if(w.game==='bowling'){
-   arcadeSportPlace(v.actor,350,425);const aim=arcadeSportNode(v,'aim','sport-aim sport-aim-up');arcadeSportPlace(aim,350,419);aim.style.transform='translate(-50%,-100%) rotate('+p.aim+'rad)';aim.hidden=!['ready','power'].includes(p.phase);detail=Math.min(3,p.completed+1)+'/3프레임 · '+p.frameShots+'/2투 · 이번 '+p.framePins+'핀';
+   arcadeSportPlace(v.actor,350,425);const aim=arcadeSportNode(v,'aim','sport-aim sport-aim-up');arcadeSportPlace(aim,350,419);aim.style.transform='translate(-50%,-100%) rotate('+p.aim+'rad)';aim.hidden=!['ready','power'].includes(p.phase);v.power.hidden=!['ready','power'].includes(p.phase);v.power.setAttribute('aria-label','강한 공은 빠르고, 약한 공은 커브 보정 시간이 길어요');detail=Math.min(3,p.completed+1)+'/3 · '+(p.bowlRack||'핀 배치')+' · '+p.frameShots+'/2투 · '+(p.phase==='moving'?'←→ 커브 보정':p.phase==='power'?'강한 공은 빠름 · 약한 공은 보정 여유':p.phase==='done'?'완료':p.frameShots?'남은 핀을 보고 다시 조준':'핀 배치를 보고 조준');
   }
   if(w.game==='volley'){arcadeSportPlace(v.actor,p.x,418);v.actor.classList.toggle('is-hitting',t<p.actionUntil);detail=p.hits+'번 살림 · 놓침 '+p.misses;}
   if(w.game==='golf'){
    const layout=w.meta.layouts[p.hole%3];arcadeSportPlace(arcadeSportNode(v,'hole','sport-golf-hole'),layout.hole.x,layout.hole.y);for(const [i,r]of layout.walls.entries())arcadeSportRect(arcadeSportNode(v,'barrier:'+i,'sport-golf-wall'),r);const aim=arcadeSportNode(v,'aim','sport-aim sport-aim-right');arcadeSportPlace(aim,p.x,p.y);aim.style.transform='translateY(-50%) rotate('+p.aim+'rad)';aim.hidden=!['ready','power'].includes(p.phase);detail=Math.min(3,p.hole+1)+'/3홀 · '+p.holeStrokes+'타';
   }
   if(w.game==='parking'){
-   const target=w.meta.spots[p.target%w.meta.spots.length],slot=arcadeSportNode(v,'slot','sport-parking-slot','P');arcadeSportPlace(slot,target.x,target.y);slot.style.transform='translate(-50%,-50%) rotate('+target.angle+'rad)';slot.classList.toggle('is-parking',p.parkHold>0);const car=arcadeSportNode(v,'car','sport-car');arcadeSportPlace(car,p.x,p.y);car.style.transform='translate(-50%,-50%) rotate('+p.angle+'rad)';car.classList.toggle('is-braking',t<p.actionUntil);for(const [i,r]of w.meta.walls.entries())arcadeSportRect(arcadeSportNode(v,'barrier:'+i,'sport-parking-obstacle'),r);detail=p.parked+'대 주차 · '+Math.round(Math.abs(p.speed))+'km/h'+(p.parkHold>0?' · 정렬 '+Math.floor(p.parkHold*100)+'%':'');
+   const level=Math.min(p.parked,w.meta.parkingLevels.length-1),layout=w.meta.parkingLevels[level],target=w.meta.spots[p.target%w.meta.spots.length],slot=arcadeSportNode(v,'slot','sport-parking-slot','P');arcadeSportPlace(slot,target.x,target.y);slot.style.width=layout.width/7+'%';slot.style.height=layout.height/4.6+'%';slot.style.transform='translate(-50%,-50%)';slot.setAttribute('aria-label','현재 주차칸 · 도착하면 다음 칸');v.panel.dataset.parkingLevel=String(level+1);v.score.textContent=p.parked+'대';const car=arcadeSportNode(v,'car','sport-car');arcadeSportPlace(car,p.x,p.y);car.style.transform='translate(-50%,-50%) rotate('+p.angle+'rad)';car.classList.toggle('is-braking',t<p.actionUntil);for(const [i,r]of layout.walls.entries())arcadeSportRect(arcadeSportNode(v,'barrier:'+i,'sport-parking-obstacle'),r);detail=p.parked+'대 · 난도 '+(level+1)+' · 도착 즉시 다음 칸';
   }
   for(const o of w.objects){if(o.ownerId!==p.id)continue;let cls='sport-ball sport-'+o.kind;if(o.down)cls+=' is-down';const node=arcadeSportNode(v,o.id,cls);arcadeSportPlace(node,o.x,o.y);node.hidden=w.game==='pong'||w.game==='volley'?t<(o.serveAt||0):false;if(o.kind==='curlStone')node.classList.toggle('is-settled',o.settled);}
   for(const [key,node]of v.nodes)if(!v.used.has(key)){node.remove();v.nodes.delete(key);}v.foot.textContent=detail;
  }
- if(own){arcadeSetText('arcadeOwnStatus',Math.round(own.score)+'점 · '+(t<own.judgeUntil?own.judge:own.phase==='power'?'파워 '+Math.round(own.power*100)+'%':''));const next=Math.max(0,(own.readyAt||0)-t),sweeping=w.game==='curling'&&own.phase==='moving',moving=['moving','between','done'].includes(own.phase)&&['curling','bowling','golf'].includes(w.game)&&!sweeping,button=arcadeDialog.querySelector('[data-arcade-control="action"]');button.disabled=s.phase!=='round'||w.phase!=='play'||!own||own.forfeited||own.eliminated||moving||next>.01;arcadeSetText('arcadeActionLabel',sweeping?'슥슥 쓸기':own.phase==='power'?'지금 발사!':g.action);arcadeSetText('arcadeActionHint',moving?'결과를 기다려요':next>.01?next.toFixed(1)+'초':sweeping?'쓸면 더 멀리 가요':g.key);if(s.phase==='round'&&w.phase==='play')arcadeSetText('arcadeStatus',t<own.judgeUntil?own.judge:own.phase==='power'?'파워 '+Math.round(own.power*100)+'% · 한 번 더 눌러 발사!':w.game==='parking'?'주차 '+own.parked+'대 · 정방향·후진 모두 1초 정렬':w.game==='pong'?'반사 '+own.rallies+'회 · ↑/↓ 패들, Space 스매시':w.game==='volley'?'풍선 '+own.hits+'번 살림 · 내려올 때 정확한 리시브 +10':w.game==='golf'?(own.hole+1)+'/3홀 · '+own.holeStrokes+'타 · 벽 반사로 우회':w.game==='bowling'?Math.min(3,own.completed+1)+'/3프레임 · '+own.frameShots+'/2투 · 이번 '+own.framePins+'핀':own.shots+'/3투 · 과녁 중심을 노려요');}
+ if(own){arcadeSetText('arcadeOwnStatus',w.game==='parking'?own.parked+'대 · 난도 '+Math.min(own.parked+1,w.meta.parkingLevels.length):Math.round(own.score)+'점 · '+(t<own.judgeUntil?own.judge:own.phase==='power'?'파워 '+Math.round(own.power*100)+'%':''));const next=Math.max(0,(own.readyAt||0)-t),sweeping=w.game==='curling'&&own.phase==='moving',moving=['moving','between','done'].includes(own.phase)&&['curling','bowling','golf'].includes(w.game)&&!sweeping,button=arcadeDialog.querySelector('[data-arcade-control="action"]');button.disabled=s.phase!=='round'||w.phase!=='play'||!own||own.forfeited||own.eliminated||moving||next>.01;arcadeSetText('arcadeActionLabel',sweeping?'슥슥 쓸기':own.phase==='power'?'지금 발사!':g.action);arcadeSetText('arcadeActionHint',moving?'결과를 기다려요':next>.01?next.toFixed(1)+'초':sweeping?'쓸면 더 멀리 가요':g.key);if(s.phase==='round'&&w.phase==='play')arcadeSetText('arcadeStatus',t<own.judgeUntil?own.judge:own.phase==='power'?'파워 '+Math.round(own.power*100)+'% · 한 번 더 눌러 발사!':w.game==='parking'?'주차 '+own.parked+'대 · 난도 '+Math.min(own.parked+1,w.meta.parkingLevels.length)+' · P칸에 도착하면 바로 다음 칸':w.game==='pong'?'반사 '+own.rallies+'회 · ↑/↓ 패들, Space 스매시':w.game==='volley'?'풍선 '+own.hits+'번 살림 · 내려올 때 정확한 리시브 +10':w.game==='golf'?(own.hole+1)+'/3홀 · '+own.holeStrokes+'타 · 벽 반사로 우회':w.game==='bowling'?Math.min(3,own.completed+1)+'/3프레임 · '+own.frameShots+'/2투 · 이번 '+own.framePins+'핀':own.shots+'/3투 · 과녁 중심을 노려요');}
+ if(own&&w.game==='bowling'&&s.phase==='round'&&w.phase==='play'){if(own.phase==='moving')arcadeSetText('arcadeActionHint','←/→로 커브 보정');if(t>=own.judgeUntil)arcadeSetText('arcadeStatus',(own.bowlRack||'핀 배치')+' · '+own.frameShots+'/2투 · '+(own.phase==='moving'?'←/→로 공의 커브를 보정해요':own.phase==='power'?'파워 '+Math.round(own.power*100)+'% · 강하면 빠르고 약하면 보정 여유':'핀 배치를 보고 조준 · 충돌 방향에 따라 핀이 퍼져요'));}
  $('arcadeDpad').hidden=false;
 };
 /* END_ARCADE_SPORTS_UI_V1 */
 
 /* ARCADE_ACTION_PACK_UI_V1 */
 Object.assign(arcadeGames,{
- dodgeball:{name:'급식 피구대회',icon:'🏐',tag:'액션 · 공 던져 명중',hint:'방향키로 이동하며 던질 방향을 보고 Space! 명중 +100점, 맞으면 -18점 후 빠른 복귀.',action:'던져!',key:'SPACE / F',input:'hit',color:'#e5a38b',duel:true,controls:'standard'},
+ dodgeball:{name:'급식 피구대회',icon:'🏐',tag:'생존 · 공 던져 명중',hint:'방향키로 피하고 상대를 보고 Space! 체력이 다하면 탈락, 마지막 생존자가 승리해요.',action:'던져!',key:'SPACE / F',input:'hit',color:'#e5a38b',duel:true,controls:'standard'},
  crown:{name:'왕관은 내 밥',icon:'👑',tag:'쟁탈 · 왕관 오래 지키기',hint:'왕관을 잡고 오래 버텨! 방향키 이동, Space 돌진으로 빼앗기. 모서리에 오래 숨으면 왕관이 떨어져.',action:'뺏어!',key:'SPACE / F',input:'dash',color:'#e6cc7e',duel:true,controls:'standard'},
- lasers:{name:'레이저 야근실',icon:'🔴',tag:'회피 · 회전과 스윕',hint:'점선은 예고, 빨간 레이저는 위험! 방향키로 피하고 Space로 짧게 대시. 맞아도 다시 돌아와요.',action:'대시!',key:'SPACE / F',input:'dash',color:'#a9c6bc',duel:true,controls:'standard'},
+ lasers:{name:'레이저 야근실',icon:'🔴',tag:'생존 · 회전과 스윕',hint:'점선은 예고, 빨간 레이저는 위험! 방향키와 Space 대시로 피해요. 체력이 다하면 탈락해요.',action:'대시!',key:'SPACE / F',input:'dash',color:'#a9c6bc',duel:true,controls:'standard'},
  frogger:{name:'횡단보도 배달왕',icon:'🚦',tag:'횡단 · 왕복 배송',hint:'방향키로 한 칸씩, Space로 바라보는 쪽 두 칸 도약! 차량과 친구를 피해서 건너편까지 왕복 배달해.',action:'두 칸!',key:'SPACE / F',input:'dash',color:'#8dc9b5',duel:true,controls:'standard'},
  bridge:{name:'나무다리 공사판',icon:'🪵',tag:'건설 · 공용 나무 경쟁',hint:'아래 땅에서 나무를 모아 내 색 다리 입구로! Space로 한 칸 건설. 나무는 최대 3개, 먼저 다리를 완성해.',action:'놓아!',key:'SPACE / F',input:'hit',color:'#bfc294',duel:true,controls:'standard'},
  claw:{name:'탕비실 집게왕',icon:'🦾',tag:'집기 · 미세 조준과 조기 회수',hint:'←/→ 조준, Space로 내려! 내려갈 때도 좌우 미세 조준, 한 번 더 누르면 빈 집게를 조기 회수해요.',action:'내려!',key:'SPACE / F',input:'hit',color:'#c7a9d7',duel:true,controls:'standard'}
@@ -140,11 +166,20 @@ function actionPackNode(key,tag,cls,text){let entry=actionPackNodes.get(key);if(
 function actionPackClean(){for(const[key,entry]of actionPackNodes)if(entry.frame!==actionPackFrame){entry.node.remove();actionPackNodes.delete(key);}}
 function actionPackPosition(node,x,y){node.style.left=x/7+'%';node.style.top=y/4.6+'%';}
 function actionPackStatic(cls,text){const node=el('div',cls,text);$('arcadeScenery').append(node);return node;}
+function actionPackDrawCrown(w,self){
+ const owner=w.players.find(p=>p.id===w.meta.ownerId&&!p.eliminated&&!p.forfeited),item=w.objects.find(o=>o.kind==='crown')||w.objects[0];
+ const badge=actionPackNode('crownOwner','div','crown-owner-status'+(owner?.id===self?' is-own':''),owner?'👑 왕관 보유 · '+owner.name+(owner.id===self?' · 나':''):'👑 주인 없는 왕관 · 가져가!');badge.dataset.owner=owner?.id||'';badge.title=badge.textContent;badge.setAttribute('role','status');badge.setAttribute('aria-live','polite');
+ const crown=actionPackNode('crown','span','ap-crown'+(owner?' is-owned':'')+(owner&&w.elapsed<w.meta.protectionUntil?' is-protected':''),'👑'),actors=$('arcadeActors');
+ if(crown.parentElement!==actors)actors.append(crown);if(badge.parentElement!==actors)actors.append(badge);crown.hidden=!owner&&!item;crown.setAttribute('role','img');crown.setAttribute('aria-label',owner?owner.name+' 님이 왕관 보유 중':'주인 없는 왕관');
+ if(owner){const side=owner.y<130,offset=owner.x>610?' - 34px':' + 34px';crown.style.left=side?'calc('+owner.x/7+'%'+offset+')':owner.x/7+'%';crown.style.top=side?'calc('+owner.y/4.6+'% - 20px)':'calc('+owner.y/4.6+'% - var(--crown-owner-lift, 68px))';}
+ else if(item)actionPackPosition(crown,item.x,item.y);
+ for(const p of w.players){const actor=arcadeUIActors.get(p.id);if(!actor)continue;const owns=p===owner;actor.classList.toggle('is-crown-holder',owns);actor.dataset.crownOwner=String(owns);}
+}
 const actionPackBuildBase=arcadeBuildBoard;
 arcadeBuildBoard=function(w){
  actionPackBuildBase(w);actionPackNodes.clear();actionPackLayer=null;actionPackFrame=0;if(!actionPackKeys.has(w.game))return;
- if(w.game==='dodgeball'){actionPackStatic('ap-court');actionPackStatic('ap-center-line');actionPackStatic('ap-center-circle');actionPackStatic('ap-scene-title','급식실 피구 코트 · 맞아도 바로 복귀');}
- if(w.game==='crown'){actionPackStatic('ap-throne-circle');for(const corner of ['tl','tr','bl','br'])actionPackStatic('ap-corner '+corner,'캠핑 금지');actionPackStatic('ap-scene-title','👑 왕관 보유 시간으로 승부');}
+ if(w.game==='dodgeball'){actionPackStatic('ap-court');actionPackStatic('ap-center-line');actionPackStatic('ap-center-circle');actionPackStatic('ap-scene-title','급식실 피구 코트 · 체력 0이면 이번 판 탈락');}
+ if(w.game==='crown'){actionPackStatic('ap-throne-circle');for(const corner of ['tl','tr','bl','br'])actionPackStatic('ap-corner '+corner,'캠핑 금지');}
  if(w.game==='lasers'){actionPackStatic('ap-laser-floor');actionPackStatic('ap-emitter left','◉');actionPackStatic('ap-emitter right','◉');actionPackStatic('ap-scene-title','WARNING · 빨간 선은 위험!');}
  if(w.game==='frogger'){
   for(let row=0;row<10;row++){const lane=actionPackStatic(w.meta.safeRows.includes(row)?'ap-traffic-safe':'ap-traffic-road');lane.style.top=(430-row*42-20)/4.6+'%';lane.style.height=40/4.6+'%';if(row===0||row===9)lane.textContent=row===9?'배달 도착 · 다시 아래로!':'출발 · 위로 배달해요';else if(row===4)lane.textContent='잠깐 쉬는 안전지대';}
@@ -160,9 +195,9 @@ const actionPackDrawBase=arcadeDrawWorld;
 arcadeDrawWorld=function(s,w,g,self){
  actionPackDrawBase(s,w,g,self);if(!actionPackKeys.has(w.game)||!actionPackLayer)return;
  const t=w.elapsed,own=w.players.find(p=>p.id===self),live=s.phase==='round'&&w.phase==='play',can=live&&own&&!own.eliminated&&!own.forfeited;actionPackFrame++;
- for(const p of w.players){const actor=arcadeUIActors.get(p.id);if(actor){actor.classList.toggle('is-respawning',t<(p.respawnUntil||0)||w.game==='frogger'&&t<p.stunUntil);actor.classList.toggle('has-crown',w.game==='crown'&&w.meta.ownerId===p.id);const tag=actor.querySelector('.five-actor-tag');if(tag)tag.textContent=(p.id===self?'▼ ':'')+(w.game==='dodgeball'?p.hits+'명중':w.game==='crown'?p.heldSeconds.toFixed(1)+'초':w.game==='lasers'?p.received+'피격':w.game==='frogger'?p.deliveries+'배송':w.game==='bridge'?p.bridgeSteps+'/'+w.meta.bridgeGoal+' · 🪵'+p.carried:p.catches+'개');}}
+ for(const p of w.players){const actor=arcadeUIActors.get(p.id);if(actor){actor.classList.toggle('is-respawning',t<(p.respawnUntil||0)||w.game==='frogger'&&t<p.stunUntil);actor.classList.toggle('has-crown',w.game==='crown'&&w.meta.ownerId===p.id);const tag=actor.querySelector('.five-actor-tag');if(tag)tag.textContent=(p.id===self?'▼ ':'')+(p.forfeited?'기권':p.eliminated?'이번 판 탈락':['dodgeball','lasers'].includes(w.game)?'♥'.repeat(Math.max(0,p.health)):w.game==='crown'?p.heldSeconds.toFixed(1)+'초':w.game==='frogger'?p.deliveries+'배송':w.game==='bridge'?p.bridgeSteps+'/'+w.meta.bridgeGoal+' · 🪵'+p.carried:p.catches+'개');}}
  if(w.game==='dodgeball')for(const o of w.objects){const ball=actionPackNode('ball:'+o.id,'span','ap-dodgeball','🏐');actionPackPosition(ball,o.x,o.y);ball.style.rotate=(t*380)+'deg';}
- if(w.game==='crown'){const o=w.objects[0],crown=actionPackNode('crown','span','ap-crown'+(w.meta.ownerId?' is-owned':''),'👑');actionPackPosition(crown,o.x,o.y);if(w.meta.ownerId&&t<w.meta.protectionUntil)crown.classList.add('is-protected');}
+ if(w.game==='crown')actionPackDrawCrown(w,self);
  if(w.game==='lasers')for(const o of w.objects){const laser=actionPackNode('laser:'+o.id,'i','ap-laser'+(t<o.activeAt?' is-warning':' is-active'));actionPackPosition(laser,o.x,o.y);laser.style.transform='translate(-50%,-50%) rotate('+o.angle+'rad)';}
  if(w.game==='frogger')for(const o of w.objects){const car=actionPackNode('car:'+o.id,'span','ap-traffic-car'+(o.vx<0?' is-left':''),o.emoji);actionPackPosition(car,o.x,o.y);car.style.width=o.width/7+'%';car.style.height=o.height/4.6+'%';}
  if(w.game==='bridge'){
@@ -190,7 +225,7 @@ Object.assign(arcadeGames,{
  safe:{name:'탕비실 비밀 금고',icon:'🔐',tag:'기억 · 숫자 다이얼',hint:'세 자리 번호를 기억! ← / →로 한 칸씩 돌리고 Space로 확정해요. 실수해도 맞힌 앞자리는 유지돼요.',action:'확정!',key:'← / → + SPACE',input:'hit',color:'#bdd5d7',duel:true,controls:'standard'},
  auction:{name:'마지막 간식 경매',icon:'✉️',tag:'눈치 · 비공개 입찰',hint:'예산 12로 A=0, W=1, D=3 비밀 입찰! 마감 전 수정 가능. 유일한 최고 입찰만 상품 획득, 입찰금은 소모되고 예산+상품 가치가 점수예요.',action:'입찰!',key:'A / W / D',input:'hit',color:'#d8c7e1',duel:true,controls:'choices'},
  stacker:{name:'보고서 탑 쌓기',icon:'📚',tag:'타이밍 · 겹친 만큼',hint:'양쪽에서 오는 블록을 Space로 멈춰 쌓아요. 겹친 부분만 남고 PERFECT 3연속이면 너비 회복! 무너져도 다시 도전해요.',action:'쌓아!',key:'SPACE / F',input:'hit',color:'#b5d6e4',duel:true,controls:'action'},
- reaction:{name:'결재 신호 반응전',icon:'🚨',tag:'반응 · 가짜 신호 주의',hint:'「찍…지 마!」는 가짜! 초록색 「지금 찍어!」에서 Space. 먼저 정확하게 누를수록 높은 점수!',action:'찍어!',key:'SPACE / F',input:'hit',color:'#dfc6ac',duel:true,controls:'action'}
+ reaction:{name:'결재 신호 반응전',icon:'🚨',tag:'판단 · 세 가지 결재 지시',hint:'초록 신호의 지시를 골라요! A=반려, W/Space=승인, D=전달. 가짜에는 참기! 늦거나 다른 버튼이면 실패.',action:'지시 선택!',key:'A / W·SPACE / D',input:'jump',color:'#dfc6ac',duel:true,controls:'choices'}
 });
 const brainPackIds=new Set(['memory','sorter','receipt','safe','auction','stacker','reaction']),brainPackNodes=new Map();
 function brainPackNode(id,tag,cls,text){const node=el(tag,cls,text);node.id='brain_'+id;brainPackNodes.set(id,node);return node;}
@@ -222,12 +257,12 @@ arcadeBuildBoard=function(w){
   const people=el('div','brain-bidders');for(const p of w.players){const bidder=brainPackNode('bidder'+p.index,'div','brain-bidder');bidder.append(el('b','',p.name),brainPackNode('bid'+p.index,'span','',''),brainPackNode('budget'+p.index,'small','',''));people.append(bidder);}layer.append(people);
  }
  if(w.game==='stacker'){
-  const construction=el('div','brain-construction');construction.append(el('div','brain-crane','멈추고, 쌓고, 칼퇴!'));
-  const tower=el('div','brain-tower');for(let i=0;i<8;i++)tower.append(brainPackNode('block'+i,'i','brain-stack-block'));tower.append(brainPackNode('movingBlock','i','brain-stack-block is-moving'),el('div','brain-stack-ground'));construction.append(tower);layer.append(construction,brainPackNode('stackInfo','div','brain-stack-info',''));
+  const construction=el('div','brain-construction');construction.append(el('div','brain-crane','주황 블록을 초록 자리 위에 놓기'));
+  const tower=el('div','brain-tower'),start=brainPackNode('stackStart','div','brain-stack-start','START'),target=brainPackNode('stackTarget','i','brain-stack-target'),hint=brainPackNode('stackHint','span','brain-stack-target-label','여기서 시작');target.append(hint);tower.append(start,target);for(let i=0;i<8;i++)tower.append(brainPackNode('block'+i,'i','brain-stack-block'));tower.append(brainPackNode('movingBlock','i','brain-stack-block is-moving'),el('div','brain-stack-ground'));construction.append(tower);layer.append(construction,brainPackNode('stackInfo','div','brain-stack-info',''));
  }
  if(w.game==='reaction'){
-  layer.append(el('div','brain-reaction-sign','가짜 신호에 낚이지 말 것'));
-  const signal=brainPackNode('signal','div','brain-reaction-signal');signal.append(el('span','brain-signal-dot'),brainPackNode('signalText','strong','','아직…'));layer.append(signal,brainPackNode('reactionRecord','div','brain-reaction-record',''));
+  layer.append(el('div','brain-reaction-sign','초록 지시를 골라! 가짜에는 손 떼기'));
+  const signal=brainPackNode('signal','div','brain-reaction-signal'),window=el('div','reaction-window');signal.append(el('span','brain-signal-dot'),brainPackNode('signalText','strong','','아직…'));window.append(brainPackNode('reactionWindow','i'));layer.append(signal,window,brainPackNode('reactionRecord','div','brain-reaction-record',''));
  }
  layer.append(brainPackNode('feedback','p','brain-feedback',''));$('arcadeScenery').append(layer);
 };
@@ -259,11 +294,14 @@ arcadeDrawWorld=function(s,w,g,self){
  }
  if(w.game==='stacker'){
   const rects=own.stackRects||[];for(let i=0;i<8;i++){const block=brainPackNodes.get('block'+i),r=rects[i];block.hidden=!r;if(r){block.style.left=r[0]/7+'%';block.style.width=r[1]/7+'%';block.style.bottom=(9+i*8)+'%';}}
-  const block=brainPackNodes.get('movingBlock');block.style.left=own.movingX/7+'%';block.style.width=own.movingWidth/7+'%';block.style.bottom=(9+Math.min(8,rects.length)*8)+'%';block.hidden=t<own.stackReadyAt;
+  const bottom=(9+Math.min(8,rects.length)*8)+'%',target=brainPackNodes.get('stackTarget');target.style.left=own.stackCenter/7+'%';target.style.width=own.stackWidth/7+'%';target.style.bottom=bottom;target.classList.toggle('is-aligned',Math.abs(own.movingX-own.stackCenter)<=Math.max(5,own.stackWidth*.06));brainPackNodes.get('stackHint').hidden=rects.length>0;brainPackNodes.get('stackStart').classList.toggle('is-start',rects.length===0);
+  const block=brainPackNodes.get('movingBlock');block.style.left=own.movingX/7+'%';block.style.width=own.movingWidth/7+'%';block.style.bottom=bottom;block.hidden=t<own.stackReadyAt;
   brainPackText('stackInfo','현재 '+own.stackLevel+'층 · 최고 '+own.bestLevel+'층 · PERFECT '+own.perfects);
  }
  if(w.game==='reaction'){
-  brainPackNodes.get('signal').dataset.signal=w.meta.signal;brainPackText('signalText',w.meta.signalText);brainPackText('reactionRecord',own.locked?(own.reactionMs>=0?own.reactionMs+' ms · '+own.reactionRank+'번째':'성급한 입력! 다음 신호 대기'):'가짜 신호에는 손 떼기');
+  brainPackNodes.get('signal').dataset.signal=w.meta.signal;brainPackNodes.get('signal').dataset.lane=String(w.meta.targetLane);brainPackText('signalText',w.meta.signalText);brainPackNodes.get('reactionWindow').style.transform='scaleX('+Math.max(0,Math.min(1,(w.meta.reactionLeft||0)/(w.meta.reactionWindow||1)))+')';
+  brainPackText('phase',w.meta.signal==='go'?'선택까지 '+w.meta.reactionLeft.toFixed(2)+'초':w.meta.signal==='fake'?'가짜 신호!':w.meta.signal==='reveal'?'다음 지시 대기':'신호를 기다려요');
+  brainPackText('reactionRecord',own.locked?(own.reactionOutcome==='hit'?own.reactionMs+' ms · 정확한 선택!':own.reactionOutcome==='miss'?'신호를 놓쳤어요':own.reactionOutcome==='wrong'?'다른 버튼! 다음 지시 대기':'성급한 입력! 다음 지시 대기'):'A 반려 · W/Space 승인 · D 전달');
  }
  arcadeSetText('arcadeStatus',w.meta.notice||g.hint);arcadeSetText('arcadeOwnStatus',Math.round(own.score)+'점'+(w.game==='auction'?' · 남은 예산 '+own.budget:''));
 };
@@ -285,15 +323,16 @@ arcadeDrawWorld=function(s,w,g,self){
  const own=w.players.find(p=>p.id===self),can=s.phase==='round'&&w.phase==='play'&&own&&!own.eliminated&&!own.forfeited;
  const choices=g.controls==='choices';arcadeExtraChoices.hidden=!choices;
  $('arcadeDpad').hidden=g.controls!=='standard';const action=arcadeDialog.querySelector('[data-arcade-control="action"]');action.hidden=choices;
- if(choices){const labels=own?.choiceLabels||w.meta.choiceLabels||['왼쪽','가운데','오른쪽'];for(const [i,button]of [...arcadeExtraChoices.children].entries()){const label=String(labels[i]??['왼쪽','가운데','오른쪽'][i]);if(button.firstChild.textContent!==label)button.firstChild.textContent=label;button.disabled=!can||own?.choiceLocked===true;}}
+ if(choices){const labels=own?.choiceLabels||w.meta.choiceLabels||['왼쪽','가운데','오른쪽'];for(const [i,button]of [...arcadeExtraChoices.children].entries()){const label=String(labels[i]??['왼쪽','가운데','오른쪽'][i]);if(button.firstChild.textContent!==label)button.firstChild.textContent=label;button.setAttribute('aria-label',w.game==='reaction'?label+' 선택':'게임 선택 '+(i+1));button.lastChild.textContent=w.game==='reaction'?['A / ←','W / SPACE','D / →'][i]:['A / ←','W / ↑','D / →'][i];button.disabled=!can||own?.choiceLocked===true;}}
 };
 function arcadeExtraInstall(){
  const installFilters=()=>{if(!arcadeDialog||document.getElementById('arcadeFamilyFilters'))return;const grid=$('arcadeGameCards'),bar=el('div','extra-family-filters');bar.id='arcadeFamilyFilters';bar.setAttribute('aria-label','연습 게임 종류');for(const [family,label]of [['all','전체'],['action','액션'],['race','경주'],['sports','스포츠'],['brain','눈치·두뇌']]){const count=Object.values(arcadeGames).filter(g=>family==='all'||g.family===family).length,button=el('button','tiny-btn',label+' '+count);button.type='button';button.setAttribute('aria-pressed',String(family==='all'));button.addEventListener('click',()=>{for(const child of bar.children)child.setAttribute('aria-pressed',String(child===button));for(const card of grid.children)card.hidden=family!=='all'&&arcadeGames[card.dataset.game]?.family!==family;});bar.append(button);}grid.before(bar);};
  const ensureBase=arcadeEnsureUI;arcadeEnsureUI=function(){const result=ensureBase();installFilters();return result;};
 
  document.addEventListener('keydown',event=>{
-  if(!arcadeDialog?.open||!arcadeState?.world||arcadeGames[arcadeState.world.game]?.controls!=='choices'||event.target?.matches?.('input,textarea,select,[contenteditable="true"]')||event.target?.closest?.('button:not([data-arcade-control]),[data-device-ui-control]'))return;
-  const index=['KeyA','ArrowLeft'].includes(event.code)?0:['KeyW','ArrowUp'].includes(event.code)?1:['KeyD','ArrowRight'].includes(event.code)?2:-1;
+  const reaction=arcadeState?.world?.game==='reaction',reactionPad=reaction&&event.target?.closest?.('[data-extra-choice]');
+  if(!arcadeDialog?.open||!arcadeState?.world||arcadeGames[arcadeState.world.game]?.controls!=='choices'||event.target?.matches?.('input,textarea,select,[contenteditable="true"]')||!reactionPad&&event.target?.closest?.('button:not([data-arcade-control]),[data-device-ui-control]'))return;
+  const index=['KeyA','ArrowLeft'].includes(event.code)?0:['KeyW','ArrowUp'].includes(event.code)||reaction&&['Space','KeyF'].includes(event.code)?1:['KeyD','ArrowRight'].includes(event.code)?2:-1;
   if(index<0)return;event.preventDefault();event.stopImmediatePropagation();if(event.repeat)return;arcadeExtraEnsureControls();const button=arcadeExtraChoices?.children[index];if(button&&!button.disabled)arcadeInput(['hit','jump','dash'][index],true);
  },true);
 }
