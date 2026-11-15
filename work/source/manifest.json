@@ -1,8 +1,8 @@
 {
-  "build": "party30-20261115-points5",
+  "build": "party30-20261115-device6",
   "assets": {
-    "css": "assets/styles-points5.css",
-    "js": "assets/app-points5.js"
+    "css": "assets/styles-device6.css",
+    "js": "assets/app-device6.js"
   },
   "styles": [
     {
@@ -313,7 +313,10 @@
         {
           "text": "\n"
         },
-        "duel-controls.css"
+        "duel-controls.css",
+        "device-shell.css",
+        "desktop-ui.css",
+        "mobile-ui.css"
       ]
     }
   ],
@@ -358,6 +361,7 @@
           "text": "\n"
         },
         "duel-controls.mjs",
+        "adaptive-ui.mjs",
         "source/scripts/bootstrap.js"
       ]
     },
