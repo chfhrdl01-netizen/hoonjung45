@@ -7,22 +7,22 @@ function gameVisualAction(w,p,g={}){
  const t=gameVisualNumber(w.elapsed),game=w.game,base=g.action||'시작!',out={verb:base,state:'ready',ready:1};
  if(!p||p.forfeited||p.eliminated)return{verb:'관전 중',state:'watch',ready:0};
  if(w.phase!=='play')return{verb:w.phase==='countdown'?'준비!':'한 판 끝',state:'watch',ready:0};
- if(t<gameVisualNumber(p.respawnUntil)||t<gameVisualNumber(p.stunUntil))return{verb:'잠깐 회복',state:'recover',ready:0};
+ if(t<gameVisualNumber(p.respawnUntil)||t<gameVisualNumber(p.stunUntil))return{verb:'회복 중',state:'recover',ready:0};
  const spec=gameVisualCooldowns[game];if(spec){const left=Math.max(0,gameVisualNumber(p[spec[0]])-t);out.ready=Math.max(0,Math.min(1,1-left/spec[1]));if(left>.02)out.state='cooling';}
  if(game==='sneak'){out.verb=w.meta.signal==='green'?'달려!':'손 떼기';out.state=w.meta.signal==='green'?'ready':'stop';}
  if(game==='runner')out.verb=p.jumpHeight>.01?(p.jumpVy<0?'착지 예약':'점프 중'):'점프!';
- if(game==='coins')out.verb='돌진·탈취';
+ if(game==='coins')out.verb='돌진!';
  if(game==='brawl')out.verb='펀치!';
  if(game==='stamp'&&p.lastStampStage===w.meta.stage){out.verb='다음 도장';out.state='watch';}
  if(['curling','bowling','golf'].includes(game)){
-  out.verb=p.phase==='power'?(game==='bowling'?'지금 투구!':game==='golf'?'지금 퍼팅!':'지금 발사!'):game==='curling'&&p.phase==='moving'?'슥슥 쓸기':'파워 시작';
+  out.verb=p.phase==='power'?(game==='bowling'?'투구!':game==='golf'?'퍼팅!':'발사!'):game==='curling'&&p.phase==='moving'?'슥슥 쓸기':'파워 시작';
   if(p.phase==='power'){out.state='charge';out.ready=Math.max(0,Math.min(1,gameVisualNumber(p.power)));}
-  else if(['between','done'].includes(p.phase)||p.phase==='moving'&&game!=='curling'){out.state='watch';out.verb=p.phase==='done'?'완료!':'굴러가는 중';}
+  else if(['between','done'].includes(p.phase)||p.phase==='moving'&&game!=='curling'){out.state='watch';out.verb=p.phase==='done'?'완료!':'이동 중';}
  }
  if(game==='volley')out.verb='받아쳐!';
  if(game==='parking'){out.verb=p.parkHold>0?'정렬 유지':'브레이크';if(p.parkHold>0){out.state='charge';out.ready=Math.max(0,Math.min(1,p.parkHold));}}
  if(game==='bridge'){out.verb=p.finishedAt>=0?'완성!':p.carried?'다리 놓기':'나무 줍기';if(!p.carried||p.finishedAt>=0)out.state='watch';}
- if(game==='claw'){out.verb=p.hookState==='down'?'조기 회수':p.hookState==='up'?'끌어올리는 중':'집게 내리기';if(p.hookState==='up')out.state='watch';}
+ if(game==='claw'){out.verb=p.hookState==='down'?'조기 회수':p.hookState==='up'?'회수 중':'집게 내리기';if(p.hookState==='up')out.state='watch';}
  if(['memory','safe'].includes(game)&&w.meta.phase==='watch'){out.state='watch';out.verb='보고 기억!';}
  if(game==='reaction'){out.state=p.locked?'watch':w.meta.signal==='go'?'ready':w.meta.signal==='fake'?'stop':'watch';out.verb=p.locked?'다음 신호':w.meta.signal==='go'?'지금 찍어!':'아직 기다려';}
  if(['doors','memory','sorter','receipt','auction'].includes(game)&&(p.locked||p.choiceLocked)&&game!=='auction'){out.state='watch';out.verb='선택 완료';}
