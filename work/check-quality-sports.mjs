@@ -11,13 +11,16 @@ function game(key,n=3){
 }
 const object=(w,p,kind)=>w.objects.find(o=>o.ownerId===p.id&&(!kind||o.kind===kind));
 
-// Everyone faces the same serve sequence, even with a nonconstant seeded RNG.
-for(const key of ['pong','volley']){
+// Volley courts face the same serve sequence; pong now uses one shared team ball.
+for(const key of ['volley']){
  const {w,rule,controls,random}=game(key,8),first=object(w,w.players[0]);
  for(const p of w.players){const b=object(w,p);assert.deepEqual([b.x,b.y,b.vx,b.vy],[first.x,first.y,first.vx,first.vy]);}
  for(const p of w.players){const b=object(w,p);if(key==='pong')b.x=-100;else b.y=500;}
  rule.step(w,.02,controls,random);const next=object(w,w.players[0]);
  for(const p of w.players){const b=object(w,p);assert.equal(p.misses,1);assert.deepEqual([b.x,b.y,b.vx,b.vy],[next.x,next.y,next.vx,next.vy],'same numbered re-serve must retain opportunity parity');}
+}
+{
+ const {w,rule,controls,random}=game('pong',3);assert.equal(w.objects.length,1);assert.equal(w.objects[0].ownerId,'');assert.deepEqual([...w.meta.teamSizes],[2,1]);const small=w.players.find(p=>p.team===w.meta.handicapTeam),large=w.players.find(p=>p.team!==w.meta.handicapTeam);assert(small.paddleHeight>large.paddleHeight&&small.moveSpeed>large.moveSpeed);Object.assign(w.objects[0],{x:698,y:230,vx:300,vy:0,serveAt:0});rule.step(w,.02,controls,random);assert.equal(w.meta.teamGoals[0],1);assert(w.players.filter(p=>p.team===0).every(p=>p.score===100));
 }
 
 // Bowling leaves the rack in place for a second attempt and distinguishes a spare.
@@ -52,12 +55,12 @@ for(const key of ['pong','volley']){
  p.readyAt=0;p.bufferUntil=0;Object.assign(b,{x:p.x,y:203,vy:40,lastHitAt:0});rule.input(w,p,'hit');assert.equal(p.hits,1);w.elapsed+=.04;rule.step(w,.04,controls,()=>.5);w.elapsed+=.02;rule.step(w,.02,controls,()=>.5);assert.equal(p.hits,2,'slightly early input is buffered into a descending receive');assert.equal(p.score,17);
 }
 
-// A bay accepts both orientations, while tiny drift decays rather than erases its hold.
+// Parking counts an arrival in this frame, then moves its bay without resetting the car.
 {
  const {w,rule,controls}=game('parking'),p=w.players[0],target=w.meta.spots[0];assert.equal(w.duration,32);
- Object.assign(p,{x:target.x,y:target.y,angle:target.angle+Math.PI,speed:0});
- for(let i=0;i<51;i++){w.elapsed+=.02;rule.step(w,.02,controls);}assert.equal(p.parked,1);assert.ok(p.baseScore>=100,'reverse parking completes normally');
- const next=w.meta.spots[1];Object.assign(p,{x:next.x+34,y:next.y,angle:next.angle,speed:0,parkHold:.5});w.elapsed+=.02;rule.step(w,.02,controls);assert.ok(p.parkHold>0&&p.parkHold<.5);
+ Object.assign(p,{x:target.x,y:target.y,angle:target.angle+Math.PI,speed:100});
+ w.elapsed+=.02;rule.step(w,.02,controls);assert.equal(p.parked,1,'arrival completes without waiting for alignment or stopping');assert.equal(p.target,1);assert.ok(Math.hypot(p.x-target.x,p.y-target.y)<3,'car remains at the completed bay');
+ p.speed=0;for(let i=0;i<51;i++){w.elapsed+=.02;rule.step(w,.02,controls);}assert.equal(p.parked,1,'the new bay cannot be farmed while stationary');assert.ok(w.meta.parkingLevels[1].width<w.meta.parkingLevels[0].width);assert.ok(w.meta.parkingLevels[1].walls.length>w.meta.parkingLevels[0].walls.length);
  assert.equal(game('golf').w.duration,32,'humans have extra time to aim through three holes');
 }
 
@@ -79,4 +82,4 @@ for(const key of ['pong','volley']){
  const {w,rule,controls}=game('claw'),p=w.players[0];w.objects=[];assert.equal(rule.input(w,p,'hit'),true);const start=p.x;controls.get(p.id).held.add('right');rule.step(w,.02,controls);assert.ok(p.x>start);assert.equal(p.hookState,'down');assert.equal(rule.input(w,p,'hit'),true);assert.equal(p.hookState,'up');assert.equal(p.attempts,1);assert.equal(rule.input(w,p,'hit'),false,'recovery cannot launch another hook');
 }
 
-console.log('PASS: fair opening serves; bowling two-throw frames, retained racks, strikes/spares; curling sweep agency and cooldown; volley descending-only and early-input buffer; reverse parking and drift grace; closest-contact arbitration and real crown stun; shared safe islands; controllable claw descent/early return.');
+console.log('PASS: fair opening serves; bowling two-throw frames, retained racks, strikes/spares; curling sweep agency and cooldown; volley descending-only and early-input buffer; immediate count-rush parking with progressive bays; closest-contact arbitration and real crown stun; shared safe islands; controllable claw descent/early return.');
