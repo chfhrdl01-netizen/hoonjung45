@@ -208,15 +208,19 @@
 /* A shorter roll keeps the personal credits and drinks readable without a long empty tail. */
 #lunchFinaleDialog .film-credit-row{margin-bottom:20px}
 #lunchFinaleDialog .film-credit-drink{display:block;margin-top:6px;color:#c0a989;font-size:13px;line-height:1.45;letter-spacing:0}
-#lunchFinaleDialog .film-credit-instagram{display:block;width:max-content;max-width:100%;margin:7px auto 0;color:#f1c579;font-size:15px;text-underline-offset:4px;letter-spacing:.03em}
-#lunchFinaleDialog .film-creator-card{position:relative;z-index:5;display:grid;grid-template-columns:1fr auto;gap:4px 22px;align-items:center;width:min(330px,90%);margin:18px auto 0;padding:10px 16px;border:1px solid #d6b27266;border-radius:7px;background:#372a2599;color:#edcc93;text-decoration:none;text-align:left;box-shadow:0 5px 18px #08060844}
-#lunchFinaleDialog .film-creator-card>span{font-size:9px;color:#af9878;letter-spacing:.06em}
-#lunchFinaleDialog .film-creator-card>strong{grid-column:1;font-size:21px;line-height:1.2;letter-spacing:.02em}
-#lunchFinaleDialog .film-creator-card>small{grid-column:2;grid-row:1/3;align-self:center;font-size:8px;letter-spacing:.1em;color:#c2a574}
-#lunchFinaleDialog .film-creator-card:hover{background:#4a352bc9;border-color:#f1c579}
-#lunchFinaleDialog .film-creator-card:focus-visible,#lunchFinaleDialog .film-credit-instagram:focus-visible{outline:3px solid #f1c579;outline-offset:4px}
-@media(max-width:600px){#lunchFinaleDialog .film-credit-row{margin-bottom:18px}#lunchFinaleDialog .film-credit-drink{font-size:11px;margin-top:4px}#lunchFinaleDialog .film-credit-instagram{font-size:13px}#lunchFinaleDialog .film-creator-card{width:min(285px,92%);padding:9px 12px;gap:3px 13px;margin-top:14px}#lunchFinaleDialog .film-creator-card>strong{font-size:19px}#lunchFinaleDialog .film-creator-card>small{font-size:7px}}
-@media(max-height:540px) and (min-width:541px){#lunchFinaleDialog .film-credit-row{margin-bottom:15px}#lunchFinaleDialog .film-credit-drink{font-size:11px}#lunchFinaleDialog .film-creator-card{width:280px;padding:7px 12px;gap:2px 12px;margin-top:9px}#lunchFinaleDialog .film-creator-card>span{font-size:8px}#lunchFinaleDialog .film-creator-card>strong{font-size:18px}#lunchFinaleDialog .film-creator-card>small{font-size:7px}#lunchFinaleDialog .film-outro h2{margin:7px 0}#lunchFinaleDialog .film-outro .film-outro-note{margin-top:7px}}
+@media(max-width:600px){#lunchFinaleDialog .film-credit-row{margin-bottom:18px}#lunchFinaleDialog .film-credit-drink{font-size:11px;margin-top:4px}}
+@media(max-height:540px) and (min-width:541px){#lunchFinaleDialog .film-credit-row{margin-bottom:15px}#lunchFinaleDialog .film-credit-drink{font-size:11px}#lunchFinaleDialog .film-outro h2{margin:7px 0}#lunchFinaleDialog .film-outro .film-outro-note{margin-top:7px}}
+/* A quiet corner keeps the creator's link a discovery, outside the main credits. */
+#lunchFinaleDialog .film-bottom{padding-block:0}
+#lunchFinaleDialog .film-easter-egg{position:relative;order:-1;flex:0 0 30px;align-self:center;color:#8f806b}
+#lunchFinaleDialog .film-easter-egg>summary{display:grid;place-items:center;width:30px;height:30px;margin:0;padding:0;list-style:none;font-size:11px;line-height:1;cursor:pointer;touch-action:manipulation;user-select:none;-webkit-user-select:none}
+#lunchFinaleDialog .film-easter-egg>summary::-webkit-details-marker{display:none}
+#lunchFinaleDialog .film-easter-egg>summary::marker{content:''}
+#lunchFinaleDialog .film-easter-egg>summary:hover,#lunchFinaleDialog .film-easter-egg[open]>summary{color:#d6be98}
+#lunchFinaleDialog .film-easter-egg:not([open])>.film-secret-link{display:none}
+#lunchFinaleDialog .film-secret-link{position:absolute;left:0;bottom:calc(100% + 7px);max-width:calc(100vw - 30px);padding:8px 11px;border:1px solid #ad94794d;border-radius:5px;background:#17121ded;color:#c7b28e;font-size:11px;line-height:1.4;white-space:nowrap;text-decoration:none;letter-spacing:.02em}
+#lunchFinaleDialog .film-secret-link:hover{text-decoration:underline;text-underline-offset:3px}
+#lunchFinaleDialog .film-easter-egg>summary:focus-visible,#lunchFinaleDialog .film-secret-link:focus-visible{outline:2px solid #c7b28e;outline-offset:1px;border-radius:4px}
 /* The coffee scene keeps every final order visible throughout its 13 seconds. */
 #lunchFinaleDialog .film-watch-note{color:#c8b48e;font-size:9px;letter-spacing:0;white-space:nowrap}
 #lunchFinaleDialog .film-coffee{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(260px,.9fr);align-items:center;gap:clamp(18px,4vw,54px);padding:clamp(20px,5vh,54px) clamp(24px,5vw,70px);text-align:center}
