@@ -61,7 +61,7 @@ function deviceRenderGame(){
  const toggle=$('deviceInfoToggle');if(!toggle)return;
  toggle.setAttribute('aria-expanded',String(expanded));toggle.hidden=!mobile||!state||phase==='invite'||phase==='done';deviceSetText(toggle,expanded?'정보 접기':'규칙·점수');
  const game=arcadeGames[state?.world?.game||state?.chosen],self=arcadeSelf(),own=state?.members.find(member=>member.id===self),player=state?.world?.players.find(p=>p.id===self);
- const points=state?.format==='points',summary=!own||own.response!=='join'?'관전':points?'내 누적 '+(state.totalPoints?.[self]||0)+'점':'내 점수 '+Math.round(player?.score||0)+'점';
+ const points=state?.format==='points',summary=!own||own.response!=='join'?'관전':points?'내 누적 '+(state.totalPoints?.[self]||0)+'점':state?.world?.game==='parking'?'내 주차 '+(player?.parked||0)+'대':state?.world?.meta?.roundSurvival?(player?.eliminated?'이번 판 관전':typeof player?.hp==='number'?'내 체력 '+Math.ceil(player.hp)+'HP':'생존 · '+'♥'.repeat(Math.max(0,player?.health||0))):'내 점수 '+Math.round(player?.score||0)+'점';
  const rules=game?.hint||'매판 순위 점수를 더해요.';deviceSetText($('deviceOwnSummary'),summary);deviceSetText($('deviceRuleSummary'),mobile?deviceTouchRule(rules):rules);if(mobile)deviceSetText($('arcadeHelp'),deviceTouchRule(rules));
  const dpad=$('arcadeDpad'),keys=(dpad&&!dpad.hidden?'이동 WASD / 방향키 · ':'')+(game?.key||'Space');deviceSetText($('deviceInputHint'),mobile?'화면 버튼으로 조작':keys);
  if(mobile&&game){
