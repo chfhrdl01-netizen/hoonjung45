@@ -1,0 +1,42 @@
+/* Small, pooled scene effects: physical feedback without covering the whole screen. */
+#arcadeDialog .gi-layer{position:absolute;inset:0;z-index:12;overflow:hidden;pointer-events:none;contain:layout style}
+#arcadeDialog .gi-burst{position:absolute;width:0;height:0;pointer-events:none;--gi-color:#e7bc5e;--gi-dark:#604526}
+#arcadeDialog .gi-burst[hidden]{display:none!important}
+#arcadeDialog .gi-burst[data-kind="perfect"],#arcadeDialog .gi-burst[data-kind="finish"]{--gi-color:#c7ed8c;--gi-dark:#345e43}
+#arcadeDialog .gi-burst[data-kind="hurt"],#arcadeDialog .gi-burst[data-kind="fail"],#arcadeDialog .gi-burst[data-kind="out"]{--gi-color:#e6a18d;--gi-dark:#7b3b32}
+#arcadeDialog .gi-burst[data-kind="boost"]{--gi-color:#b4e7df;--gi-dark:#315a66}
+#arcadeDialog .gi-ring{position:absolute;left:-18px;top:-18px;width:36px;height:36px;border:3px solid var(--gi-color);border-radius:50%;opacity:0;box-shadow:0 0 0 2px #fff5d955}
+#arcadeDialog .gi-label{position:absolute;left:0;top:-12px;transform:translate(-50%,-100%);white-space:nowrap;font:950 clamp(13px,3cqw,23px)/1.1 system-ui,sans-serif;letter-spacing:-.04em;color:var(--gi-dark);-webkit-text-stroke:3px #fff5dc;paint-order:stroke fill;filter:drop-shadow(0 2px #30271f33);opacity:0}
+#arcadeDialog .gi-burst[data-strong="true"] .gi-label{font-size:clamp(17px,3.8cqw,30px)}
+#arcadeDialog .gi-piece{position:absolute;left:-3px;top:-3px;width:6px;height:9px;border-radius:1px;border:1px solid var(--gi-dark);background:var(--gi-color);opacity:0}
+#arcadeDialog .gi-piece:nth-child(3n){background:#fff1bf}
+#arcadeDialog .gi-burst[data-flavor="paper"] .gi-piece{width:8px;height:11px;background:#fff3d8;border-color:#8a7e64;box-shadow:inset 0 2px #a7bea255}
+#arcadeDialog .gi-burst[data-flavor="pins"] .gi-piece{width:5px;height:13px;border-radius:3px;background:#fff1d5;border-color:#8b6951}
+#arcadeDialog .gi-burst[data-flavor="coin"] .gi-piece{width:8px;height:8px;border-radius:50%;background:#f6ce65;border-color:#926823}
+#arcadeDialog .gi-burst[data-flavor="speed"] .gi-piece{width:15px;height:3px;border:0;background:var(--gi-color)}
+#arcadeDialog .gi-burst[data-flavor="dust"] .gi-piece{width:7px;height:5px;border-radius:50%;border:0;background:#bca17a}
+#arcadeDialog .gi-burst[data-flavor="ice"] .gi-piece{width:5px;height:10px;background:#d7f4ed;border-color:#86b6b3}
+#arcadeDialog .gi-burst[data-flavor="hit"] .gi-ring{border-radius:20%;rotate:45deg;border-width:4px}
+#arcadeDialog .gi-burst[data-flavor="stamp"] .gi-ring{border-radius:4px;border-style:double;border-width:5px}
+#arcadeDialog .gi-burst[data-beat="0"] .gi-ring{animation:gi-ring-a .45s ease-out both}
+#arcadeDialog .gi-burst[data-beat="1"] .gi-ring{animation:gi-ring-b .45s ease-out both}
+#arcadeDialog .gi-burst[data-beat="0"] .gi-label{animation:gi-word-a .6s ease-out both}
+#arcadeDialog .gi-burst[data-beat="1"] .gi-label{animation:gi-word-b .6s ease-out both}
+#arcadeDialog .gi-burst[data-beat="0"] .gi-piece{animation:gi-paper-a .55s cubic-bezier(.15,.68,.25,1) var(--gi-delay) both}
+#arcadeDialog .gi-burst[data-beat="1"] .gi-piece{animation:gi-paper-b .55s cubic-bezier(.15,.68,.25,1) var(--gi-delay) both}
+#arcadeDialog .gi-react[data-gi-beat="0"] .av-body{transform-origin:50% 70%;animation:gi-body-a .18s ease-out}
+#arcadeDialog .gi-react[data-gi-beat="1"] .av-body{transform-origin:50% 70%;animation:gi-body-b .18s ease-out}
+#arcadeDialog .five-board[data-game="rhythm"][data-gi-kind="perfect"] .ten-hit-line{background:#d3eea0;box-shadow:0 0 0 3px #fff1b888}
+#arcadeDialog .five-board[data-game="rhythm"][data-gi-kind="success"] .ten-hit-line{background:#e9d07e;box-shadow:0 0 0 2px #fff1b877}
+#arcadeDialog .five-board[data-game="rhythm"][data-gi-kind="fail"] .ten-hit-line{background:#d59686}
+#arcadeDialog .five-board[data-game="rhythm"][data-gi-kind] .ten-rhythm-judge{font-weight:950;text-shadow:0 2px #fff3d966}
+@keyframes gi-ring-a{0%{opacity:.95;transform:scale(.3)}80%{opacity:.35}100%{opacity:0;transform:scale(2.5)}}
+@keyframes gi-ring-b{0%{opacity:.95;transform:scale(.3)}80%{opacity:.35}100%{opacity:0;transform:scale(2.5)}}
+@keyframes gi-word-a{0%{opacity:0;translate:0 8px;scale:.72}15%,65%{opacity:1;translate:0 0;scale:1.03}100%{opacity:0;translate:0 -12px;scale:1}}
+@keyframes gi-word-b{0%{opacity:0;translate:0 8px;scale:.72}15%,65%{opacity:1;translate:0 0;scale:1.03}100%{opacity:0;translate:0 -12px;scale:1}}
+@keyframes gi-paper-a{0%{opacity:0;transform:translate(0,0) rotate(0) scale(.5)}10%{opacity:.95}100%{opacity:0;transform:translate(var(--gi-x),var(--gi-y)) rotate(var(--gi-turn)) scale(.6)}}
+@keyframes gi-paper-b{0%{opacity:0;transform:translate(0,0) rotate(0) scale(.5)}10%{opacity:.95}100%{opacity:0;transform:translate(var(--gi-x),var(--gi-y)) rotate(var(--gi-turn)) scale(.6)}}
+@keyframes gi-body-a{0%{transform:scale(.88,1.06)}55%{transform:scale(1.08,.94)}100%{transform:scale(1)}}
+@keyframes gi-body-b{0%{transform:scale(.88,1.06)}55%{transform:scale(1.08,.94)}100%{transform:scale(1)}}
+@media(prefers-reduced-motion:reduce){#arcadeDialog .gi-ring,#arcadeDialog .gi-label,#arcadeDialog .gi-piece,#arcadeDialog .gi-react .av-body{animation:none!important;transition:none!important}#arcadeDialog .gi-piece{display:none}#arcadeDialog .gi-ring{opacity:.55;transform:none}#arcadeDialog .gi-label{opacity:1;translate:none;scale:none}}
+/* END_GAME_IMPACT_V1 */
