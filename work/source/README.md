@@ -37,7 +37,7 @@
 node work/build.mjs
 ```
 
-`index.html`, `assets/styles-secret8.css`, `assets/app-secret8.js`를 루트와 `dist/`에 동일하게 생성합니다. CSS·JS를 먼저 배포하고 HTML을 마지막에 반영합니다. 이전 자산은 캐시 방문자를 위해 보존합니다.
+`index.html`, `assets/styles-secret8.css`, `assets/app-secret8a.js`를 루트와 `dist/`에 동일하게 생성합니다. CSS·JS를 먼저 배포하고 HTML을 마지막에 반영합니다. 이전 자산은 캐시 방문자를 위해 보존합니다.
 
 방 통신·메인 앱·화면 장식의 세 IIFE 범위를 유지합니다. 메인 앱의 소스 조각은 함수 호이스팅과 래퍼 순서에 의존하므로 각각 `<script>`나 ES 모듈로 직접 불러오지 않습니다. CSS의 `@source`/`@end-source` 경계 이름과 manifest의 순서도 보존합니다.
 
