@@ -1,0 +1,52 @@
+/* Shared identity, separate screen composition and input affordances. */
+#deviceRoomTabs{display:none}.device-room-pane{min-width:0}.device-info-toggle{border:1.5px solid #30271f;background:#fff8de;border-radius:9px;padding:7px 11px;min-height:38px;font-size:11px;font-weight:850;white-space:nowrap}.device-own-summary{font-weight:900}.device-input-hint{font-size:11px;color:#6b5c43}.device-rule-summary{margin:0;font-size:11px;line-height:1.4}.device-info-toggle[aria-expanded="true"]{background:#dce8b1}.device-info-toggle:focus-visible,.device-room-tab:focus-visible{outline:3px solid #275ce8;outline-offset:3px}
+body[data-device-layout="compact"] #deviceInfoToggle,body[data-device-layout="compact"] #deviceRuleSummary{display:none}
+body[data-device-layout="compact"] #deviceOwnSummary{margin-left:auto}
+body[data-device-layout="desktop"] .shell{max-width:1280px}
+body[data-device-layout="desktop"] #roomLobby{grid-template-columns:minmax(0,1fr) 410px;gap:50px;padding:44px 48px}
+body[data-device-layout="desktop"] .room-lobby-copy .lobby-friends{height:195px;width:420px;max-width:100%}
+body[data-device-layout="desktop"] .room-lobby-copy .lobby-friends-scene{height:155px}
+body[data-device-layout="desktop"] .room-lobby-form{padding:27px}
+body:is([data-device-layout="phone"],[data-device-layout="touch-wide"]) #deviceRoomTabs{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:0 0 16px;padding:4px;border:1.5px solid #b8aa8d;border-radius:13px;background:#e9dfc6}
+.device-room-tab{border:0;border-radius:9px;min-height:46px;padding:9px 6px;background:transparent;font-size:12px;font-weight:850;color:#6c5b3c}
+.device-room-tab[aria-selected="true"]{background:#fffaf0;color:#282217;box-shadow:0 2px 4px #3e311d20}
+.device-room-tab:disabled{opacity:.55}
+body:is([data-device-layout="phone"],[data-device-layout="touch-wide"]) #roomLobby[data-room-mode="create"] #deviceJoinPane,body:is([data-device-layout="phone"],[data-device-layout="touch-wide"]) #roomLobby[data-room-mode="join"] #deviceCreatePane{display:none}
+body:is([data-device-layout="phone"],[data-device-layout="touch-wide"]) #deviceJoinPane>.room-divider{display:none}
+body:is([data-device-layout="phone"],[data-device-layout="touch-wide"]) :is(.room-input,.text-input,#deptSearch){font-size:16px!important}
+body:is([data-device-layout="phone"],[data-device-layout="touch-wide"]) #arcadeDialog kbd{display:none}
+body:is([data-device-layout="phone"],[data-device-layout="touch-wide"]) #deviceInputHint{display:none}
+body[data-device-layout="phone"] .shell{padding:0 14px}
+body[data-device-layout="phone"] .topbar{height:62px}
+body[data-device-layout="phone"] #roomLobby{display:block;margin:16px 0 24px;padding:20px 18px;border-width:2px;border-radius:20px;box-shadow:4px 4px #30271f}
+body[data-device-layout="phone"] .has-lobby-friends h2{font-size:35px;line-height:1.08;margin:10px 0 0;text-align:center;max-width:none}
+body[data-device-layout="phone"] .room-lobby-copy>.room-kicker{display:block;text-align:center;font-size:9px}
+body[data-device-layout="phone"] .room-lobby-copy .lobby-friends{height:133px;width:290px;margin:0 auto}
+body[data-device-layout="phone"] .lobby-friends-scene{height:108px;bottom:10px}
+body[data-device-layout="phone"] .lobby-friend{height:96px}
+body[data-device-layout="phone"] .lobby-friend-1{height:113px}
+body[data-device-layout="phone"] .lobby-friends-note{font-size:10px;top:7px;padding:5px 8px}
+body[data-device-layout="phone"] .lobby-welcome-line{font-size:11px;text-align:center;margin:6px 0}
+body[data-device-layout="phone"] .has-lobby-friends .arcade-try-tray{margin:13px 0 20px;align-items:stretch}
+body[data-device-layout="phone"] .lobby-play-button{width:100%;max-width:none;min-width:0;min-height:54px;font-size:19px;transform:none}
+body[data-device-layout="phone"] .arcade-try-tray small{text-align:center}
+body[data-device-layout="phone"] .has-lobby-friends .room-lobby-rules{display:none}
+body[data-device-layout="phone"] .room-lobby-form{padding:18px 14px;border-radius:15px;box-shadow:none}
+body[data-device-layout="phone"] .room-consent{margin:14px 0;padding:13px 10px}
+body[data-device-layout="phone"] .room-status{min-height:24px;margin-top:12px}
+body[data-device-layout="phone"] #arcadeMenu .five-intro{padding:19px 16px 10px}
+body[data-device-layout="phone"] #arcadeMenu .five-intro b{font-size:23px}
+body[data-device-layout="phone"] #arcadeMenu .five-game-cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;padding-left:12px;padding-right:12px}
+body[data-device-layout="phone"] #arcadeMenu .five-game-card{min-width:0;min-height:198px;padding:12px 10px}
+body[data-device-layout="phone"] #arcadeMenu .five-card-hint{font-size:11px;line-height:1.5}
+body[data-device-layout="phone"] #arcadeMenu .five-card-cta{min-height:38px;display:flex;align-items:center}
+body[data-device-layout="phone"] #resultView[data-lunch-flow="true"] .result-wrap{display:flex;flex-direction:column}
+body[data-device-layout="phone"] #resultView[data-lunch-flow="true"] .result-details{order:0}
+body[data-device-layout="phone"] #resultView[data-lunch-flow="true"] .result-ticket{order:1;min-height:240px}
+body[data-device-layout="phone"] .score-result-table{font-size:13px}
+body[data-device-layout="phone"] .score-result-table th,body[data-device-layout="phone"] .score-result-table td{padding-top:11px;padding-bottom:11px}
+body[data-device-layout="phone"] #roomBanner{padding:12px}
+body[data-device-layout="phone"] .room-banner-code{font-size:22px}
+body[data-device-layout="phone"] .room-banner-actions{gap:5px}
+body[data-device-layout="phone"] .room-banner-actions button{min-height:42px}
+@media(max-width:359px){body[data-device-layout="phone"] #roomLobby{padding:16px 12px}.device-room-tab{font-size:11px}body[data-device-layout="phone"] .has-lobby-friends h2{font-size:31px}}
