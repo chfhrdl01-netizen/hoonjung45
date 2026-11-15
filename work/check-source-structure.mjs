@@ -1,0 +1,26 @@
+import fs from 'node:fs';
+import assert from 'node:assert/strict';
+import vm from 'node:vm';
+import { readSource, sourceManifest } from './assemble-source.mjs';
+import { readProduction } from './read-production.mjs';
+
+const project = new URL('../', import.meta.url);
+const manifest = sourceManifest(), source = readSource();
+const read = path => fs.readFileSync(new URL(path, project), 'utf8');
+const html = read('index.html'), css = read(manifest.assets.css), js = read(manifest.assets.js);
+const scripts = [...source.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/gi)].map(match => match[1]);
+const styles = [...source.matchAll(/<style\b[^>]*>([\s\S]*?)<\/style>/gi)].map(match => match[1]);
+assert.equal(scripts.length, 3, 'transport, application and theme keep their original execution scopes');
+assert.equal(js, scripts.join('\n;\n'), 'bundling preserves every source script and its order');
+assert.equal(css, styles.join('\n'), 'bundling preserves the complete CSS cascade order');
+new vm.Script(js, { filename: manifest.assets.js });
+assert(!/<style\b|<script\b(?![^>]*\bsrc=)/i.test(html), 'production HTML has no inline style or application code');
+assert(html.includes('href="' + manifest.assets.css + '"'));
+assert(html.includes('src="' + manifest.assets.js + '"'));
+assert(Buffer.byteLength(html) < 32768, 'the page remains a small HTML document');
+assert(!js.includes('qaLayoutReport') && !js.includes('QA8888'), 'QA fixtures never ship in the game bundle');
+assert(!source.includes('<!-- source:'), 'every canonical source include is resolved');
+for (const path of ['index.html', manifest.assets.css, manifest.assets.js]) assert.equal(read(path), read('dist/' + path), 'root and dist deploy the same ' + path);
+const rehydrated = readProduction();
+assert(rehydrated.includes(js) && rehydrated.includes(css), 'VM tests inspect the actual production assets');
+console.log('PASS: small HTML plus versioned CSS/JS assets; original three scopes, complete source/cascade order, root/dist identity and production/QA separation.');
