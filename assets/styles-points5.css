@@ -967,6 +967,7 @@ html:has(#coffeeDeliveryPanel[data-popup="true"]:not([hidden])),body.delivery-ga
 }
 /* END_LUNCH_FINALE_CSS_V2 */
 
+
 /* FOCUSED_GAME_STAGE: fit the arena after measuring help, roster and controls. */
 #arcadeDialog[open]:is([data-purpose="lunch"],[data-playing="true"]){position:fixed;inset:0;width:100vw;max-width:100vw;height:100dvh;max-height:100dvh;margin:0;padding:0;border:0;border-radius:0;box-shadow:none;overflow:hidden;background:#eee7cc;display:flex;flex-direction:column}
 #arcadeDialog:not([open]){display:none!important}
