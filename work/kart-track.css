@@ -1,0 +1,25 @@
+/* A real three-lane circuit, shared with the host's track projection. */
+#arcadeDialog .five-board[data-game="kart"]{background:repeating-linear-gradient(45deg,#b5cc9926 0 18px,#93b38018 18px 36px),#aec58c}
+#arcadeDialog .kart-circuit{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+#arcadeDialog .kart-circuit>svg{display:block;width:100%;height:100%;overflow:hidden}
+#arcadeDialog .kart-circuit path{fill:none;stroke-linejoin:round;stroke-linecap:round}
+#arcadeDialog .kart-track-shadow{stroke:#52745b55;stroke-width:112}
+#arcadeDialog .kart-track-guard{stroke:#3f5c52;stroke-width:104}
+#arcadeDialog .kart-track-curb{stroke:#f4e7c8;stroke-width:96}
+#arcadeDialog .kart-track-curb-stripe{stroke:#bd7458;stroke-width:96;stroke-dasharray:14 14}
+#arcadeDialog .kart-track-road{stroke:#677474;stroke-width:82}
+#arcadeDialog .kart-track-lane{stroke:#f6edd1a8;stroke-width:1.7;stroke-dasharray:12 11}
+#arcadeDialog .kart-track-arrow{stroke:#f0dfb36e;stroke-width:3}
+#arcadeDialog .kart-finish-line{stroke:#304b46;stroke-width:1.5}
+#arcadeDialog .kart-start-direction{stroke:#d6f0a5;stroke-width:4}
+#arcadeDialog .kart-start-label{fill:#395647;font:900 10px system-ui,sans-serif;letter-spacing:.08em}
+#arcadeDialog .kart-infield-cup{font:30px system-ui,sans-serif}
+#arcadeDialog .kart-infield-label{fill:#557654;font:900 10px system-ui,sans-serif;letter-spacing:.1em}
+#arcadeDialog .kart-chicane-label{fill:#597c59;font:700 8px system-ui,sans-serif;letter-spacing:.08em}
+#arcadeDialog .five-board[data-game="kart"] .five-actor.is-kart{width:clamp(20px,5cqw,34px);height:clamp(22px,5cqw,35px);transform:translate(-50%,-78%)}
+#arcadeDialog .five-board[data-game="kart"] .five-actor.is-kart::after{left:4%;right:4%;bottom:-2px;height:7px;border-width:2px;border-radius:4px;background:var(--p-color);box-shadow:-3px 3px 0 #304343,3px 3px 0 #304343}
+#arcadeDialog .five-board[data-game="kart"] .five-actor.is-kart::before{content:"";position:absolute;left:50%;top:83%;width:15px;height:11px;background:#fff3bb;clip-path:polygon(0 0,100% 50%,0 100%,25% 50%);transform:translate(-50%,-50%) rotate(var(--kart-heading,0deg));transform-origin:center;z-index:5;pointer-events:none}
+#arcadeDialog .five-board[data-game="kart"] .five-actor-name{font-size:clamp(7px,1.25cqw,10px);padding:1px 3px}
+#arcadeDialog .five-board[data-game="kart"] .five-actor-tag{font-size:clamp(7px,1.3cqw,10px);color:#f9f0cf;text-shadow:0 1px #304343,1px 0 #304343,-1px 0 #304343}
+#arcadeDialog .five-board[data-game="kart"] .ten-kart-object{font-size:clamp(14px,3.4cqw,25px);line-height:1;filter:drop-shadow(0 1px #203c3b55)}
+#arcadeDialog .five-board[data-game="kart"] .ten-kart-object.is-preview{opacity:.45}
