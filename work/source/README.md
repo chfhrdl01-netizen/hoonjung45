@@ -15,7 +15,8 @@
 | 현재 방향·체력·재사용 상태, 예측 보조 표시 제한 | `../game-visuals.mjs`, `../game-visuals.css` |
 | 실제 이벤트의 파동·조각·판정·효과음 | `../game-impact.mjs`, `../game-impact.css` |
 | 30종 판정·공유 트랙 좌표·생존 순위·팀 탁구·볼링·주차 | `../game-rules.mjs` |
-| 랜덤 4판 + 대난투·누적 점수·경기 시간·수신 검증 | `../arcade-controller.mjs` |
+| 랜덤 4판 + 대난투·누적 점수·경기 시간·공유 일시정지·수신 검증 | `../arcade-controller.mjs` |
+| 접힌 경기의 정지 안내·입력 비활성화·장식 정지 | `../match-pause-ui.mjs`, `../match-pause.css` |
 | 오락실·순위·게임별 장면과 조작부 | `../arcade-ui.mjs`, `scripts/arcade-renderers.js` |
 | 탑쌓기 시작 받침대, 실제 레일 코스, 볼링 화면 | `../stacker-clarity.css`, `../kart-track.css`, `../bowling-clarity.css` |
 | 왕관 보유자·팀 탁구·세 갈래 반응·주차 대수전 화면 | `../crown-clarity.css`, `../pong-team.css`, `../reaction-challenge.css`, `../parking-rush.css` |
@@ -37,7 +38,7 @@
 node work/build.mjs
 ```
 
-`index.html`, `assets/styles-secret8.css`, `assets/app-secret8a.js`를 루트와 `dist/`에 동일하게 생성합니다. CSS·JS를 먼저 배포하고 HTML을 마지막에 반영합니다. 이전 자산은 캐시 방문자를 위해 보존합니다.
+`index.html`, `assets/styles-pause9.css`, `assets/app-pause9.js`를 루트와 `dist/`에 동일하게 생성합니다. CSS·JS를 먼저 배포하고 HTML을 마지막에 반영합니다. 이전 자산은 캐시 방문자를 위해 보존합니다.
 
 방 통신·메인 앱·화면 장식의 세 IIFE 범위를 유지합니다. 메인 앱의 소스 조각은 함수 호이스팅과 래퍼 순서에 의존하므로 각각 `<script>`나 ES 모듈로 직접 불러오지 않습니다. CSS의 `@source`/`@end-source` 경계 이름과 manifest의 순서도 보존합니다.
 
@@ -61,10 +62,13 @@ node work/build.mjs
 
 브라우저에서는 처음의 탑 받침대, 코스와 장애물의 좌표 일치, 볼링의 현재 핀 배치, 왕관 보유자 전환, 팀·주차 대수·반응 선택, 생존 탈락 후 관전과 다음 경기 복귀를 확인합니다. 가로·세로에서 버튼과 안내가 경기장을 가리지 않는지도 봅니다. 뷰포트 크기 변경은 실제 입력 방식이나 실기기 검사를 대신하지 않습니다.
 
+경기 접기는 점심 점수전 전체를 일시정지합니다. 각 참가자의 `pausedBy` 요청을 따로 해제하며, 마지막 요청을 해제할 때 경기·카운트다운·다음 경기의 마감시각을 보정합니다. 입력은 호스트와 UI에서 차단하고, 퇴장 처리는 정지 중에도 계속 수행합니다. `match-pause-ui.mjs`는 모든 게임 렌더러 뒤에서 실행해 게임별 래퍼가 조작을 다시 켜지 않게 합니다.
+
 ## 관련 검사
 
 | 영역 | 검사 파일 |
 | --- | --- |
+| 공유 일시정지·실제 DOM 흐름 | `../check-match-pause.mjs`, `../check-match-pause-dom.mjs` |
 | 선택·준비 | `../check-character-ready.mjs`, `../check-practice-character.mjs`, `../check-department-avatars.mjs` |
 | 생존·누적 순위·피날레 | `../check-survival-rounds.mjs`, `../check-points-series.mjs`, `../check-brawl-finale.mjs`, `../check-score-finish.mjs` |
 | 탑·레일·볼링·왕관 | `../check-stacker-clarity.mjs`, `../check-kart-track.mjs`, `../check-bowling-skill.mjs`, `../check-crown-clarity.mjs` |
