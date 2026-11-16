@@ -82,7 +82,7 @@ function lunchDecisionHandle(senderId,cmd){
   if(!netIsHost()||cmd.roundId!==s.roundId||!lunchDecisionRequired().some(p=>p.id===senderId))return true;
   if(cmd.t==='lunchAccept'&&s.phase==='review'&&Number.isSafeInteger(cmd.version)&&cmd.version===s.version&&!s.acceptedIds.includes(senderId)){s.acceptedIds.push(senderId);s.notice=(s.participants.find(p=>p.id===senderId)?.name||'참가자')+' 님 승낙!';s.seq++;if(!lunchDecisionFinalize()){lunchDecisionRender();netPublish();}return true;}
   if(cmd.t==='lunchObject'){if(Number.isSafeInteger(cmd.version)&&cmd.version===s.version)lunchDecisionObject(senderId);return true;}
-  if(cmd.t==='lunchReset'&&senderId===netSelfId()&&s.phase==='review'){lunchDecisionResetMeal();return true;}return true;
+  return true;
  }
  if(cmd.t==='reset'){if(senderId===netSelfId()&&s.phase==='coffee'&&lunchDecisionCoffeeDone()){lunchDecisionClear();return false;}return true;}
  if(cmd.t.startsWith('delivery'))return s.phase!=='coffee';
@@ -132,7 +132,7 @@ function lunchDecisionEnsureUI(){
  const style=el('style');style.id='lunchDecisionStyles';style.textContent='.lunch-decision{margin:20px 24px;padding:20px;border:2px solid #30251e;border-radius:14px;background:#fff7db;box-shadow:4px 4px 0 #30251e22}.lunch-decision h3{font-size:22px;margin:0 0 6px}.lunch-decision p{margin:7px 0;line-height:1.6}.lunch-decision ul{list-style:none;padding:0;display:grid;gap:7px}.lunch-decision li{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:9px 12px;background:#fffdf3;border:1px solid #34251f44;border-radius:9px}.lunch-decision li strong{margin-right:auto}.lunch-decision li small{font-weight:800}.lunch-decision .lunch-choice-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:15px}.lunch-decision .lunch-choice-actions button{min-height:46px}.lunch-decision .lunch-decision-note{font-size:12px;color:#67584c}.lunch-decision .accepted{background:#dce9bd}.lunch-decision .left{opacity:.5}@media(max-width:600px){.lunch-decision{margin:14px 10px;padding:15px}.lunch-decision h3{font-size:20px}.lunch-decision .lunch-choice-actions button{flex:1 1 100%}}';document.head.append(style);
  const panel=el('section','lunch-decision');panel.id='lunchDecisionPanel';panel.setAttribute('aria-label','우승 메뉴 검토와 만장일치 승낙');
  const heading=el('h3');heading.id='lunchDecisionTitle';const status=el('p');status.id='lunchDecisionStatus';status.setAttribute('role','status');const list=el('ul');list.id='lunchDecisionRoster';const note=el('p','lunch-decision-note');note.id='lunchDecisionSelf';
- const actions=el('div','lunch-choice-actions');for(const spec of [['lunchAcceptBtn','이 메뉴로 점심 먹을게요','btn primary','lunchAccept'],['lunchObjectBtn','내 메뉴로 이의 제기 · 1대1','btn dark','lunchObject'],['lunchResetBtn','메뉴 다시 고르기','tiny-btn','lunchReset']]){const b=el('button',spec[2],spec[1]);b.id=spec[0];b.type='button';b.addEventListener('click',()=>{const s=lunchDecisionState;if(s)netRoom.send({t:spec[3],roundId:s.roundId,version:s.version});});actions.append(b);}
+ const actions=el('div','lunch-choice-actions');for(const spec of [['lunchAcceptBtn','이 메뉴로 점심 먹을게요','btn primary','lunchAccept'],['lunchObjectBtn','내 메뉴로 이의 제기 · 1대1','btn dark','lunchObject']]){const b=el('button',spec[2],spec[1]);b.id=spec[0];b.type='button';b.addEventListener('click',()=>{const s=lunchDecisionState;if(s)netRoom.send({t:spec[3],roundId:s.roundId,version:s.version});});actions.append(b);}
  panel.append(heading,status,list,note,actions);const anchor=view.querySelector('.result-actions');if(anchor)anchor.before(panel);else view.append(panel);
 }
 function lunchDecisionRender(){
@@ -146,7 +146,7 @@ function lunchDecisionRender(){
  $('lunchDecisionSelf').textContent=!eligible?'처음 메뉴를 낸 참가자만 승낙과 이의 제기에 참여해요.':s.phase==='coffee'?'모든 참가자가 이 메뉴를 승낙했어요.':defeated?'이의를 받고 패배해 이번 점심에서 다시 이의를 제기할 수 없어요. 새 메뉴를 승낙해주세요.':used?'내 이의 제기 기회는 사용했어요. 메뉴가 바뀌면 새 메뉴를 다시 승낙해주세요.':ownAccepted?'이 메뉴를 승낙했어요. 메뉴가 바뀌면 다시 승낙할 수 있어요.':'이의 제기는 오늘 점심 전체에서 1인 1회. 이의를 받고 패하면 재도전할 수 없어요.';
  const accept=$('lunchAcceptBtn');accept.hidden=!eligible||s.phase==='coffee';accept.disabled=s.phase!=='review'||ownAccepted;accept.textContent=ownAccepted?'이 메뉴 승낙 완료 ✓':'이 메뉴로 점심 먹을게요';
  const objection=$('lunchObjectBtn');objection.hidden=!eligible||self===s.winnerId||own.menu===s.menu||s.phase==='coffee';objection.disabled=s.phase!=='review'||used||ownAccepted;objection.textContent=defeated?'방어전 패배 · 재도전 불가':used?'이의 제기 1회 사용 완료':'내 메뉴로 이의 제기 · 1대1';
- $('lunchResetBtn').hidden=!netIsHost()||s.phase!=='review';const old=$('objectBtn');if(old)old.hidden=true;const again=$('againBtn');if(again){again.disabled=s.phase!=='coffee'||!done;again.title=again.disabled?'모두 승낙하고 커피 뽑기까지 마치면 다음 점심을 시작할 수 있어요.':'';}const copy=$('copyBtn');if(copy){copy.disabled=result.provisional===true;copy.title=copy.disabled?'모두 승낙한 뒤 최종 점심 결과를 복사할 수 있어요.':'';}
+ const old=$('objectBtn');if(old)old.hidden=true;const again=$('againBtn');if(again){again.disabled=s.phase!=='coffee'||!done;again.title=again.disabled?'모두 승낙하고 커피 뽑기까지 마치면 다음 점심을 시작할 수 있어요.':'';}const copy=$('copyBtn');if(copy){copy.disabled=result.provisional===true;copy.title=copy.disabled?'모두 승낙한 뒤 최종 점심 결과를 복사할 수 있어요.':'';}
 }
 function lunchDecisionTick(){
  if(!lunchDecisionState)return;if(!netIsActive()||!result||result.id!==lunchDecisionState.roundId||netPhase==='setup'){lunchDecisionClear();return;}
