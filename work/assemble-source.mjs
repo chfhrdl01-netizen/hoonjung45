@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 
 const work = new URL('./', import.meta.url);
-const read = path => fs.readFileSync(new URL(path, work), 'utf8');
+const read = path => fs.readFileSync(new URL(path, work), 'utf8').replace(/\r\n/g, '\n');
 
 function readEntry(entry) {
   if (typeof entry === 'string') return read(entry);
