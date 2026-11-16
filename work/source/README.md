@@ -6,7 +6,7 @@
 | --- | --- |
 | 화면·입력 방식 판별, 모바일 참여 탭, 경기 정보 펼치기 | `../adaptive-ui.mjs` |
 | PC·모바일 로비, 터치 안내, 최종 점수표 배치 | `../device-shell.css`, `../desktop-ui.css`, `../mobile-ui.css` |
-| 방 생성·초대·실시간 연결 | `scripts/room-transport.js` |
+| 방 생성·초대 주소 동기화·실시간 연결 | `scripts/room-transport.js` |
 | 기본 메뉴 화면·키보드 전투 | `scripts/app-core-and-combat.js` |
 | 레이스·온라인 참가 상태·아이템 | `scripts/race-and-network.js` |
 | 별도 커피·난투 게임 | `scripts/coffee-and-brawl.js` |
@@ -38,7 +38,7 @@
 node work/build.mjs
 ```
 
-`index.html`, `assets/styles-pause9.css`, `assets/app-pause9.js`를 루트와 `dist/`에 동일하게 생성합니다. CSS·JS를 먼저 배포하고 HTML을 마지막에 반영합니다. 이전 자산은 캐시 방문자를 위해 보존합니다.
+`index.html`, `assets/styles-pause9.css`, `assets/app-pause9b.js`를 루트와 `dist/`에 동일하게 생성합니다. CSS·JS를 먼저 배포하고 HTML을 마지막에 반영합니다. 이전 자산은 캐시 방문자를 위해 보존합니다.
 
 방 통신·메인 앱·화면 장식의 세 IIFE 범위를 유지합니다. 메인 앱의 소스 조각은 함수 호이스팅과 래퍼 순서에 의존하므로 각각 `<script>`나 ES 모듈로 직접 불러오지 않습니다. CSS의 `@source`/`@end-source` 경계 이름과 manifest의 순서도 보존합니다.
 
@@ -77,3 +77,5 @@ node work/build.mjs
 | 엔딩·시간·전체 규칙 | `../check-ending-locked.mjs`, `../check-arcade-clock.mjs`, `../check-game-rules.mjs` |
 
 검사 명령과 이전 버전의 확인 기록은 루트 README를 참고합니다. quality7의 통과 개수·시뮬레이션 수·레이아웃 수치나 공개 멀티 기록을 secret8의 검증 결과로 해석하지 않습니다.
+
+초대 주소 회귀 검사는 `../check-room-address.mjs`입니다. 예전 초대 주소에서 새 방을 생성하는 경우와 수동 코드 입장, 복사 실패 대체 입력, 퇴장·방 종료, 입장 제한시간과 늦은 콜백을 실제 조립된 전송 코드로 확인합니다. 이 주소 수정은 기존 BUILD와 입장 프로토콜을 유지합니다.
