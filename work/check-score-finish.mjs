@@ -101,10 +101,10 @@ for(const path of ['award-callback','finalize','duel-finish','review']){
 {
  const {env:e,state}=environment(3,{tied:true});e.api.complete(state);const cb=e.awardCallback;e.awardCallback=null;cb({reason:'completed'});const ledger=scoreLedger(e.result);e.api.object('2');e.roster=e.roster.filter(p=>p.id!=='2');e.api.presence({kind:'leave',memberId:'2'});
  assert.equal(e.api.state.phase,'review');assert.equal(e.result.winnerId,'1','a departing challenger keeps the current present menu representative');assert(e.api.state.usedIds.includes('2'));assert.equal(scoreLedger(e.result),ledger);
- e.api.handle('0',{t:'lunchReset',roundId:e.result.id,version:e.api.state.version});assert.equal(e.result,null,'the host may still explicitly start a new meal');assert.equal(e.netPhase,'setup');
+ e.api.handle('0',{t:'lunchReset',roundId:e.result.id,version:e.api.state.version});assert.equal(scoreLedger(e.result),ledger,'the removed reset command cannot discard the final score result');assert.equal(e.netPhase,'result');
 }
 {
  const {env:e,state}=environment(3,{tied:true});e.api.complete(state);e.result.leagueFormat='elimination';e.roster=e.roster.filter(p=>p.id!=='1');e.api.presence({kind:'leave',memberId:'1'});
  assert.equal(e.result,null,'legacy non-points menu decisions retain their existing departure reset');
 }
-console.log('PASS: 2/3/8-player score series, shared first representative, direct ceremony, immutable ledger through one-time appeals and representative departure during award/review/duel, same-menu transfer, stale callbacks, valid guest snapshots, sole-host coffee, explicit new-meal reset and non-points compatibility.');
+console.log('PASS: 2/3/8-player score series, shared first representative, direct ceremony, immutable ledger through one-time appeals and representative departure during award/review/duel, same-menu transfer, stale callbacks, valid guest snapshots, sole-host coffee, removed reset command and non-points compatibility.');
