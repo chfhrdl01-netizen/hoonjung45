@@ -55,7 +55,7 @@ node work/build.mjs
 | --- | --- |
 | `index.html` | 화면 HTML |
 | `assets/styles-pause9.css` | 기기별·게임별 스타일 |
-| `assets/app-pause9.js` | 방 통신·판정·진행·화면 코드 |
+| `assets/app-pause9b.js` | 방 통신·판정·진행·화면 코드 |
 
 같은 세 파일을 `dist/`에도 생성합니다. CSS·JS를 먼저 배포하고 마지막에 `index.html`을 반영합니다. 이전 캐시 방문자를 위한 자산은 보존합니다. 방 통신·메인 앱·장식의 세 실행 범위를 유지하며 소스 조각을 각각 ES 모듈로 불러오지 않습니다.
 
@@ -112,4 +112,14 @@ DOM 검사는 설치된 `linkedom/esm/index.js` 경로를 인수로 전달해 �
 
 ```sh
 node work/check-match-pause-dom.mjs
+```
+
+## 2026-11-16 초대 주소 동기화 수정
+
+예전 초대 링크에서 새 방을 만들면 주소창에는 예전 방 코드가 남던 문제를 수정했습니다. 새 방 생성·다른 코드로 입장·입장 확인 때 주소창, 방 코드 입력, 초대 링크를 같은 방으로 맞춥니다. 방에서 나가거나 방이 끝나면 주소의 방 코드를 지웁니다. 입장 대기 안내에는 시도 중인 방 코드를 표시합니다.
+
+네트워크 프로토콜과 BUILD는 pause9를 유지해 기존 방과 연결할 수 있습니다. 캐시를 분리하기 위해 실행 자산만 `assets/app-pause9b.js`로 갱신했습니다.
+
+```sh
+node work/check-room-address.mjs
 ```
