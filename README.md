@@ -1,6 +1,6 @@
-# 점심결재 대작전 · secret8
+# 점심결재 대작전 · pause9
 
-[게임 열기](https://chfhrdl01-netizen.github.io/hoonjung45/?v=party30-20261116-secret8)
+[게임 열기](https://chfhrdl01-netizen.github.io/hoonjung45/?v=party30-20261116-pause9)
 
 대구대학교 점심 메뉴를 친구들과 함께 정하는 2~8인 브라우저 게임입니다. 방에 모여 캐릭터와 메뉴를 고르고, 30종 미니게임의 순위 점수를 합산해 대표 메뉴를 정합니다.
 
@@ -54,8 +54,8 @@ node work/build.mjs
 | 배포 파일 | 역할 |
 | --- | --- |
 | `index.html` | 화면 HTML |
-| `assets/styles-secret8.css` | 기기별·게임별 스타일 |
-| `assets/app-secret8a.js` | 방 통신·판정·진행·화면 코드 |
+| `assets/styles-pause9.css` | 기기별·게임별 스타일 |
+| `assets/app-pause9.js` | 방 통신·판정·진행·화면 코드 |
 
 같은 세 파일을 `dist/`에도 생성합니다. CSS·JS를 먼저 배포하고 마지막에 `index.html`을 반영합니다. 이전 캐시 방문자를 위한 자산은 보존합니다. 방 통신·메인 앱·장식의 세 실행 범위를 유지하며 소스 조각을 각각 ES 모듈로 불러오지 않습니다.
 
@@ -90,3 +90,26 @@ node work/check-device-ui.mjs
 ## 이전 버전 기록
 
 quality7의 공개 멀티 검증과 당시 수치는 현재 secret8 검증과 별개입니다. 이전 런타임은 [bab736a437e88d5b6a4666152d94426ccc34d356](https://github.com/chfhrdl01-netizen/hoonjung45/commit/bab736a437e88d5b6a4666152d94426ccc34d356), Pages 실행은 [43710694481](https://github.com/chfhrdl01-netizen/hoonjung45/actions/runs/43710694481)에서 확인할 수 있습니다.
+
+## 2026-11-16 경기 접기 일시정지
+
+빌드: `party30-20261116-pause9`. 참가자가 경기 화면을 접으면 방 전체의 카운트다운·경기 진행·다음 경기 대기시간과 입력을 멈춥니다. 접은 참가자가 모두 다시 열면 남은 시간부터 이어집니다. 여러 명의 접기 요청을 따로 관리하고, 퇴장한 참가자의 요청은 해제합니다.
+
+결과 화면의 ‘메뉴 다시 고르기’ 버튼과 해당 수동 초기화 명령을 제거했습니다. 완료된 점수와 순위는 유지하며, 승낙·이의 제기·커피 진행을 이어갑니다.
+
+검증: 30종 × 카운트다운·진행 중의 60개 실제 엔진 정지·재개 시나리오, 게스트 시계 차이, 다중 접기, 다음 경기 대기, 눌린 입력 해제, 퇴장 복구, 빠른 접기·열기, 오래된 상태 거부를 검사합니다. 실제 배포 번들을 DOM에서 실행해 30종 화면의 접기·열기 버튼, 조작 비활성화, 5판 종료 후 결과·승낙 화면도 확인했습니다. DOM 검사는 실제 브라우저의 화면 배치나 기기 간 WebRTC 연결을 대신하지 않습니다.
+
+```sh
+node work/build.mjs
+node work/check-match-pause.mjs
+node work/check-arcade-clock.mjs
+node work/check-points-series.mjs
+node work/check-score-finish.mjs
+node work/check-source-structure.mjs
+```
+
+DOM 검사는 설치된 `linkedom/esm/index.js` 경로를 인수로 전달해 실행할 수 있습니다. 기본 경로는 `work/qa-deps/node_modules/linkedom/esm/index.js`입니다.
+
+```sh
+node work/check-match-pause-dom.mjs
+```
