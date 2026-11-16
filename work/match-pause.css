@@ -1,0 +1,2 @@
+/* Freeze decorative animation along with the authoritative match clock. */
+.five-arcade-dialog[data-match-paused="true"] #arcadeBoard *{animation-play-state:paused!important}
