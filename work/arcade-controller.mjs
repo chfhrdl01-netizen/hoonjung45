@@ -2,13 +2,39 @@
 const arcadeEngine=createArcadeEngine(),arcadeGameKeys=typeof arcadeGames==='object'&&arcadeGames?Object.keys(arcadeGames):['sneak','dodge','coins','stamp','runner'];
 let arcadeState=null,arcadeDemo=false,arcadeInputSeq=0,arcadeLastPublish=0,arcadePumpAt=0,arcadeAccum=0,arcadePrevious=null,arcadeReceivedAt=0,arcadeLastWorldId='',arcadeBotAt=0,arcadeHeartbeatAt=0;
 const arcadeBotSeq=new Map(),arcadeBotBrains=new Map();
-let arcadeClock=null,arcadeClockOffset=0;
+let arcadeClock=null,arcadeClockOffset=0,arcadePauseAt=null,arcadeFolded=false;
 const arcadeFixedStepMs=16,arcadeMaxCatchupSteps=64;
 function arcadeStartClock(w,now){const countdown=w.phase==='countdown'?w.countdown*1000:0;arcadeClock={worldId:w.id,countdownEnd:now+countdown-w.elapsed*1000,end:now+countdown+(w.duration-w.elapsed)*1000};arcadePumpAt=now;arcadeAccum=0;}
 function arcadeServerNow(){return Date.now()+(arcadeHost()?0:arcadeClockOffset);}
-function arcadeClockSeconds(w){if(!w)return 0;if(arcadeHost()&&arcadeClock?.worldId===w.id){const deadline=w.phase==='countdown'?arcadeClock.countdownEnd:arcadeClock.end;return Math.max(0,(deadline-performance.now())/1000);}const clock=arcadeState?.clock;if(clock?.worldId===w.id)return Math.max(0,((w.phase==='countdown'?clock.countdownEndAt:clock.endAt)-arcadeServerNow())/1000);return w.phase==='countdown'?Math.max(0,w.countdown):Math.max(0,w.duration-w.elapsed);}
+function arcadeIsPaused(s=arcadeState){return !!s?.pausedBy?.length;}
+function arcadeTimelineNow(){return arcadeIsPaused()?arcadeState.pausedAt:arcadeServerNow();}
+function arcadeClearPause(s=arcadeState){if(!s)return;if(arcadeIsPaused(s))s.pauseSeq=(s.pauseSeq||0)+1;s.pausedBy=[];s.pausedAt=null;arcadePauseAt=null;}
+// Only the host owns the clock. Each participant releases their own fold request.
+function arcadeChangePause(ids,now=performance.now(),publish=true){
+ const s=arcadeState;if(!s||s.purpose!=='lunch'||!['round','between'].includes(s.phase))return false;
+ const previous=s.pausedBy||[];if(ids.length===previous.length&&ids.every(id=>previous.includes(id)))return false;
+ if(!previous.length&&ids.length){
+  arcadeAdvanceWorld(now);arcadeResolveRound();if(arcadeState!==s||!['round','between'].includes(s.phase))return false;
+  arcadePauseAt=now;s.pausedAt=Date.now();arcadeEngine.release(s.world);
+ }else if(previous.length&&!ids.length){
+  const duration=Math.max(0,now-arcadePauseAt);
+  if(arcadeClock?.worldId===s.world?.id){arcadeClock.countdownEnd+=duration;arcadeClock.end+=duration;}
+  if(s.phase==='between')s.nextAt+=Date.now()-s.pausedAt;
+  arcadePumpAt=now;arcadePauseAt=null;s.pausedAt=null;arcadeEngine.release(s.world);
+ }
+ s.pausedBy=[...ids];s.pauseSeq=(s.pauseSeq||0)+1;arcadePrevious=null;
+ if(publish){if(typeof arcadeClearKeys==='function')arcadeClearKeys();arcadeRenderSafe();arcadePublish(true);}return true;
+}
+function arcadeSetFolded(folded){
+ const s=arcadeState,self=arcadeSelf(),member=s?.members.find(m=>m.id===self);
+ if(s?.purpose!=='lunch'||!['round','between'].includes(s.phase)||member?.response!=='join'||member.left||member.forfeited)return false;
+ if(arcadeFolded===folded&&(folded||!s.pausedBy?.includes(self)))return false;
+ arcadeFolded=folded;if(typeof arcadeClearKeys==='function')arcadeClearKeys();
+ return arcadeSend({t:'arcadeFold',gameId:s.id,folded});
+}
+function arcadeClockSeconds(w){if(!w)return 0;if(arcadeHost()&&arcadeClock?.worldId===w.id){const deadline=w.phase==='countdown'?arcadeClock.countdownEnd:arcadeClock.end;return Math.max(0,(deadline-(arcadeIsPaused()?arcadePauseAt:performance.now()))/1000);}const clock=arcadeState?.clock;if(clock?.worldId===w.id)return Math.max(0,((w.phase==='countdown'?clock.countdownEndAt:clock.endAt)-arcadeTimelineNow())/1000);return w.phase==='countdown'?Math.max(0,w.countdown):Math.max(0,w.duration-w.elapsed);}
 function arcadeAdvanceWorld(now){
- const s=arcadeState,w=s?.world;if(!arcadeHost()||s?.phase!=='round'||!w||w.phase==='done'||!Number.isFinite(now))return 0;if(arcadeClock?.worldId!==w.id)arcadeStartClock(w,now);
+ const s=arcadeState,w=s?.world;if(!arcadeHost()||arcadeIsPaused(s)||s?.phase!=='round'||!w||w.phase==='done'||!Number.isFinite(now))return 0;if(arcadeClock?.worldId!==w.id)arcadeStartClock(w,now);
  arcadeAccum+=Math.max(0,now-arcadePumpAt);arcadePumpAt=now;let steps=0,resyncedCountdown=false;
  while(arcadeAccum>=arcadeFixedStepMs&&w.phase!=='done'&&steps<arcadeMaxCatchupSteps){arcadeEngine.step(w,arcadeFixedStepMs/1000,now);arcadeAccum-=arcadeFixedStepMs;steps++;}
  if(w.phase==='done'){arcadeAccum=0;return steps;}
@@ -31,21 +57,21 @@ function arcadeClone(v){return v?JSON.parse(JSON.stringify(v)):null;}
 function arcadeBaseContext(){return netPhase+':'+(result?.id||'setup');}
 function arcadeBusy(){return !!arcadeState&&['invite','round','between'].includes(arcadeState.phase);}
 function arcadeRenderSafe(){if(typeof arcadeRequestRender==='function')arcadeRequestRender();else if(typeof arcadeRender==='function')arcadeRender();if(typeof arcadeUpdateButtons==='function')arcadeUpdateButtons();}
-function arcadeGetState(){if(arcadeDemo||!netIsActive()||!arcadeState)return null;const state=arcadeClone(arcadeState);if(netIsHost()){state.serverNow=Date.now();if(arcadeClock?.worldId===state.world?.id){const now=performance.now();state.clock={worldId:state.world.id,countdownEndAt:state.serverNow+arcadeClock.countdownEnd-now,endAt:state.serverNow+arcadeClock.end-now};}}return state;}
+function arcadeGetState(){if(arcadeDemo||!netIsActive()||!arcadeState)return null;const state=arcadeClone(arcadeState);if(netIsHost()){state.serverNow=Date.now();if(arcadeClock?.worldId===state.world?.id){const now=arcadeIsPaused()?arcadePauseAt:performance.now(),wall=arcadeIsPaused()?state.pausedAt:state.serverNow;state.clock={worldId:state.world.id,countdownEndAt:wall+arcadeClock.countdownEnd-now,endAt:wall+arcadeClock.end-now};}}return state;}
 function arcadePublish(force=false){if(arcadeDemo||!netIsHost()||netApplying)return;const n=performance.now();if(!force&&n-arcadeLastPublish<80)return;arcadeLastPublish=n;netPublish();}
 function arcadeSend(cmd){if(arcadeDemo)return arcadeHandle(arcadeSelf(),cmd);return netRoom.send(cmd);}
-function arcadeInput(action,held){if(!arcadeState?.world)return false;return arcadeSend({t:'arcadeInput',gameId:arcadeState.id,worldId:arcadeState.world.id,seq:++arcadeInputSeq,action,held});}
-function arcadeCancel(){arcadeState=null;arcadeDemo=false;arcadePrevious=null;arcadeLastWorldId='';arcadeRandomBag=null;arcadeClock=null;arcadeClockOffset=0;arcadeAccum=0;arcadeBotSeq.clear();arcadeBotBrains.clear();if(typeof arcadeClearKeys==='function')arcadeClearKeys();if(typeof arcadeDialog!=='undefined')arcadeDialog?.close();arcadeRenderSafe();}
+function arcadeInput(action,held){if(!arcadeState?.world||arcadeIsPaused())return false;return arcadeSend({t:'arcadeInput',gameId:arcadeState.id,worldId:arcadeState.world.id,seq:++arcadeInputSeq,action,held});}
+function arcadeCancel(){arcadeState=null;arcadeDemo=false;arcadePrevious=null;arcadeLastWorldId='';arcadeRandomBag=null;arcadeClock=null;arcadeClockOffset=0;arcadePauseAt=null;arcadeFolded=false;arcadeAccum=0;arcadeBotSeq.clear();arcadeBotBrains.clear();if(typeof arcadeClearKeys==='function')arcadeClearKeys();if(typeof arcadeDialog!=='undefined')arcadeDialog?.close();arcadeRenderSafe();}
 function arcadeClose(){
  if(!arcadeState){if(typeof arcadeDialog!=='undefined')arcadeDialog?.close();return;}
  if(arcadeDemo){arcadeCancel();return;}
  const s=arcadeState,m=s.members.find(m=>m.id===arcadeSelf());
- if(s.purpose==='lunch'){if(typeof arcadeClearKeys==='function')arcadeClearKeys();if(typeof arcadeDialog!=='undefined')arcadeDialog?.close();return;}
+ if(s.purpose==='lunch'){arcadeSetFolded(true);if(typeof arcadeClearKeys==='function')arcadeClearKeys();if(typeof arcadeDialog!=='undefined')arcadeDialog?.close();if(typeof menuTournamentRenderBackground==='function')menuTournamentRenderBackground();return;}
  if(m?.response==='pending')arcadeSend({t:'arcadeReply',gameId:s.id,response:'pass'});
  if(['round','between'].includes(s.phase)&&s.activeIds.includes(arcadeSelf()))arcadeSend({t:'arcadeForfeit',gameId:s.id});
  if(typeof arcadeClearKeys==='function')arcadeClearKeys();if(typeof arcadeDialog!=='undefined')arcadeDialog?.close();
 }
-function arcadeMakeState(mode,game,members){const s={id:'arcade_'+Date.now()+'_'+rand(1000000),roomCode:arcadeDemo?'practice':String(netRoom.code||''),context:arcadeBaseContext(),phase:'invite',purpose:'arcade',mode,chosen:game,members,activeIds:[],round:0,history:[],world:null,championIds:[],nextAt:0,lastGame:'',tiebreakIds:[],safeIds:[],notice:''};if(mode==='tournament')arcadeInitPoints(s);return s;}
+function arcadeMakeState(mode,game,members){const s={id:'arcade_'+Date.now()+'_'+rand(1000000),roomCode:arcadeDemo?'practice':String(netRoom.code||''),context:arcadeBaseContext(),phase:'invite',purpose:'arcade',mode,chosen:game,members,activeIds:[],round:0,history:[],world:null,championIds:[],nextAt:0,pausedBy:[],pausedAt:null,pauseSeq:0,lastGame:'',tiebreakIds:[],safeIds:[],notice:''};if(mode==='tournament')arcadeInitPoints(s);return s;}
 function arcadeIsPoints(s=arcadeState){return s?.mode==='tournament'&&s.format==='points';}
 function arcadePointsSync(s){const present=arcadeDemo||!netIsActive()?null:new Set(netMembers().map(m=>m.id));s.activeIds=s.members.filter(m=>m.response==='join'&&!m.left&&!m.forfeited&&(!present||present.has(m.id))).map(m=>m.id);s.safeIds=[];s.tiebreakIds=s.tiebreakIds.filter(id=>s.activeIds.includes(id));return s.activeIds;}
 function arcadeInitPoints(s=arcadeState){if(!s||s.mode!=='tournament')return false;if(s.format==='points')return true;s.format='points';s.pointRoundLimit=5;s.pointRounds=0;s.totalPoints=Object.fromEntries(s.members.map(m=>[m.id,0]));s.pointsStage='regular';s.pointsTiebreaks=0;s.tieReason='';s.representativeId='';s.tiebreakIds=[];arcadePointsSync(s);return true;}
@@ -54,7 +80,7 @@ function arcadePointsStandings(s=arcadeState){
  let rank=0,last=null;for(const [index,row]of rows.entries())if(row.eligible){if(row.points!==last)rank=index+1;row.rank=rank;last=row.points;}return rows;
 }
 function arcadePointsFinish(){
- const s=arcadeState;if(!arcadeIsPoints(s))return false;if(s.phase==='done')return true;arcadePointsSync(s);const standings=arcadePointsStandings(s),leaders=standings.filter(p=>p.rank===1),winner=leaders.length?leaders[leaders.length===1?0:rand(leaders.length)]:null;s.phase='done';s.nextAt=0;s.tiebreakIds=[];s.safeIds=[];s.championIds=leaders.map(p=>p.id);s.representativeId=winner?.id||'';s.tieReason=leaders.length>1?'누적 점수 공동 1위 · 대표 메뉴 추첨':'';s.notice=winner?(leaders.length>1?leaders.map(p=>p.name).join(' · ')+' 님 공동 1위! 누적 '+winner.points+'점 · 순위는 함께 유지하고, 대표 메뉴만 한 번 추첨했어요.':winner.name+' 님 누적 '+winner.points+'점으로 최종 1위!')+(s.pointRounds<s.pointRoundLimit?' · 참가자 기권으로 경기를 마쳤어요.':''):'남은 참가자가 없어 점수전을 마쳤어요.';
+ const s=arcadeState;if(!arcadeIsPoints(s))return false;if(s.phase==='done')return true;arcadePointsSync(s);const standings=arcadePointsStandings(s),leaders=standings.filter(p=>p.rank===1),winner=leaders.length?leaders[leaders.length===1?0:rand(leaders.length)]:null;s.phase='done';arcadeClearPause(s);s.nextAt=0;s.tiebreakIds=[];s.safeIds=[];s.championIds=leaders.map(p=>p.id);s.representativeId=winner?.id||'';s.tieReason=leaders.length>1?'누적 점수 공동 1위 · 대표 메뉴 추첨':'';s.notice=winner?(leaders.length>1?leaders.map(p=>p.name).join(' · ')+' 님 공동 1위! 누적 '+winner.points+'점 · 순위는 함께 유지하고, 대표 메뉴만 한 번 추첨했어요.':winner.name+' 님 누적 '+winner.points+'점으로 최종 1위!')+(s.pointRounds<s.pointRoundLimit?' · 참가자 기권으로 경기를 마쳤어요.':''):'남은 참가자가 없어 점수전을 마쳤어요.';
  if(s.purpose==='lunch'&&typeof netFinishMenuTournament==='function'){netFinishMenuTournament(s);return true;}arcadeRenderSafe();arcadePublish(true);return true;
 }
 function arcadePointsFinal(s){if(s!==arcadeState)return false;return arcadePointsFinish();}
@@ -73,7 +99,7 @@ function arcadeInvite(senderId,mode,game){
 }
 function arcadeRandomGame(previous,count){const points=arcadeIsPoints(),pool=arcadeGamePool(count).filter(key=>!points||key!=='brawl'),session=arcadeState?.id||'',signature=pool.join('|');if(!arcadeRandomBag||arcadeRandomBag.session!==session||arcadeRandomBag.signature!==signature)arcadeRandomBag={session,signature,remaining:[...pool]};if(!arcadeRandomBag.remaining.length)arcadeRandomBag.remaining=[...pool];const played=new Set(points?(arcadeState.history||[]).map(round=>round.game):[]);let choices=arcadeRandomBag.remaining.filter(k=>k!==previous&&!played.has(k));if(!choices.length)choices=pool.filter(k=>!played.has(k));if(!choices.length)choices=[...pool];const previousFamily=typeof arcadeGames==='object'?arcadeGames[previous]?.family:'';if(previousFamily){const otherFamilies=choices.filter(key=>arcadeGames[key]?.family!==previousFamily);if(otherFamilies.length)choices=otherFamilies;}const game=choices[rand(choices.length)];arcadeRandomBag.remaining=arcadeRandomBag.remaining.filter(k=>k!==game);return game;}
 function arcadeStartWorld(){
- const s=arcadeState;if(!s||!arcadeHost()||!['invite','between'].includes(s.phase))return false;arcadeInitPoints(s);if(arcadeIsPoints(s))arcadePointsSync(s);const ids=(s.tiebreakIds.length?s.tiebreakIds:s.activeIds).filter(id=>s.activeIds.includes(id));
+ const s=arcadeState;if(!s||!arcadeHost()||arcadeIsPaused(s)||!['invite','between'].includes(s.phase))return false;arcadeInitPoints(s);if(arcadeIsPoints(s))arcadePointsSync(s);const ids=(s.tiebreakIds.length?s.tiebreakIds:s.activeIds).filter(id=>s.activeIds.includes(id));
  if(ids.length<2){arcadeFinishTournament();return;}const finale=arcadeIsPoints(s)&&s.pointRounds===s.pointRoundLimit-1,game=s.mode==='single'?s.chosen:finale?'brawl':arcadeRandomGame(s.lastGame,ids.length);
  s.round++;s.lastGame=game;s.phase='round';s.nextAt=0;s.world=arcadeEngine.create({id:s.id+':'+s.round,game,participants:ids.map(id=>s.members.find(m=>m.id===id)),seed:rand(0xffffffff)});
  if(s.tiebreakIds.length)s.world.duration=Math.min(s.world.duration,16);s.world.meta.tiebreak=s.tiebreakIds.length>0;s.world.meta.safeIds=[...s.safeIds];if(arcadeIsPoints(s)){s.world.meta.pointsStage='regular';s.world.meta.pointsRound=s.pointRounds+1;s.world.meta.partyRespawn=false;s.world.meta.finale=finale;if(finale){s.world.duration=30;s.world.meta.notice='피날레 대난투! 체력 100 · 쓰러지면 이번 판 탈락 · 생존 순위로 점수를 받아요!';}}
@@ -95,6 +121,7 @@ function arcadeResolveRound(){
 }
 function arcadeForfeit(id){
  const s=arcadeState;if(!s)return;const m=s.members.find(m=>m.id===id);if(!m||m.response!=='join'||!s.activeIds.includes(id))return;
+ if(s.pausedBy?.includes(id))arcadeChangePause(s.pausedBy.filter(value=>value!==id),performance.now(),false);
  if(s.world&&['countdown','play'].includes(s.world.phase))arcadeEngine.forfeit(s.world,id);
  s.activeIds=s.activeIds.filter(v=>v!==id);s.tiebreakIds=s.tiebreakIds.filter(v=>v!==id);s.safeIds=s.safeIds.filter(v=>v!==id);m.forfeited=true;
  if(arcadeIsPoints(s)){
@@ -119,9 +146,14 @@ function arcadeHandle(senderId,cmd){
  if(!arcadeHost()||!arcadeDemo&&(!netIsActive()||!netMembers().some(m=>m.id===senderId)))return true;
  if(cmd.t==='arcadeInvite'){arcadeInvite(senderId,cmd.mode||'single',cmd.game||'coins');return true;}
  const s=arcadeState;if(!s||cmd.gameId!==s.id)return true;const m=s.members.find(m=>m.id===senderId);if(!m)return true;
+ if(cmd.t==='arcadeFold'){
+  if(typeof cmd.folded==='boolean'&&s.purpose==='lunch'&&['round','between'].includes(s.phase)&&m.response==='join'&&!m.left&&!m.forfeited&&s.activeIds.includes(senderId)){
+   const ids=s.pausedBy||[];arcadeChangePause(cmd.folded?[...new Set([...ids,senderId])]:ids.filter(id=>id!==senderId));
+  }return true;
+ }
  if(cmd.t==='arcadeCancel'&&senderId===arcadeSelf()){if(s.purpose==='lunch'&&typeof netCancelMenuTournament==='function')netCancelMenuTournament();else{arcadeCancel();if(netIsHost())netPublish();}return true;}
  if(cmd.t==='arcadeReply'&&s.phase==='invite'&&['join','pass'].includes(cmd.response)&&!m.left){m.response=cmd.response;arcadeRenderSafe();arcadePublish(true);arcadeMaybeStart();return true;}
- if(cmd.t==='arcadeInput'&&s.phase==='round'&&s.activeIds.includes(senderId)&&s.world&&cmd.worldId===s.world.id){const now=performance.now();arcadeAdvanceWorld(now);arcadeResolveRound();if(arcadeState!==s||s.phase!=='round'||cmd.worldId!==s.world?.id)return true;if(arcadeEngine.input(s.world,senderId,cmd,now)){arcadeRenderSafe();arcadePublish(false);}return true;}
+ if(cmd.t==='arcadeInput'&&!arcadeIsPaused(s)&&s.phase==='round'&&s.activeIds.includes(senderId)&&s.world&&cmd.worldId===s.world.id){const now=performance.now();arcadeAdvanceWorld(now);arcadeResolveRound();if(arcadeState!==s||s.phase!=='round'||cmd.worldId!==s.world?.id)return true;if(arcadeEngine.input(s.world,senderId,cmd,now)){arcadeRenderSafe();arcadePublish(false);}return true;}
  if(cmd.t==='arcadeForfeit'&&m.response==='join'&&['round','between'].includes(s.phase)){arcadeForfeit(senderId);return true;}return true;
 }
 function arcadeValidatePoints(data){
@@ -141,12 +173,19 @@ function arcadeValidatePoints(data){
  }else if(data.championIds.length||data.representativeId||data.tieReason)return false;
  return true;
 }
+function arcadeValidatePause(data){
+ if(data.pausedBy===undefined&&data.pausedAt===undefined&&data.pauseSeq===undefined)return true;
+ if(!Array.isArray(data.pausedBy)||data.pausedBy.length>8||new Set(data.pausedBy).size!==data.pausedBy.length||!Number.isSafeInteger(data.pauseSeq)||data.pauseSeq<0)return false;
+ if(!data.pausedBy.length)return data.pausedAt===null;
+ return data.purpose==='lunch'&&['round','between'].includes(data.phase)&&Number.isFinite(data.pausedAt)&&data.pausedAt>=0&&data.pauseSeq>0&&data.pausedBy.every(id=>data.activeIds.includes(id)&&data.members.some(m=>m.id===id&&m.response==='join'&&!m.left&&!m.forfeited));
+}
 function arcadeValidate(data){
  if(!data||!['arcade','lunch'].includes(data.purpose||'arcade')||typeof data.id!=='string'||data.id.length>100||data.roomCode!==String(netRoom.code||'')||data.context!==arcadeBaseContext()||!['invite','round','between','done'].includes(data.phase)||!['single','tournament'].includes(data.mode)||!arcadeGameKeys.includes(data.chosen)||!Array.isArray(data.members)||data.members.length<2||data.members.length>8)return false;
  if(data.members.some(m=>!m||typeof m.id!=='string'||typeof m.name!=='string'||!['pending','join','pass'].includes(m.response))||new Set(data.members.map(m=>m.id)).size!==data.members.length)return false;
  if(data.purpose==='lunch'&&(data.mode!=='tournament'||netPhase!=='menuTournament'||data.context!=='menuTournament:setup'||data.members.length!==netSpec?.participants?.length||data.members.some(m=>m.response!=='join'||typeof m.menu!=='string'||!validName(m.menu)||!netSpec?.participants?.some(p=>p.id===m.id&&p.menu===m.menu))))return false;
  const known=new Set(data.members.map(m=>m.id));for(const k of ['activeIds','championIds','tiebreakIds','safeIds'])if(!Array.isArray(data[k])||data[k].length>8||new Set(data[k]).size!==data[k].length||data[k].some(id=>!known.has(id)))return false;
  if(!Number.isSafeInteger(data.round)||data.round<0||!Number.isFinite(data.nextAt)||!Array.isArray(data.history)||data.history.length>60||typeof data.notice!=='string')return false;
+ if(!arcadeValidatePause(data))return false;
  const w=data.world;if(!w)return data.phase==='invite'&&arcadeValidatePoints(data);if(typeof w.id!=='string'||!arcadeGameKeys.includes(w.game)||!['countdown','play','done'].includes(w.phase)||!Number.isSafeInteger(w.seq)||w.seq<0||!Number.isFinite(w.elapsed)||w.elapsed<0||!Number.isFinite(w.countdown)||!Number.isFinite(w.duration)||w.duration<=0||w.duration>60||!Array.isArray(w.players)||w.players.length<2||w.players.length>8||!Array.isArray(w.objects)||w.objects.length>220||!w.meta||typeof w.meta!=='object')return false;
  if(data.serverNow!==undefined&&(!Number.isFinite(data.serverNow)||data.serverNow<0))return false;if(data.clock!==undefined&&(!data.clock||data.clock.worldId!==w.id||!Number.isFinite(data.clock.countdownEndAt)||!Number.isFinite(data.clock.endAt)||data.clock.countdownEndAt<0||data.clock.endAt<data.clock.countdownEndAt||Math.abs(data.clock.endAt-data.clock.countdownEndAt-w.duration*1000)>2||!Number.isFinite(data.serverNow)))return false;
  if(arcadeSurvivalGame(w.game)?w.meta.roundSurvival!==true:w.meta.roundSurvival===true)return false;
@@ -157,8 +196,8 @@ function arcadeValidate(data){
 }
 function arcadeReceive(data){
  if(arcadeDemo||netIsHost())return;if(!data){if(arcadeState)arcadeCancel();return;}if(!arcadeValidate(data))return;const fresh=arcadeState?.id!==data.id,newWorld=arcadeState?.world?.id!==data.world?.id;
- if(!fresh&&(data.round<arcadeState.round||!newWorld&&data.world?.seq<arcadeState.world?.seq||arcadeIsPoints(arcadeState)&&(data.pointRounds<arcadeState.pointRounds||data.pointsTiebreaks<arcadeState.pointsTiebreaks)))return;
- arcadePrevious=!fresh&&arcadeState?.world?arcadeState.world:null;arcadeState=arcadeClone(data);arcadeReceivedAt=performance.now();if(Number.isFinite(data.serverNow))arcadeClockOffset=data.serverNow-Date.now();else if(fresh)arcadeClockOffset=0;if(fresh||newWorld){arcadeInputSeq=0;arcadeLastWorldId=data.world?.id||'';if(typeof arcadeClearKeys==='function')arcadeClearKeys();}
+ if(!fresh&&((data.pauseSeq||0)<(arcadeState.pauseSeq||0)||data.round<arcadeState.round||!newWorld&&data.world?.seq<arcadeState.world?.seq||arcadeIsPoints(arcadeState)&&(data.pointRounds<arcadeState.pointRounds||data.pointsTiebreaks<arcadeState.pointsTiebreaks)))return;
+ const pauseChanged=fresh||(data.pauseSeq||0)!==(arcadeState.pauseSeq||0);arcadePrevious=!fresh&&!pauseChanged&&arcadeState?.world?arcadeState.world:null;arcadeState=arcadeClone(data);arcadeReceivedAt=performance.now();if(Number.isFinite(data.serverNow))arcadeClockOffset=data.serverNow-Date.now();else if(fresh)arcadeClockOffset=0;if(fresh||newWorld){arcadeInputSeq=0;arcadeLastWorldId=data.world?.id||'';}if(fresh)arcadeFolded=false;if(fresh||newWorld||pauseChanged){if(typeof arcadeClearKeys==='function')arcadeClearKeys();}
  if(fresh)arcadeOpen();arcadeRenderSafe();
 }
 function arcadePresence(event){
@@ -197,12 +236,13 @@ function arcadeHousekeep(now){
  if(!arcadeDemo&&(!netIsActive()||s.roomCode!==String(netRoom.code||'')||s.context!==arcadeBaseContext()||!(s.purpose==='lunch'?netPhase==='menuTournament':['setup','result'].includes(netPhase)))){arcadeCancel();return;}
  if(!arcadeHost())return;
  if(!arcadeDemo){const present=new Set(netMembers().map(m=>m.id));for(const m of s.members)if(!m.left&&!present.has(m.id)){m.left=true;if(s.phase==='invite')m.response='pass';else arcadeForfeit(m.id);}if(arcadeState!==s)return;if(s.phase==='invite')arcadeMaybeStart();}
+ if(arcadeIsPaused(s))return;
  if(s.phase==='between'&&Date.now()>=s.nextAt)arcadeStartWorld();
  if(s.phase==='round'&&s.world){arcadeAdvanceWorld(now);if(arcadeState!==s)return;
   if(arcadeDemo&&now-arcadeBotAt>=180&&s.world.phase==='play'){arcadeBotAt=now;for(const p of s.world.players)if(p.id!==arcadeSelf()&&!p.eliminated&&!p.forfeited){const v=arcadeNormalBot(s.world,p);let seq=arcadeBotSeq.get(p.id)||0;arcadeEngine.input(s.world,p.id,{seq:++seq,action:'sync',held:v.held||[]},now);if(v.action)arcadeEngine.input(s.world,p.id,{seq:++seq,action:v.action},now);arcadeBotSeq.set(p.id,seq);}}
   arcadeResolveRound();arcadePublish(false);
  }
 }
-setInterval(()=>{const now=performance.now();arcadeHousekeep(now);if(arcadeState?.phase==='round'&&arcadeState.world?.phase==='play'&&now-arcadeHeartbeatAt>=200){arcadeHeartbeatAt=now;arcadeInput('sync',typeof arcadeHeld==='function'?arcadeHeld():[]);}if(arcadeState?.phase==='between')arcadeRenderSafe();},32);
+setInterval(()=>{const now=performance.now();arcadeHousekeep(now);if(!arcadeIsPaused()&&arcadeState?.phase==='round'&&arcadeState.world?.phase==='play'&&now-arcadeHeartbeatAt>=200){arcadeHeartbeatAt=now;arcadeInput('sync',typeof arcadeHeld==='function'?arcadeHeld():[]);}if(arcadeState?.phase==='between')arcadeRenderSafe();},32);
 netRoom.onDisconnect(e=>{if(e.self||e.hostLost)arcadeCancel();});
 /* END_ARCADE_CONTROLLER_V1 */
