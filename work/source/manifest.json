@@ -1,8 +1,8 @@
 {
-  "build": "party30-20261116-secret8",
+  "build": "party30-20261116-pause9",
   "assets": {
-    "css": "assets/styles-secret8.css",
-    "js": "assets/app-secret8a.js"
+    "css": "assets/styles-pause9.css",
+    "js": "assets/app-pause9.js"
   },
   "styles": [
     {
@@ -326,7 +326,8 @@
         "pong-team.css",
         "reaction-challenge.css",
         "parking-rush.css",
-        "game-impact.css"
+        "game-impact.css",
+        "match-pause.css"
       ]
     }
   ],
@@ -375,6 +376,7 @@
         "game-experience.mjs",
         "game-visuals.mjs",
         "game-impact.mjs",
+        "match-pause-ui.mjs",
         "source/scripts/bootstrap.js"
       ]
     },
