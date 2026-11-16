@@ -2,7 +2,7 @@
   "build": "party30-20261116-pause9",
   "assets": {
     "css": "assets/styles-pause9.css",
-    "js": "assets/app-pause9.js"
+    "js": "assets/app-pause9b.js"
   },
   "styles": [
     {
