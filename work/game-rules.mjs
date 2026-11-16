@@ -926,6 +926,7 @@ function createArcadeEngine(){
  function forfeit(w,id){if(!privateWorlds.has(w)||w.phase==='done')return false;const p=w.players.find(p=>p.id===id);if(!p||p.forfeited)return false;p.forfeited=true;p.eliminated=true;p.health=0;privateWorlds.get(w).controls.get(id)?.held.clear();if(w.players.every(p=>p.eliminated||p.forfeited))finish(w);return true;}
  function bot(w,id){const secret=privateWorlds.get(w);if(!secret||w.phase!=='play')return {held:[]};const p=w.players.find(p=>p.id===id);if(!p||p.eliminated||p.forfeited)return {held:[]};return rules[w.game].bot(w,p,secret.random)||{held:[]};}
  function complete(w){if(!privateWorlds.has(w))return false;finish(w);return true;}
- return {create,input,step,forfeit,bot,complete};
+ function release(w){const secret=privateWorlds.get(w);if(!secret)return false;for(const control of secret.controls.values())control.held.clear();return true;}
+ return {create,input,step,forfeit,bot,complete,release};
 }
 /* END_ARCADE_ENGINE_V1 */
