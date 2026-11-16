@@ -6,14 +6,17 @@ function arcadeDisplayName(p,s=arcadeState){return s?.purpose==='lunch'?(s.membe
 function menuTournamentEnsureView(){
  if($('menuTournamentView'))return;
  const view=el('section','menu-tournament-view');view.id='menuTournamentView';view.hidden=true;view.setAttribute('aria-label','전원 누적 점수전 진행');
- view.innerHTML='<span class="menu-tournament-kicker">FIVE ROUNDS · EVERYONE PLAYS</span><h2>다 같이 5판, 끝까지 함께!</h2><p>매판 게임은 랜덤! 다섯 판의 순위 점수를 합산해 최종 순위를 정해요.<br>동점은 공동 순위, 점심 메뉴는 공동 1위 중 추첨합니다.</p><div class="menu-tournament-progress"><strong id="menuTournamentRound"></strong><span id="menuTournamentCount"></span></div><div id="menuTournamentCandidates" class="menu-tournament-candidates"></div><button id="menuTournamentResumeBtn" class="btn primary" type="button">경기 화면 열기 →</button><small>화면을 접어도 경기는 계속돼요. 다섯 판을 마치면 최종 점수표와 시상식으로 이어집니다.</small>';
+ view.innerHTML='<span class="menu-tournament-kicker">FIVE ROUNDS · EVERYONE PLAYS</span><h2>다 같이 5판, 끝까지 함께!</h2><p>매판 게임은 랜덤! 다섯 판의 순위 점수를 합산해 최종 순위를 정해요.<br>동점은 공동 순위, 점심 메뉴는 공동 1위 중 추첨합니다.</p><div class="menu-tournament-progress"><strong id="menuTournamentRound"></strong><span id="menuTournamentCount"></span></div><div id="menuTournamentCandidates" class="menu-tournament-candidates"></div><button id="menuTournamentResumeBtn" class="btn primary" type="button">경기 화면 열기 →</button><small id="menuTournamentPauseNote" role="status">경기 화면을 접으면 모두 일시정지해요. 다시 열면 남은 시간부터 이어집니다.</small>';
  $('game').append(view);$('menuTournamentResumeBtn').addEventListener('click',()=>{if(arcadeState?.purpose==='lunch')arcadeOpen();});
 }
 function menuTournamentRenderBackground(){
  const s=arcadeState;menuTournamentEnsureView();const view=$('menuTournamentView');view.hidden=netPhase!=='menuTournament';if(view.hidden||!s||s.purpose!=='lunch')return;
- const key=s.id+':'+s.round+':'+s.phase+':'+s.activeIds.join(',')+':'+s.lastGame+':'+JSON.stringify(s.totalPoints);if(view.dataset.key===key)return;view.dataset.key=key;
+ const key=s.id+':'+s.round+':'+s.phase+':'+s.activeIds.join(',')+':'+s.lastGame+':'+JSON.stringify(s.totalPoints)+':'+(s.pauseSeq||0);if(view.dataset.key===key)return;view.dataset.key=key;
  arcadeSetText('menuTournamentRound',('ROUND '+Math.min(s.pointRoundLimit||5,(s.pointRounds||0)+1)+' / '+(s.pointRoundLimit||5))+' · '+(arcadeGames[s.world?.game]?.name||'랜덤 게임'));
- arcadeSetText('menuTournamentCount',s.activeIds.length+'명 함께 참여 · 누적 점수');
+ arcadeSetText('menuTournamentCount',s.activeIds.length+'명 함께 참여 · '+(arcadeIsPaused(s)?'일시정지':'누적 점수'));
+ const paused=arcadeIsPaused(s),names=(s.pausedBy||[]).map(id=>s.members.find(m=>m.id===id)?.name||'참가자').join(' · '),ownPause=s.pausedBy?.includes(arcadeSelf());
+ arcadeSetText('menuTournamentResumeBtn',ownPause?'경기 이어하기 →':paused?'일시정지된 경기 보기 →':'경기 화면 열기 →');
+ arcadeSetText('menuTournamentPauseNote',paused?names+' 님이 경기 화면을 접었어요. 모두 다시 열면 남은 시간부터 이어져요.':'경기 화면을 접으면 모두 일시정지해요. 다시 열면 남은 시간부터 이어집니다.');
  const list=$('menuTournamentCandidates');list.replaceChildren();for(const m of [...s.members].sort((a,b)=>(s.totalPoints?.[b.id]||0)-(s.totalPoints?.[a.id]||0))){const card=el('div','menu-tournament-candidate');card.classList.toggle('is-out',m.left||m.forfeited);card.append(el('span','',actionFood(m.menu)),el('b','',m.menu),el('small','',m.name+(m.id===arcadeSelf()?' · 내 메뉴':'')),el('strong','',m.left?'퇴장':(s.totalPoints?.[m.id]||0)+'점'));list.append(card);}
 }
 function netRenderMenuTournament(){menuTournamentRenderBackground();}
