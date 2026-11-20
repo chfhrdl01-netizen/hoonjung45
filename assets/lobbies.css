@@ -1,0 +1,204 @@
+.game-brands {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  min-width: 0;
+  gap: 8px clamp(12px, 2vw, 24px);
+}
+
+.nunchi-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  color: #282666;
+  font-size: clamp(0.85rem, 1.5vw, 1.05rem);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.nunchi-brand:hover, .nunchi-panel-join:hover { color: #5038ad; }
+.nunchi-brand:focus-visible, .nunchi-panel a:focus-visible { outline: 3px solid #513fba; outline-offset: 4px; }
+
+.nunchi-brand-mark {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: 2px solid #201d40;
+  border-radius: 9px;
+  background: #423b9a;
+  color: #ffe287;
+  box-shadow: 2px 2px #201d40;
+  transform: rotate(-5deg);
+}
+
+.nunchi-brand-mark::before {
+  content: '';
+  width: 17px;
+  height: 11px;
+  border: 2px solid currentColor;
+  border-radius: 60% 30% / 75% 38%;
+  transform: rotate(15deg);
+}
+
+.nunchi-brand-mark::after {
+  content: '';
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.game-lobbies {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  gap: clamp(14px, 2vw, 27px);
+  margin: 30px 0;
+}
+
+.game-lobbies:has(>#roomLobby[hidden]), .arcade-practice .game-lobbies { display: none; }
+.game-lobbies > .room-lobby { margin: 0; min-width: 0; }
+
+.nunchi-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  min-width: 0;
+  padding: clamp(20px, 2.55vw, 36px);
+  border: 3px solid #252243;
+  border-radius: 24px;
+  background: radial-gradient(circle at 82% 18%, #fff2c2, transparent 35%), #ede7ff;
+  box-shadow: 7px 7px #252243;
+  color: #252243;
+}
+
+.nunchi-panel-meta {
+  margin: 0 0 10px;
+  color: #4a4384;
+  font-size: .875rem;
+  font-weight: 850;
+}
+
+.nunchi-panel h2 {
+  margin: 0;
+  font-size: clamp(1.75rem, 3.15vw, 3rem);
+  font-weight: 950;
+  line-height: 1.08;
+  letter-spacing: -.07em;
+  word-break: keep-all;
+}
+
+.nunchi-panel-art {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  height: clamp(108px, 12vw, 156px);
+  margin: 14px 0 8px;
+  overflow: hidden;
+  border-radius: 14px;
+  background: linear-gradient(180deg, #e2dbfa 67%, #d3c8f0 67%);
+}
+
+.nunchi-art-board {
+  display: grid;
+  place-content: center;
+  gap: 7px;
+  position: absolute;
+  width: 42%;
+  height: 57%;
+  left: 15%;
+  top: 14%;
+  border: 2px solid #252243;
+  border-radius: 7px;
+  background: #fffcf4;
+  box-shadow: 3px 3px #6555a6;
+  transform: rotate(-7deg);
+}
+
+.nunchi-art-board i { width: clamp(24px, 6vw, 70px); height: 3px; border-radius: 3px; background: #9280ca; }
+.nunchi-art-board i:last-child { width: 58%; background: #db9138; }
+
+.nunchi-art-talk {
+  position: absolute;
+  right: 16%;
+  top: 10%;
+  padding: 2px 10px;
+  border: 2px solid #252243;
+  border-radius: 10px 10px 10px 2px;
+  background: #ffe48d;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.nunchi-art-person {
+  position: absolute;
+  bottom: 12%;
+  right: 18%;
+  width: 19%;
+  aspect-ratio: .9;
+  border: 2px solid #252243;
+  border-radius: 48% 48% 28% 28%;
+  background: linear-gradient(#f6d49f 58%, #6755b1 58%);
+  box-shadow: 3px 4px #252243;
+  transform: rotate(8deg);
+}
+
+.nunchi-art-person i {
+  position: absolute;
+  left: 25%;
+  top: 36%;
+  width: 4px;
+  height: 5px;
+  border-radius: 50%;
+  background: #252243;
+  box-shadow: 12px 0 #252243;
+}
+
+.nunchi-panel-copy { margin: 7px 0 20px; color: #494566; font-size: 1rem; line-height: 1.55; word-break: keep-all; }
+
+.nunchi-panel-button {
+  display: grid;
+  place-items: center;
+  min-height: 48px;
+  margin-bottom: 10px;
+  padding: 9px 12px;
+  border: 2px solid #252243;
+  border-radius: 10px;
+  background: #41378e;
+  color: #fff;
+  box-shadow: 3px 3px #252243;
+  font-size: 1rem;
+  font-weight: 850;
+  text-align: center;
+  text-decoration: none;
+}
+
+.nunchi-panel-button:hover { background: #302778; }
+.nunchi-panel-join { display: grid; place-items: center; min-height: 40px; color: #30286c; font-size: .9375rem; font-weight: 800; text-underline-offset: 4px; }
+
+@media (min-width: 981px) {
+  .game-lobbies > .room-lobby { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); padding: clamp(20px, 2.5vw, 38px); gap: clamp(14px, 1.8vw, 27px); }
+  .game-lobbies .room-lobby-copy h2 { font-size: clamp(2rem, 3.55vw, 3.7rem); }
+  .game-lobbies .room-lobby-form { width: 100%; max-width: 100%; padding: clamp(15px, 1.7vw, 27px); }
+}
+
+@media (max-width: 980px) {
+  .game-lobbies { grid-template-columns: minmax(0, 1fr); gap: 22px; }
+  .nunchi-panel h2 br { display: none; }
+  .nunchi-panel-art { max-width: 370px; }
+}
+
+@media (max-width: 620px) {
+  .topbar:has(.game-brands) { height: auto; min-height: 68px; padding-block: 8px; flex-wrap: wrap; gap: 8px 12px; }
+  .game-brands { width: 100%; }
+  .nunchi-brand-mark { width: 27px; height: 27px; }
+  .nunchi-brand-mark::before { width: 13px; height: 9px; }
+  .game-lobbies { margin: 20px 0; }
+  .nunchi-panel { border-radius: 17px; box-shadow: 4px 4px #252243; }
+}
