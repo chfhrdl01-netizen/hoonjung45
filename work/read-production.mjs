@@ -11,7 +11,7 @@ export function readProduction() {
     return fs.readFileSync(new URL(path, project), 'utf8');
   };
   html = html.replace(/<link\b[^>]*rel="stylesheet"[^>]*href="([^"]+)"[^>]*>/gi,
-    (_, path) => '<style>' + asset(path) + '</style>');
+    (tag, path) => /^https?:\/\//i.test(path) ? tag : '<style>' + asset(path) + '</style>');
   html = html.replace(/<script\b[^>]*src="([^"]+)"[^>]*>\s*<\/script>/gi,
     (_, path) => '<script>' + asset(path) + '</script>');
   return html;
