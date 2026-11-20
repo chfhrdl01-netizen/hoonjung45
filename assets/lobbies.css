@@ -183,9 +183,9 @@
 .nunchi-panel-join { display: grid; place-items: center; min-height: 40px; color: #30286c; font-size: .9375rem; font-weight: 800; text-underline-offset: 4px; }
 
 @media (min-width: 981px) {
-  .game-lobbies > #roomLobby { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); padding: clamp(20px, 2.5vw, 38px); gap: clamp(14px, 1.8vw, 27px); }
+  .game-lobbies > #roomLobby.room-lobby { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); padding: clamp(20px, 2.5vw, 38px); gap: clamp(14px, 1.8vw, 27px); }
   .game-lobbies #roomLobbyTitle { font-size: clamp(2rem, 3.4vw, 3.5rem); word-break: keep-all; }
-  .game-lobbies #roomLobby .room-lobby-form { width: 100%; max-width: 100%; padding: clamp(15px, 1.7vw, 27px); }
+  .game-lobbies #roomLobby.room-lobby .room-lobby-form { width: 100%; max-width: 100%; padding: clamp(15px, 1.7vw, 27px); }
 }
 
 @media (max-width: 980px) {
