@@ -1,8 +1,8 @@
 {
-  "build": "party30-20261116-pause9",
+  "build": "party30-20261120-stayroom",
   "assets": {
     "css": "assets/styles-pause9.css",
-    "js": "assets/app-pause9b.js"
+    "js": "assets/app-stayroom.js"
   },
   "styles": [
     {
