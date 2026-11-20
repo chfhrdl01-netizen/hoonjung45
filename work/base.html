@@ -12,31 +12,20 @@
 <!-- source:onlineCombatStyles --><!-- source:departmentRaceStyles --><!-- source:onlineGameStyles --><!-- source:onlinePolishStyles --><!-- source:raceItemStyles --><!-- source:raceSmoothStyles --><!-- source:coffeeEventStyles -->
 <!-- source:victoryImpactStyles --><!-- source:coffeeManittoStyles --><!-- source:groupBrawlStyles --><!-- source:groupBrawlRoomStyles --><!-- source:departmentAvatarStyles --><!-- source:brawlProjectileStyles --><!-- source:throneFocusStyles --><!-- source:wonkyArcadeStyles --><!-- source:partyMiniStyles --><!-- source:fiveArcadeStyles --><!-- source:campusControlsStyles -->
 <link rel="stylesheet" href="assets/lobbies.css">
+<link rel="stylesheet" href="https://lunch-room-relay.sin.chatgpt.site/shared/game-switcher.css">
 </head>
 <body>
 <div class="shell">
 <header class="topbar">
 <div class="game-brands">
 <div class="brand"><span class="brand-mark" aria-hidden="true">밥</span> 점심 결재 대작전</div>
-<a class="nunchi-brand" href="https://lunch-room-relay.sin.chatgpt.site/nunchi/"><span class="nunchi-brand-mark" aria-hidden="true"></span>사회생활 눈치 대작전</a>
 </div>
-<div class="header-actions"><button class="tiny-btn" id="soundBtn" type="button" aria-pressed="false"><span class="sound-label">효과음 </span><span id="soundState">OFF</span></button><button class="tiny-btn" id="helpBtn" type="button">게임 방법</button></div>
+<div class="header-actions"><nav class="game-switcher" aria-label="게임 이동"><a href="https://lunch-room-relay.sin.chatgpt.site/games/">게임 모아보기</a><details><summary>게임 전환</summary><ul><li><a href="/hoonjung45/" aria-current="page">점심 결재 대작전</a></li><li><a href="https://lunch-room-relay.sin.chatgpt.site/nunchi/">사회생활 눈치 대작전</a></li><li><a href="https://lunch-room-relay.sin.chatgpt.site/horror/">잔류자 00:13</a></li></ul></details></nav><button class="tiny-btn" id="soundBtn" type="button" aria-pressed="false"><span class="sound-label">효과음 </span><span id="soundState">OFF</span></button><button class="tiny-btn" id="helpBtn" type="button">게임 방법</button></div>
 </header>
 <div class="game-lobbies">
 <section id="roomLobby" class="room-lobby" aria-labelledby="roomLobbyTitle">
 <div class="room-lobby-copy"><span class="room-kicker">ONLINE LUNCH CLUB</span><h2 id="roomLobbyTitle">같은 방에서,<br>같이 맛점!</h2><p>각자 메뉴 하나를 걸고 입장!<br>랜덤 4판 + 피날레 대난투로 함께 결정해요.</p><div class="room-lobby-rules"><span>01 닉네임 입력</span><span>02 주문 참여 동의</span><span>03 같은 방 입장</span></div></div>
 <div class="room-lobby-form"><label class="room-field-label" for="roomNickname">내 닉네임 <small>1~12자</small></label><input id="roomNickname" class="text-input room-input" maxlength="24" autocomplete="nickname" placeholder="친구들이 알아볼 이름" aria-describedby="roomNicknameHint"><span id="roomNicknameHint" class="room-note">같은 방에서는 서로 다른 닉네임을 사용해요.</span><label class="room-consent"><input type="checkbox" id="roomConsent"><span><strong>오늘 점심 주문에 참여할게요.</strong><small>직접 동의한 사람만 메뉴 선택과 5판 점수전에 참여해요.</small></span></label><button id="roomCreateBtn" class="btn primary room-wide" type="button" disabled>새 점심방 만들기 <span aria-hidden="true">→</span></button><div class="room-divider"><span>초대받았다면</span></div><label class="room-field-label" for="roomCodeInput">방 코드</label><div class="room-join-row"><input id="roomCodeInput" class="text-input room-input room-code-input" maxlength="200" inputmode="text" autocapitalize="characters" autocomplete="off" placeholder="방 코드 6자리"><button id="roomJoinBtn" class="btn dark" type="button" disabled>입장</button></div><div id="roomStatus" class="room-status" role="status" aria-live="polite">닉네임을 입력하고 점심 주문 참여에 동의해주세요.</div><p class="room-order-note">게임은 실제 주문·결제를 자동으로 진행하지 않아요.</p></div>
-</section>
-<section class="nunchi-panel" aria-labelledby="nunchi-panel-title">
-  <p class="nunchi-panel-meta">1명 · 사무실 공포</p>
-  <h2 id="nunchi-panel-title">잔류자<br>00:13</h2>
-  <div class="nunchi-panel-art" aria-hidden="true">
-    <span class="nunchi-art-board"><i></i><i></i><i></i></span>
-    <span class="nunchi-art-talk">···</span>
-    <span class="nunchi-art-person"><i></i></span>
-  </div>
-  <p class="nunchi-panel-copy">출입기록에는 두 명이 찍혀 있다. 손전등을 들고 비상구를 찾아라.</p>
-  <a class="nunchi-panel-button" href="https://lunch-room-relay.sin.chatgpt.site/nunchi/?practice=1">혼자 바로 하기</a>
 </section>
 </div>
 <section id="roomBanner" class="room-banner" aria-label="참가 중인 점심방" hidden><div class="room-banner-top"><div><span class="room-kicker">함께 주문하는 점심방</span><strong class="room-banner-code" id="roomCodeText"></strong></div><div class="room-banner-actions"><button class="tiny-btn" id="roomCopyBtn" type="button">초대 링크 복사</button><button class="tiny-btn room-leave" id="roomLeaveBtn" type="button">주문 참여 취소하고 나가기</button></div></div><div class="room-roster" id="roomRoster"></div><div class="room-banner-bottom"><span id="roomMemberCount"></span><span id="roomHostNotice">방장은 이 화면을 열어두세요.</span></div><input class="text-input room-copy-fallback" id="roomCopyFallback" readonly aria-label="복사할 점심방 초대 링크" hidden><div class="room-banner-notice" id="roomBannerNotice" role="status" aria-live="polite"></div></section>
