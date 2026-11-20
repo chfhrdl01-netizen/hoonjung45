@@ -39,6 +39,17 @@ function environment({guest=false,count=8,clock=100000}={}){
  vm.createContext(env);vm.runInContext(source+'\nthis.api={timeline:lunchFinaleTimeline,data:lunchFinaleData,get:lunchFinaleGetState,validate:lunchFinaleValidate,receive:lunchFinaleReceive,tick:lunchFinaleTick,open:lunchFinaleOpen,close:lunchFinaleClose,reset:lunchFinaleReset,advance:lunchFinaleAdvance,sceneAt:lunchFinaleSceneAt,get dialog(){return lunchFinaleDialog;},get shared(){return lunchFinaleShared;},get localEnd(){return lunchFinaleLocalEnd;}};',env);
  env.node=id=>nodes.get(id)||null;env.now=()=>now;env.advance=ms=>{now+=ms;let guard=0;while([...timers.values()].some(t=>t.due<=now)){assert(++guard<100,'bounded timer processing');const [id,t]=[...timers].filter(([,v])=>v.due<=now).sort((a,b)=>a[1].due-b[1].due)[0];timers.delete(id);t.fn();}for(const fn of intervals)fn();};env.disconnect=()=>disconnects.forEach(fn=>fn({self:true}));return env;
 }
+function assertStayedInRoom(e){
+ assert.equal(e.api.dialog.open,false);
+ assert.equal(e.active,true);
+ assert.equal(e.netPhase,'result');
+ assert.equal(e.netRoom.code,'ROOM12');
+ assert.equal(e.setupCalls,0);
+ assert.equal(e.closed.length,0);
+ assert.equal(e.node('roomNickname').value,'old');
+ assert.equal(e.node('roomCodeInput').value,'old');
+ assert.equal(e.node('roomConsent').checked,true);
+}
 {
  for(const count of [1,2,8]){const e=environment({count}),plan=e.api.timeline(e.api.data());assert.equal(plan.sceneTimes[3]-plan.sceneTimes[2],13000,'coffee announcement lasts 13 seconds');assert.equal(plan.duration,count===8?43500:count===1?40000:40500);assert.equal(plan.duration,plan.sceneTimes.at(-1)+4500);}
 }
@@ -50,13 +61,24 @@ function environment({guest=false,count=8,clock=100000}={}){
  secret.open=true;e.api.tick();assert.equal(secret.open,true,'ordinary rendering does not close a discovered link');assert.equal(e.api.localEnd,s.endAt,'opening the local Easter egg never changes the shared deadline');assert.deepEqual(copy(e.api.get()),copy(s),'discovery never enters shared game state');e.api.close();assert.equal(secret.open,false,'close folds the link away');e.api.tick();assert.equal(film.open,true);assert.equal(secret.open,false,'reopening does not reveal an old discovery');
  e.advance(8300);assert.equal(film.dataset.scene,'2');e.advance(12999);assert.equal(film.dataset.scene,'2');e.advance(1);assert.equal(film.dataset.scene,'3','coffee scene does not advance early');
  film.close();assert.equal(film.open,false);e.api.tick();assert.equal(film.open,true,'unexpected browser dismissal cannot bypass the mandatory film');assert.equal(e.api.localEnd,s.endAt,'dismissal never restarts or extends the film');
- e.advance(s.endAt-e.now()-1);assert.equal(e.closed.length,0);e.advance(1);assert.equal(film.open,false,'film closes only after its complete timeline');assert.equal(e.closed.length,0,'host grace allows peers to leave first');e.advance(599);assert.equal(e.closed.length,0);e.advance(1);assert.deepEqual(e.closed,['finale']);assert.equal(e.setupCalls,1);assert.equal(e.node('roomNickname').value,'');assert.equal(e.node('roomCodeInput').value,'');assert.equal(e.node('roomConsent').checked,false);assert.equal(e.api.shared,null);
+ e.advance(s.endAt-e.now()-1);assert.equal(film.open,true);
+ e.advance(1);assertStayedInRoom(e);
+ assert.equal(e.api.get(),null,'completed schedules are no longer published');
+ e.advance(100000);assertStayedInRoom(e);
+ assert.equal(e.publishes,1,'the same round does not start another ending');
+ e.result.id='meal-2';e.delivery.roundId=e.result.id;e.delivery.id='delivery-2';
+ e.api.tick();assert.equal(film.open,true,'a new round can show its own ending in the same room');
+ assert.equal(e.api.get().roundId,'meal-2');
 }
 {
  const host=environment(),schedule=host.api.get(),guest=environment({guest:true,clock:700000});assert.equal(guest.api.receive(schedule),true);guest.api.tick();assert.equal(guest.api.dialog.open,true);
- const end=guest.api.localEnd;guest.advance(700);const repeat=copy(schedule);repeat.serverNow+=700;assert.equal(guest.api.receive(repeat),true);assert.equal(guest.api.localEnd,end,'periodic snapshots do not postpone automatic room exit');
+ const end=guest.api.localEnd;guest.advance(700);const repeat=copy(schedule);repeat.serverNow+=700;assert.equal(guest.api.receive(repeat),true);assert.equal(guest.api.localEnd,end,'periodic snapshots do not postpone the end of the film');
  for(const mutate of [s=>s.duration-=8500,s=>s.sceneTimes[3]-=8500,s=>s.endAt+=1,s=>s.data.orders[0].drink='변조 주문',s=>s.data.orders.pop(),s=>{s.data.coffeeId='p2';s.data.coffeeName='동료 3';}]){const invalid=copy(repeat);mutate(invalid);assert.equal(guest.api.validate(invalid),false,'guest rejects timeline/order/winner tampering');}
- guest.advance(end-guest.now()-1);assert.equal(guest.closed.length,0);guest.advance(1);assert.deepEqual(guest.closed,['finale'],'guest leaves on full shared deadline without host grace');
+ guest.advance(end-guest.now()-1);assert.equal(guest.api.dialog.open,true);
+ guest.advance(1);assertStayedInRoom(guest);
+ const late=copy(schedule);late.serverNow=schedule.endAt+100;
+ assert.equal(guest.api.receive(late),true);guest.api.tick();assertStayedInRoom(guest);
+ guest.advance(100000);assertStayedInRoom(guest);
 }
 {
  const e=environment();e.delivery.members.forEach(m=>m.response='pass');e.delivery.winnerId='';e.api.tick();assert.equal(e.node('lunchFinaleOrdersEmpty').hidden,false);assert.equal(e.node('lunchFinaleOrders').hidden,true);assert.equal(e.api.validate(e.api.get()),true,'all-pass scene remains a valid ending');e.api.reset();assert.equal(e.api.dialog.open,false,'internal cleanup can close and clear film');e.advance(100000);assert.equal(e.closed.length,0,'cancelled schedule never exits an unrelated room');
@@ -67,4 +89,4 @@ function environment({guest=false,count=8,clock=100000}={}){
 }
 assert.match(css,/\.film-easter-egg:not\(\[open\]\)>.film-secret-link\{display:none\}/,'closed link is absent from display and keyboard navigation');
 assert.match(css,/\.film-coffee\{display:grid;grid-template-columns:/,'desktop coffee scene uses announcement and order columns');assert.match(css,/@media\(max-width:600px\)[\s\S]*grid-template-columns:minmax\(0,1fr\);grid-template-rows:/,'mobile places all orders below the announcement');
-console.log('PASS: mandatory ending blocks ESC/buttons/result bypass, coffee lasts 13s, all 8 final orders render safely, shared 40–43.5s deadlines validate, replay cannot extend time, all-pass/reset/disconnect/stale contexts and automatic lobby exit remain correct.');
+console.log('PASS: mandatory ending blocks ESC/buttons/result bypass, coffee lasts 13s, all 8 final orders render safely, shared 40–43.5s deadlines validate, replay cannot extend time, all-pass/reset/disconnect/stale contexts and host/guest room retention after credits pass.');
