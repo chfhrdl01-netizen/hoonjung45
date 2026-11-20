@@ -36,6 +36,7 @@ const files = {
   [manifest.assets.css]: css,
   [manifest.assets.js]: js,
   [lobbyStyles]: fs.readFileSync(new URL(lobbyStyles, root), 'utf8'),
+  'assets/hoonjung-studio-wordmark.png': fs.readFileSync(new URL('assets/hoonjung-studio-wordmark.png', root)),
 };
 for (const directory of ['', 'dist/']) {
   for (const [path, contents] of Object.entries(files)) {
