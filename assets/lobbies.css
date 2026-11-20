@@ -202,3 +202,17 @@
   .game-lobbies { margin: 20px 0; }
   .nunchi-panel { border-radius: 17px; box-shadow: 4px 4px #252243; }
 }
+
+.room-studio-link {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 3px;
+}
+.room-studio-link:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+.room-studio-link img { display: block; width: 142px; height: auto; }
+#lunchFinaleDialog .film-secret-link img {
+  display: block;
+  width: 115px;
+  height: auto;
+  filter: brightness(0) invert(1);
+}
