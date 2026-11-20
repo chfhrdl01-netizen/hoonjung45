@@ -24,7 +24,7 @@
 | 최종 점수표·커피 주문 화면 | `scripts/scoreboard-and-coffee.js` |
 | 메뉴 승낙·1회 이의 제기 | `../lunch-decision.mjs` |
 | 시상식·수상 소감·점수전 종료 흐름 | `scripts/presentation-and-score-flow.js` |
-| 커피 주문 엔딩·작은 별 이스터에그·공동 퇴장 | `../lunch-finale.mjs`, `../lunch-finale.css` |
+| 커피 주문 엔딩·작은 별 이스터에그·결과 화면 복귀 | `../lunch-finale.mjs`, `../lunch-finale.css` |
 | 학과 목록·캐릭터·선택 창 | `../departments.mjs`, `../department-avatars.mjs`, `../department-picker.mjs` |
 | 모바일 방향키·1대1 본인 키패드 | `../mobile-controls.css`, `../duel-controls.mjs`, `../duel-controls.css` |
 | 공통 화면·게임별·시상식 스타일 | `styles/`의 기능별 CSS 5개 |
@@ -38,7 +38,7 @@
 node work/build.mjs
 ```
 
-`index.html`, `assets/styles-pause9.css`, `assets/app-pause9b.js`를 루트와 `dist/`에 동일하게 생성합니다. CSS·JS를 먼저 배포하고 HTML을 마지막에 반영합니다. 이전 자산은 캐시 방문자를 위해 보존합니다.
+`index.html`, `assets/styles-pause9.css`, `assets/app-stayroom.js`를 루트와 `dist/`에 동일하게 생성합니다. CSS·JS를 먼저 배포하고 HTML을 마지막에 반영합니다. 이전 자산은 캐시 방문자를 위해 보존합니다.
 
 방 통신·메인 앱·화면 장식의 세 IIFE 범위를 유지합니다. 메인 앱의 소스 조각은 함수 호이스팅과 래퍼 순서에 의존하므로 각각 `<script>`나 ES 모듈로 직접 불러오지 않습니다. CSS의 `@source`/`@end-source` 경계 이름과 manifest의 순서도 보존합니다.
 
@@ -51,7 +51,7 @@ node work/build.mjs
 - 생존 7종은 판 안에서 부활하지 않습니다. 탈락한 플레이어의 입력은 무시하지만 시리즈 참가 자격은 유지해 다음 게임에 모두 돌아옵니다. 내부 생존 정렬용 점수는 화면에 그대로 출력하지 않습니다.
 - 탁구는 한 공을 사용하는 팀전입니다. 팀 득점·순위를 공유하고 인원 불균형 보정을 적용합니다. 기권과 재서브 때도 팀 상태를 함께 확인합니다.
 - 예상 궤적·착지점·자동 타깃 강조를 다시 넣지 않습니다. 현재 방향과 실제 목표·위험 신호, 결과 피드백을 구분합니다.
-- 엔딩의 `details`/`summary` 작은 별은 로컬 표시 상태입니다. 링크를 펼쳐도 공유 일정이 바뀌지 않고, 엔딩 생성·닫기·연결 종료 때 접힙니다. 건너뛰기와 자동 퇴장 규칙을 건드리지 않습니다.
+- 엔딩의 `details`/`summary` 작은 별은 로컬 표시 상태입니다. 링크를 펼쳐도 공유 일정이 바뀌지 않고, 엔딩 생성·닫기·연결 종료 때 접힙니다. 크레딧과 마지막 인사가 끝나면 엔딩 창이 닫히고 참가자들은 같은 방에 남습니다.
 - 효과는 실제 이벤트를 기준으로 발생시키고 반복 프레임·세계 전환·생존 시간 누적만으로 발동하지 않습니다. DOM 재사용, 효과음 OFF, 움직임 줄이기를 보존합니다.
 
 ## 화면을 수정할 때
