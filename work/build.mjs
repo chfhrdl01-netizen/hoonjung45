@@ -30,7 +30,13 @@ html = html.replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, () => {
   return '<script src="' + manifest.assets.js + '"></script>';
 });
 
-const files = { 'index.html': html, [manifest.assets.css]: css, [manifest.assets.js]: js };
+const lobbyStyles = 'assets/lobbies.css';
+const files = {
+  'index.html': html,
+  [manifest.assets.css]: css,
+  [manifest.assets.js]: js,
+  [lobbyStyles]: fs.readFileSync(new URL(lobbyStyles, root), 'utf8'),
+};
 for (const directory of ['', 'dist/']) {
   for (const [path, contents] of Object.entries(files)) {
     const target = new URL(directory + path, root);
